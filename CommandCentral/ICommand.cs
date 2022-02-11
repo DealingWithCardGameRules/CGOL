@@ -2,8 +2,8 @@
 
 namespace dk.itu.game.msc.cgdl.CommandCentral
 {
-    public class Class1
+    public interface ICommand
     {
-
+        Guid ProcessId { get; }
     }
 }
