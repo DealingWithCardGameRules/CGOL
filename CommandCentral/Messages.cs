@@ -20,19 +20,19 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
 
             // Engage command handler
             dynamic handler = provider.GetService(genericHandlerType);
-            handler.Handler((dynamic)command);
+            handler.Handle((dynamic)command);
         }
 
         public T Dispatch<T>(IQuery<T> query)
         {
             // Identify query handler
             Type queryHandlerType = typeof(IQueryHandler<,>);
-            Type[] queryType = { query.GetType() }; 
+            Type[] queryType = { query.GetType(), typeof(T) }; 
             Type genericHandlerType = queryHandlerType.MakeGenericType(queryType);
 
             // Engage query handler
             dynamic handler = provider.GetService(genericHandlerType);
-            T result = handler.Dispatch((dynamic)query);
+            T result = handler.Handle((dynamic)query);
             return result;
         }
 
