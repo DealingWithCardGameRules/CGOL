@@ -2,7 +2,7 @@
 
 namespace dk.itu.game.msc.cgdl.CommandCentral
 {
-    public sealed class Messages
+    public sealed class Messages : IEventDispatcher
     {
         private readonly IServiceProvider provider;
 
@@ -20,7 +20,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
 
             // Engage command handler
             dynamic handler = provider.GetService(genericHandlerType);
-            handler.Handle((dynamic)command);
+            handler.Handle((dynamic)command, this);
         }
 
         public T Dispatch<T>(IQuery<T> query)
@@ -36,7 +36,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
             return result;
         }
 
-        public void Dispatch(IEvent @event)
+        void IEventDispatcher.Dispatch(IEvent @event)
         {
             // Identify event observer
             Type eventObserverType = typeof(IEventObserver<>);

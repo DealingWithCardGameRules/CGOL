@@ -83,7 +83,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
             sut.Dispatch(commandStub);
 
             // Then
-            commandHandlerMock.Received().Handle(commandStub);
+            commandHandlerMock.Received().Handle(commandStub, Arg.Any<IEventDispatcher>());
         }
 
         [TestMethod]
@@ -176,7 +176,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var providerStub = Substitute.For<IServiceProvider>();
-            var sut = new Messages(providerStub);
+            var sut = (IEventDispatcher)new Messages(providerStub);
             var someEventStub = Substitute.For<IEvent>();
 
             // When
@@ -191,7 +191,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var providerMock = Substitute.For<IServiceProvider>();
-            var sut = new Messages(providerMock);
+            var sut = (IEventDispatcher)new Messages(providerMock);
 
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<IEventObserver<IEvent>>());
 
@@ -208,7 +208,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
             // Given
             var eventStub = new EventStub();
             var providerMock = Substitute.For<IServiceProvider>();
-            var sut = new Messages(providerMock);
+            var sut = (IEventDispatcher)new Messages(providerMock);
 
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<IEventObserver<IEvent>>());
 
@@ -226,7 +226,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
             var eventStub = new EventStub();
             var providerMock = Substitute.For<IServiceProvider>();
             var eventObserverMock = Substitute.For<IEventObserver<IEvent>>();
-            var sut = new Messages(providerMock);
+            var sut = (IEventDispatcher)new Messages(providerMock);
 
             providerMock.GetService(Arg.Any<Type>()).Returns(eventObserverMock);
 

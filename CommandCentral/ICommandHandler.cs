@@ -2,6 +2,6 @@
 {
     public interface ICommandHandler<TCommand> where TCommand : ICommand
     {
-        void Handle(TCommand command);
+        void Handle(TCommand command, IEventDispatcher eventDispatcher);
     }
 }
