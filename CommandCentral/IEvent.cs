@@ -4,7 +4,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
 {
     public interface IEvent
     {
-        DateTime EventDate { get; }
+        DateTime EventTime { get; }
         int Version { get; }
         Guid ProcessId { get; }
     }

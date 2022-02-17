@@ -5,7 +5,11 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandCentral", "CommandCentral\CommandCentral.csproj", "{A13C870B-43D1-4E98-9C62-FC1ADD5987B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandCentral.Test", "CommandCentral.Test\CommandCentral.Test.csproj", "{33BF0073-2228-410F-9897-0C889B29A414}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandCentral.Test", "CommandCentral.Test\CommandCentral.Test.csproj", "{33BF0073-2228-410F-9897-0C889B29A414}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluxxConcepts", "FluxxConcepts\FluxxConcepts.csproj", "{4E042DB1-3A57-4C2F-AD33-550ACAF564A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonConcepts", "CommonConcepts\CommonConcepts.csproj", "{5AC9C996-5F6A-4EF0-9B4D-74CC14BAF8F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{33BF0073-2228-410F-9897-0C889B29A414}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33BF0073-2228-410F-9897-0C889B29A414}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33BF0073-2228-410F-9897-0C889B29A414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E042DB1-3A57-4C2F-AD33-550ACAF564A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E042DB1-3A57-4C2F-AD33-550ACAF564A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E042DB1-3A57-4C2F-AD33-550ACAF564A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E042DB1-3A57-4C2F-AD33-550ACAF564A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AC9C996-5F6A-4EF0-9B4D-74CC14BAF8F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AC9C996-5F6A-4EF0-9B4D-74CC14BAF8F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AC9C996-5F6A-4EF0-9B4D-74CC14BAF8F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AC9C996-5F6A-4EF0-9B4D-74CC14BAF8F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -247,7 +247,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
 
         public class EventStub : IEvent
         {
-            public DateTime EventDate => throw new NotImplementedException();
+            public DateTime EventTime => throw new NotImplementedException();
             public int Version => throw new NotImplementedException();
             public Guid ProcessId => throw new NotImplementedException();
         }

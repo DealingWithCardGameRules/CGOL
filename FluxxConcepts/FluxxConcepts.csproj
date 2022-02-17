@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+	<PackageId>dk.itu.game.msc.cgdl.$(AssemblyName)</PackageId>
+	<RootNamespace>dk.itu.game.msc.cgdl.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CommandCentral\CommandCentral.csproj" />
+    <ProjectReference Include="..\CommonConcepts\CommonConcepts.csproj" />
+  </ItemGroup>
+
+</Project>
