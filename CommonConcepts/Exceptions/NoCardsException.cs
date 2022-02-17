@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts
+namespace dk.itu.game.msc.cgdl.CommonConcepts.Exceptions
 {
     [Serializable]
     public class NoCardsException : Exception

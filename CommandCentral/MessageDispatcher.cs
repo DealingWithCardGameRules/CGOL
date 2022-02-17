@@ -2,11 +2,11 @@
 
 namespace dk.itu.game.msc.cgdl.CommandCentral
 {
-    public sealed class Messages : IEventDispatcher
+    internal sealed class MessageDispatcher : IDispatcher, IEventDispatcher
     {
         private readonly IServiceProvider provider;
 
-        public Messages(IServiceProvider serviceProvider)
+        public MessageDispatcher(IServiceProvider serviceProvider)
         {
             provider = serviceProvider ?? throw new ArgumentNullException(nameof(IServiceProvider));
         }
@@ -36,7 +36,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
             return result;
         }
 
-        void IEventDispatcher.Dispatch(IEvent @event)
+        public void Dispatch(IEvent @event)
         {
             // Identify event observer
             Type eventObserverType = typeof(IEventObserver<>);

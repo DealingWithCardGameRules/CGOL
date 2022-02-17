@@ -8,6 +8,13 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
     [TestClass]
     public class TestMessages
     {
+        DispatchFactory factory;
+
+        public TestMessages()
+        {
+            factory = new DispatchFactory();
+        }
+
         [TestMethod]
         public void Instantiate_MissingServiceProvider_ThrowsArgumentNullException()
         {
@@ -16,7 +23,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
 
             // When
             Assert.ThrowsException<ArgumentNullException>(() => {
-                new Messages(service);
+                factory.Create(service);
                 });
         }
 
@@ -25,7 +32,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var providerStub = Substitute.For<IServiceProvider>();
-            var sut = new Messages(providerStub);
+            var sut = factory.Create(providerStub);
             var someCommandStub = Substitute.For<ICommand>();
 
             // When
@@ -40,7 +47,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var providerMock = Substitute.For<IServiceProvider>();
-            var sut = new Messages(providerMock);
+            var sut = factory.Create(providerMock);
             
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<ICommandHandler<ICommand>>());
 
@@ -57,7 +64,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
             // Given
             var commandStub = new CommandStub();
             var providerMock = Substitute.For<IServiceProvider>();
-            var sut = new Messages(providerMock);
+            var sut = factory.Create(providerMock);
             
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<ICommandHandler<ICommand>>());
 
@@ -75,7 +82,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
             var commandStub = new CommandStub();
             var providerMock = Substitute.For<IServiceProvider>();
             var commandHandlerMock = Substitute.For<ICommandHandler<ICommand>>();
-            var sut = new Messages(providerMock);
+            var sut = factory.Create(providerMock);
             
             providerMock.GetService(Arg.Any<Type>()).Returns(commandHandlerMock);
 
@@ -91,7 +98,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var queryStub = Substitute.For<IQuery<int>>();
-            var sut = new Messages(Substitute.For<IServiceProvider>());
+            var sut = factory.Create(Substitute.For<IServiceProvider>());
 
             // When
             Assert.ThrowsException<RuntimeBinderException>(() =>
@@ -105,7 +112,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var providerMock = Substitute.For<IServiceProvider>();
-            var sut = new Messages(providerMock);
+            var sut = factory.Create(providerMock);
             
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<IQueryHandler<IQuery<int>, int>>());
 
@@ -122,7 +129,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
             // Given
             var queryStub = new QueryStub();
             var providerMock = Substitute.For<IServiceProvider>();
-            var sut = new Messages(providerMock);
+            var sut = factory.Create(providerMock);
             
             providerMock.GetService(typeof(IQueryHandler<QueryStub, int>)).Returns(Substitute.For< IQueryHandler<IQuery<int>, int> >());
 
@@ -140,7 +147,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
             var queryStub = new QueryStub();
             var providerMock = Substitute.For<IServiceProvider>();
             var queryHandler = Substitute.For<IQueryHandler<IQuery<int>, int>>();
-            var sut = new Messages(providerMock);
+            var sut = factory.Create(providerMock);
 
             providerMock.GetService(typeof(IQueryHandler<QueryStub, int>)).Returns(queryHandler);
 
@@ -159,7 +166,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
             var queryStub = new QueryStub();
             var providerMock = Substitute.For<IServiceProvider>();
             var queryHandler = Substitute.For<IQueryHandler<IQuery<int>, int>>();
-            var sut = new Messages(providerMock);
+            var sut = factory.Create(providerMock);
 
             providerMock.GetService(typeof(IQueryHandler<QueryStub, int>)).Returns(queryHandler);
             queryHandler.Handle(queryStub).Returns(expected);
@@ -176,7 +183,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var providerStub = Substitute.For<IServiceProvider>();
-            var sut = (IEventDispatcher)new Messages(providerStub);
+            var sut = (IEventDispatcher)factory.Create(providerStub);
             var someEventStub = Substitute.For<IEvent>();
 
             // When
@@ -191,7 +198,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var providerMock = Substitute.For<IServiceProvider>();
-            var sut = (IEventDispatcher)new Messages(providerMock);
+            var sut = (IEventDispatcher)factory.Create(providerMock);
 
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<IEventObserver<IEvent>>());
 
@@ -208,7 +215,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
             // Given
             var eventStub = new EventStub();
             var providerMock = Substitute.For<IServiceProvider>();
-            var sut = (IEventDispatcher)new Messages(providerMock);
+            var sut = (IEventDispatcher)factory.Create(providerMock);
 
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<IEventObserver<IEvent>>());
 
@@ -226,7 +233,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
             var eventStub = new EventStub();
             var providerMock = Substitute.For<IServiceProvider>();
             var eventObserverMock = Substitute.For<IEventObserver<IEvent>>();
-            var sut = (IEventDispatcher)new Messages(providerMock);
+            var sut = (IEventDispatcher)factory.Create(providerMock);
 
             providerMock.GetService(Arg.Any<Type>()).Returns(eventObserverMock);
 
