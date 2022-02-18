@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonConcepts", "CommonCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluxxConcepts.Test", "FluxxConcepts.Test\FluxxConcepts.Test.csproj", "{66436B03-B4AB-47CC-ABC1-2570F3637423}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameState", "GameState\GameState.csproj", "{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{66436B03-B4AB-47CC-ABC1-2570F3637423}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66436B03-B4AB-47CC-ABC1-2570F3637423}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66436B03-B4AB-47CC-ABC1-2570F3637423}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

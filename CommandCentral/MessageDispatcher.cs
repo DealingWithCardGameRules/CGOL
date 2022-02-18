@@ -2,13 +2,15 @@
 
 namespace dk.itu.game.msc.cgdl.CommandCentral
 {
-    internal sealed class MessageDispatcher : IDispatcher, IEventDispatcher
+    public sealed class MessageDispatcher : IDispatcher
     {
         private readonly IServiceProvider provider;
+        private readonly IEventDispatcher eventDispatcher;
 
-        public MessageDispatcher(IServiceProvider serviceProvider)
+        public MessageDispatcher(IServiceProvider serviceProvider, IEventDispatcher eventDispatcher)
         {
             provider = serviceProvider ?? throw new ArgumentNullException(nameof(IServiceProvider));
+            this.eventDispatcher = eventDispatcher ?? throw new ArgumentNullException(nameof(eventDispatcher));
         }
 
         public void Dispatch(ICommand command)
@@ -20,7 +22,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
 
             // Engage command handler
             dynamic handler = provider.GetService(genericHandlerType);
-            handler.Handle((dynamic)command, this);
+            handler.Handle((dynamic)command, eventDispatcher);
         }
 
         public T Dispatch<T>(IQuery<T> query)
@@ -34,18 +36,6 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
             dynamic handler = provider.GetService(genericHandlerType);
             T result = handler.Handle((dynamic)query);
             return result;
-        }
-
-        public void Dispatch(IEvent @event)
-        {
-            // Identify event observer
-            Type eventObserverType = typeof(IEventObserver<>);
-            Type[] eventType = { @event.GetType() };
-            Type genericObserverType = eventObserverType.MakeGenericType(eventType);
-
-            // Invoke event observer
-            dynamic observer = provider.GetService(genericObserverType);
-            observer.Invoke((dynamic)@event);
         }
     }
 }
