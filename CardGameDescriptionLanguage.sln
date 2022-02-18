@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluxxConcepts.Test", "Fluxx
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameState", "GameState\GameState.csproj", "{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEvents", "GameEvents\GameEvents.csproj", "{164ED6DC-7DE0-40A1-B6E5-93B21CDF7E55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGameDescriptionLanguage", "CardGameDescriptionLanguage\CardGameDescriptionLanguage.csproj", "{29CA54CC-AF9A-4F11-9CF3-0AE5B235EFF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{164ED6DC-7DE0-40A1-B6E5-93B21CDF7E55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{164ED6DC-7DE0-40A1-B6E5-93B21CDF7E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{164ED6DC-7DE0-40A1-B6E5-93B21CDF7E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{164ED6DC-7DE0-40A1-B6E5-93B21CDF7E55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CA54CC-AF9A-4F11-9CF3-0AE5B235EFF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CA54CC-AF9A-4F11-9CF3-0AE5B235EFF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CA54CC-AF9A-4F11-9CF3-0AE5B235EFF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CA54CC-AF9A-4F11-9CF3-0AE5B235EFF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

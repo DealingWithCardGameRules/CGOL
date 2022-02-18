@@ -5,12 +5,12 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
     public sealed class MessageDispatcher : IDispatcher
     {
         private readonly IServiceProvider provider;
-        private readonly IEventDispatcher eventDispatcher;
+        private readonly IEventDispatcher dispatcher;
 
         public MessageDispatcher(IServiceProvider serviceProvider, IEventDispatcher eventDispatcher)
         {
             provider = serviceProvider ?? throw new ArgumentNullException(nameof(IServiceProvider));
-            this.eventDispatcher = eventDispatcher ?? throw new ArgumentNullException(nameof(eventDispatcher));
+            dispatcher = eventDispatcher ?? throw new ArgumentNullException(nameof(eventDispatcher));
         }
 
         public void Dispatch(ICommand command)
@@ -22,7 +22,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
 
             // Engage command handler
             dynamic handler = provider.GetService(genericHandlerType);
-            handler.Handle((dynamic)command, eventDispatcher);
+            handler.Handle((dynamic)command, dispatcher);
         }
 
         public T Dispatch<T>(IQuery<T> query)
