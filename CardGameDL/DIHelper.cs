@@ -1,5 +1,4 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.GameEvents;
+﻿using dk.itu.game.msc.cgdl.GameEvents;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace dk.itu.game.msc.cgdl

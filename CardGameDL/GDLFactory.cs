@@ -15,7 +15,7 @@ namespace dk.itu.game.msc.cgdl
             this.interpolator = interpolator ?? throw new ArgumentNullException(nameof(interpolator));
         }
 
-        IDispatcher Create(string path, string fileName)
+        public IDispatcher Create(string path, string fileName)
         {
             var logWriter = factory.NewLog(path, fileName);
             var eventDispatcher = new EventLogDecorator(new EventDispatcher(interpolator), logWriter);

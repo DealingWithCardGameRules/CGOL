@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace dk.itu.game.msc.cgdl
 {
     [Serializable]
-    internal class DuplicateConceptException : Exception
+    public class DuplicateConceptException : Exception
     {
         public DuplicateConceptException()
         {
