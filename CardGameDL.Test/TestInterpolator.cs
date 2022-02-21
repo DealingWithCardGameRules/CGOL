@@ -111,6 +111,54 @@ namespace dk.itu.game.msc.cgdl.Test
         }
 
         [TestMethod]
+        public void GetService_RemovedCommandHandler_ThrowsUnknownConceptException()
+        {
+            // Given
+            var sut = new Interpolator();
+            var commandHandlerStud = new CommandHandlerStub();
+            sut.AddConcept(commandHandlerStud);
+            sut.RemoveConcept(commandHandlerStud);
+
+            // When, Then
+            Assert.ThrowsException<UnknownConceptException>(() =>
+            {
+                sut.GetService(typeof(ICommandHandler<CommandStub>));
+            });
+        }
+
+        [TestMethod]
+        public void GetService_RemovedQueryHandler_ThrowsUnknownConceptException()
+        {
+            // Given
+            var sut = new Interpolator();
+            var queryHandlerStud = new QueryHandlerStub();
+            sut.AddConcept(queryHandlerStud);
+            sut.RemoveConcept(queryHandlerStud);
+
+            // When, Then
+            Assert.ThrowsException<UnknownConceptException>(() =>
+            {
+                sut.GetService(typeof(IQueryHandler<QueryStub, bool>));
+            });
+        }
+
+        [TestMethod]
+        public void GetService_RemovedEventObserver_ThrowsUnknownConceptException()
+        {
+            // Given
+            var sut = new Interpolator();
+            var eventObserverStud = new EventObserverStub();
+            sut.AddConcept(eventObserverStud);
+            sut.RemoveConcept(eventObserverStud);
+
+            // When, Then
+            Assert.ThrowsException<UnknownConceptException>(() =>
+            {
+                sut.GetService(typeof(IEventObserver<EventStub>));
+            });
+        }
+
+        [TestMethod]
         public void Supports_UnknownEvent_ReturnsFalse()
         {
             // Given
@@ -335,9 +383,54 @@ namespace dk.itu.game.msc.cgdl.Test
             Assert.IsFalse(result);
         }
 
+        [TestMethod]
+        public void AddConcept_AlreadyKnownCommandHandler_ThrowsDuplicateConceptException()
+        {
+            // Given
+            var sut = new Interpolator();
+            var commandHandlerStub = new CommandHandlerStub();
+            sut.AddConcept(commandHandlerStub);
+
+            // When, Then
+            Assert.ThrowsException<DuplicateConceptException>(() =>
+            {
+                sut.AddConcept(Substitute.For<ICommandHandler<CommandStub>>());
+            });
+        }
+
+        [TestMethod]
+        public void AddConcept_AlreadyKnownQueryHandler_ThrowsDuplicateConceptException()
+        {
+            // Given
+            var sut = new Interpolator();
+            var queryHandlerStub = new QueryHandlerStub();
+            sut.AddConcept(queryHandlerStub);
+
+            // When, Then
+            Assert.ThrowsException<DuplicateConceptException>(() =>
+            {
+                sut.AddConcept(Substitute.For<IQueryHandler<QueryStub, bool>>());
+            });
+        }
+
+        [TestMethod]
+        public void AddConcept_AlreadyKnownEventObserver_ThrowsDuplicateConceptException()
+        {
+            // Given
+            var sut = new Interpolator();
+            var eventObserverStub = new EventObserverStub();
+            sut.AddConcept(eventObserverStub);
+
+            // When, Then
+            Assert.ThrowsException<DuplicateConceptException>(() =>
+            {
+                sut.AddConcept(Substitute.For<IEventObserver<EventStub>>());
+            });
+        }
+
         // Stub classes for concrete tests
 
-        class CommandStub : ICommand
+        public class CommandStub : ICommand
         {
             public System.Guid ProcessId => throw new System.NotImplementedException();
         }
@@ -350,7 +443,7 @@ namespace dk.itu.game.msc.cgdl.Test
             }
         }
 
-        class QueryStub : IQuery<bool> { }
+        public class QueryStub : IQuery<bool> { }
 
         class QueryHandlerStub : IQueryHandler<QueryStub, bool>
         {
@@ -360,7 +453,7 @@ namespace dk.itu.game.msc.cgdl.Test
             }
         }
 
-        class EventStub : IEvent
+        public class EventStub : IEvent
         {
             public System.DateTime EventTime => throw new System.NotImplementedException();
             public int Version => throw new System.NotImplementedException();
