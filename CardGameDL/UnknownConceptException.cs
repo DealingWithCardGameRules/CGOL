@@ -23,6 +23,6 @@ namespace dk.itu.game.msc.cgdl
         {
         }
 
-        public Type ServiceType { get; }
+        public Type? ServiceType { get; }
     }
 }

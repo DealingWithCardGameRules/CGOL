@@ -27,6 +27,6 @@ namespace dk.itu.game.msc.cgdl
         {
         }
 
-        public Type Type { get; }
+        public Type? Type { get; }
     }
 }
