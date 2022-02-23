@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl
 {
-    public class Interpolator : IServiceProvider
+    public class Interpolator : IServiceProvider, IInterpolator
     {
         public Dictionary<Type, object> conceptHandlers;
         public HashSet<Type> supported;

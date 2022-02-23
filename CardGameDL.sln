@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameEvents", "GameEvents\Ga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameDL", "CardGameDL\CardGameDL.csproj", "{24B9AB8D-0470-43C3-881D-9149098909B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGameDL.Test", "CardGameDL.Test\CardGameDL.Test.csproj", "{F0CFCF37-1796-4E32-AA44-FBB61F9BE72C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameDL.Test", "CardGameDL.Test\CardGameDL.Test.csproj", "{F0CFCF37-1796-4E32-AA44-FBB61F9BE72C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGameGL.AcceptTest", "CardGameGL.AcceptTest\CardGameGL.AcceptTest.csproj", "{743FAE35-282F-4BC6-81B3-7E556CA18D20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{F0CFCF37-1796-4E32-AA44-FBB61F9BE72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0CFCF37-1796-4E32-AA44-FBB61F9BE72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0CFCF37-1796-4E32-AA44-FBB61F9BE72C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{743FAE35-282F-4BC6-81B3-7E556CA18D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{743FAE35-282F-4BC6-81B3-7E556CA18D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{743FAE35-282F-4BC6-81B3-7E556CA18D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{743FAE35-282F-4BC6-81B3-7E556CA18D20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

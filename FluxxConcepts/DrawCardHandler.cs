@@ -22,8 +22,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             if (!dispatcher.Dispatch(new HasCards(command.Source)))
                 throw new NoCardsException(command.Source);
 
-            ICard card = dispatcher.Dispatch(new GetTopCard(command.Source));
-            eventDispatcher.Dispatch(new CardDrawn(DateTime.Now, command.ProcessId, command.Source, command.Destination, card.Instance));
+            eventDispatcher.Dispatch(new CardDrawn(DateTime.Now, command.ProcessId, command.Source, command.Destination));
         }
     }
 }

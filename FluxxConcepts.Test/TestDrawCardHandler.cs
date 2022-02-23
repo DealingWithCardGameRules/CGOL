@@ -62,22 +62,6 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
         }
 
         [TestMethod]
-        public void Handle_HasCardsReturnsTrue_DispatchesGetTopCardQuery()
-        {
-            // Given
-            var dispatcherMock = Substitute.For<IDispatcher>();
-            var sut = new DrawCardHandler(dispatcherMock);
-            var command = new DrawCard(Guid.Empty, Guid.Empty);
-            dispatcherMock.Dispatch(Arg.Any<HasCards>()).Returns(true);
-
-            // When
-            sut.Handle(command, Substitute.For<IEventDispatcher>());
-
-            // Then
-            dispatcherMock.Received().Dispatch(Arg.Any<GetTopCard>());
-        }
-
-        [TestMethod]
         public void Handle_SpecificSource_CardDrawnSourceMatches()
         {
             // Given
@@ -113,28 +97,6 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
 
             // Then
             eventDispatcherMock.Received().Dispatch(Arg.Is<CardDrawn>(result => expectedDestination == result.Distination));
-        }
-
-        [TestMethod]
-        public void Handle_GetTopCardReturnsInstance_CardDrawnCardMatchesInstance()
-        {
-            // Given
-            var dispatcherStub = Substitute.For<IDispatcher>();
-            var sut = new DrawCardHandler(dispatcherStub);
-            var command = new DrawCard(Guid.Empty, Guid.Empty);
-            var eventDispatcherMock = Substitute.For<IEventDispatcher>();
-            var expectedInstance = Guid.NewGuid();
-            var CardStub = Substitute.For<ICard>();
-
-            dispatcherStub.Dispatch(Arg.Any<HasCards>()).Returns(true);
-            dispatcherStub.Dispatch(Arg.Any<GetTopCard>()).Returns(CardStub);
-            _ = CardStub.Instance.Returns(expectedInstance);
-
-            // When
-            sut.Handle(command, eventDispatcherMock);
-
-            // Then
-            eventDispatcherMock.Received().Dispatch(Arg.Is<CardDrawn>(result => expectedInstance == result.Card));
         }
     }
 }

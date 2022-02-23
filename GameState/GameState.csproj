@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CommandCentral\CommandCentral.csproj" />
+    <ProjectReference Include="..\CommonConcepts\CommonConcepts.csproj" />
   </ItemGroup>
 
 </Project>

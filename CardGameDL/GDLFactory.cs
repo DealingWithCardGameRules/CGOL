@@ -21,5 +21,10 @@ namespace dk.itu.game.msc.cgdl
             var eventDispatcher = new EventLogDecorator(new EventDispatcher(interpolator), logWriter);
             return new MessageDispatcher(interpolator, eventDispatcher);
         }
+
+        public IDispatcher Create()
+        {
+            return new MessageDispatcher(interpolator, new EventDispatcher(interpolator));
+        }
     }
 }
