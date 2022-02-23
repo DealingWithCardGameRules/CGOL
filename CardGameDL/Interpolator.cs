@@ -65,13 +65,15 @@ namespace dk.itu.game.msc.cgdl
 
         private void Add<T>(T obj)
         {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
             if (conceptHandlers.ContainsKey(typeof(T)))
                 throw new DuplicateConceptException(typeof(T));
 
             conceptHandlers[typeof(T)] = obj;
         }
 
-        private void Remove<T>(T obj)
+        private void Remove<T>(T _)
         {
             if (conceptHandlers.ContainsKey(typeof(T)))
                 conceptHandlers.Remove(typeof(T));
