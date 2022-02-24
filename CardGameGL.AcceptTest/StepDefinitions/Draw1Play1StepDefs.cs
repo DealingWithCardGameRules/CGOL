@@ -1,38 +1,38 @@
 using CardGameGL.AcceptTest.Drivers;
-using System;
-using TechTalk.SpecFlow;
 
 namespace CardGameGL.AcceptTest.StepDefinitions
 {
     [Binding]
     public class Draw1Play1StepDefs
     {
-        GameDriver game = new GameDriver();
-        Guid stack;
+        GameDriver gameDriver = new GameDriver();
+        Guid deck;
+        Guid hand;
 
-        [Given(@"a stack of (.*) cards?")]
-        public void GivenAStackOfCards(int cards)
+        [Given(@"a deck of (.*) cards?")]
+        public void GivenADeckOfCards(int cards)
         {
-            stack = Guid.NewGuid();
-            game.AddStack(stack, cards);
+            deck = Guid.NewGuid();
+            gameDriver.AddDeck(deck, cards);
         }
 
-        [Given(@"(?:a|the) player with (.*) cards")]
+        [Given(@"a player with (.*) cards")]
         public void GivenAPlayerWithCards(int cards)
         {
-            throw new PendingStepException();
+            hand = Guid.NewGuid();
+            gameDriver.AddHand(hand, cards);
         }
 
-        [When(@"(?:a|the) player draws (.*) cards?")]
-        public void WhenDrawsCard(int cards)
+        [When(@"the player draws (.*) cards?")]
+        public void WhenPlayerDrawsCard(int cards)
         {
-            throw new PendingStepException();
+            gameDriver.DrawCards(deck, hand, cards);
         }
 
-        [Then(@"(?:a|the) player should have (.*) cards?")]
-        public void ThenShouldHaveCard(int cards)
+        [Then(@"the player should have (.*) cards?")]
+        public void ThenPlayerShouldHaveCard(int cards)
         {
-            throw new PendingStepException();
+            gameDriver.CheckSize(hand, cards);
         }
     }
 }

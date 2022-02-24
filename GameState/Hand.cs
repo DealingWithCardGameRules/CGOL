@@ -5,46 +5,45 @@ using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.GameState
 {
-    internal class CardStack : ICardCollection
+    internal class Hand : ICardCollection
     {
         public Guid Instance { get; }
-        List<ICard> cards;
 
-        public CardStack(Guid id)
+        readonly Dictionary<Guid, ICard> cards;
+        public Hand(Guid id)
         {
             Instance = id;
-            cards = new List<ICard>();
+            cards = new Dictionary<Guid, ICard>();
         }
 
         public void AddCard(ICard card)
         {
-            cards.Add(card);
+            cards[card.Instance] = card;
         }
 
         public void RemoveCard(Guid cardId)
         {
-            foreach(var card in cards)
-            {
-                if (card.Instance == cardId)
-                {
-                    cards.Remove(card);
-                }
-            }
+            if (cards.ContainsKey(cardId))
+                cards.Remove(cardId);
         }
 
         public ICard? GetCard()
         {
-            return cards.Last();
+            if (cards.Count > 0)
+                return cards.Last().Value;
+            return null;
         }
 
         public ICard? Get(Guid cardId)
         {
-            return cards.FirstOrDefault(c => c.Instance == cardId);
+            if (cards.ContainsKey(cardId))
+                return cards[cardId];
+            return null;
         }
 
         public int Count()
         {
-            return cards.Count();
+            return cards.Count;
         }
     }
 }

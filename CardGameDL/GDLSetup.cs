@@ -1,5 +1,4 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Handlers;
 using dk.itu.game.msc.cgdl.GameState;
 
@@ -20,9 +19,20 @@ namespace dk.itu.game.msc.cgdl
 
         public void AddHandlers()
         {
-            interpolator.AddConcept(new CardStackDeclaredObserver(game));
-            interpolator.AddConcept(new CardAddedToStackObserver(game));
+            // Command handlers
             interpolator.AddConcept(new SimplyDeclareStack(timeProvider));
+            interpolator.AddConcept(new SimplyDeclareHand(timeProvider));
+            interpolator.AddConcept(new SimplyAddCard(timeProvider));
+            interpolator.AddConcept(new SimplyDrawCard(timeProvider));
+
+            // Query handlers
+            interpolator.AddConcept(new CardCounter(game));
+
+            // Event observers
+            interpolator.AddConcept(new CardStackDeclaredObserver(game));
+            interpolator.AddConcept(new HandDeclaredObserver(game));
+            interpolator.AddConcept(new CardAddedObserver(game));
+            interpolator.AddConcept(new CardDrawnObserver(game));
         }
     }
 }

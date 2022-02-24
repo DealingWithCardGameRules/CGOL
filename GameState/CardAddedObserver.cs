@@ -3,18 +3,18 @@ using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 
 namespace dk.itu.game.msc.cgdl.GameState
 {
-    public class CardAddedToStackObserver : IEventObserver<CardAddedToStack>
+    public class CardAddedObserver : IEventObserver<CardAdded>
     {
         private readonly Game game;
 
-        public CardAddedToStackObserver(Game game)
+        public CardAddedObserver(Game game)
         {
             this.game = game;
         }
 
-        public void Invoke(CardAddedToStack @event)
+        public void Invoke(CardAdded @event)
         {
-            game.AddCard(@event.StackId, @event.Card);
+            game.AddCard(@event.DestinationId, @event.Card);
         }
     }
 }

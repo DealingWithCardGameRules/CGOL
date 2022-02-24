@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CardGameDL\CardGameDL.csproj" />
+    <ProjectReference Include="..\FluxxConcepts\FluxxConcepts.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,15 +3,15 @@ using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 {
-    public class AddCardToStack : ICommand
+    public class AddCard : ICommand
     {
         public Guid ProcessId => new Guid("C41ED5BD-D463-4B29-BD77-BCAB6FCF1853");
-        public Guid StackId { get; }
+        public Guid DestinationId { get; }
         public ICard Card { get; }
 
-        public AddCardToStack(Guid stackId, ICard card)
+        public AddCard(Guid stackId, ICard card)
         {
-            StackId = stackId;
+            DestinationId = stackId;
             Card = card;
         }
     }
