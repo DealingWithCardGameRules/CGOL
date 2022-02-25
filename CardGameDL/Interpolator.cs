@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl
 {
-    public class Interpolator : IServiceProvider, IInterpolator
+    public class Interpolator : IInterpolator
     {
         public Dictionary<Type, object> conceptHandlers;
         public HashSet<Type> supported;
@@ -23,7 +23,12 @@ namespace dk.itu.game.msc.cgdl
             return conceptHandlers[serviceType];
         }
 
-        public bool Supports<T>(T _) => Supports<T>();
+        public bool Supports(object type)
+        {
+            if (type == null)
+                return false;
+            return supported.Contains(type.GetType());
+        }
 
         public bool Supports<T>() => supported.Contains(typeof(T));
 

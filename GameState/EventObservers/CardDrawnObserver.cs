@@ -2,7 +2,7 @@
 using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 using System;
 
-namespace dk.itu.game.msc.cgdl.GameState
+namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 {
     public class CardDrawnObserver : IEventObserver<CardDrawn>
     {
@@ -10,7 +10,7 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         public CardDrawnObserver(Game game)
         {
-            this.game = game ?? throw new System.ArgumentNullException(nameof(game));
+            this.game = game ?? throw new ArgumentNullException(nameof(game));
         }
 
         public void Invoke(CardDrawn @event)

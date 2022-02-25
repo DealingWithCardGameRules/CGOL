@@ -28,6 +28,11 @@ namespace dk.itu.game.msc.cgdl.GameState
             return collections[collectionId].GetCard();
         }
 
+        internal ICard? GetCard(Guid collectionId, Guid cardId)
+        {
+            return collections[collectionId].Get(cardId);
+        }
+
         internal void AddHand(Hand hand)
         {
             collections.Add(hand.Instance, hand);

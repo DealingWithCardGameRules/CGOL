@@ -1,7 +1,7 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 
-namespace dk.itu.game.msc.cgdl.GameState
+namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 {
     public class CardStackDeclaredObserver : IEventObserver<CardStackDeclared>
     {

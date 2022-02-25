@@ -1,14 +1,16 @@
-﻿namespace dk.itu.game.msc.cgdl.CommandCentral
+﻿using System;
+
+namespace dk.itu.game.msc.cgdl.CommandCentral
 {
-    public interface IInterpolator
+    public interface IInterpolator : IServiceProvider
     {
-        public bool Supports<T>(T type);
-        public bool Supports<T>();
-        public void AddConcept<T>(ICommandHandler<T> commandHandler) where T : ICommand;
-        public void AddConcept<T, TResult>(IQueryHandler<T, TResult> queryHandler) where T : IQuery<TResult>;
-        public void AddConcept<T>(IEventObserver<T> eventObserver) where T : IEvent;
-        public void RemoveConcept<T>(ICommandHandler<T> commandHandler) where T : ICommand;
-        public void RemoveConcept<T, TResult>(IQueryHandler<T, TResult> queryHandler) where T : IQuery<TResult>;
-        public void RemoveConcept<T>(IEventObserver<T> eventObserver) where T : IEvent;
+        bool Supports(object type);
+        bool Supports<T>();
+        void AddConcept<T>(ICommandHandler<T> commandHandler) where T : ICommand;
+        void AddConcept<T, TResult>(IQueryHandler<T, TResult> queryHandler) where T : IQuery<TResult>;
+        void AddConcept<T>(IEventObserver<T> eventObserver) where T : IEvent;
+        void RemoveConcept<T>(ICommandHandler<T> commandHandler) where T : ICommand;
+        void RemoveConcept<T, TResult>(IQueryHandler<T, TResult> queryHandler) where T : IQuery<TResult>;
+        void RemoveConcept<T>(IEventObserver<T> eventObserver) where T : IEvent;
     }
 }

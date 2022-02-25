@@ -8,36 +8,33 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
     [TestClass]
     public class TestEventDispatcher
     {
-
         [TestMethod]
-        public void Dispatch_NoEventObserver_ThrowsRuntimeBinderException()
+        public void Dispatch_AnyEvent_CallsSupports()
         {
             // Given
-            var providerStub = Substitute.For<IServiceProvider>();
-            var sut = new EventDispatcher(providerStub);
-            var someEventStub = Substitute.For<IEvent>();
-
-            // When
-            Assert.ThrowsException<RuntimeBinderException>(() =>
-            {
-                sut.Dispatch(someEventStub);
-            });
-        }
-
-        [TestMethod]
-        public void Dispatch_AnyEvent_CallsGetService()
-        {
-            // Given
-            var providerMock = Substitute.For<IServiceProvider>();
+            var providerMock = Substitute.For<IInterpolator>();
             var sut = new EventDispatcher(providerMock);
-
-            providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<IEventObserver<IEvent>>());
 
             // When
             sut.Dispatch(Substitute.For<IEvent>());
 
             // Then
-            providerMock.Received().GetService(Arg.Any<Type>());
+            providerMock.Received().Supports(Arg.Any<IEvent>());
+        }
+
+        [TestMethod]
+        public void Dispatch_NotSupported_DoesNotCallGetService()
+        {
+            // Given
+            var providerMock = Substitute.For<IInterpolator>();
+            var sut = new EventDispatcher(providerMock);
+            providerMock.Supports(Arg.Any<IEvent>()).Returns(false);
+
+            // When
+            sut.Dispatch(Substitute.For<IEvent>());
+
+            // Then
+            providerMock.DidNotReceive().GetService(Arg.Any<Type>());
         }
 
         [TestMethod]
@@ -45,9 +42,9 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var eventStub = new EventStub();
-            var providerMock = Substitute.For<IServiceProvider>();
+            var providerMock = Substitute.For<IInterpolator>();
             var sut = new EventDispatcher(providerMock);
-
+            providerMock.Supports(Arg.Any<IEvent>()).Returns(true);
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<IEventObserver<IEvent>>());
 
             // When
@@ -62,10 +59,10 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var eventStub = new EventStub();
-            var providerMock = Substitute.For<IServiceProvider>();
+            var providerMock = Substitute.For<IInterpolator>();
             var eventObserverMock = Substitute.For<IEventObserver<IEvent>>();
             var sut = new EventDispatcher(providerMock);
-
+            providerMock.Supports(Arg.Any<IEvent>()).Returns(true);
             providerMock.GetService(Arg.Any<Type>()).Returns(eventObserverMock);
 
             // When

@@ -1,7 +1,7 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 
-namespace dk.itu.game.msc.cgdl.GameState
+namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 {
     public class CardCounter : IQueryHandler<CardCount, int>
     {

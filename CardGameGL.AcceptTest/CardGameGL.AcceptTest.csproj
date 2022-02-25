@@ -17,12 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Support\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CardGameDL\CardGameDL.csproj" />
-    <ProjectReference Include="..\FluxxConcepts\FluxxConcepts.csproj" />
   </ItemGroup>
 
 </Project>

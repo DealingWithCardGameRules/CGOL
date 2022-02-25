@@ -23,11 +23,12 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         public void RemoveCard(Guid cardId)
         {
-            foreach(var card in cards)
+            for (int i = 0; i < cards.Count; i++)
             {
-                if (card.Instance == cardId)
+                if (cards[i].Instance == cardId)
                 {
-                    cards.Remove(card);
+                    cards.RemoveAt(i);
+                    return;
                 }
             }
         }
