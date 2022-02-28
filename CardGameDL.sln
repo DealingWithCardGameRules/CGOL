@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameDL.Test", "CardGame
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameGL.AcceptTest", "CardGameGL.AcceptTest\CardGameGL.AcceptTest.csproj", "{743FAE35-282F-4BC6-81B3-7E556CA18D20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGameWebApp", "CardGameWebApp\CardGameWebApp.csproj", "{621D5983-4BBF-4882-8859-8783B12AD521}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameWebApp", "CardGameWebApp\CardGameWebApp.csproj", "{621D5983-4BBF-4882-8859-8783B12AD521}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
