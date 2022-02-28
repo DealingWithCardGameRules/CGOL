@@ -9,12 +9,26 @@ on:
 
 jobs:
   web-deploy:
-    name: Deploy
+    name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest code
-        uses: actions/checkout@v2
-        
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core 3.1	
+        uses: actions/setup-dotnet@v1	
+        with:	
+          dotnet-version: 3.1.x
+      - name: Setup .NET Core 6.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+      - name: Publish
+        run: dotnet publish CardGameDL.sln --configuration Release --framework net6.0 --output ./publish --runtime win-x86 --self-contained true -p:PublishTrimmed=true -p:PublishSingleFile=true
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
@@ -22,3 +36,4 @@ jobs:
           server-dir: cgdl-thesis/
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
+          local-dir: /home/runner/work/CardGameDL/CardGameDL/publish/
