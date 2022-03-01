@@ -26,10 +26,10 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Test
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --no-build --verbosity normal 
       - name: Publish
         #run: dotnet publish CardGameDL.sln --configuration Release --framework net6.0 --output ./publish --runtime win-x86 --self-contained true -p:PublishTrimmed=true -p:PublishSingleFile=true
-        run: dotnet publish -c Release --output ./Release
+        run: dotnet publish -c Release --output ./Release -r win-x86
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
