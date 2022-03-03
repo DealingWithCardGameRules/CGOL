@@ -1,13 +1,40 @@
 ﻿@page "/"
+@using CardGameWebApp.Shared
+@using System.Net.Http
+@inject HttpClient Http
 
 <h1>Card Game Description Language</h1>
 
-<p>This site will serve as the main interface for the GDL. To test implementation, please pick a simple game from the list:</p>
+<p>This site will serve as the main interface for the GDL.</p>
 
-<ul>
-	<li>
-		<a href="d1p1">
-			Draw one play one
-		</a>
-	</li>
-</ul>
+@if (demo != null)
+{
+	<p>To test implementation, please pick a simple game from the list:</p>
+
+	<ul>
+		@foreach (var demo in demo.Links)
+		{
+			@if (knownDemos.ContainsKey(demo.Key))
+			{
+			<li>
+				<a href="@knownDemos[demo.Key]">
+					@demo.Key
+				</a>
+			</li>
+			}
+		}
+	</ul>	
+}
+
+@code {
+	private Dictionary<string, string> knownDemos = new Dictionary<string, string>
+	{
+		{"Draw one play one", "d1p1"}
+	};
+
+
+    private DemoList demo;
+
+    protected override async Task OnInitializedAsync() => 
+        demo = await Http.GetFromJsonAsync<DemoList>("demos");
+}
