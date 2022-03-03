@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{B0FC1E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{64D1BC7C-BCF1-4EDF-AE23-456BFA312D68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Representation", "Representation\Representation.csproj", "{3E8C1ADE-6E53-4732-A8D6-C6BAFE6C49DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Representation", "Representation\Representation.csproj", "{3E8C1ADE-6E53-4732-A8D6-C6BAFE6C49DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
