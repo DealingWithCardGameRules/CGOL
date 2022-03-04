@@ -7,12 +7,12 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     internal class CardStack : ICardCollection
     {
-        public Guid Instance { get; }
+        public string Name { get; }
         List<ICard> cards;
 
-        public CardStack(Guid id)
+        public CardStack(string name)
         {
-            Instance = id;
+            Name = name;
             cards = new List<ICard>();
         }
 

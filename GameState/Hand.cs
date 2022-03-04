@@ -7,12 +7,12 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     internal class Hand : ICardCollection
     {
-        public Guid Instance { get; }
+        public string Name { get; }
 
         readonly Dictionary<Guid, ICard> cards;
-        public Hand(Guid id)
+        public Hand(string name)
         {
-            Instance = id;
+            Name = name;
             cards = new Dictionary<Guid, ICard>();
         }
 

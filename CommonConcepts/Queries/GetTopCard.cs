@@ -5,11 +5,11 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Queries
 {
     public class GetTopCard : IQuery<ICard?>
     {
-        public Guid Source { get; }
+        public string Collection { get; }
 
-        public GetTopCard(Guid source)
+        public GetTopCard(string collection)
         {
-            Source = source;
+            Collection = collection;
         }
     }
 }

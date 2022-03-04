@@ -6,9 +6,9 @@ namespace CardGameGL.AcceptTest.StepDefinitions
     public class Draw1Play1StepDefs
     {
         GameDriver gameDriver = new GameDriver();
-        Guid discardPile = new Guid("FF9B0F0F-2F98-4CD5-9AB6-79B64EDDC6F9");
-        Guid deck = new Guid("B5EAB8C4-95EF-4247-AA9F-F5542EC1525B");
-        Guid hand = new Guid("6E39D361-A3E1-4610-A943-2517B830050B");
+        string discardPile = "discard pile";
+        string deck = "deck";
+        string hand = "hand";
 
         [Given(@"a deck of (.*) cards?")]
         public void GivenADeckOfCards(int cards)

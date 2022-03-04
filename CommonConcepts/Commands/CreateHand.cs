@@ -7,11 +7,11 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
     {
         public Guid ProcessId => new Guid("F42D3FDC-048B-462A-8EC9-274A33F18DF5");
 
-        public Guid HandId { get; }
+        public string Hand { get; }
 
-        public CreateHand(Guid handId)
+        public CreateHand(string hand)
         {
-            HandId = handId;
+            Hand = hand;
         }
     }
 }

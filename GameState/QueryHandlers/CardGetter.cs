@@ -15,7 +15,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 
         public ICard? Handle(GetCard query)
         {
-            return game.GetCard(query.SourceId, query.CardId);
+            return game.GetCard(query.Collection, query.CardId);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             // Given
             var dispatcher = Substitute.For<IDispatcher>();
             var sut = new DrawCardHandler(dispatcher);
-            var command = new DrawCard(Guid.Empty, Guid.Empty);
+            var command = new DrawCard(string.Empty, string.Empty);
 
             dispatcher.Dispatch(Arg.Any<HasCards>()).Returns(false);
 
@@ -49,7 +49,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             // Given
             var dispatcher = Substitute.For<IDispatcher>();
             var sut = new DrawCardHandler(dispatcher);
-            var command = new DrawCard(Guid.Empty, Guid.Empty);
+            var command = new DrawCard(string.Empty, string.Empty);
             var eventDispatcher = Substitute.For<IEventDispatcher>();
 
             dispatcher.Dispatch(Arg.Any<HasCards>()).Returns(true);
@@ -67,8 +67,8 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             // Given
             var dispatcherStub = Substitute.For<IDispatcher>();
             var sut = new DrawCardHandler(dispatcherStub);
-            var expectedSource = Guid.NewGuid();
-            var command = new DrawCard(expectedSource, Guid.Empty);
+            var expectedSource = "Deck";
+            var command = new DrawCard(expectedSource, string.Empty);
             var eventDispatcherMock = Substitute.For<IEventDispatcher>();
 
             dispatcherStub.Dispatch(Arg.Any<HasCards>()).Returns(true);
@@ -86,8 +86,8 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             // Given
             var dispatcherStub = Substitute.For<IDispatcher>();
             var sut = new DrawCardHandler(dispatcherStub);
-            var expectedDestination = Guid.NewGuid();
-            var command = new DrawCard(Guid.Empty, expectedDestination);
+            var expectedDestination = "Deck";
+            var command = new DrawCard(string.Empty, expectedDestination);
             var eventDispatcherMock = Substitute.For<IEventDispatcher>();
 
             dispatcherStub.Dispatch(Arg.Any<HasCards>()).Returns(true);

@@ -24,53 +24,53 @@ namespace CardGameGL.AcceptTest.Drivers
             dispatcher = new DispatchLogger(disp);
         }
 
-        internal void CreateDiscardPile(Guid id)
+        internal void CreateDiscardPile(string name)
         {
-            dispatcher.Dispatch(new CreateStack(id));
+            dispatcher.Dispatch(new CreateCollection(name));
         }
 
-        internal void DrawCards(Guid deck, Guid hand, int cards)
+        internal void DrawCards(string deck, string hand, int cards)
         {
             for (int i = 0; i < cards; i++)
                 DrawCard(deck, hand);
         }
 
-        internal void PlayCard(Guid hand, Guid discardPile)
+        internal void PlayCard(string hand, string discardPile)
         {
             var card = dispatcher.Dispatch(new GetTopCard(hand));
             if (card != null)
                 dispatcher.Dispatch(new PlayCard(hand, discardPile, card.Instance));
         }
 
-        internal void CheckSize(Guid collectionId, int expectedSize)
+        internal void CheckSize(string collection, int expectedSize)
         {
-            var count = dispatcher.Dispatch(new CardCount(collectionId));
+            var count = dispatcher.Dispatch(new CardCount(collection));
             Assert.AreEqual(expectedSize, count);
         }
 
-        internal void DrawCard(Guid deck, Guid hand)
+        internal void DrawCard(string deck, string hand)
         {
             dispatcher.Dispatch(new DrawCard(deck, hand));
         }
 
-        internal void AddHand(Guid handId, int cards)
+        internal void AddHand(string hand, int cards)
         {
-            dispatcher.Dispatch(new CreateHand(handId));
-            AddCards(handId, cards);
+            dispatcher.Dispatch(new CreateHand(hand));
+            AddCards(hand, cards);
         }
 
-        internal void AddDeck(Guid deckId, int cards = 0)
+        internal void AddDeck(string deck, int cards = 0)
         {
-            dispatcher.Dispatch(new CreateStack(deckId));
-            AddCards(deckId, cards);
+            dispatcher.Dispatch(new CreateCollection(deck));
+            AddCards(deck, cards);
         }
 
-        private void AddCards(Guid deckId, int cards)
+        private void AddCards(string deck, int cards)
         {
             for (int i = 0; i < cards; i++)
             {
                 var card = new BlankCard();
-                dispatcher.Dispatch(new AddCard(deckId, card));
+                dispatcher.Dispatch(new AddCard(deck, card));
             }
         }
     }

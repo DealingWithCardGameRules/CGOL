@@ -3,15 +3,15 @@ using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 {
-    public class CreateStack : ICommand
+    public class CreateCollection : ICommand
     {
         public Guid ProcessId => new Guid("BB4E3338-8973-4D07-8892-983B3E617C95");
 
-        public Guid StackId { get; }
+        public string Name { get; }
 
-        public CreateStack(Guid stackId)
+        public CreateCollection(string stack)
         {
-            StackId = stackId;
+            Name = stack;
         }
     }
 }

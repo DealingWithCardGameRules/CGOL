@@ -15,7 +15,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
         public void Handle(CreateHand command, IEventDispatcher eventDispatcher)
         {
-            var @event = new HandDeclared(timeProvider.Now, command.ProcessId, command.HandId);
+            var @event = new HandDeclared(timeProvider.Now, command.ProcessId, command.Hand);
             eventDispatcher.Dispatch(@event);
         }
     }

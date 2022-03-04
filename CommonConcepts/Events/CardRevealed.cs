@@ -8,14 +8,14 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
         public int Version => 1;
         public DateTime EventTime { get; }
         public Guid ProcessId { get; }
-        public Guid PlacementId { get; }
+        public string Placement { get; }
         public ICard Card { get; }
 
-        public CardRevealed(DateTime eventTime, Guid processId, Guid placementId, ICard card)
+        public CardRevealed(DateTime eventTime, Guid processId, string placement, ICard card)
         {
             EventTime = eventTime;
             ProcessId = processId;
-            PlacementId = placementId;
+            Placement = placement;
             Card = card;
         }
     }

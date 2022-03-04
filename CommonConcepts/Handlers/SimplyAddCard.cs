@@ -16,7 +16,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
         public void Handle(AddCard command, IEventDispatcher eventDispatcher)
         {
-            var @event = new CardAdded(timeProvider.Now, command.ProcessId, command.Card, command.DestinationId);
+            var @event = new CardAdded(timeProvider.Now, command.ProcessId, command.Card, command.Destination);
             eventDispatcher.Dispatch(@event);
         }
     }

@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 
         public int Handle(CardCount query)
         {
-            return game.CollectionSize(query.CollectionId);
+            return game.CollectionSize(query.Collection);
         }
     }
 }
