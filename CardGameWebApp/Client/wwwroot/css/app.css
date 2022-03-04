@@ -49,7 +49,7 @@ a, .btn-link {
         top: 0.5rem;
     }
 
-.card {
+.playcard {
     display: inline-block;
     border: 1px solid black;
     border-radius: 5px;
@@ -57,36 +57,40 @@ a, .btn-link {
     height: 275px;
     padding-left: 5px;
     padding-right: 5px;
+    vertical-align: middle;
 }
 
-    .card .background {
+    .playcard.empty {
+        border-style: dashed;
+    }
+
+    .playcard .background {
         width: 187px;
         height: 263px;
         margin-top: 5px;
-        vertical-align: middle;
         align-items: center;
         justify-content: center;
         display: flex;
         border-radius: 5px;
     }
 
-        .card .background h1 {
+        .playcard .background h1 {
             font-style: italic;
             text-align: center;
         }
 
-    .card .illustration {
+    .playcard .illustration {
         display: block;
         border: 1px solid black;
         width: 187px;
         height: 100px;
     }
 
-    .card h3 {
+    .playcard h3 {
         margin-bottom: 0px;
         font-size: 12pt;
     }
 
-    .card .description {
+    .playcard .description {
         overflow-y: scroll;
     }

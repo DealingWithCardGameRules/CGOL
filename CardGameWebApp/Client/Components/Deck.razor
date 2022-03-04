@@ -1,9 +1,30 @@
-﻿<div class="card">
-	<div class="background" style="background-color: lightblue;">
-		<h1>Draw one <br /> Play one</h1>
-	</div>
+﻿<div class="playcard @(IsEmpty ? "empty" : "deck")">
+	@if (!FaceUp)
+	{
+		<div class="background" style="background-color: @Color;">
+			<h1>@Name</h1>
+		</div>
+	}
+	else
+	{
+		<div class="background">
+			<p>@Name</p>
+		</div>
+	}
 </div>
 
 @code {
+	[Parameter]
+	public string Color { get; set; } = "lightblue";
 
+	[Parameter]
+	public string Name { get; set; } = "";
+
+	[Parameter]
+	public bool FaceUp { get; set; } = false;
+
+	[Parameter]
+	public int NumberOfCards { get; set; } = 0;
+
+	public bool IsEmpty => NumberOfCards <= 0;
 }

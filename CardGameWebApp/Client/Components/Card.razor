@@ -1,10 +1,21 @@
-﻿<div class="card">
-	<h3>Test</h3>
-	<img class="illustration" src="/illustrations/Pass.png" />
-	<p>Classification</p>
-	<p class="description">This is a longer description than usually, to see how it will be formatted.</p>
+﻿<div class="playcard">
+	<h3>@Title</h3>
+	<img class="illustration" src="/illustrations/@(Illustration).png" />
+	<p>@Classification</p>
+	<p class="description">@ChildContent</p>
 </div>
 
 @code {
+	[Parameter]
+	public string Title { get; set; } = "Untitled";
+
+	[Parameter]
+	public string Illustration { get; set; } = "Pass";
+
+	[Parameter]
+	public string Classification { get; set; } = "Unclasified";
+
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
 
 }
