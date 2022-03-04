@@ -14,12 +14,12 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 
         public void Invoke(CardMoved @event)
         {
-            var card = game.GetCard(@event.SourceId, @event.CardId);
+            var card = game.GetCard(@event.Source, @event.CardId);
             if (card == null)
                 return;
 
-            game.RemoveCard(@event.SourceId, @event.CardId);
-            game.AddCard(@event.DestinationId, card);
+            game.RemoveCard(@event.Source, @event.CardId);
+            game.AddCard(@event.Destination, card);
         }
     }
 }

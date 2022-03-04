@@ -6,12 +6,12 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
     public class AddCard : ICommand
     {
         public Guid ProcessId => new Guid("C41ED5BD-D463-4B29-BD77-BCAB6FCF1853");
-        public Guid DestinationId { get; }
+        public string Destination { get; }
         public ICard Card { get; }
 
-        public AddCard(Guid stackId, ICard card)
+        public AddCard(string deck, ICard card)
         {
-            DestinationId = stackId;
+            Destination = deck;
             Card = card;
         }
     }

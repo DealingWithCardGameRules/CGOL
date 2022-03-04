@@ -5,11 +5,11 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Queries
 {
     public class HasCards : IQuery<bool>
     {
-        public Guid Source { get; }
+        public string Collection { get; }
 
-        public HasCards(Guid source)
+        public HasCards(string collection)
         {
-            Source = source;
+            Collection = collection;
         }
     }
 }

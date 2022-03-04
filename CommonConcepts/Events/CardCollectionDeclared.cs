@@ -3,18 +3,18 @@ using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
 {
-    public class CardStackDeclared : IEvent
+    public class CardCollectionDeclared : IEvent
     {
         public int Version => 1;
         public DateTime EventTime { get; }
         public Guid ProcessId { get; }
-        public Guid StackId { get; }
+        public string Stack { get; }
 
-        public CardStackDeclared(DateTime eventTime, Guid processId, Guid stackId)
+        public CardCollectionDeclared(DateTime eventTime, Guid processId, string stack)
         {
             EventTime = eventTime;
             ProcessId = processId;
-            StackId = stackId;
+            Stack = stack;
         }
     }
 }

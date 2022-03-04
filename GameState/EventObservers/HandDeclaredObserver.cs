@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 
         public void Invoke(HandDeclared @event)
         {
-            game.AddHand(new Hand(@event.HandId));
+            game.AddHand(new Hand(@event.Name));
         }
     }
 }

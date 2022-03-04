@@ -5,11 +5,11 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Queries
 {
     public class CardCount : IQuery<int>
     {
-        public Guid CollectionId { get; }
+        public string Collection { get; }
 
-        public CardCount(Guid collectionId)
+        public CardCount(string collection)
         {
-            CollectionId = collectionId;
+            Collection = collection;
         }
     }
 }

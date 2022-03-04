@@ -19,15 +19,15 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
         public void Handle(PlayCard command, IEventDispatcher eventDispatcher)
         {
-            var card = dispatcher.Dispatch(new GetCard(command.SourceId, command.CardId));
+            var card = dispatcher.Dispatch(new GetCard(command.Source, command.CardId));
 
             if (card == null)
                 throw new Exception($"Card not found: {command.CardId}");
 
-            var revealEvent = new CardRevealed(timeProvider.Now, command.ProcessId, command.SourceId, card);
+            var revealEvent = new CardRevealed(timeProvider.Now, command.ProcessId, command.Source, card);
             eventDispatcher.Dispatch(revealEvent);
 
-            var moveEvent = new CardMoved(timeProvider.Now, command.ProcessId, command.SourceId, command.DestinationId, command.CardId);
+            var moveEvent = new CardMoved(timeProvider.Now, command.ProcessId, command.Source, command.Destination, command.CardId);
             eventDispatcher.Dispatch(moveEvent);
         }
     }

@@ -24,7 +24,7 @@ namespace dk.itu.game.msc.cgdl
         public void AddHandlers()
         {
             // Command handlers
-            interpolator.AddConcept(new SimplyDeclareStack(timeProvider));
+            interpolator.AddConcept(new SimplyDeclareCollection(timeProvider));
             interpolator.AddConcept(new SimplyDeclareHand(timeProvider));
             interpolator.AddConcept(new SimplyAddCard(timeProvider));
             interpolator.AddConcept(new SimplyDrawCard(timeProvider));

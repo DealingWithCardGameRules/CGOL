@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 
         public void Invoke(CardAdded @event)
         {
-            game.AddCard(@event.DestinationId, @event.Card);
+            game.AddCard(@event.Destination, @event.Card);
         }
     }
 }

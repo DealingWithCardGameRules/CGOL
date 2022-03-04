@@ -6,46 +6,46 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     public class Game
     {
-        readonly Dictionary<Guid, ICardCollection> collections;
+        readonly Dictionary<string, ICardCollection> collections;
 
         public Game()
         {
-            collections = new Dictionary<Guid, ICardCollection>();
+            collections = new Dictionary<string, ICardCollection>();
         }
 
         internal void AddStack(CardStack stack)
         {
-            collections.Add(stack.Instance, stack);
+            collections.Add(stack.Name, stack);
         }
 
-        internal int CollectionSize(Guid collectionId)
+        internal int CollectionSize(string stack)
         {
-            return collections[collectionId].Count();
+            return collections[stack].Count();
         }
 
-        internal ICard? GetCard(Guid collectionId)
+        internal ICard? GetCard(string stack)
         {
-            return collections[collectionId].GetCard();
+            return collections[stack].GetCard();
         }
 
-        internal ICard? GetCard(Guid collectionId, Guid cardId)
+        internal ICard? GetCard(string collection, Guid cardId)
         {
-            return collections[collectionId].Get(cardId);
+            return collections[collection].Get(cardId);
         }
 
         internal void AddHand(Hand hand)
         {
-            collections.Add(hand.Instance, hand);
+            collections.Add(hand.Name, hand);
         }
 
-        internal void AddCard(Guid collectionId, ICard card)
+        internal void AddCard(string collect, ICard card)
         {
-            collections[collectionId].AddCard(card);
+            collections[collect].AddCard(card);
         }
 
-        internal void RemoveCard(Guid collectionId, Guid cardId)
+        internal void RemoveCard(string collection, Guid cardId)
         {
-            collections[collectionId].RemoveCard(cardId);
+            collections[collection].RemoveCard(cardId);
         }
     }
 }

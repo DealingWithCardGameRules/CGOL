@@ -11,14 +11,14 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
         public DateTime EventTime1 { get; }
         public Guid ProcessId1 { get; }
         public ICard Card { get; }
-        public Guid DestinationId { get; }
+        public string Destination { get; }
 
-        public CardAdded(DateTime eventTime, Guid processId, ICard card, Guid destinationId)
+        public CardAdded(DateTime eventTime, Guid processId, ICard card, string destination)
         {
             EventTime1 = eventTime;
             ProcessId1 = processId;
             Card = card;
-            DestinationId = destinationId;
+            Destination = destination;
         }
     }
 }
