@@ -1,16 +1,34 @@
-﻿<div class="playcard @(IsEmpty ? "empty" : "deck")">
-	@if (!FaceUp)
-	{
-		<div class="background" style="background-color: @Color;">
-			<h1>@Name</h1>
-		</div>
-	}
-	else
-	{
-		<div class="background">
-			<p>@Name</p>
-		</div>
-	}
+﻿@using CardGameWebApp.Shared
+
+<div class="playcard @(IsEmpty ? "empty" : "deck")">
+	<ActionPrompt Active="@(!IsEmpty)" Actions=@Actions>
+		@if (!FaceUp)
+		{
+			<div class="background" style="background-color: @Color;">
+				@if (ChildContent != null)
+				{
+					@ChildContent
+				} 
+				else
+				{
+					<p>@Name</p>
+				}
+			</div>
+		}
+		else
+		{
+			<div class="background">
+				@if (ChildContent != null)
+				{
+					@ChildContent
+				} 
+				else
+				{
+					<p>@Name</p>
+				}
+			</div>
+		}
+	</ActionPrompt>
 </div>
 
 @code {
@@ -25,6 +43,12 @@
 
 	[Parameter]
 	public int NumberOfCards { get; set; } = 0;
+
+	[Parameter]
+	public RenderFragment ChildContent { get; set; } = null;
+
+	[Parameter]
+	public Func<IEnumerable<CallBackAction>> Actions { get; set; }
 
 	public bool IsEmpty => NumberOfCards <= 0;
 }

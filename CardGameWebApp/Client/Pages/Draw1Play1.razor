@@ -1,10 +1,59 @@
 ﻿@page "/d1p1"
 @using CardGameWebApp.Client.Components
+@using CardGameWebApp.Shared
 
 <h1>Draw one play one</h1>
 
 <div>
-	<Deck Name="Draw One Play One" NumberOfCards="1"></Deck>
-	<Card Title="Pass" Illustration="Pass" Classification="">Do nothing.</Card>
-	<Deck Name="Discard Pile" FaceUp="true"></Deck>
+	<Deck Name="deck" NumberOfCards="1" Actions=@DeckActions><h2><em>Draw One<br />Play One</em></h2></Deck>
+	<Deck Name="discardPile" FaceUp="true">Discard Pile</Deck>
+	@foreach(var card in Hand)
+	{
+		<Card Title="@card.Name" Illustration="@card.Illustration" Classification="@card.Classification" Actions="@(() => GenerateActions(@card.Actions))">@card.Description</Card>
+	}
 </div>
+
+@code
+{
+	private List<CardDTO> Hand { get; set; }
+
+	private IEnumerable<CallBackAction> DeckActions() {
+		yield return new CallBackAction
+			{
+				Name = "Draw a card",
+				Execute = () => 
+				{
+					Console.WriteLine("Clicked on draw a card"); 
+					Hand.Add(new CardDTO 
+						{
+							Name = "Pass", 
+							Illustration = "Pass", 
+							Description = "Does nothing", 
+							Actions = new Dictionary<string, string> { { "Play", "Played" } }
+						});
+				}
+			};
+	}
+
+	private IEnumerable<CallBackAction> GenerateActions(IDictionary<string, string> actions)
+	{
+		if (actions == null)
+			yield break;
+
+		foreach (var action in actions)
+			yield return new CallBackAction
+				{
+					Name = action.Key,
+					Execute = () =>
+					{
+						Console.WriteLine($"Call {action.Value}");
+					}
+				};
+	}
+
+	public Draw1Play1()
+	{
+		Hand = new List<CardDTO>();
+		
+	}
+}

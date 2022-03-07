@@ -50,6 +50,7 @@ a, .btn-link {
     }
 
 .playcard {
+    position: relative;
     display: inline-block;
     border: 1px solid black;
     border-radius: 5px;
@@ -58,6 +59,7 @@ a, .btn-link {
     padding-left: 5px;
     padding-right: 5px;
     vertical-align: middle;
+    margin-left: 5px;
 }
 
     .playcard.empty {
@@ -94,3 +96,37 @@ a, .btn-link {
     .playcard .description {
         overflow-y: scroll;
     }
+
+    .playcard .cardbody {
+    }
+
+    .playcard .card-actions {
+        position: absolute;
+        display: block;
+        top: 0px;
+        left: 0px;
+        width: 198px;
+        height: 273px;
+        background-color: rgba(255,255,255,0.8);
+        z-index: 2;
+        cursor: pointer;
+        padding: 5px;
+    }
+
+        .playcard .card-actions.transparent {
+            background-color: rgba(0,0,0,0);
+        }
+    
+        .playcard .card-actions > button {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .playcard .card-actions .heading {
+            margin-bottom: 15px;
+        }
+
+        .playcard .card-actions .heading > h3 {
+            display: inline;
+            font-size: 18pt;
+        }

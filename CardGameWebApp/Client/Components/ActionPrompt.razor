@@ -1,0 +1,35 @@
+﻿@using CardGameWebApp.Shared
+@if (Active && Actions != null)
+{
+	<div class="card-actions transparent" @onclick="Toggle">
+	</div>
+	<div hidden="@(!IsShowing)" class="card-actions" @onclick="Toggle">
+		<div class="heading">
+			<h3>Actions:</h3>
+			<button type="button" class="btn-close float-end" aria-label="Close"></button>
+		</div>
+
+		@foreach(var action in Actions.Invoke())
+		{
+			<button @onclick="action.Execute">@action.Name</button>
+		}
+	</div>
+}
+<div class="cardbody">
+	@ChildContent
+</div>
+
+@code {
+	private bool IsShowing { get; set; } = false;
+	private void Toggle() => IsShowing = !IsShowing;
+
+	[Parameter]
+	public bool Active { get; set; } = true;
+
+	[Parameter]
+	public Func<IEnumerable<CallBackAction>> Actions { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+}
