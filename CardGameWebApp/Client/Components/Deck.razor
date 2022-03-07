@@ -2,7 +2,7 @@
 
 <div class="playcard @(IsEmpty ? "empty" : "deck")">
 	<ActionPrompt Active="@(!IsEmpty)" Actions=@Actions>
-		@if (!FaceUp)
+		@if (!FaceUp && !IsEmpty)
 		{
 			<div class="background" style="background-color: @Color;">
 				@if (ChildContent != null)

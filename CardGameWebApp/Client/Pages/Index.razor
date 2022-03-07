@@ -17,7 +17,7 @@
 			@if (knownDemos.ContainsKey(demo.Key))
 			{
 			<li>
-				<a href="@knownDemos[demo.Key]">
+				<a href="@(knownDemos[demo.Key])/@demo.Value.Encode64()">
 					@demo.Key
 				</a>
 			</li>
@@ -27,13 +27,12 @@
 }
 
 @code {
-	private Dictionary<string, string> knownDemos = new Dictionary<string, string>
+    private Dictionary<string, string> knownDemos = new Dictionary<string, string>
 	{
 		{"Draw one play one", "d1p1"}
 	};
 
-
-    private DemoList demo;
+	private DemoList demo;
 
     protected override async Task OnInitializedAsync() => 
         demo = await Http.GetFromJsonAsync<DemoList>("demos");
