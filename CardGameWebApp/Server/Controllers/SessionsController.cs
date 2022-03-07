@@ -28,7 +28,7 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Guid sessionId)
+        public ActionResult Create([FromBody] Guid sessionId)
         {
             var session = factory.Create(sessionId);
             repository.AddSession(session);

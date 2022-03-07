@@ -1,10 +1,98 @@
-﻿@page "/d1p1"
+﻿@page "/d1p1/{Url}"
 @using CardGameWebApp.Client.Components
+@using CardGameWebApp.Shared
+@using System.Net
+@inject HttpClient Http
 
 <h1>Draw one play one</h1>
 
 <div>
-	<Deck Name="Draw One Play One" NumberOfCards="1"></Deck>
-	<Card Title="Pass" Illustration="Pass" Classification="">Do nothing.</Card>
-	<Deck Name="Discard Pile" FaceUp="true"></Deck>
+	<Deck Name="deck" NumberOfCards="@CardsInDeck" Actions=@DeckActions><h2><em>Draw One<br />Play One</em></h2></Deck>
+	<Deck Name="discardPile" FaceUp="true">
+		@if (TopDiscard != null)
+		{
+			<Card Title="@TopDiscard.Name" Illustration="@TopDiscard.Illustration" Classification="@TopDiscard.Classification">@TopDiscard.Description</Card>
+		}
+		else
+		{
+			<span>Discard Pile</span>
+		}
+	</Deck>
+	@foreach(var card in Hand)
+	{
+		<Card Title="@card.Name" Illustration="@card.Illustration" Classification="@card.Classification" Actions="@(() => GenerateActions(@card, @card.Actions))">@card.Description</Card>
+	}
 </div>
+
+@code
+{
+	[Parameter]
+	public string Url { get; set; }
+
+	private CardDTO TopDiscard { get; set; }
+	private Draw1play1DemoDTO game { get; set; }
+	private List<CardDTO> Hand { get; set; }
+	private int CardsInDeck { get; set; } = 0;
+
+	protected override async Task OnInitializedAsync()
+	{
+		var response = await Http.GetAsync(Url.Decode64());
+		if (response.StatusCode == HttpStatusCode.Created)
+		{
+			game = await Http.GetFromJsonAsync<Draw1play1DemoDTO>(response.Headers.Location.AbsoluteUri);
+			CardsInDeck = int.Parse(await Http.GetStringAsync(game.CardsInDeckQuery));
+		}
+	}
+
+	private IEnumerable<CallBackAction> DeckActions() {
+		yield return new CallBackAction
+			{
+				Name = "Draw a card",
+				Execute = async () => 
+				{
+					Console.WriteLine("Clicked on draw a card");
+					var response = await Http.GetAsync(game.DrawAction);
+					if (response.StatusCode == HttpStatusCode.OK)
+					{
+						dynamic cards = await Http.GetFromJsonAsync<IEnumerable<CardDTO>>(game.CardsInHandQuery);
+						Hand.AddRange(cards);
+						CardsInDeck = int.Parse(await Http.GetStringAsync(game.CardsInDeckQuery));
+						this.StateHasChanged();
+					}
+				}
+			};
+	}
+
+	private IEnumerable<CallBackAction> GenerateActions(CardDTO card, IDictionary<string, string> actions)
+	{
+		if (actions == null)
+			yield break;
+
+		foreach (var action in actions)
+		{
+			yield return new CallBackAction
+				{
+					Name = action.Key,
+					Execute = () =>
+					{
+						Console.WriteLine($"Call {action.Value}");
+
+						var response = Http.GetAsync(action.Value).ContinueWith((response) =>
+						{
+							if (response.Result.StatusCode == HttpStatusCode.OK)
+							{
+								TopDiscard = card;
+								Hand.Remove(card);
+								this.StateHasChanged();
+							}
+						});
+					}
+				};
+		}
+	}
+
+	public Draw1Play1()
+	{
+		Hand = new List<CardDTO>();
+	}
+}

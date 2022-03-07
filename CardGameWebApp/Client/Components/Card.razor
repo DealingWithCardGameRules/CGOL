@@ -1,8 +1,11 @@
-﻿<div class="playcard">
-	<h3>@Title</h3>
-	<img class="illustration" src="/illustrations/@(Illustration).png" />
-	<p>@Classification</p>
-	<p class="description">@ChildContent</p>
+﻿@using CardGameWebApp.Shared
+<div class="playcard">
+	<ActionPrompt Actions=@Actions>
+		<h3>@Title</h3>
+		<img class="illustration" src="/illustrations/@(Illustration).png" />
+		<p>@Classification</p>
+		<p class="description">@ChildContent</p>
+	</ActionPrompt>
 </div>
 
 @code {
@@ -14,8 +17,11 @@
 
 	[Parameter]
 	public string Classification { get; set; } = "Unclasified";
+	
+	[Parameter]
+	public Func<IEnumerable<CallBackAction>> Actions { get; set; }
 
 	[Parameter]
-	public RenderFragment? ChildContent { get; set; }
+	public RenderFragment ChildContent { get; set; }
 
 }
