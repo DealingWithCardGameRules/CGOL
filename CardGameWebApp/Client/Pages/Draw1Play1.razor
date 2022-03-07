@@ -9,7 +9,7 @@
 	<Deck Name="discardPile" FaceUp="true">Discard Pile</Deck>
 	@foreach(var card in Hand)
 	{
-		<Card Title="@card.Name" Illustration="@card.Illustration" Classification="@card.Classification" Actions="@(() => GenerateActions(@card.Actions))">@card.Description</Card>
+		<Card Title="@card.Name" Illustration="@card.Illustration" Classification="@card.Classification" Actions="@(() => GenerateActions(@card, @card.Actions))">@card.Description</Card>
 	}
 </div>
 
@@ -35,25 +35,28 @@
 			};
 	}
 
-	private IEnumerable<CallBackAction> GenerateActions(IDictionary<string, string> actions)
+	private IEnumerable<CallBackAction> GenerateActions(CardDTO card, IDictionary<string, string> actions)
 	{
 		if (actions == null)
 			yield break;
 
 		foreach (var action in actions)
+		{
 			yield return new CallBackAction
 				{
 					Name = action.Key,
 					Execute = () =>
 					{
 						Console.WriteLine($"Call {action.Value}");
+						Hand.Remove(card);
+						this.StateHasChanged();
 					}
 				};
+		}
 	}
 
 	public Draw1Play1()
 	{
 		Hand = new List<CardDTO>();
-		
 	}
 }
