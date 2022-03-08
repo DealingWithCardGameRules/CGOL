@@ -2,7 +2,7 @@
 
 namespace dk.itu.game.msc.cgdl.LanguageParser
 {
-    internal class TokenDefinition
+    public class TokenDefinition : ITokenDefinition
     {
         private readonly ITokenType tokenType;
         private readonly Regex regex;
@@ -22,21 +22,13 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                 if (match.Length != input.Length)
                     remainingText = input.Substring(match.Length);
 
-                return new TokenMatch
+                return new TokenMatch(tokenType)
                 {
-                    Type = tokenType,
                     Value = match.Value,
                     RemainingText = remainingText
                 };
             }
             return null;
         }
-    }
-
-    internal class TokenMatch : IToken
-    {
-        public ITokenType Type { get; set; }
-        public string Value { get; set; }
-        public string RemainingText { get; set; }
     }
 }

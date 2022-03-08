@@ -2,16 +2,16 @@
 
 namespace dk.itu.game.msc.cgdl.LanguageParser
 {
-    internal class Lexer
+    public class Lexer
     {
-        private readonly List<TokenDefinition> definitions;
+        private readonly List<ITokenDefinition> definitions;
 
         public Lexer()
         {
-            definitions = new List<TokenDefinition>();
+            definitions = new List<ITokenDefinition>();
         }
 
-        public void Add(TokenDefinition definition)
+        public void Add(ITokenDefinition definition)
         {
             definitions.Add(definition);
         }
