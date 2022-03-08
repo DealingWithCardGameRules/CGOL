@@ -4,16 +4,16 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
 {
     public class TokenDefinition : ITokenDefinition
     {
-        private readonly ITokenType tokenType;
+        private readonly IToken token;
         private readonly Regex regex;
 
-        public TokenDefinition(ITokenType type, string regexPattern)
+        public TokenDefinition(IToken type, string regexPattern)
         {
-            tokenType = type;
+            token = type;
             regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
         }
 
-        public TokenMatch? Match(string input)
+        public ITokenMatch? Match(string input)
         {
             var match = regex.Match(input);
             if (match.Success)
@@ -22,7 +22,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                 if (match.Length != input.Length)
                     remainingText = input.Substring(match.Length);
 
-                return new TokenMatch(tokenType)
+                return new TokenMatch(token)
                 {
                     Value = match.Value,
                     RemainingText = remainingText

@@ -2,15 +2,15 @@
 
 namespace dk.itu.game.msc.cgdl.LanguageParser
 {
-    public class TokenMatch : IToken
+    public class TokenMatch : ITokenMatch
     {
-        public ITokenType Type { get; set; }
+        public IToken Token { get; set; }
         public string Value { get; set; } = string.Empty;
         public string RemainingText { get; set; } = string.Empty;
 
-        public TokenMatch(ITokenType tokenType)
+        public TokenMatch(IToken token)
         {
-            Type = tokenType ?? throw new ArgumentNullException(nameof(tokenType));
+            Token = token ?? throw new ArgumentNullException(nameof(token));
         }
     }
 }

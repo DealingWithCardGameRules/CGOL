@@ -1,19 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
+using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser
 {
     public class Lexer
     {
-        private readonly List<ITokenDefinition> definitions;
+        private readonly ITokenDefinition tokenDefinition;
 
-        public Lexer()
+        public Lexer(ITokenDefinition tokenDefinition)
         {
-            definitions = new List<ITokenDefinition>();
-        }
-
-        public void Add(ITokenDefinition definition)
-        {
-            definitions.Add(definition);
+            this.tokenDefinition = tokenDefinition;
         }
 
         public IEnumerable<IToken> Tokenize(IEnumerable<string> input)
@@ -24,10 +20,10 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
 
                 while (!string.IsNullOrWhiteSpace(remaining))
                 {
-                    var match = FindMatch(remaining);
+                    var match = tokenDefinition.Match(remaining);
                     if (match != null)
                     {
-                        yield return match;
+                        yield return match.Token;
                         remaining = match.RemainingText;
                     }
                     else
@@ -38,17 +34,6 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
 
                 yield return new SequenceTerminator();
             }
-        }
-
-        private TokenMatch? FindMatch(string text)
-        {
-            foreach (var definition in definitions)
-            {
-                var match = definition.Match(text);
-                if (match != null)
-                    return match;
-            }
-            return null;
         }
     }
 }

@@ -9,14 +9,13 @@
 
         public Lexer Create()
         {
-            var lexer = new Lexer();
-            lexer.Add(new TokenDefinition(new Keyword { Name = "play" }, "^play"));
-            lexer.Add(new TokenDefinition(new Literate { Name = "number" }, "^\\d+"));
-            lexer.Add(new TokenDefinition(new Literate { Name = "string" }, "^\"[^\"]*\""));
-
-            // Concepts
-            lexer.Add(new TokenDefinition(new Concept(), "^[a-zA-Z]*"));
-            return lexer;
+            var composite = new TokenDefinitionComposite(
+                new TokenDefinition(new Keyword(), "^play"),
+                new TokenDefinition(new NumberLiteral(), "^\\d+"),
+                new TokenDefinition(new StringLiteral(), "^\"[^\"]*\""),
+                new TokenDefinition(new Concept(), "^[a-zA-Z]*")
+            );
+            return new Lexer(composite); ;
         }
     }
 }
