@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
-using System;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Test
 {

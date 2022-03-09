@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace dk.itu.game.msc.cgdl
 {
@@ -84,5 +85,18 @@ namespace dk.itu.game.msc.cgdl
                 conceptHandlers.Remove(typeof(T));
         }
 
+        public Type? ResolveCommand(string concept)
+        {
+            return supported
+                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommand)))
+                .FirstOrDefault(t => t.Name.Equals(concept));
+        }
+
+        public Type? ResolveQuery(string concept)
+        {
+            return supported
+                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQuery<>)))
+                .FirstOrDefault(t => t.Name.Equals(concept));
+        }
     }
 }
