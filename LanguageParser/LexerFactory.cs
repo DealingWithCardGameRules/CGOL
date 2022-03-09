@@ -10,10 +10,10 @@
         public Lexer Create()
         {
             var composite = new TokenDefinitionComposite(
-                new TokenDefinition(new Keyword(), "^play"),
-                new TokenDefinition(new NumberLiteral(), "^\\d+"),
-                new TokenDefinition(new StringLiteral(), "^\"[^\"]*\""),
-                new TokenDefinition(new Concept(), "^[a-zA-Z]*")
+                new RegexTokenDefinition(new Keyword(), "^play"),
+                new RegexTokenDefinition(new NumberLiteral(), "^\\d+"),
+                new RegexTokenDefinition(new StringLiteral(), "^\"[^\"]*\""),
+                new RegexTokenDefinition(new Concept(), "^[a-zA-Z]*")
             );
             return new Lexer(composite); ;
         }

@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Test
@@ -19,7 +18,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var expected = "Test";
 
             // When
-            sut.Tokenize(aList(expected)).ToArray();
+            sut.Tokenize(aList(expected)).ToArray(); // ToArray forces the IEnumerable to run
 
             // Then
             definitionMock.Received().Match(expected);
@@ -57,21 +56,42 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         }
 
         [TestMethod]
-        public void Tokenize_Match_ReturnsTokenMatch()
+        public void Tokenize_Match_CallsTokenOnMatch()
         {
-            /*
+
             // Given
             var definitionStub = Substitute.For<ITokenDefinition>();
             var sut = new Lexer(definitionStub);
-            var expected = Substitute.For<ITokenMatch>();
-            definitionStub.Match(Arg.Any<string>()).Returns(expected);
+            var matchMock = Substitute.For<ITokenMatch>();
+            definitionStub.Match(Arg.Any<string>()).Returns(matchMock);
+
+            // When
+            sut.Tokenize(aList("Test")).ToArray(); // ToArray forces the IEnumerable to run
+
+            // Then
+            _ = matchMock.Received().Token;
+
+        }
+
+        [TestMethod]
+        public void Tokenize_Match_ReturnsTokenMatch()
+        {
+            
+            // Given
+            var definitionStub = Substitute.For<ITokenDefinition>();
+            var sut = new Lexer(definitionStub);
+            var expected = Substitute.For<IToken>();
+            var matchStub = Substitute.For<ITokenMatch>();
+            
+            definitionStub.Match(Arg.Any<string>()).Returns(matchStub);
+            matchStub.Token.Returns(expected);
 
             // When
             var result = sut.Tokenize(aList("Test"));
 
             // Then
             result.Contains(expected);
-            */
+            
         }
 
         private T[] aList<T>(params T[] list) => list;
