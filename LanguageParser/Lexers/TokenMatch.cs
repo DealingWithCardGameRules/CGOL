@@ -1,6 +1,7 @@
-﻿using System;
+﻿using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
+using System;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser
+namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
 {
     public class TokenMatch : ITokenMatch
     {

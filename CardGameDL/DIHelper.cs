@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.GameEvents;
 using dk.itu.game.msc.cgdl.GameState;
+using dk.itu.game.msc.cgdl.LanguageParser.Parsers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace dk.itu.game.msc.cgdl
@@ -15,6 +16,7 @@ namespace dk.itu.game.msc.cgdl
             services.AddSingleton<Game>();
             services.AddSingleton<GDLSetup>();
             services.AddSingleton<ITimeProvider>(new UtcTime());
+            services.AddSingleton<ConceptParser>();
         }
     }
 }

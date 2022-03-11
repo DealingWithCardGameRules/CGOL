@@ -1,4 +1,4 @@
-﻿namespace dk.itu.game.msc.cgdl.LanguageParser
+﻿namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
 {
     public interface ITokenMatch
     {

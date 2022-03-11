@@ -1,30 +1,39 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
+﻿using dk.itu.game.msc.cgdl.LanguageParser.Parsers;
+using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser
 {
-    public class CGDLParser : IParser
+    public class CGDLParser
     {
-        private Stack<IToken> tokenStack;
+        private readonly IParserStackFactory factory;
+        private readonly IParser<ICommand> conceptParser;
+        private IParserStack stack;
 
-        public CGDLParser(IInterpolator interpolator)
+        public CGDLParser(IParserStackFactory factory, IParser<ICommand> conceptParser)
         {
-
+            this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            this.conceptParser = conceptParser ?? throw new ArgumentNullException(nameof(conceptParser));
         }
 
-        private void LoadSequenceStack(IEnumerable<IToken> tokens)
+        public IEnumerable<ICommand> Parse(IEnumerable<IToken> tokens)
         {
-            tokenStack = new Stack<IToken>();
-            foreach (var token in tokens)
-            {
-                tokenStack.Push(token);
+            stack = factory.Create(tokens);
+            // [<action>\n]*
+            
+            while (stack.HasTokens) {
+                ParseAction();
+                yield return conceptParser.Result;
+                stack.DiscardToken<SequenceTerminator>();
             }
         }
 
-        private IToken ReadToken(IToken token)
+        private void ParseAction()
         {
-            throw new NotImplementedException();
+            // <concept>
+            conceptParser.Parse(stack);
         }
     }
 }

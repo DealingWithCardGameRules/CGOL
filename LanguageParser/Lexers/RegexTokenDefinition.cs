@@ -1,7 +1,8 @@
-﻿using System;
+﻿using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
+using System;
 using System.Text.RegularExpressions;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser
+namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
 {
     public class RegexTokenDefinition : ITokenDefinition
     {
@@ -13,7 +14,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             if (string.IsNullOrEmpty(regexPattern))
                 throw new ArgumentNullException(nameof(regexPattern));
 
-            this.token = token ?? throw new System.ArgumentNullException(nameof(token));
+            this.token = token ?? throw new ArgumentNullException(nameof(token));
             regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
         }
 
