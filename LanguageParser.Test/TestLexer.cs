@@ -70,7 +70,6 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
 
             // Then
             _ = matchMock.Received().Token;
-
         }
 
         [TestMethod]
@@ -91,7 +90,6 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
 
             // Then
             result.Contains(expected);
-            
         }
 
         private T[] aList<T>(params T[] list) => list;

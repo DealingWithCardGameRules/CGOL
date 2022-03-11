@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser
 {
-    public class CGDLParser
+    public class CGDLParser : IParser
     {
         private Stack<IToken> tokenStack;
 
