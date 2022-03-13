@@ -9,5 +9,11 @@
             // Remove quotes
             Value = value[1..^1];
         }
+
+        public override string ToString()
+        {
+            return $"String (\"{Value}\")";
+        }
+
     }
 }

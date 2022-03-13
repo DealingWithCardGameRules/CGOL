@@ -9,5 +9,10 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
         {
             Value = Convert.ToInt32(value);
         }
+
+        public override string ToString()
+        {
+            return $"Number ({Value})";
+        }
     }
 }

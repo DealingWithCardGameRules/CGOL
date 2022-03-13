@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace dk.itu.game.msc.cgdl
 {
@@ -88,14 +89,14 @@ namespace dk.itu.game.msc.cgdl
         public Type? ResolveCommand(string concept)
         {
             return supported
-                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommand)))
+                .Where(t => typeof(ICommand).IsAssignableFrom(t))
                 .FirstOrDefault(t => t.Name.Equals(concept));
         }
 
         public Type? ResolveQuery(string concept)
         {
             return supported
-                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQuery<>)))
+                .Where(t => typeof(IQuery<>).IsAssignableFrom(t))
                 .FirstOrDefault(t => t.Name.Equals(concept));
         }
     }

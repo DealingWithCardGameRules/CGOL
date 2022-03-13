@@ -6,14 +6,14 @@ using dk.itu.game.msc.cgdl.GameState.QueryHandlers;
 
 namespace dk.itu.game.msc.cgdl
 {
-    public class GDLSetup
+    public class SimpleGameSetup
     {
         private readonly Game game;
-        private readonly Interpolator interpolator;
+        private readonly IInterpolator interpolator;
         private readonly ITimeProvider timeProvider;
         private readonly IDispatcher dispatcher;
 
-        public GDLSetup(Game game, Interpolator interpolator, ITimeProvider timeProvider, IDispatcher dispatcher)
+        public SimpleGameSetup(Game game, IInterpolator interpolator, ITimeProvider timeProvider, IDispatcher dispatcher)
         {
             this.game = game;
             this.interpolator = interpolator;
@@ -29,6 +29,7 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new SimplyAddCard(timeProvider));
             interpolator.AddConcept(new SimplyDrawCard(timeProvider));
             interpolator.AddConcept(new SimplyRevealAndMove(timeProvider, dispatcher));
+            interpolator.AddConcept(new SimplyDeclareCard());
 
             // Query handlers
             interpolator.AddConcept(new CardCounter(game));

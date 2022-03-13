@@ -55,9 +55,9 @@ namespace CardGameWebApp.Server.Controllers
             var dispatcher = GetDispatcher(id);
 
             // Setup
-            dispatcher.Dispatch(new CreateCollection(deck));
-            dispatcher.Dispatch(new CreateCollection(hand));
-            dispatcher.Dispatch(new CreateCollection(discardPile));
+            dispatcher.Dispatch(new CreateDeck(deck));
+            dispatcher.Dispatch(new CreateDeck(hand));
+            dispatcher.Dispatch(new CreateDeck(discardPile));
             dispatcher.Dispatch(new AddCard(deck, new PassCard("Pass")));
 
             return new Draw1play1DemoDTO

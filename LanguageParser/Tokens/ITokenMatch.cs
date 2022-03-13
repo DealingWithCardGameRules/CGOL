@@ -4,6 +4,5 @@
     {
         string RemainingText { get; set; }
         IToken Token { get; set; }
-        string Value { get; set; }
     }
 }

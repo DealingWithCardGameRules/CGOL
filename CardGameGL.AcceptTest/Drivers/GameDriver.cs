@@ -12,6 +12,8 @@ namespace CardGameGL.AcceptTest.Drivers
     {
         ServiceProvider serviceProvider;
         IDispatcher dispatcher;
+        CardGameDLParser parser;
+        Dictionary<string, ICommand[]> library = new Dictionary<string, ICommand[]>();
 
         public GameDriver()
         {
@@ -19,14 +21,28 @@ namespace CardGameGL.AcceptTest.Drivers
             serviceCollection.AddCardGameDescriptionLanguage();
             serviceCollection.AddSingleton(p => p.GetRequiredService<GDLFactory>().Create());
             serviceProvider = serviceCollection.BuildServiceProvider();
-            serviceProvider.GetService<GDLSetup>()?.AddHandlers();
-            var disp = serviceProvider.GetService<IDispatcher>() ?? throw new Exception("No dispatcher service available");
+            serviceProvider.GetService<SimpleGameSetup>()?.AddHandlers();
+            var disp = serviceProvider.GetService<IDispatcher>() ?? throw new Exception("No dispatcher service available.");
+            parser = serviceProvider.GetService<CardGameDLParser>() ?? throw new Exception("No CGDL parser.");
             dispatcher = new DispatchLogger(disp);
+        }
+
+        internal void Process(string template)
+        {
+            foreach (var command in library[template])
+            {
+                dispatcher.Dispatch(command);
+            }
+        }
+
+        internal void Load(string template, string cgdl)
+        {
+            library.Add(template, parser.Parse(cgdl).ToArray());
         }
 
         internal void CreateDiscardPile(string name)
         {
-            dispatcher.Dispatch(new CreateCollection(name));
+            dispatcher.Dispatch(new CreateDeck(name));
         }
 
         internal void DrawCards(string deck, string hand, int cards)
@@ -61,7 +77,7 @@ namespace CardGameGL.AcceptTest.Drivers
 
         internal void AddDeck(string deck, int cards = 0)
         {
-            dispatcher.Dispatch(new CreateCollection(deck));
+            dispatcher.Dispatch(new CreateDeck(deck));
             AddCards(deck, cards);
         }
 

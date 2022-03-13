@@ -7,9 +7,9 @@ namespace dk.itu.game.msc.cgdl
     public class GDLFactory
     {
         private readonly EventLoggerFactory factory;
-        private readonly Interpolator interpolator;
+        private readonly IInterpolator interpolator;
 
-        public GDLFactory(EventLoggerFactory factory, Interpolator interpolator)
+        public GDLFactory(EventLoggerFactory factory, IInterpolator interpolator)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
             this.interpolator = interpolator ?? throw new ArgumentNullException(nameof(interpolator));

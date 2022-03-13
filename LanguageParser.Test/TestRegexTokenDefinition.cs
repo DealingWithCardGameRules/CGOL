@@ -20,21 +20,21 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         public void Ctor_NullRegexPattern_ThrowsArgumentNullException()
         {
             // When, Then
-            Assert.ThrowsException<ArgumentNullException>(() => new RegexTokenDefinition(Substitute.For<IToken>(), null));
+            Assert.ThrowsException<ArgumentNullException>(() => new RegexTokenDefinition(Substitute.For<ITokenFactory>(), null));
         }
 
         [TestMethod]
         public void Ctor_EmptyRegexPattern_ThrowsArgumentNullException()
         {
             // When, Then
-            Assert.ThrowsException<ArgumentNullException>(() => new RegexTokenDefinition(Substitute.For<IToken>(), ""));
+            Assert.ThrowsException<ArgumentNullException>(() => new RegexTokenDefinition(Substitute.For<ITokenFactory>(), ""));
         }
 
         [TestMethod]
         public void Match_NoMatch_ReturnsNull()
         {
             // Given
-            var sut = new RegexTokenDefinition(Substitute.For<IToken>(), @"\d");
+            var sut = new RegexTokenDefinition(Substitute.For<ITokenFactory>(), @"\d");
 
             // When
             var result = sut.Match("Test");
@@ -47,7 +47,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         public void Match_Match_ReturnsIMatch()
         {
             // Given
-            var sut = new RegexTokenDefinition(Substitute.For<IToken>(), @".*");
+            var sut = new RegexTokenDefinition(Substitute.For<ITokenFactory>(), @".*");
 
             // When
             var result = sut.Match("Test");
@@ -57,25 +57,11 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         }
 
         [TestMethod]
-        public void Match_Match_ReturnMatchHasValue()
-        {
-            // Given
-            var expected = "T";
-            var sut = new RegexTokenDefinition(Substitute.For<IToken>(), $"^{expected}");
-
-            // When
-            var result = sut.Match("Test");
-
-            // Then
-            Assert.AreEqual(expected, result.Value);
-        }
-
-        [TestMethod]
         public void Match_Match_ReturnMatchHasRemainingText()
         {
             // Given
             var expected = "est";
-            var sut = new RegexTokenDefinition(Substitute.For<IToken>(), $"^T");
+            var sut = new RegexTokenDefinition(Substitute.For<ITokenFactory>(), $"^T");
 
             // When
             var result = sut.Match("Test");
@@ -89,7 +75,9 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         {
             // Given
             var expected = Substitute.For<IToken>();
-            var sut = new RegexTokenDefinition(expected, $"^T");
+            var factoryStub = Substitute.For<ITokenFactory>();
+            var sut = new RegexTokenDefinition(factoryStub, $"^T");
+            factoryStub.Create(Arg.Any<string>()).Returns(expected);
 
             // When
             var result = sut.Match("Test");

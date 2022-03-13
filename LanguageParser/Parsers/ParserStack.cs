@@ -7,23 +7,19 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
     internal class ParserStack : IParserStack
     {
-        private readonly Stack<IToken> tokenStack;
+        private readonly Queue<IToken> tokenStack;
         public IToken LookAhead1 { get; private set; }
         public IToken LookAhead2 { get; private set; }
         public bool HasTokens => tokenStack.Any();
 
         public ParserStack(IEnumerable<IToken> tokens)
         {
-            tokenStack = new Stack<IToken>();
+            tokenStack = new Queue<IToken>();
             foreach (var token in tokens)
-                tokenStack.Push(token);
+                tokenStack.Enqueue(token);
 
             LookAhead1 = Pop();
             LookAhead2 = Pop();
-        }
-
-        public ParserStack()
-        {
         }
 
         public IToken ReadToken(Type type)
@@ -52,13 +48,13 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 
         private IToken Pop()
         {
-            return tokenStack.Any() ? tokenStack.Pop() : new SequenceTerminator();
+            return tokenStack.Any() ? tokenStack.Dequeue() : new SequenceTerminator();
         }
 
         private void Validate<T>(IToken token)
         {
             if (!(token is T))
-                throw new GDLParserException($"Expected {typeof(T)} but found {LookAhead1.GetType()}");
+                throw new GDLParserException($"Expected {typeof(T).Name} but found {LookAhead1}");
         }
 
         public void ApplyToken<T>(Action<T> callback) where T : IToken

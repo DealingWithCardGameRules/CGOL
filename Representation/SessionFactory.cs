@@ -17,7 +17,7 @@ namespace dk.itu.game.msc.cgdl.Representation
             serviceCollection.AddSingleton(p => p.GetRequiredService<GDLFactory>().Create());
             
             var serviceProvider = serviceCollection.BuildServiceProvider();
-            serviceProvider.GetService<GDLSetup>()?.AddHandlers();
+            serviceProvider.GetService<SimpleGameSetup>()?.AddHandlers();
             return new Session(id, serviceProvider);
         }
     }

@@ -8,5 +8,10 @@
         {
             Name = value;
         }
+
+        public override string ToString()
+        {
+            return $"Concept ({Name})";
+        }
     }
 }
