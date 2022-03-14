@@ -1,7 +1,6 @@
 ﻿using CardGameGL.AcceptTest.Support;
 using dk.itu.game.msc.cgdl;
 using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +37,12 @@ namespace CardGameGL.AcceptTest.Drivers
         internal void Load(string template, string cgdl)
         {
             library.Add(template, parser.Parse(cgdl).ToArray());
+        }
+
+        internal void CreateLibrary()
+        {
+            var card = new CreateCard("Pass", "Pass", "Pass", "Does nothing.");
+            dispatcher.Dispatch(card);
         }
 
         internal void CreateDiscardPile(string name)
@@ -85,21 +90,8 @@ namespace CardGameGL.AcceptTest.Drivers
         {
             for (int i = 0; i < cards; i++)
             {
-                var card = new BlankCard();
-                dispatcher.Dispatch(new AddCard(deck, card));
+                dispatcher.Dispatch(new AddCard(deck, "Pass"));
             }
-        }
-    }
-
-    class BlankCard : ICard
-    {
-        public Guid Template => Guid.Empty;
-        public Guid Instance { get; }
-        public string Name => "Pass";
-
-        public BlankCard()
-        {
-            Instance = Guid.NewGuid();
         }
     }
 }

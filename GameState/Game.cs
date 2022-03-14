@@ -6,7 +6,7 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     public class Game
     {
-        readonly Dictionary<string, ICardCollection> collections;
+        private readonly Dictionary<string, ICardCollection> collections;
 
         public Game()
         {

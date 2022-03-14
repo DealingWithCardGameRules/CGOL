@@ -7,12 +7,12 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
     {
         public Guid ProcessId => new Guid("C41ED5BD-D463-4B29-BD77-BCAB6FCF1853");
         public string Destination { get; }
-        public ICard Card { get; }
+        public string Template { get; }
 
-        public AddCard(string deck, ICard card)
+        public AddCard(string deck, string template)
         {
             Destination = deck;
-            Card = card;
+            Template = template;
         }
     }
 }

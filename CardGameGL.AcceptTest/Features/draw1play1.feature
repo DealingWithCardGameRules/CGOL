@@ -5,6 +5,7 @@ where none of the cards has any effect! How fun!
 
 Background: 
 	Given a discard pile
+	And a library
 
 Scenario: Draw a card
 	Given a deck of 1 card

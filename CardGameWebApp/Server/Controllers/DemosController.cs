@@ -58,7 +58,8 @@ namespace CardGameWebApp.Server.Controllers
             dispatcher.Dispatch(new CreateDeck(deck));
             dispatcher.Dispatch(new CreateDeck(hand));
             dispatcher.Dispatch(new CreateDeck(discardPile));
-            dispatcher.Dispatch(new AddCard(deck, new PassCard("Pass")));
+            dispatcher.Dispatch(new CreateCard("Pass", "Pass", "Pass", "Pass"));
+            dispatcher.Dispatch(new AddCard(deck, "Pass"));
 
             return new Draw1play1DemoDTO
             {
@@ -103,8 +104,8 @@ namespace CardGameWebApp.Server.Controllers
             var dto = new CardDTO
             {
                 Name = card.Name,
-                Illustration = "Pass",
-                Description = "Does nothing",
+                Illustration = card.Illustration,
+                Description = card.Description
             };
 
             if (collection == hand)
@@ -122,15 +123,20 @@ namespace CardGameWebApp.Server.Controllers
 
         class PassCard : ICard
 		{
-			public PassCard(string name)
+			public PassCard()
 			{
 				Instance = Guid.NewGuid();
-				Name = name;
 			}
 
-			public Guid Template => Guid.Empty;
 			public Guid Instance { get; }
-			public string Name { get; }
-		}
+
+            public string Name => "Pass";
+
+            public string Illustration => "Pass";
+
+            public string Description => "Does nothing.";
+
+            public string Template => throw new NotImplementedException();
+        }
 	}
 }

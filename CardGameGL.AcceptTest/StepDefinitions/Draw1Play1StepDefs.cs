@@ -46,5 +46,11 @@ namespace CardGameGL.AcceptTest.StepDefinitions
             gameDriver.CreateDiscardPile(discardPile);
         }
 
+        [Given(@"a library")]
+        public void GivenALibrary()
+        {
+            gameDriver.CreateLibrary();
+        }
+
     }
 }

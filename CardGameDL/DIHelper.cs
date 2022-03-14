@@ -4,7 +4,6 @@ using dk.itu.game.msc.cgdl.GameState;
 using dk.itu.game.msc.cgdl.LanguageParser;
 using dk.itu.game.msc.cgdl.LanguageParser.Lexers;
 using dk.itu.game.msc.cgdl.LanguageParser.Parsers;
-using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace dk.itu.game.msc.cgdl
@@ -17,11 +16,12 @@ namespace dk.itu.game.msc.cgdl
             services.AddSingleton<GDLFactory>();
             services.AddSingleton<IInterpolator, Interpolator>();
             services.AddSingleton<Game>();
+            services.AddSingleton<Library>();
             services.AddSingleton<SimpleGameSetup>();
             services.AddSingleton<ITimeProvider>(new UtcTime());
             services.AddSingleton<IParserQueueFactory, ParserQueueFactory>();
             services.AddSingleton<IParser<object>, LiteralParser>();
-            services.AddSingleton<IParser<ICommand>, ConceptParser >();
+            services.AddSingleton<IParser<ICommand>, ConceptParser>();
             services.AddSingleton<CGDLParser>();
             services.AddSingleton<LexerFactory>();
             services.AddSingleton<CardGameDLParser>();
