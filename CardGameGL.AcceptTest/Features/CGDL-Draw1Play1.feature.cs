@@ -121,8 +121,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
- testRunner.Given("the following \"game\" definition:", "CreateDeck \"deck\"\r\nCreateHand \"player\"\r\nCreateCard \"Pass\" \"Pass\" \"Pass\" \"Does not" +
-                        "hing\"\r\nAddCard \"deck\" \"Pass\"\r\nDrawCard \"deck\" \"player\"", ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("the following \"game\" definition:", "CreateDeck \"deck\"\r\nCreateHand \"player\"\r\nCreateCard \"pass\"\r\nAddCard \"deck\" \"pass\"\r" +
+                        "\nDrawCard \"deck\" \"player\"", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
  testRunner.When("the definition \"game\" is processed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

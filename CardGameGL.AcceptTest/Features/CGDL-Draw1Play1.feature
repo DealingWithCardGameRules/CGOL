@@ -8,8 +8,8 @@ Scenario: Draw a card
 """
 CreateDeck "deck"
 CreateHand "player"
-CreateCard "Pass" "Pass" "Pass" "Does nothing"
-AddCard "deck" "Pass"
+CreateCard "pass"
+AddCard "deck" "pass"
 DrawCard "deck" "player"
 """
 	When the definition "game" is processed

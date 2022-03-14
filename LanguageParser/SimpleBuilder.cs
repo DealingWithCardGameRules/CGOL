@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser
 {
@@ -9,7 +11,8 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
         private readonly List<object?> arguments = new List<object?>();
         private readonly Type type;
 
-        public IEnumerable<Type> ArgumentTypes { get; }
+        public IEnumerable<Type> ArgumentTypes => parameters.Select(p => p.ParameterType);
+        private IEnumerable<ParameterInfo> parameters;
 
         public SimpleBuilder(Type type)
         {
@@ -19,11 +22,11 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             var ctors = type.GetConstructors();
             if (ctors != null)
             {
-                ArgumentTypes = ctors.Single().GetParameters().Select(p => p.ParameterType);
+                parameters = ctors.Single().GetParameters();
             }
             else
             {
-                ArgumentTypes = new Type[0];
+                parameters = new ParameterInfo[0];
             }
 
             this.type = type;
@@ -41,7 +44,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
         {
             if (ArgumentTypes.Any())
             {
-                if (arguments.Count() != ArgumentTypes.Count())
+                if (arguments.Count() < parameters.Count(p => !p.IsOptional))
                     throw new GDLParserException($"The concept {type.Name} expects {ArgumentTypes.Count()} arguments but found {arguments.Count()} arguments");
                 
                 for (int i = 0; i < arguments.Count(); i++)
@@ -50,7 +53,12 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                         throw new GDLParserException($"The concept {type.Name} expects the following parameter types [{string.Join(",", ArgumentTypes.Select(t => t.Name))}] arguments but found [{string.Join(",", arguments.Select(a => a?.GetType().Name??"<none>"))}] arguments");
                 }
 
-                return (T)Activator.CreateInstance(type, arguments.ToArray());
+                return (T)Activator.CreateInstance(type, 
+                    BindingFlags.CreateInstance |
+                    BindingFlags.Public |
+                    BindingFlags.Instance |
+                    BindingFlags.OptionalParamBinding,
+                    null, arguments.ToArray(), CultureInfo.CurrentCulture);
             }
 
             return (T)Activator.CreateInstance(type);

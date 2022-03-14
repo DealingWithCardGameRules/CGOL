@@ -17,17 +17,20 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
             this.literalParser = literalParser ?? throw new ArgumentNullException(nameof(literalParser));
         }
 
-        public void Parse(IParserQueue stack)
+        public void Parse(IParserQueue queue)
         {
             // {string_value}[ <literal>]*
-            var concept = stack.ReadToken<Concept>();
+            var concept = queue.ReadToken<Concept>();
             var type = interpolator.ResolveCommand(concept.Name) ?? throw new GDLParserException($"Unknown concept {concept.Name}. Please make sure all concepts are loaded before you parse again.");
-            stack.DiscardToken();
+            queue.DiscardToken();
 
             var builder = new SimpleBuilder<ICommand>(type);
             foreach (var _ in builder.ArgumentTypes)
             {
-                literalParser.Parse(stack);
+                if (queue.LookAhead1 is SequenceTerminator)
+                    break;
+
+                literalParser.Parse(queue);
                 var literal = literalParser.Result;
                 builder.SetNextArgument(literal);
             }
