@@ -1,4 +1,5 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
+using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.LanguageParser.Parsers;
 using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
 using System;
@@ -10,7 +11,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
     {
         private readonly IParserQueueFactory factory;
         private readonly IParser<ICommand> conceptParser;
-        private IParserQueue stack;
+        private IParserQueue queue;
 
         public CGDLParser(IParserQueueFactory factory, IParser<ICommand> conceptParser)
         {
@@ -20,20 +21,32 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
 
         public IEnumerable<ICommand> Parse(IEnumerable<IToken> tokens)
         {
-            stack = factory.Create(tokens);
+            queue = factory.Create(tokens);
             // [<action>\n]*
             
-            while (stack.HasTokens) {
-                ParseAction();
-                yield return conceptParser.Result;
-                stack.DiscardToken<SequenceTerminator>();
+            while (queue.HasTokens) {
+                yield return ParseAction();
+                queue.DiscardToken<SequenceTerminator>();
             }
         }
 
-        private void ParseAction()
+        private ICommand ParseAction()
         {
-            // <concept>
-            conceptParser.Parse(stack);
+            // [Play ]<concept>
+            bool play = false;
+            if (queue.LookAhead1 is PlayKeyword)
+            {
+                queue.DiscardToken();
+                play = true;
+            }
+
+            conceptParser.Parse(queue);
+            var output = conceptParser.Result;
+
+            if (play)
+                output = new PostPonedCommand(output);
+
+            return output;
         }
     }
 }

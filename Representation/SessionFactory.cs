@@ -5,11 +5,6 @@ namespace dk.itu.game.msc.cgdl.Representation
 {
     public class SessionFactory
     {
-        public SessionFactory()
-        {
-
-        }
-
         public Session Create(Guid id)
         {
             var serviceCollection = new ServiceCollection();
