@@ -6,7 +6,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
     {
         public object? Result {get; private set;}
 
-        public void Parse(IParserStack stack)
+        public void Parse(IParserQueue stack)
         {
             // {<string>|number_value}
             stack.ApplyToken<StringLiteral>((token) => Result = token.Value);

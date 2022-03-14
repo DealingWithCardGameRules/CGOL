@@ -3,6 +3,6 @@
     public interface IParser<T>
     {
         T Result { get; }
-        void Parse(IParserStack stack);
+        void Parse(IParserQueue stack);
     }
 }

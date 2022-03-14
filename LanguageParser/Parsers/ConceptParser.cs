@@ -17,7 +17,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
             this.literalParser = literalParser ?? throw new ArgumentNullException(nameof(literalParser));
         }
 
-        public void Parse(IParserStack stack)
+        public void Parse(IParserQueue stack)
         {
             // {string_value}[ <literal>]*
             var concept = stack.ReadToken<Concept>();

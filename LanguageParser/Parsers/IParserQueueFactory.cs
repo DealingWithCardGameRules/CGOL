@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
-    public interface IParserStackFactory
+    public interface IParserQueueFactory
     {
-        IParserStack Create(IEnumerable<IToken> tokens);
+        IParserQueue Create(IEnumerable<IToken> tokens);
     }
 }

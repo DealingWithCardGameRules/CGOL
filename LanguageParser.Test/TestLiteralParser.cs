@@ -17,7 +17,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             
             // When, then
             Assert.ThrowsException<GDLParserException>(() => {
-                sut.Parse(Substitute.For<IParserStack>());
+                sut.Parse(Substitute.For<IParserQueue>());
                 });
         }
 
@@ -26,7 +26,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         {
             // Given
             var sut = new LiteralParser();
-            var stackMock = Substitute.For<IParserStack>();
+            var stackMock = Substitute.For<IParserQueue>();
 
             // When
             try { // Ignore exceptions
@@ -42,7 +42,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         {
             // Given
             var sut = new LiteralParser();
-            var stackMock = Substitute.For<IParserStack>();
+            var stackMock = Substitute.For<IParserQueue>();
 
             // When
             try
@@ -60,7 +60,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         {
             // Given
             var sut = new LiteralParser();
-            var stackStub = Substitute.For<IParserStack>();
+            var stackStub = Substitute.For<IParserQueue>();
             var literal = new StringLiteral();
             literal.Parse("\"\"");
             stackStub.ApplyToken(Arg.Do<Action<StringLiteral>>(a => a(literal)));
@@ -78,7 +78,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         {
             // Given
             var sut = new LiteralParser();
-            var stackStub = Substitute.For<IParserStack>();
+            var stackStub = Substitute.For<IParserQueue>();
             var literal = new NumberLiteral();
             literal.Parse("0");
             stackStub.ApplyToken(Arg.Do<Action<NumberLiteral>>(a => a(literal)));

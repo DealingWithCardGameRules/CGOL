@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
-    internal class ParserStack : IParserStack
+    internal class ParserQueue : IParserQueue
     {
         private readonly Queue<IToken> tokenStack;
         public IToken LookAhead1 { get; private set; }
         public IToken LookAhead2 { get; private set; }
         public bool HasTokens => tokenStack.Any();
 
-        public ParserStack(IEnumerable<IToken> tokens)
+        public ParserQueue(IEnumerable<IToken> tokens)
         {
             tokenStack = new Queue<IToken>();
             foreach (var token in tokens)

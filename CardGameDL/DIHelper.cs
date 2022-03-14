@@ -19,7 +19,7 @@ namespace dk.itu.game.msc.cgdl
             services.AddSingleton<Game>();
             services.AddSingleton<SimpleGameSetup>();
             services.AddSingleton<ITimeProvider>(new UtcTime());
-            services.AddSingleton<IParserStackFactory, ParserStackFactory>();
+            services.AddSingleton<IParserQueueFactory, ParserQueueFactory>();
             services.AddSingleton<IParser<object>, LiteralParser>();
             services.AddSingleton<IParser<ICommand>, ConceptParser >();
             services.AddSingleton<CGDLParser>();

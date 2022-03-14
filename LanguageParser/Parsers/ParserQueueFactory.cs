@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
-    public class ParserStackFactory : IParserStackFactory
+    public class ParserQueueFactory : IParserQueueFactory
     {
-        public IParserStack Create(IEnumerable<IToken> tokens)
+        public IParserQueue Create(IEnumerable<IToken> tokens)
         {
-            return new ParserStack(tokens);
+            return new ParserQueue(tokens);
         }
     }
 }

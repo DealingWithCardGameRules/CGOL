@@ -3,7 +3,7 @@ using System;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
-    public interface IParserStack
+    public interface IParserQueue
     {
         IToken LookAhead1 { get; }
         IToken LookAhead2 { get; }
