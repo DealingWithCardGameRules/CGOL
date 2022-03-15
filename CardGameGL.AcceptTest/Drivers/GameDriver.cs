@@ -1,53 +1,42 @@
-﻿using CardGameGL.AcceptTest.Support;
-using dk.itu.game.msc.cgdl;
+﻿using dk.itu.game.msc.cgdl;
 using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CardGameGL.AcceptTest.Drivers
 {
     internal class GameDriver
     {
-        ServiceProvider serviceProvider;
-        IDispatcher dispatcher;
-        CardGameDLParser parser;
-        Dictionary<string, ICommand[]> library = new Dictionary<string, ICommand[]>();
+        readonly Dictionary<string, ICommand[]> library = new();
+        readonly CGDLService cgdl;
 
         public GameDriver()
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddCardGameDescriptionLanguage();
-            serviceCollection.AddSingleton(p => p.GetRequiredService<GDLFactory>().Create());
-            serviceProvider = serviceCollection.BuildServiceProvider();
-            serviceProvider.GetService<SimpleGameSetup>()?.AddHandlers();
-            var disp = serviceProvider.GetService<IDispatcher>() ?? throw new Exception("No dispatcher service available.");
-            parser = serviceProvider.GetService<CardGameDLParser>() ?? throw new Exception("No CGDL parser.");
-            dispatcher = new DispatchLogger(disp);
+            cgdl = new CGDLServiceFactory().CreateBasicGame();
         }
 
         internal void Process(string template)
         {
             foreach (var command in library[template])
             {
-                dispatcher.Dispatch(command);
+                cgdl.Dispatch(command);
             }
         }
 
         internal void Load(string template, string cgdl)
         {
-            library.Add(template, parser.Parse(cgdl).ToArray());
+            library.Add(template, this.cgdl.Parse(cgdl).ToArray());
         }
 
         internal void CreateLibrary()
         {
             var card = new CreateCard("Pass", "Pass", "Pass", "Does nothing.");
-            dispatcher.Dispatch(card);
+            cgdl.Dispatch(card);
         }
 
         internal void CreateDiscardPile(string name)
         {
-            dispatcher.Dispatch(new CreateDeck(name));
+            cgdl.Dispatch(new CreateDeck(name));
         }
 
         internal void DrawCards(string deck, string hand, int cards)
@@ -58,31 +47,31 @@ namespace CardGameGL.AcceptTest.Drivers
 
         internal void PlayCard(string hand, string discardPile)
         {
-            var card = dispatcher.Dispatch(new GetTopCard(hand));
+            var card = cgdl.Dispatch(new GetTopCard(hand));
             if (card != null)
-                dispatcher.Dispatch(new PlayCard(hand, discardPile, card.Instance));
+                cgdl.Dispatch(new PlayCard(hand, discardPile, card.Instance));
         }
 
         internal void CheckSize(string collection, int expectedSize)
         {
-            var count = dispatcher.Dispatch(new CardCount(collection));
+            var count = cgdl.Dispatch(new CardCount(collection));
             Assert.AreEqual(expectedSize, count);
         }
 
         internal void DrawCard(string deck, string hand)
         {
-            dispatcher.Dispatch(new DrawCard(deck, hand));
+            cgdl.Dispatch(new DrawCard(deck, hand));
         }
 
         internal void AddHand(string hand, int cards)
         {
-            dispatcher.Dispatch(new CreateHand(hand));
+            cgdl.Dispatch(new CreateHand(hand));
             AddCards(hand, cards);
         }
 
         internal void AddDeck(string deck, int cards = 0)
         {
-            dispatcher.Dispatch(new CreateDeck(deck));
+            cgdl.Dispatch(new CreateDeck(deck));
             AddCards(deck, cards);
         }
 
@@ -90,7 +79,7 @@ namespace CardGameGL.AcceptTest.Drivers
         {
             for (int i = 0; i < cards; i++)
             {
-                dispatcher.Dispatch(new AddCard(deck, "Pass"));
+                cgdl.Dispatch(new AddCard(deck, "Pass"));
             }
         }
     }

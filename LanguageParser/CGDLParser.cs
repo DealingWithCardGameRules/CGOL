@@ -44,7 +44,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             var output = conceptParser.Result;
 
             if (play)
-                output = new PostPonedCommand(output);
+                output = new PostponedCommand(output);
 
             return output;
         }

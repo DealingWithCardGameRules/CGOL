@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Pluralize.NET" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CommandCentral\CommandCentral.csproj" />
     <ProjectReference Include="..\CommonConcepts\CommonConcepts.csproj" />
   </ItemGroup>

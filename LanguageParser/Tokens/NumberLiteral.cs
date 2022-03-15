@@ -12,7 +12,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
 
         public override string ToString()
         {
-            return $"Number ({Value})";
+            return $"Number: {Value}";
         }
     }
 }

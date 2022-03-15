@@ -2,9 +2,11 @@
 {
     internal class PlayKeyword : IToken
     {
-        public void Parse(string value)
+        public void Parse(string value) { }
+
+        public override string ToString()
         {
-            
+            return "Keyword: Play";
         }
     }
 }

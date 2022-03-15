@@ -44,13 +44,20 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
         {
             if (ArgumentTypes.Any())
             {
-                if (arguments.Count() < parameters.Count(p => !p.IsOptional))
-                    throw new GDLParserException($"The concept {type.Name} expects {ArgumentTypes.Count()} arguments but found {arguments.Count()} arguments");
+                var requiredParameters = parameters.Count(p => !p.IsOptional);
+                var optionalParameters = ArgumentTypes.Count();
+                if (arguments.Count() < requiredParameters)
+                {
+                    if (requiredParameters == optionalParameters)
+                        throw new GDLParserException($"The concept {type.Name} expects {requiredParameters} arguments but found {arguments.Count().Pluralize("arguments")}");
+                    else
+                        throw new GDLParserException($"The concept {type.Name} expects between {requiredParameters.Pluralize("arguments")} and {optionalParameters.Pluralize("arguments")} but found {arguments.Count().Pluralize("arguments")}");
+                }  
                 
                 for (int i = 0; i < arguments.Count(); i++)
                 {
                     if (arguments.ElementAt(i)?.GetType() != ArgumentTypes.ElementAt(i))
-                        throw new GDLParserException($"The concept {type.Name} expects the following parameter types [{string.Join(",", ArgumentTypes.Select(t => t.Name))}] arguments but found [{string.Join(",", arguments.Select(a => a?.GetType().Name??"<none>"))}] arguments");
+                        throw new GDLParserException($"The concept {type.Name} expects the following parameter {"types".Pluralize(optionalParameters)} [{string.Join(",", ArgumentTypes.Select(t => t.Name))}] but found [{string.Join(",", arguments.Select(a => a?.GetType().Name??"<none>"))}] {"arguments".Pluralize(arguments.Count())}");
                 }
 
                 return (T)Activator.CreateInstance(type, 

@@ -4,12 +4,12 @@ using System;
 
 namespace dk.itu.game.msc.cgdl
 {
-    public class GDLFactory
+    public class DispatcherFactory
     {
         private readonly EventLoggerFactory factory;
         private readonly IInterpolator interpolator;
 
-        public GDLFactory(EventLoggerFactory factory, IInterpolator interpolator)
+        public DispatcherFactory(EventLoggerFactory factory, IInterpolator interpolator)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
             this.interpolator = interpolator ?? throw new ArgumentNullException(nameof(interpolator));
