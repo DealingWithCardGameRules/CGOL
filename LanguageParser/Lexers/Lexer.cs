@@ -1,4 +1,5 @@
 ﻿using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
+using System;
 using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
@@ -10,6 +11,11 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
         public Lexer(ITokenDefinition tokenDefinition)
         {
             this.tokenDefinition = tokenDefinition;
+        }
+
+        public IEnumerable<IToken> Tokenize(string input)
+        {
+            return Tokenize(input.Split(Environment.NewLine));
         }
 
         public IEnumerable<IToken> Tokenize(IEnumerable<string> input)

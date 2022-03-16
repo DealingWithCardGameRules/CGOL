@@ -4,8 +4,13 @@
     {
         public string Name { get; private set; }
 
+        public string RawValue { get; private set; }
+
+        public string Type => "concept";
+
         public void Parse(string value)
         {
+            RawValue = value;
             Name = value;
         }
 

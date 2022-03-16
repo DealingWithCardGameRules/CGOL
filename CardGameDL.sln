@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Representation", "Represent
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageParser", "LanguageParser\LanguageParser.csproj", "{EB5F59CA-4CA2-4FD0-8E12-EB15B2788683}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageParser.Test", "LanguageParser.Test\LanguageParser.Test.csproj", "{99DA9251-EC9F-4416-B45C-7FFD42817826}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageParser.Test", "LanguageParser.Test\LanguageParser.Test.csproj", "{99DA9251-EC9F-4416-B45C-7FFD42817826}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

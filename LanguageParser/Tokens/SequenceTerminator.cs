@@ -2,6 +2,10 @@
 {
     public class SequenceTerminator : IToken
     {
+        public string RawValue => @"\n";
+
+        public string Type => "symbol";
+
         public void Parse(string value) { }
 
         public override string ToString()
