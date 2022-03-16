@@ -9,10 +9,10 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public string Destination { get; }
         public string Template { get; }
 
-        public AddCard(string deck, string template)
+        public AddCard(string template, string deck)
         {
-            Destination = deck;
             Template = template;
+            Destination = deck;
         }
     }
 }

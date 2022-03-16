@@ -59,7 +59,7 @@ namespace CardGameWebApp.Server.Controllers
             dispatcher.Dispatch(new CreateDeck(hand));
             dispatcher.Dispatch(new CreateDeck(discardPile));
             dispatcher.Dispatch(new CreateCard("Pass", "Pass", "Pass", "Pass"));
-            dispatcher.Dispatch(new AddCard(deck, "Pass"));
+            dispatcher.Dispatch(new AddCard("Pass", deck));
 
             return new Draw1play1DemoDTO
             {

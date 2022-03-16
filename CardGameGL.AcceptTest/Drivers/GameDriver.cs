@@ -34,6 +34,23 @@ namespace CardGameGL.AcceptTest.Drivers
             cgdl.Dispatch(card);
         }
 
+        internal void ChooseDrawCard()
+        {
+            var commands = cgdl.Dispatch(new GetAvailableActions());
+            var drawCommand = commands.First(c => c is DrawCard);
+            if (drawCommand != null)
+                cgdl.Dispatch(drawCommand);
+        }
+
+        internal void ChoosePLayCard()
+        {
+            var commands = cgdl.Dispatch(new GetAvailableActions());
+            var playCommand = (PlayCard)commands.First(c => c is PlayCard);
+            var card = cgdl.Dispatch(new GetTopCard(playCommand.Source)) ?? throw new Exception($"No cards in {playCommand.Source}");
+            playCommand.Card = card.Instance;
+            cgdl.Dispatch(playCommand);
+        }
+
         internal void CreateDiscardPile(string name)
         {
             cgdl.Dispatch(new CreateDeck(name));
@@ -79,7 +96,7 @@ namespace CardGameGL.AcceptTest.Drivers
         {
             for (int i = 0; i < cards; i++)
             {
-                cgdl.Dispatch(new AddCard(deck, "Pass"));
+                cgdl.Dispatch(new AddCard("Pass", deck));
             }
         }
     }

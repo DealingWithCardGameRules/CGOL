@@ -3,7 +3,7 @@ using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 
 namespace dk.itu.game.msc.cgdl.GameState.CommandHandlers
 {
-    class PostponedCommandHandler : ICommandHandler<PostponedCommand>
+    public class PostponedCommandHandler : ICommandHandler<PostponedCommand>
     {
         private readonly CommandRepository repository;
 
