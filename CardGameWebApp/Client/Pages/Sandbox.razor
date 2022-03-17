@@ -1,0 +1,66 @@
+﻿@page "/sandbox"
+@using CardGameWebApp.Client.Components
+
+<h1>Create and test sandbox</h1>
+
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar">
+	<div class="btn-group me-2" role="group" aria-label="Test">
+		<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" aria-controls="playArea" disabled="@(!playing)" @onclick="() => playing = false">
+			<span class="oi oi-media-stop" aria-hidden="true"></span> Stop
+		</button>
+		<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" @onclick="() => playing = true" disabled="@(playing)">
+			<span class="oi oi-media-play" aria-hidden="true"></span> Play
+		</button>
+	</div>
+
+	<div class="btn-group" role="group" aria-label="Preloads">
+		<div class="btn-group" role="group">
+			<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				Examples
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+				@foreach (var preload in preloads)
+				{
+				<li>
+					<a class="dropdown-item" @onclick="() => SelectPreload(preload.Key)">@preload.Key</a>
+				</li>	
+				}
+			</ul>
+		</div>
+	</div>
+</div>
+
+<HighlightEditor Value="@cgdl"></HighlightEditor>
+
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="playArea" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+
+  </div>
+</div>
+
+
+@code {
+	private bool playing = false;
+
+	private Dictionary<string, string> preloads = new Dictionary<string, string>
+	{
+		{"Draw 1 play 1", "CreateDeck \"deck\"\n" +
+							"CreateDeck \"discard pile\"\n" +
+							"CreateHand \"player\"\n" +
+							"CreateCard \"pass\"\n" +
+							"AddCard \"pass\" \"deck\"\n" +
+							"Play DrawCard \"deck\" \"player\"\n" +
+							"Play PlayCard \"player\" \"discard pile\"" }
+	};
+
+	private void SelectPreload(string preload)
+	{
+		cgdl = preloads[preload];
+	}
+
+	private string cgdl = string.Empty;
+}

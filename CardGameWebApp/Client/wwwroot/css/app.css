@@ -190,3 +190,7 @@ span.token.symbol {
 #highlighting {
     z-index: 0;
 }
+
+.offcanvas-end {
+    width: calc(100% - 32px);
+}

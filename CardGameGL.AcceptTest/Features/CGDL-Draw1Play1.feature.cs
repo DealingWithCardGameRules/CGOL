@@ -105,7 +105,10 @@ namespace CardGameGL.AcceptTest.Features
  testRunner.When("the definition \"game\" is processed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 18
- testRunner.Then("the \"player\" should have 0 cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the \"deck\" should have 1 card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 19
+ testRunner.And("the \"player\" should have 0 card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
@@ -117,7 +120,7 @@ namespace CardGameGL.AcceptTest.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Draw a card", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 20
+#line 21
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -140,10 +143,10 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-#line 21
+#line 22
  testRunner.When("the player choses DrawCard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 22
+#line 23
  testRunner.Then("the \"player\" should have 1 card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -158,7 +161,7 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Play a card", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 24
+#line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -181,13 +184,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-#line 25
+#line 26
  testRunner.Given("the player has chosen DrawCard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 26
+#line 27
  testRunner.When("the player choses PlayCard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 27
+#line 28
  testRunner.Then("the \"player\" should have 0 cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
