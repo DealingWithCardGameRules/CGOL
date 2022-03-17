@@ -26,13 +26,16 @@ namespace CardGameWebApp.Client
                     output.Append($"<span class=\"token symbol\">\"</span><span class=\"token {token.Type}\">{literal.Value}</span><span class=\"token symbol\">\"</span>");
                 }
                 else if (token is Symbol)
+                {
                     output.Append(token.RawValue);
+                }
                 else
                 {
                     output.Append($"<span class=\"token {token.Type}\">{token.RawValue}</span>");
                 }
             }
-            return output.ToString();
+            var debug = output.ToString();
+            return debug;
         }
     }
 }

@@ -1,20 +1,28 @@
-﻿<div style="height: 500px; position: relative;">
-    <textarea id="editing" spellcheck="false" @bind="@PlainCGDL" @bind:event="oninput"></textarea>
-    <pre id="highlighting" aria-hidden="true">
+﻿@inject IJSRuntime JS
+
+<div class="highlight-editor">
+    <textarea id="editing" class="editing" spellcheck="false" @bind="@Value" @bind:event="oninput" onscroll="sync_scroll();"></textarea>
+    <pre id="highlighting" class="highlighting" aria-hidden="true">
       <code class="language-cgdl">@((MarkupString)HighlightedCGDL)</code>
     </pre>
 </div>
 
 @code {
+    // Inspiration:
+    // https://css-tricks.com/creating-an-editable-textarea-that-supports-syntax-highlighted-code/
+
     private Highlighter highlighter = new Highlighter();
     private string source;
     private string HighlightedCGDL;
-    private string PlainCGDL
+
+    [Parameter]
+    public string Value
     {
         set
         {
             source = value;
             HighlightedCGDL = Highlight(value);
+            JS.InvokeVoidAsync("sync_scroll");
         }
         get
         {
