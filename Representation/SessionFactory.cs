@@ -1,23 +1,20 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using dk.itu.game.msc.cgdl.CommandCentral;
+using dk.itu.game.msc.cgdl.GameState;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace dk.itu.game.msc.cgdl.Representation
 {
     public class SessionFactory
     {
-        public SessionFactory()
-        {
-
-        }
-
         public Session Create(Guid id)
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddCardGameDescriptionLanguage();
-            serviceCollection.AddSingleton(p => p.GetRequiredService<GDLFactory>().Create());
-            
+            serviceCollection.AddCGDLBasics();
+            serviceCollection.AddCGDLService();
             var serviceProvider = serviceCollection.BuildServiceProvider();
-            serviceProvider.GetService<GDLSetup>()?.AddHandlers();
+            serviceProvider.GetService<SimpleGameSetup>()?.AddHandlers();
+            new GameStateSetup().Setup(serviceProvider.GetRequiredService<IInterpolator>());
             return new Session(id, serviceProvider);
         }
     }

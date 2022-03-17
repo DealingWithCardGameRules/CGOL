@@ -1,32 +1,59 @@
-﻿using CardGameGL.AcceptTest.Support;
-using dk.itu.game.msc.cgdl;
+﻿using dk.itu.game.msc.cgdl;
 using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CardGameGL.AcceptTest.Drivers
 {
     internal class GameDriver
     {
-        ServiceProvider serviceProvider;
-        IDispatcher dispatcher;
+        readonly Dictionary<string, ICommand[]> library = new();
+        readonly CGDLService cgdl;
 
         public GameDriver()
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddCardGameDescriptionLanguage();
-            serviceCollection.AddSingleton(p => p.GetRequiredService<GDLFactory>().Create());
-            serviceProvider = serviceCollection.BuildServiceProvider();
-            serviceProvider.GetService<GDLSetup>()?.AddHandlers();
-            var disp = serviceProvider.GetService<IDispatcher>() ?? throw new Exception("No dispatcher service available");
-            dispatcher = new DispatchLogger(disp);
+            cgdl = new CGDLServiceFactory().CreateBasicGame();
+        }
+
+        internal void Process(string template)
+        {
+            foreach (var command in library[template])
+            {
+                cgdl.Dispatch(command);
+            }
+        }
+
+        internal void Load(string template, string cgdl)
+        {
+            library.Add(template, this.cgdl.Parse(cgdl).ToArray());
+        }
+
+        internal void CreateLibrary()
+        {
+            var card = new CreateCard("Pass", "Pass", "Pass", "Does nothing.");
+            cgdl.Dispatch(card);
+        }
+
+        internal void ChooseDrawCard()
+        {
+            var commands = cgdl.Dispatch(new GetAvailableActions());
+            var drawCommand = commands.First(c => c is DrawCard);
+            if (drawCommand != null)
+                cgdl.Dispatch(drawCommand);
+        }
+
+        internal void ChoosePLayCard()
+        {
+            var commands = cgdl.Dispatch(new GetAvailableActions());
+            var playCommand = (PlayCard)commands.First(c => c is PlayCard);
+            var card = cgdl.Dispatch(new GetTopCard(playCommand.Source)) ?? throw new Exception($"No cards in {playCommand.Source}");
+            playCommand.Card = card.Instance;
+            cgdl.Dispatch(playCommand);
         }
 
         internal void CreateDiscardPile(string name)
         {
-            dispatcher.Dispatch(new CreateCollection(name));
+            cgdl.Dispatch(new CreateDeck(name));
         }
 
         internal void DrawCards(string deck, string hand, int cards)
@@ -37,31 +64,31 @@ namespace CardGameGL.AcceptTest.Drivers
 
         internal void PlayCard(string hand, string discardPile)
         {
-            var card = dispatcher.Dispatch(new GetTopCard(hand));
+            var card = cgdl.Dispatch(new GetTopCard(hand));
             if (card != null)
-                dispatcher.Dispatch(new PlayCard(hand, discardPile, card.Instance));
+                cgdl.Dispatch(new PlayCard(hand, discardPile, card.Instance));
         }
 
         internal void CheckSize(string collection, int expectedSize)
         {
-            var count = dispatcher.Dispatch(new CardCount(collection));
+            var count = cgdl.Dispatch(new CardCount(collection));
             Assert.AreEqual(expectedSize, count);
         }
 
         internal void DrawCard(string deck, string hand)
         {
-            dispatcher.Dispatch(new DrawCard(deck, hand));
+            cgdl.Dispatch(new DrawCard(deck, hand));
         }
 
         internal void AddHand(string hand, int cards)
         {
-            dispatcher.Dispatch(new CreateHand(hand));
+            cgdl.Dispatch(new CreateHand(hand));
             AddCards(hand, cards);
         }
 
         internal void AddDeck(string deck, int cards = 0)
         {
-            dispatcher.Dispatch(new CreateCollection(deck));
+            cgdl.Dispatch(new CreateDeck(deck));
             AddCards(deck, cards);
         }
 
@@ -69,21 +96,8 @@ namespace CardGameGL.AcceptTest.Drivers
         {
             for (int i = 0; i < cards; i++)
             {
-                var card = new BlankCard();
-                dispatcher.Dispatch(new AddCard(deck, card));
+                cgdl.Dispatch(new AddCard("Pass", deck));
             }
-        }
-    }
-
-    class BlankCard : ICard
-    {
-        public Guid Template => Guid.Empty;
-        public Guid Instance { get; }
-        public string Name => "Pass";
-
-        public BlankCard()
-        {
-            Instance = Guid.NewGuid();
         }
     }
 }

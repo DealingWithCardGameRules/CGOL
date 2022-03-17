@@ -1,0 +1,29 @@
+﻿<div style="height: 500px; position: relative;">
+    <textarea id="editing" spellcheck="false" @bind="@PlainCGDL" @bind:event="oninput"></textarea>
+    <pre id="highlighting" aria-hidden="true">
+      <code class="language-cgdl">@((MarkupString)HighlightedCGDL)</code>
+    </pre>
+</div>
+
+@code {
+    private Highlighter highlighter = new Highlighter();
+    private string source;
+    private string HighlightedCGDL;
+    private string PlainCGDL
+    {
+        set
+        {
+            source = value;
+            HighlightedCGDL = Highlight(value);
+        }
+        get
+        {
+            return source;
+        }
+    }
+
+    private string Highlight(string input)
+    {
+        return highlighter.Highlight(input);
+    }
+}

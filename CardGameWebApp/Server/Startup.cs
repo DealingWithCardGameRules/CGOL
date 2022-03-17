@@ -42,7 +42,7 @@ namespace CardGameWebApp.Server
                 app.UseExceptionHandler("/Error");
             }
 
-            app.ApplicationServices.GetService<GDLSetup>()?.AddHandlers();
+            app.ApplicationServices.GetService<SimpleGameSetup>()?.AddHandlers();
 
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();

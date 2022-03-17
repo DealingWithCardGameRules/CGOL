@@ -6,9 +6,9 @@ namespace CardGameGL.AcceptTest.StepDefinitions
     public class Draw1Play1StepDefs
     {
         GameDriver gameDriver = new GameDriver();
-        string discardPile = "discard pile";
-        string deck = "deck";
-        string hand = "hand";
+        readonly string discardPile = "discard pile";
+        readonly string deck = "deck";
+        readonly string hand = "hand";
 
         [Given(@"a deck of (.*) cards?")]
         public void GivenADeckOfCards(int cards)
@@ -44,6 +44,12 @@ namespace CardGameGL.AcceptTest.StepDefinitions
         public void GivenADiscardPile()
         {
             gameDriver.CreateDiscardPile(discardPile);
+        }
+
+        [Given(@"a library")]
+        public void GivenALibrary()
+        {
+            gameDriver.CreateLibrary();
         }
 
     }
