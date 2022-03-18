@@ -10,6 +10,5 @@ namespace CardGameWebApp.Shared
         {
             Sessions = sessions;
         }
-
     }
 }

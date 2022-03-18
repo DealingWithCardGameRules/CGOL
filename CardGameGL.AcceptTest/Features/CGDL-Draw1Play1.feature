@@ -4,7 +4,7 @@ A very simple draw one play one card game
 where none of the cards has any effect! How fun!
 
 Background: Load a game
-	Given the following "game" definition:
+	Given the following:
 """
 CreateDeck "deck"
 CreateDeck "discard pile"
@@ -14,7 +14,6 @@ AddCard "pass" "deck"
 Play DrawCard "deck" "player"
 Play PlayCard "player" "discard pile"
 """
-	When the definition "game" is processed
 	Then the "deck" should have 1 card
 	And the "player" should have 0 card
 	

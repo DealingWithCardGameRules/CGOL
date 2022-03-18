@@ -29,6 +29,9 @@ namespace dk.itu.game.msc.cgdl.GameState
             interpolator.AddConcept(new CardGetter(game));
             interpolator.AddConcept(new TemplateGetter(library));
             interpolator.AddConcept(new GetAvailableActionsHandler(globalCommands));
+            interpolator.AddConcept(new GetCollectionNamesHandler(game));
+            interpolator.AddConcept(new GetVisibleCardsHandler(game));
+            interpolator.AddConcept(new GetCollectionTagsHandler(game));
 
             // Event observers
             interpolator.AddConcept(new CardStackDeclaredObserver(game));

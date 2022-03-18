@@ -97,17 +97,14 @@ namespace CardGameGL.AcceptTest.Features
 #line 6
 #line hidden
 #line 7
- testRunner.Given("the following \"game\" definition:", "CreateDeck \"deck\"\r\nCreateDeck \"discard pile\"\r\nCreateHand \"player\"\r\nCreateCard \"pa" +
+ testRunner.Given("the following:", "CreateDeck \"deck\"\r\nCreateDeck \"discard pile\"\r\nCreateHand \"player\"\r\nCreateCard \"pa" +
                     "ss\"\r\nAddCard \"pass\" \"deck\"\r\nPlay DrawCard \"deck\" \"player\"\r\nPlay PlayCard \"player" +
                     "\" \"discard pile\"", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 17
- testRunner.When("the definition \"game\" is processed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 18
  testRunner.Then("the \"deck\" should have 1 card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 19
+#line 18
  testRunner.And("the \"player\" should have 0 card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -120,7 +117,7 @@ namespace CardGameGL.AcceptTest.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Draw a card", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 21
+#line 20
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -143,10 +140,10 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-#line 22
+#line 21
  testRunner.When("the player choses DrawCard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 23
+#line 22
  testRunner.Then("the \"player\" should have 1 card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -161,7 +158,7 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Play a card", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 25
+#line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -184,13 +181,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-#line 26
+#line 25
  testRunner.Given("the player has chosen DrawCard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 27
+#line 26
  testRunner.When("the player choses PlayCard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 28
+#line 27
  testRunner.Then("the \"player\" should have 0 cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

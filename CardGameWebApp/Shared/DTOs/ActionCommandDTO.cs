@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CardGameWebApp.Shared
+﻿namespace CardGameWebApp.Shared
 {
     public class ActionCommandDTO
     {

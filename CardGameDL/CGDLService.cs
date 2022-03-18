@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace dk.itu.game.msc.cgdl
 {
@@ -7,6 +8,7 @@ namespace dk.itu.game.msc.cgdl
     {
         private readonly IDispatcher dispatcher;
         private readonly CardGameDLParser parser;
+        private readonly Dictionary<string, ICommand[]> library;
 
         public CGDLService(IDispatcher dispatcher, CardGameDLParser parser)
         {
@@ -24,9 +26,28 @@ namespace dk.itu.game.msc.cgdl
             return dispatcher.Dispatch<T>(query);
         }
 
-        public IEnumerable<ICommand> Parse(string cgdl)
+        public void Parse(string cgdl)
         {
-            return parser.Parse(cgdl);
+            foreach (var command in parser.Parse(cgdl))
+            {
+                dispatcher.Dispatch(command);
+            }
+        }
+
+        public void Parse(string cgdl, string template)
+        {
+            library.Add(template, parser.Parse(cgdl).ToArray());
+        }
+
+        public void Process(string template)
+        {
+            if (library.ContainsKey(template))
+            {
+                foreach (var command in library[template])
+                {
+                    dispatcher.Dispatch(command);
+                }
+            }
         }
     }
 }

@@ -7,18 +7,6 @@ namespace CardGameGL.AcceptTest.StepDefinitions
     {
         GameDriver gameDriver = new GameDriver();
 
-        [Given(@"the following ""([^""]*)"" definition:")]
-        public void GivenTheFollowingDefinition(string template, string cgdl)
-        {
-            gameDriver.Load(template, cgdl);
-        }
-
-        [When(@"the definition ""([^""]*)"" is processed")]
-        public void WhenTheDefinitionIsProcessed(string template)
-        {
-            gameDriver.Process(template);
-        }
-
         [Then(@"the ""([^""]*)"" should have (.*) cards?")]
         public void ThenTheShouldHaveCard(string collection, int cards)
         {
@@ -41,6 +29,12 @@ namespace CardGameGL.AcceptTest.StepDefinitions
         public void WhenThePlayerChosesPlayCard()
         {
             gameDriver.ChoosePLayCard();
+        }
+
+        [Given(@"the following:")]
+        public void GivenTheFollowing(string cgdl)
+        {
+            gameDriver.Process(cgdl);
         }
     }
 }
