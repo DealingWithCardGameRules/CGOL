@@ -433,6 +433,8 @@ namespace dk.itu.game.msc.cgdl.Test
         public class CommandStub : ICommand
         {
             public System.Guid ProcessId => throw new System.NotImplementedException();
+
+            public System.Guid Instance => throw new System.NotImplementedException();
         }
 
         class CommandHandlerStub : ICommandHandler<CommandStub>

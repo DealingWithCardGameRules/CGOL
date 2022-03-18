@@ -12,8 +12,11 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public string Illustration { get; internal set; }
         public string Description { get; internal set; }
 
+        public Guid Instance { get; }
+
         public CreateCard(string template, string? name = null, string? illustration = null, string? description = null)
         {
+            Instance = Guid.NewGuid();
             Template = template;
             Name = name ?? template;
             Illustration = illustration ?? string.Empty;

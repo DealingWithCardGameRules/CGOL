@@ -8,6 +8,7 @@ using CardGameWebApp.Shared.DTOs;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 using System.Collections.Generic;
 using dk.itu.game.msc.cgdl.CommonConcepts;
+using dk.itu.game.msc.cgdl.CommandCentral;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -83,6 +84,15 @@ namespace CardGameWebApp.Server.Controllers
                 }
                 return output;
             }
+            IDictionary<string, string> actionLink(IEnumerable<ICommand> commands)
+            {
+                Dictionary<string, string> output = new Dictionary<string, string>();
+                foreach (var command in commands)
+                {
+                    output[command.GetType().Name] = Url.Action(nameof(GetActions), "game", new { id, instance=command.Instance }, Request.Scheme);
+                }
+                return output;
+            }
 
             var current = session.GetSession(id);
             var dto = new CardCollectionDTO
@@ -90,7 +100,8 @@ namespace CardGameWebApp.Server.Controllers
                 Name = name,
                 VisibleCards = cardLink(current.Service.Dispatch(new GetVisibleCards(name))),
                 CardCount = current.Service.Dispatch(new CardCount(name)),
-                Tags = current.Service.Dispatch(new GetCollectionTags(name))
+                Tags = current.Service.Dispatch(new GetCollectionTags(name)),
+                Actions = actionLink(current.Service.Dispatch(new GetAvailableActionsForCollection(name)))
             };
             
             return new CardCollectionResponse(Request.GetEncodedUrl())
@@ -101,6 +112,12 @@ namespace CardGameWebApp.Server.Controllers
 
         [HttpGet("{id:Guid}/cards/{card:Guid}")]
         public ActionResult GetCard(Guid id, Guid card)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{id:Guid}/actions/{instance:Guid}")]
+        public ActionResult GetActions(Guid id, Guid instance)
         {
             return Ok();
         }

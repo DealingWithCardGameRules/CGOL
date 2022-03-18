@@ -188,6 +188,8 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         public class CommandStub : ICommand
         {
             public Guid ProcessId => throw new NotImplementedException();
+
+            public Guid Instance => throw new NotImplementedException();
         }
 
         public class QueryStub : IQuery<int> { }

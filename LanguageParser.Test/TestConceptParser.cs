@@ -184,11 +184,15 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
     public class SimpleCommand : ICommand
     {
         public Guid ProcessId => throw new NotImplementedException();
+
+        public Guid Instance => throw new NotImplementedException();
     }
 
     public class ComplexCommand : ICommand
     {
         public Guid ProcessId => throw new NotImplementedException();
+
+        public Guid Instance => throw new NotImplementedException();
 
         public ComplexCommand(string arg1, int arg2)
         {
