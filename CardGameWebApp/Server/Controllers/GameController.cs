@@ -117,9 +117,23 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpGet("{id:Guid}/actions/{instance:Guid}")]
-        public ActionResult GetActions(Guid id, Guid instance)
+        public ActionResponse GetActions(Guid id, Guid instance)
         {
-            return Ok();
+            return new ActionResponse(new ActionDTO(), Request.GetEncodedUrl());
+        }
+
+        [HttpPost("{id:Guid}/actions/{instance:Guid}")]
+        public ActionResult GetActions(Guid id, Guid instance, [FromBody]ActionDTO action)
+        {
+            var current = session.GetSession(id);
+            var command = current.Service.Dispatch(new GetAvailableAction(instance));
+            if (command != null)
+            {
+                current.Service.Dispatch(command);
+                return Ok();
+            }
+
+            return NotFound();
         }
 
         [HttpGet("{id:Guid}/actions")]
