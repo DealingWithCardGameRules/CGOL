@@ -1,5 +1,8 @@
 ﻿@page "/sandbox"
 @using CardGameWebApp.Client.Components
+@using CardGameWebApp.Shared.Responses
+@using System.Net
+@inject HttpClient Http
 
 <h1>Create and test sandbox</h1>
 
@@ -8,7 +11,7 @@
 		<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" aria-controls="playArea" disabled="@(!playing)" @onclick="() => playing = false">
 			<span class="oi oi-media-stop" aria-hidden="true"></span> Stop
 		</button>
-		<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" @onclick="() => playing = true" disabled="@(playing)">
+		<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" @onclick="() => PlayGame()" disabled="@(playing)">
 			<span class="oi oi-media-play" aria-hidden="true"></span> Play
 		</button>
 	</div>
@@ -34,17 +37,36 @@
 
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="playArea" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
-    <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+    <h5 id="offcanvasRightLabel">Game</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-
+	  <GameSimulator @ref=gameSim GameUrl="gameUrl"></GameSimulator>
   </div>
 </div>
 
 
 @code {
 	private bool playing = false;
+	private GameSimulator gameSim;
+	private string cgdl = string.Empty;
+	private string gameUrl = string.Empty;
+	private GameIndexResponse game;
+
+
+	private async void PlayGame()
+	{
+		playing = true;
+		game.Game.CGDLSource = cgdl;
+		var response = await Http.PostAsync(game.Links["self"], JsonContent.Create(game.Game));
+		if (response.StatusCode == HttpStatusCode.Created)
+		{
+			gameUrl = response.Headers.Location.AbsoluteUri;
+			gameSim.Start();
+		}
+	}
+	 protected override async Task OnInitializedAsync() => 
+	  game = await Http.GetFromJsonAsync<GameIndexResponse>("game");
 
 	private Dictionary<string, string> preloads = new Dictionary<string, string>
 	{
@@ -62,5 +84,4 @@
 		cgdl = preloads[preload];
 	}
 
-	private string cgdl = string.Empty;
 }
