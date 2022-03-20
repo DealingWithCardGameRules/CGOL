@@ -2,7 +2,7 @@
 
 namespace CardGameWebApp.Shared
 {
-	public class CardDTO
+	public class CardDescriptionDTO
     {
         public string Name { get; set; }
         public string Description { get; set; }

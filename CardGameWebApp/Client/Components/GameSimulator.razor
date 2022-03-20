@@ -2,47 +2,59 @@
 @inject HttpClient Http
 
 <!-- Community cards -->
-<div>
-	<h2>Community cards collections</h2>
+@if (communities != null && communities.Any())
+{
+	<div>
+		<h2>Community cards collections</h2>
 	
-</div>
+	</div>
+}
 
 <!-- Decks -->
-<div>
-	<h2>Decks</h2>
-	@if (decks != null)
+
+@if (decks != null && decks.Any())
+{
+	<div>
+		<h2>Decks</h2>
+	@foreach (var deck in decks.Select(d => collectionCache[d]))
 	{
-		@foreach (var deck in decks.Select(d => collectionCache[d]))
-		{
-			<Deck FaceUp="true" NumberOfCards="deck.CardCollection.CardCount">
+		<Deck FaceUp="false" NumberOfCards="deck.CardCollection.CardCount" Name="@deck.CardCollection.Name">
+			@if (deck.CardCollection.VisibleCards.Any())
+			{
 				@foreach (var card in deck.CardCollection.VisibleCards)
 				{
-					<Card Title="@card.Key" Illustration="@card.Key"></Card>
+					<Card Title="@card.Name" Illustration="@card.Name"></Card>
+					}
 				}
-			</Deck>
-		}
+			else
+			{
+				<p>@deck.CardCollection.Name</p>		
+			}
+		</Deck>
 	}
-</div>
+	</div>
+}
 
 <!-- Hands -->
-<div>
-	<h2>Hands</h2>
-	@if (hands != null)
+@if (hands != null && hands.Any())
+{
+	<div>
+		<h2>Hands</h2>
+	@foreach (var hand in hands.Select(h => collectionCache[h]))
 	{
-		@foreach (var hand in hands.Select(h => collectionCache[h]))
-		{
-			<Deck FaceUp="true" NumberOfCards="hand.CardCollection.CardCount">
-				@foreach (var card in hand.CardCollection.VisibleCards)
-				{
-					<Card Title="@card.Key" Illustration="@card.Key"></Card>
-				}
-			</Deck>
-		}		
-	}
-</div>
+		<dev>
+			@foreach (var card in hand.CardCollection.VisibleCards)
+			{
+				<Card Title="@card.Name" Illustration="@card.Name"></Card>
+			}
+		</dev>
+	}		
+	</div>
+}
 
 @code {
 	private GameOverviewResponse game;
+	private IEnumerable<string> communities = null;
 	private IEnumerable<string> hands = null;
 	private IEnumerable<string> decks = null;
 	private Dictionary<string, CardCollectionResponse> collectionCache;

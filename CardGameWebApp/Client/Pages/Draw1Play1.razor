@@ -29,9 +29,9 @@
 	[Parameter]
 	public string Url { get; set; }
 
-	private CardDTO TopDiscard { get; set; }
+	private CardDescriptionDTO TopDiscard { get; set; }
 	private Draw1play1DemoDTO game { get; set; }
-	private List<CardDTO> Hand { get; set; }
+	private List<CardDescriptionDTO> Hand { get; set; }
 	private int CardsInDeck { get; set; } = 0;
 
 	protected override async Task OnInitializedAsync()
@@ -54,7 +54,7 @@
 					var response = await Http.GetAsync(game.DrawAction);
 					if (response.StatusCode == HttpStatusCode.OK)
 					{
-						dynamic cards = await Http.GetFromJsonAsync<IEnumerable<CardDTO>>(game.CardsInHandQuery);
+						dynamic cards = await Http.GetFromJsonAsync<IEnumerable<CardDescriptionDTO>>(game.CardsInHandQuery);
 						Hand.AddRange(cards);
 						CardsInDeck = int.Parse(await Http.GetStringAsync(game.CardsInDeckQuery));
 						this.StateHasChanged();
@@ -63,7 +63,7 @@
 			};
 	}
 
-	private IEnumerable<CallBackAction> GenerateActions(CardDTO card, IDictionary<string, string> actions)
+	private IEnumerable<CallBackAction> GenerateActions(CardDescriptionDTO card, IDictionary<string, string> actions)
 	{
 		if (actions == null)
 			yield break;
@@ -93,6 +93,6 @@
 
 	public Draw1Play1()
 	{
-		Hand = new List<CardDTO>();
+		Hand = new List<CardDescriptionDTO>();
 	}
 }

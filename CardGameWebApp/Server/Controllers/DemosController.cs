@@ -97,12 +97,12 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpGet("{id:Guid}/{collection}")]
-        public IEnumerable<CardDTO> GetCardsIn(Guid id, string collection, int top = 0)
+        public IEnumerable<CardDescriptionDTO> GetCardsIn(Guid id, string collection, int top = 0)
 		{
             var service = GetService(id);
 
             var card = service.Dispatch(new GetTopCard(collection));
-            var dto = new CardDTO
+            var dto = new CardDescriptionDTO
             {
                 Name = card.Name,
                 Illustration = card.Illustration,
