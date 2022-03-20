@@ -15,7 +15,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
 
         public IEnumerable<IToken> Tokenize(string input)
         {
-            return Tokenize(input.Split(Environment.NewLine));
+            return Tokenize(input.Split('\n'));
         }
 
         public IEnumerable<IToken> Tokenize(IEnumerable<string> input)

@@ -8,10 +8,7 @@
 
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar">
 	<div class="btn-group me-2" role="group" aria-label="Test">
-		<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" aria-controls="playArea" disabled="@(!playing)" @onclick="() => playing = false">
-			<span class="oi oi-media-stop" aria-hidden="true"></span> Stop
-		</button>
-		<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" @onclick="() => PlayGame()" disabled="@(playing)">
+		<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" @onclick="() => PlayGame()">
 			<span class="oi oi-media-play" aria-hidden="true"></span> Play
 		</button>
 	</div>
@@ -33,7 +30,7 @@
 	</div>
 </div>
 
-<HighlightEditor Value="@cgdl"></HighlightEditor>
+<HighlightEditor @ref=highlighter></HighlightEditor>
 
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="playArea" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
@@ -41,7 +38,7 @@
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-	  <GameSimulator @ref=gameSim GameUrl="gameUrl"></GameSimulator>
+	  <GameSimulator @ref=@gameSim></GameSimulator>
   </div>
 </div>
 
@@ -49,24 +46,21 @@
 @code {
 	private bool playing = false;
 	private GameSimulator gameSim;
-	private string cgdl = string.Empty;
 	private string gameUrl = string.Empty;
 	private GameIndexResponse game;
-
+	private HighlightEditor highlighter;
 
 	private async void PlayGame()
 	{
-		playing = true;
-		game.Game.CGDLSource = cgdl;
+		game.Game.CGDLSource = highlighter.Value;
 		var response = await Http.PostAsync(game.Links["self"], JsonContent.Create(game.Game));
 		if (response.StatusCode == HttpStatusCode.Created)
 		{
-			gameUrl = response.Headers.Location.AbsoluteUri;
-			gameSim.Start();
+			gameSim.Start(response.Headers.Location.AbsoluteUri);
 		}
 	}
-	 protected override async Task OnInitializedAsync() => 
-	  game = await Http.GetFromJsonAsync<GameIndexResponse>("game");
+	protected override async Task OnInitializedAsync() => 
+		game = await Http.GetFromJsonAsync<GameIndexResponse>("game");
 
 	private Dictionary<string, string> preloads = new Dictionary<string, string>
 	{
@@ -81,7 +75,8 @@
 
 	private void SelectPreload(string preload)
 	{
-		cgdl = preloads[preload];
+		highlighter.Value = preloads[preload];
+		this.StateHasChanged();
 	}
 
 }
