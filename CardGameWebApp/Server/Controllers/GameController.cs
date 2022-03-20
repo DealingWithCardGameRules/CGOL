@@ -75,14 +75,16 @@ namespace CardGameWebApp.Server.Controllers
         [HttpGet("{id:Guid}/collections/{name}")]
         public CardCollectionResponse GetCollection(Guid id, string name)
         {
-            IDictionary<string, string> cardLink(IEnumerable<ICard> cards)
+            IEnumerable<CardRefDTO> cardLink(IEnumerable<ICard> cards)
             {
-                Dictionary<string, string> output = new Dictionary<string, string>();
                 foreach (var card in cards)
                 {
-                    output[card.Name] = Url.Action(nameof(GetCard), "game", new { id, card=card.Instance }, Request.Scheme);
+                    yield return new CardRefDTO
+                    {
+                        Name = card.Name,
+                        Link = Url.Action(nameof(GetCard), "game", new { id, card = card.Instance }, Request.Scheme)
+                    };
                 }
-                return output;
             }
             IDictionary<string, string> actionLink(IEnumerable<ICommand> commands)
             {
