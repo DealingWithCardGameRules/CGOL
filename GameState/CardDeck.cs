@@ -5,15 +5,22 @@ using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.GameState
 {
-    internal class CardStack : ICardCollection
+    internal class CardDeck : ICardCollection
     {
         public string Name { get; }
-        List<ICard> cards;
+        public IEnumerable<string> Tags => tags;
 
-        public CardStack(string name)
+        readonly List<string> tags;
+        readonly List<ICard> cards;
+
+        public CardDeck(string name)
         {
             Name = name;
             cards = new List<ICard>();
+            tags = new List<string>
+            {
+                "deck"
+            };
         }
 
         public void AddCard(ICard card)
@@ -46,6 +53,11 @@ namespace dk.itu.game.msc.cgdl.GameState
         public int Count()
         {
             return cards.Count();
+        }
+
+        public IEnumerable<ICard> GetRevieledCards()
+        {
+            yield break; // Never reviel
         }
     }
 }

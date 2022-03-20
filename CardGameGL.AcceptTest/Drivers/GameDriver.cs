@@ -1,5 +1,4 @@
 ﻿using dk.itu.game.msc.cgdl;
-using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 
@@ -7,7 +6,6 @@ namespace CardGameGL.AcceptTest.Drivers
 {
     internal class GameDriver
     {
-        readonly Dictionary<string, ICommand[]> library = new();
         readonly CGDLService cgdl;
 
         public GameDriver()
@@ -15,17 +13,9 @@ namespace CardGameGL.AcceptTest.Drivers
             cgdl = new CGDLServiceFactory().CreateBasicGame();
         }
 
-        internal void Process(string template)
+        internal void Process(string source)
         {
-            foreach (var command in library[template])
-            {
-                cgdl.Dispatch(command);
-            }
-        }
-
-        internal void Load(string template, string cgdl)
-        {
-            library.Add(template, this.cgdl.Parse(cgdl).ToArray());
+            cgdl.Parse(source);
         }
 
         internal void CreateLibrary()

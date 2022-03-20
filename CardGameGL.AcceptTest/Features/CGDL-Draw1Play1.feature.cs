@@ -97,15 +97,15 @@ namespace CardGameGL.AcceptTest.Features
 #line 6
 #line hidden
 #line 7
- testRunner.Given("the following \"game\" definition:", "CreateDeck \"deck\"\r\nCreateDeck \"discard pile\"\r\nCreateHand \"player\"\r\nCreateCard \"pa" +
+ testRunner.Given("the following:", "CreateDeck \"deck\"\r\nCreateDeck \"discard pile\"\r\nCreateHand \"player\"\r\nCreateCard \"pa" +
                     "ss\"\r\nAddCard \"pass\" \"deck\"\r\nPlay DrawCard \"deck\" \"player\"\r\nPlay PlayCard \"player" +
                     "\" \"discard pile\"", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 17
- testRunner.When("the definition \"game\" is processed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("the \"deck\" should have 1 card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 18
- testRunner.Then("the \"player\" should have 0 cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("the \"player\" should have 0 card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         

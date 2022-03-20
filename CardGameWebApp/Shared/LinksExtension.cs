@@ -5,7 +5,7 @@ namespace CardGameWebApp.Shared
 {
     public abstract class LinksExtension
     {
-        [JsonPropertyName("_links")]
+        [JsonPropertyName("links")]
         public IDictionary<string, string> Links { get; set; }
 
         [JsonConstructor]

@@ -1,7 +1,6 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.LanguageParser;
 using dk.itu.game.msc.cgdl.LanguageParser.Lexers;
-using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -20,7 +19,7 @@ namespace dk.itu.game.msc.cgdl
 
         public IEnumerable<ICommand> Parse(string input)
         {
-            return ParseLines(input.Split(Environment.NewLine));
+            return ParseLines(input.Split('\n'));
         }
 
         public IEnumerable<ICommand> Parse(StreamReader stream)

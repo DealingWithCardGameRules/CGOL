@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgdl.CommonConcepts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.GameState
 {
@@ -13,9 +14,29 @@ namespace dk.itu.game.msc.cgdl.GameState
             collections = new Dictionary<string, ICardCollection>();
         }
 
-        internal void AddStack(CardStack stack)
+        internal IEnumerable<ICard> GetRevieledCards(string collection)
         {
-            collections.Add(stack.Name, stack);
+            return collections[collection].GetRevieledCards();
+        }
+
+        internal IEnumerable<string> CollectionNames() => collections.Keys;
+
+        internal IEnumerable<string> GetTags(string collection)
+        {
+            return collections[collection].Tags;
+        }
+
+        internal IEnumerable<string> CollectionNames(IEnumerable<string> tags)
+        {
+            foreach (var collection in collections.Where(p => p.Value.Tags.Count(t => tags.Contains(t)) == tags.Count()))
+            {
+                yield return collection.Key;
+            }
+        }
+
+        internal void AddDeck(CardDeck collection)
+        {
+            collections.Add(collection.Name, collection);
         }
 
         internal int CollectionSize(string stack)

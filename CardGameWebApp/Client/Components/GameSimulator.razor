@@ -1,0 +1,77 @@
+﻿@using CardGameWebApp.Shared.Responses
+@inject HttpClient Http
+
+<!-- Community cards -->
+<div>
+	<h2>Community cards collections</h2>
+	
+</div>
+
+<!-- Decks -->
+<div>
+	<h2>Decks</h2>
+	@if (decks != null)
+	{
+		@foreach (var deck in decks.Select(d => collectionCache[d]))
+		{
+			<Deck FaceUp="true" NumberOfCards="deck.CardCollection.CardCount">
+				@foreach (var card in deck.CardCollection.VisibleCards)
+				{
+					<Card Title="@card.Key" Illustration="@card.Key"></Card>
+				}
+			</Deck>
+		}
+	}
+</div>
+
+<!-- Hands -->
+<div>
+	<h2>Hands</h2>
+	@if (hands != null)
+	{
+		@foreach (var hand in hands.Select(h => collectionCache[h]))
+		{
+			<Deck FaceUp="true" NumberOfCards="hand.CardCollection.CardCount">
+				@foreach (var card in hand.CardCollection.VisibleCards)
+				{
+					<Card Title="@card.Key" Illustration="@card.Key"></Card>
+				}
+			</Deck>
+		}		
+	}
+</div>
+
+@code {
+	private GameOverviewResponse game;
+	private IEnumerable<string> hands = null;
+	private IEnumerable<string> decks = null;
+	private Dictionary<string, CardCollectionResponse> collectionCache;
+
+	public async void Start(string gameUrl)
+	{
+		collectionCache = new Dictionary<string, CardCollectionResponse>();
+		hands = null;
+		decks = null;
+
+		game = await Http.GetFromJsonAsync<GameOverviewResponse>(gameUrl);
+
+		foreach (var pair in game.Game.Hands)
+			await UpdateCollectionCache(pair.Key, pair.Value);
+		foreach (var pair in game.Game.Decks)
+			await UpdateCollectionCache(pair.Key, pair.Value);
+
+		hands = game.Game.Hands.Keys;
+		decks = game.Game.Decks.Keys;
+		this.StateHasChanged();
+	}
+
+	public async Task UpdateCollectionCache(string name, string url)
+	{
+		var response = await Http.GetFromJsonAsync<CardCollectionResponse>(url);
+		if (collectionCache.ContainsKey(name))
+			collectionCache[name] = response;
+		else
+			collectionCache.Add(name, response);
+	}
+
+}

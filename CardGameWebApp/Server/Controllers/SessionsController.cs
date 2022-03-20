@@ -11,34 +11,31 @@ namespace CardGameWebApp.Server.Controllers
     [Route("[controller]")]
     public class SessionsController : ControllerBase
     {
-        private readonly SessionRepository repository;
-        private readonly SessionFactory factory;
+        private readonly SessionService service;
 
-        public SessionsController(SessionRepository repository, SessionFactory factory)
+        public SessionsController(SessionService service)
         {
-            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            this.service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
         [HttpGet]
         public SessionList GetList()
         {
-            var sessionDTOs = repository.ListSessions().Select(s => new SessionDTO(s.Instance));
+            var sessionDTOs = service.ListSessions().Select(s => new SessionDTO(s.Instance));
             return new SessionList(sessionDTOs, Request.GetEncodedUrl());
         }
 
         [HttpPost]
         public ActionResult Create([FromBody] Guid sessionId)
         {
-            var session = factory.Create(sessionId);
-            repository.AddSession(session);
+            service.Create(sessionId);
             return CreatedAtAction(nameof(GetSession), new { id = sessionId });
         }
 
         [HttpGet("{id:int}")]
         public ActionResult<SessionDTO> GetSession(Guid id)
         {
-            var session = repository.GetSession(id);
+            var session = service.GetSession(id);
             if (session == null)
                 return NotFound();
 

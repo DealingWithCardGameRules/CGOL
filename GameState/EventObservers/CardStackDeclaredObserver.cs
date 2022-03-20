@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 
         public void Invoke(CardCollectionDeclared @event)
         {
-            game.AddStack(new CardStack(@event.Stack));
+            game.AddDeck(new CardDeck(@event.Stack));
         }
     }
 }

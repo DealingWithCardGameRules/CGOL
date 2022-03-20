@@ -15,7 +15,6 @@
     private string source;
     private string HighlightedCGDL;
 
-    [Parameter]
     public string Value
     {
         set
@@ -23,6 +22,7 @@
             source = value;
             HighlightedCGDL = Highlight(value);
             JS.InvokeVoidAsync("sync_scroll");
+            this.StateHasChanged();
         }
         get
         {

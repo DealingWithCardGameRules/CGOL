@@ -8,9 +8,10 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public Guid ProcessId => new Guid("F42D3FDC-048B-462A-8EC9-274A33F18DF5");
 
         public string Hand { get; }
-
+        public Guid Instance { get; }
         public CreateHand(string hand)
         {
+            Instance = Guid.NewGuid();
             Hand = hand;
         }
     }

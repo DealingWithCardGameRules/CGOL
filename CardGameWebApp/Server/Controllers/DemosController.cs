@@ -1,4 +1,5 @@
 ﻿using CardGameWebApp.Shared;
+using dk.itu.game.msc.cgdl;
 using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
@@ -52,14 +53,14 @@ namespace CardGameWebApp.Server.Controllers
         [HttpGet("{id:Guid}")]
         public Draw1play1DemoDTO SetupD1P1(Guid id)
         {
-            var dispatcher = GetDispatcher(id);
+            var service = GetService(id);
 
             // Setup
-            dispatcher.Dispatch(new CreateDeck(deck));
-            dispatcher.Dispatch(new CreateDeck(hand));
-            dispatcher.Dispatch(new CreateDeck(discardPile));
-            dispatcher.Dispatch(new CreateCard("Pass", "Pass", "Pass", "Pass"));
-            dispatcher.Dispatch(new AddCard("Pass", deck));
+            service.Dispatch(new CreateDeck(deck));
+            service.Dispatch(new CreateDeck(hand));
+            service.Dispatch(new CreateDeck(discardPile));
+            service.Dispatch(new CreateCard("Pass", "Pass", "Pass", "Pass"));
+            service.Dispatch(new AddCard("Pass", deck));
 
             return new Draw1play1DemoDTO
             {
@@ -73,15 +74,15 @@ namespace CardGameWebApp.Server.Controllers
         [HttpGet("{id:Guid}/{collection}/count")]
         public int Count(Guid id, string collection)
 		{
-            var dispatcher = GetDispatcher(id);
-            return dispatcher.Dispatch(new CardCount(collection));
+            var service = GetService(id);
+            return service.Dispatch(new CardCount(collection));
         }
 
         [HttpGet("{id:Guid}/draw")]
         public IActionResult DrawCard(Guid id)
 		{
-            var dispatcher = GetDispatcher(id);
-            dispatcher.Dispatch(new DrawCard(deck, hand));
+            var service = GetService(id);
+            service.Dispatch(new DrawCard(deck, hand));
 
             return Ok();
 		}
@@ -89,8 +90,8 @@ namespace CardGameWebApp.Server.Controllers
         [HttpGet("{id:Guid}/play")]
         public IActionResult PlayCard(Guid id, [FromQuery] Guid card)
         {
-            var dispatcher = GetDispatcher(id);
-            dispatcher.Dispatch(new PlayCard(hand, discardPile, card));
+            var service = GetService(id);
+            service.Dispatch(new PlayCard(hand, discardPile, card));
 
             return Ok();
         }
@@ -98,9 +99,9 @@ namespace CardGameWebApp.Server.Controllers
         [HttpGet("{id:Guid}/{collection}")]
         public IEnumerable<CardDTO> GetCardsIn(Guid id, string collection, int top = 0)
 		{
-            var dispatcher = GetDispatcher(id);
+            var service = GetService(id);
 
-            var card = dispatcher.Dispatch(new GetTopCard(collection));
+            var card = service.Dispatch(new GetTopCard(collection));
             var dto = new CardDTO
             {
                 Name = card.Name,
@@ -119,7 +120,7 @@ namespace CardGameWebApp.Server.Controllers
             yield return dto;
         }
 
-        private IDispatcher GetDispatcher(Guid id) => (IDispatcher)repository.GetSession(id).Provider.GetService(typeof(IDispatcher)) ?? throw new Exception();
+        private CGDLService GetService(Guid id) => repository.GetSession(id).Service ?? throw new Exception();
 
         class PassCard : ICard
 		{

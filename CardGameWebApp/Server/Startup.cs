@@ -27,6 +27,7 @@ namespace CardGameWebApp.Server
             services.AddRazorPages();
             services.AddSingleton(new SessionRepository());
             services.AddSingleton(new SessionFactory());
+            services.AddSingleton<SessionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

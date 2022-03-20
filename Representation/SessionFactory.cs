@@ -1,7 +1,4 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.GameState;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 
 namespace dk.itu.game.msc.cgdl.Representation
 {
@@ -9,13 +6,8 @@ namespace dk.itu.game.msc.cgdl.Representation
     {
         public Session Create(Guid id)
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddCGDLBasics();
-            serviceCollection.AddCGDLService();
-            var serviceProvider = serviceCollection.BuildServiceProvider();
-            serviceProvider.GetService<SimpleGameSetup>()?.AddHandlers();
-            new GameStateSetup().Setup(serviceProvider.GetRequiredService<IInterpolator>());
-            return new Session(id, serviceProvider);
+            var service = new CGDLServiceFactory().CreateBasicGame();
+            return new Session(id, service);
         }
     }
 }
