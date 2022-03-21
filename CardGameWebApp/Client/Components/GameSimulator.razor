@@ -45,13 +45,13 @@
 		<h2>Hands</h2>
 	@foreach (var hand in hands.Select(h => collectionCache[h.Key]))
 	{
-		<dev>
+		<Hand NumberOfCards="hand.CardCollection.CardCount" FaceUp="true">
 			@foreach (var card in hand.CardCollection.VisibleCards)
 			{
-				<Card Title="@card.Name" Illustration="@card.Name"></Card>
+				<Card Title="@card.Name" Illustration="@card.Name" Actions="() => GetActions(card.Actions)"></Card>
 			}
-		</dev>
-	}		
+		</Hand>
+	}
 	</div>
 }
 
@@ -73,7 +73,7 @@
 		foreach (var pair in game.Game.Hands)
 			await UpdateCollectionCache(pair.Key, pair.Value);
 		foreach (var pair in game.Game.Decks)
-			await UpdateCollectionCache(pair.Key, pair.Value);		
+			await UpdateCollectionCache(pair.Key, pair.Value);
 
 		hands = game.Game.Hands;
 		decks = game.Game.Decks;
@@ -104,11 +104,13 @@
 			yield return new CallBackAction
 			{
 				Name = action.Key,
-				Execute = () =>
+				Execute = async () =>
 				{
 					Console.WriteLine($"Call {action.Value}");
+					var actionReponse = await Http.GetFromJsonAsync<ActionResponse>(action.Value);
+					var dto = actionReponse.Action;
 
-					var response = Http.PostAsync(action.Value, JsonContent.Create(new ActionDTO())).ContinueWith(async (response) =>
+					var response = Http.PostAsync(action.Value, JsonContent.Create(dto)).ContinueWith(async (response) =>
 					{
 						if (response.Result.StatusCode == HttpStatusCode.OK)
 						{

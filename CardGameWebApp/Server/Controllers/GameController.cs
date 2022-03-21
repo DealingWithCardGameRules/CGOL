@@ -9,6 +9,10 @@ using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 using System.Collections.Generic;
 using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.CommandCentral;
+using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
+using System.Linq;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Dynamic;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -75,6 +79,18 @@ namespace CardGameWebApp.Server.Controllers
         [HttpGet("{id:Guid}/collections/{name}")]
         public CardCollectionResponse GetCollection(Guid id, string name)
         {
+            var current = session.GetSession(id);
+            List<ICommand> colActions = new List<ICommand>();
+            List<ICommand> cardActions = new List<ICommand>();
+
+            foreach (var action in current.Service.Dispatch(new GetAvailableActionsForCollection(name)))
+            {
+                if (action.GetPlayCard() != null)
+                    cardActions.Add(action);
+                else
+                    colActions.Add(action);
+            }
+
             IEnumerable<CardRefDTO> cardLink(IEnumerable<ICard> cards)
             {
                 foreach (var card in cards)
@@ -82,28 +98,35 @@ namespace CardGameWebApp.Server.Controllers
                     yield return new CardRefDTO
                     {
                         Name = card.Name,
-                        Link = Url.Action(nameof(GetCard), "game", new { id, card = card.Instance }, Request.Scheme)
+                        //Link = Url.Action(nameof(GetCard), "game", new { id, card = card.Instance }, Request.Scheme),
+                        Actions = actionLink(cardActions, card.Instance)
                     };
                 }
             }
-            IDictionary<string, string> actionLink(IEnumerable<ICommand> commands)
+
+            IDictionary<string, string> actionLink(IEnumerable<ICommand> commands, Guid? card = null)
             {
                 Dictionary<string, string> output = new Dictionary<string, string>();
                 foreach (var command in commands)
                 {
-                    output[command.GetType().Name] = Url.Action(nameof(GetActions), "game", new { id, instance=command.Instance }, Request.Scheme);
+                    dynamic obj = new ExpandoObject();
+                    obj.id = id;
+                    obj.instance = command.Instance;
+                    if (card != null)
+                        (obj as IDictionary<string, object>).Add(command.GetPlayCard(), card);
+
+                    output[command.GetType().Name] = Url.Action(nameof(GetActions), "game", (object)obj, Request.Scheme);
                 }
                 return output;
             }
 
-            var current = session.GetSession(id);
             var dto = new CardCollectionDTO
             {
                 Name = name,
                 VisibleCards = cardLink(current.Service.Dispatch(new GetVisibleCards(name))),
                 CardCount = current.Service.Dispatch(new CardCount(name)),
                 Tags = current.Service.Dispatch(new GetCollectionTags(name)),
-                Actions = actionLink(current.Service.Dispatch(new GetAvailableActionsForCollection(name)))
+                Actions = actionLink(colActions)
             };
             
             return new CardCollectionResponse(Request.GetEncodedUrl())
@@ -115,6 +138,7 @@ namespace CardGameWebApp.Server.Controllers
         [HttpGet("{id:Guid}/cards/{card:Guid}")]
         public ActionResult GetCard(Guid id, Guid card)
         {
+
             return Ok();
         }
 
@@ -126,7 +150,23 @@ namespace CardGameWebApp.Server.Controllers
             if (command == null)
                 return NotFound(); // Early out
 
-            return new ActionResponse(new ActionDTO(), Request.GetEncodedUrl());
+            var dto = new ActionDTO();
+            var parameters = new List<ActionParameterDTO>();
+
+            var playCardProperty = command.GetPlayCard();
+            if (playCardProperty != null)
+            {
+                parameters.Add(new ActionParameterDTO
+                {
+                    Name = playCardProperty,
+                    Type = "CardID",
+                    Value = Request.Query[playCardProperty]
+                });
+            }
+
+            dto.Parameters = parameters;
+            var output = new ActionResponse(dto, Request.GetEncodedUrl());
+            return output;
         }
 
         [HttpPost("{id:Guid}/actions/{instance:Guid}")]
@@ -136,6 +176,14 @@ namespace CardGameWebApp.Server.Controllers
             var command = current.Service.Dispatch(new GetAvailableAction(instance));
             if (command == null)
                 return NotFound(); // Early out
+
+            var playCardProperty = command.GetPlayCard();
+            if (playCardProperty != null)
+            {
+                var value = action.Parameters.Single(p => p.Name.Equals(playCardProperty)).Value;
+                var cardId = Guid.Parse(value);
+                command.SetPlayCard(cardId);
+            }
 
             current.Service.Dispatch(command);
             return Ok();
