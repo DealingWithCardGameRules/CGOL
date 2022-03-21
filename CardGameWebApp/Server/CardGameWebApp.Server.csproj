@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Classes\**" />
+    <Content Remove="Classes\**" />
+    <EmbeddedResource Remove="Classes\**" />
+    <None Remove="Classes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.11" />
   </ItemGroup>
 
@@ -13,10 +20,6 @@
     <ProjectReference Include="..\..\Representation\Representation.csproj" />
     <ProjectReference Include="..\Client\CardGameWebApp.Client.csproj" />
     <ProjectReference Include="..\Shared\CardGameWebApp.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Classes\" />
   </ItemGroup>
 
 

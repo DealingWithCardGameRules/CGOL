@@ -1,4 +1,6 @@
-﻿@using CardGameWebApp.Shared.Responses
+﻿@using CardGameWebApp.Shared.DTOs
+@using CardGameWebApp.Shared.Responses
+@using System.Net
 @inject HttpClient Http
 
 <!-- Community cards -->
@@ -16,9 +18,10 @@
 {
 	<div>
 		<h2>Decks</h2>
-	@foreach (var deck in decks.Select(d => collectionCache[d]))
+	@foreach (var deck in decks.Select(d => collectionCache[d.Key]))
 	{
-		<Deck FaceUp="false" NumberOfCards="deck.CardCollection.CardCount" Name="@deck.CardCollection.Name">
+		<Deck FaceUp="false" NumberOfCards="deck.CardCollection.CardCount" 
+			Name="@deck.CardCollection.Name" Actions="() => GetActions(deck.CardCollection.Actions)">
 			@if (deck.CardCollection.VisibleCards.Any())
 			{
 				@foreach (var card in deck.CardCollection.VisibleCards)
@@ -40,7 +43,7 @@
 {
 	<div>
 		<h2>Hands</h2>
-	@foreach (var hand in hands.Select(h => collectionCache[h]))
+	@foreach (var hand in hands.Select(h => collectionCache[h.Key]))
 	{
 		<dev>
 			@foreach (var card in hand.CardCollection.VisibleCards)
@@ -55,8 +58,8 @@
 @code {
 	private GameOverviewResponse game;
 	private IEnumerable<string> communities = null;
-	private IEnumerable<string> hands = null;
-	private IEnumerable<string> decks = null;
+	private IDictionary<string, string> hands = null;
+	private IDictionary<string, string> decks = null;
 	private Dictionary<string, CardCollectionResponse> collectionCache;
 
 	public async void Start(string gameUrl)
@@ -70,14 +73,22 @@
 		foreach (var pair in game.Game.Hands)
 			await UpdateCollectionCache(pair.Key, pair.Value);
 		foreach (var pair in game.Game.Decks)
-			await UpdateCollectionCache(pair.Key, pair.Value);
+			await UpdateCollectionCache(pair.Key, pair.Value);		
 
-		hands = game.Game.Hands.Keys;
-		decks = game.Game.Decks.Keys;
+		hands = game.Game.Hands;
+		decks = game.Game.Decks;
 		this.StateHasChanged();
 	}
 
-	public async Task UpdateCollectionCache(string name, string url)
+	private async Task updateCache()
+	{
+		foreach (var pair in hands)
+			await UpdateCollectionCache(pair.Key, pair.Value);
+		foreach (var pair in decks)
+			await UpdateCollectionCache(pair.Key, pair.Value);		
+	}
+
+	private async Task UpdateCollectionCache(string name, string url)
 	{
 		var response = await Http.GetFromJsonAsync<CardCollectionResponse>(url);
 		if (collectionCache.ContainsKey(name))
@@ -86,4 +97,27 @@
 			collectionCache.Add(name, response);
 	}
 
+	private IEnumerable<CallBackAction> GetActions(IDictionary<string, string> actions)
+	{
+		foreach (var action in actions)
+		{
+			yield return new CallBackAction
+			{
+				Name = action.Key,
+				Execute = () =>
+				{
+					Console.WriteLine($"Call {action.Value}");
+
+					var response = Http.PostAsync(action.Value, JsonContent.Create(new ActionDTO())).ContinueWith((response) =>
+					{
+						if (response.Result.StatusCode == HttpStatusCode.OK)
+						{
+							Task.WaitAll(updateCache());
+							this.StateHasChanged();
+						}
+					});
+				}
+			};
+		}
+	}
 }
