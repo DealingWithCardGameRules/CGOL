@@ -108,11 +108,11 @@
 				{
 					Console.WriteLine($"Call {action.Value}");
 
-					var response = Http.PostAsync(action.Value, JsonContent.Create(new ActionDTO())).ContinueWith((response) =>
+					var response = Http.PostAsync(action.Value, JsonContent.Create(new ActionDTO())).ContinueWith(async (response) =>
 					{
 						if (response.Result.StatusCode == HttpStatusCode.OK)
 						{
-							Task.WaitAll(updateCache());
+							await updateCache();
 							this.StateHasChanged();
 						}
 					});
