@@ -18,30 +18,30 @@ namespace dk.itu.game.msc.cgdl.GameState
             globalCommands = new CommandRepository();
         }
 
-        public void Setup(IInterpolator interpolator)
+        public void Setup(IPluginContext context)
         {
             // Command handlers
-            interpolator.AddConcept(new PostponedCommandHandler(globalCommands));
+            context.Interpolator.AddConcept(new PostponedCommandHandler(globalCommands));
 
             // Query handlers
-            interpolator.AddConcept(new CardCounter(game));
-            interpolator.AddConcept(new TopCardGetter(game));
-            interpolator.AddConcept(new CardGetter(game));
-            interpolator.AddConcept(new TemplateGetter(library));
-            interpolator.AddConcept(new GetAvailableActionsHandler(globalCommands));
-            interpolator.AddConcept(new GetCollectionNamesHandler(game));
-            interpolator.AddConcept(new GetVisibleCardsHandler(game));
-            interpolator.AddConcept(new GetCollectionTagsHandler(game));
-            interpolator.AddConcept(new GetAvailableActionsForCollectionHandler(globalCommands));
-            interpolator.AddConcept(new GetAvailableActionHandler(globalCommands));
+            context.Interpolator.AddConcept(new CardCounter(game));
+            context.Interpolator.AddConcept(new TopCardGetter(game));
+            context.Interpolator.AddConcept(new CardGetter(game));
+            context.Interpolator.AddConcept(new TemplateGetter(library));
+            context.Interpolator.AddConcept(new GetAvailableActionsHandler(globalCommands));
+            context.Interpolator.AddConcept(new GetCollectionNamesHandler(game));
+            context.Interpolator.AddConcept(new GetVisibleCardsHandler(game));
+            context.Interpolator.AddConcept(new GetCollectionTagsHandler(game));
+            context.Interpolator.AddConcept(new GetAvailableActionsForCollectionHandler(globalCommands));
+            context.Interpolator.AddConcept(new GetAvailableActionHandler(globalCommands));
 
             // Event observers
-            interpolator.AddConcept(new CardStackDeclaredObserver(game));
-            interpolator.AddConcept(new HandDeclaredObserver(game));
-            interpolator.AddConcept(new CardAddedObserver(game));
-            interpolator.AddConcept(new CardDrawnObserver(game));
-            interpolator.AddConcept(new CardMovedObserver(game));
-            interpolator.AddConcept(new CardDeclaredObserver(library));
+            context.Interpolator.AddConcept(new CardStackDeclaredObserver(game));
+            context.Interpolator.AddConcept(new HandDeclaredObserver(game));
+            context.Interpolator.AddConcept(new CardAddedObserver(game));
+            context.Interpolator.AddConcept(new CardDrawnObserver(game));
+            context.Interpolator.AddConcept(new CardMovedObserver(game));
+            context.Interpolator.AddConcept(new CardDeclaredObserver(library));
         }
     }
 }

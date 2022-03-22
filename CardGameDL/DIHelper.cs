@@ -14,17 +14,19 @@ namespace dk.itu.game.msc.cgdl
             services.AddSingleton<EventLoggerFactory>();
             services.AddSingleton<DispatcherFactory>();
             services.AddSingleton<IInterpolator, Interpolator>();
-            services.AddSingleton<ITimeProvider>(new UtcTime());
+            services.AddSingleton<ITimeProvider, UtcTime>();
+            services.AddSingleton<IPluginContext, PluginContext>();
         }
 
         public static void AddCGDLParser(this IServiceCollection services)
         {
             services.AddSingleton<IParserQueueFactory, ParserQueueFactory>();
-            services.AddSingleton<IParser<object>, LiteralParser>();
-            services.AddSingleton<IParser<ICommand>, ConceptParser>();
+            services.AddSingleton<IParser<object?>, LiteralParser>();
+            services.AddSingleton<IParser<ICommand?>, ConceptParser>();
             services.AddSingleton<CGDLParser>();
             services.AddSingleton<LexerFactory>();
             services.AddSingleton<CardGameDLParser>();
+            services.AddSingleton<LanguageParserSetup>();
         }
 
         public static void AddCGDLService(this IServiceCollection services)
