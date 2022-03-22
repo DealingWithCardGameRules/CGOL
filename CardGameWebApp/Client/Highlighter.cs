@@ -37,20 +37,20 @@ namespace CardGameWebApp.Client
                 }
                 else if (KnownConcept.ContainsKey(token.RawValue))
                 {
-                    output.Append($"<span class=\"token {token.Type}\">{token.RawValue}<span class=\"intel\"> ");
-                    foreach (var parameter in KnownConcept[token.RawValue].Parameters)
+                    var knowledge = KnownConcept[token.RawValue];
+                    output.Append($"<span class=\"token {token.Type}\" data-placement=\"top\" data-toggle=\"tooltip\" data-html=\"true\" title=\"");
+                    output.Append($"<b>{knowledge.Name}</b>");
+                    foreach (var parameter in knowledge.Parameters)
                     {
-                        if (!parameter.Required)
-                            output.Append("[");
-
-                        output.Append($"{parameter.Name}");
-
-                        if (!parameter.Required)
-                            output.Append("]");
-
-                        output.Append(" ");
+                        output.Append(' ');
+                        if (parameter.Required)
+                        {
+                            output.Append($"<em>{parameter.Name}</em>");
+                        }
+                        else
+                            output.Append($"[<em>{parameter.Name}</em>]");
                     }
-                    output.Append("</span></span>");
+                    output.Append($"\">{token.RawValue}</span>");
                 }
                 else
                 {

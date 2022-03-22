@@ -3,8 +3,8 @@
 @inject HttpClient Http
 
 <div class="highlight-editor">
-    <textarea id="editing" class="editing" spellcheck="false" @bind="@Value" @bind:event="oninput" onscroll="sync_scroll();"></textarea>
-    <pre id="highlighting" class="highlighting" aria-hidden="true">
+    <textarea id="editing" class="editing @intel" wrap="off" spellcheck="false" @bind="@Value" @bind:event="oninput" onscroll="sync_scroll();" @onkeydown="KeyDown" @onkeyup="Reset"></textarea>
+    <pre id="highlighting" class="highlighting" aria-hidden="true" @onclick="Reset">
       <code class="language-cgdl">@((MarkupString)HighlightedCGDL)</code>
     </pre>
 </div>
@@ -16,6 +16,21 @@
     private Highlighter highlighter = new Highlighter();
     private string source;
     private string HighlightedCGDL;
+    private string intel;
+
+    private void KeyDown(KeyboardEventArgs args)
+    {
+        if (args.CtrlKey)
+        {
+            intel = "intel";
+        }
+    }
+
+    private void Reset()
+    {
+        intel = "";
+    }
+
 
     public string Value
     {
