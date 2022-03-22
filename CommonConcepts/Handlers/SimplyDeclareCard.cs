@@ -15,7 +15,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
         public void Handle(CreateCard command, IEventDispatcher eventDispatcher)
         {
-            var template = new SimpleTemplate(command.Template, command.Name, command.Illustration, command.Description);
+            var template = new SimpleTemplate(command.Template);
             var @event = new CardDeclared(timeProvider.Now, command.ProcessId, command.Template, template);
             eventDispatcher.Dispatch(@event);
         }

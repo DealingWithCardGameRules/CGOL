@@ -26,9 +26,9 @@
 			{
 				@foreach (var card in deck.CardCollection.VisibleCards)
 				{
-					<Card Title="@card.Name" Illustration="@card.Name"></Card>
-					}
+					<Card Template="@card.Name" />
 				}
+			}
 			else
 			{
 				<p>@deck.CardCollection.Name</p>		
@@ -48,7 +48,7 @@
 		<Hand NumberOfCards="hand.CardCollection.CardCount" FaceUp="true">
 			@foreach (var card in hand.CardCollection.VisibleCards)
 			{
-				<Card Title="@card.Name" Illustration="@card.Name" Actions="() => GetActions(card.Actions)"></Card>
+				<Card Template="@card.Name" Actions="() => GetActions(card.Actions)" />
 			}
 		</Hand>
 	}

@@ -1,27 +1,22 @@
 ﻿@using CardGameWebApp.Shared
 <div class="playcard">
 	<ActionPrompt Actions=@Actions>
-		<h3>@Title</h3>
-		<img class="illustration" src="/illustrations/@(Illustration).png" />
-		<p>@Classification</p>
-		<p class="description">@ChildContent</p>
+		@{
+			var card = library.GetCard(Template);
+		}
+		<h3>@card.Name</h3>
+		<img class="illustration" src="/illustrations/@(card.Illustration).png" />
+		<p>@card.Classification</p>
+		<p class="description">@card.Description</p>
 	</ActionPrompt>
 </div>
 
 @code {
-	[Parameter]
-	public string Title { get; set; } = "Untitled";
+	private CardLibrary library = CardLibrary.Instance;
 
 	[Parameter]
-	public string Illustration { get; set; } = "Pass";
+	public string Template { get; set; } = "?";
 
-	[Parameter]
-	public string Classification { get; set; } = "Unclasified";
-	
 	[Parameter]
 	public Func<IEnumerable<CallBackAction>> Actions { get; set; }
-
-	[Parameter]
-	public RenderFragment ChildContent { get; set; }
-
 }

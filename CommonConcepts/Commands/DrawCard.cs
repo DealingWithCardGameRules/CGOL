@@ -10,11 +10,11 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         [PlayFrom] public string Source { get; }
         public string Destination { get; }
         public Guid Instance { get; }
-        public DrawCard(string source, string destination)
+        public DrawCard(string from, string to)
         {
             Instance = Guid.NewGuid();
-            Source = source;
-            Destination = destination;
+            Source = from;
+            Destination = to;
         }
     }
 }

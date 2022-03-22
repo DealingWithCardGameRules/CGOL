@@ -97,7 +97,7 @@ namespace CardGameWebApp.Server.Controllers
                 {
                     yield return new CardRefDTO
                     {
-                        Name = card.Name,
+                        Name = card.Template,
                         //Link = Url.Action(nameof(GetCard), "game", new { id, card = card.Instance }, Request.Scheme),
                         Actions = actionLink(cardActions, card.Instance)
                     };

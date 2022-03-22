@@ -9,10 +9,10 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 
         public string Hand { get; }
         public Guid Instance { get; }
-        public CreateHand(string hand)
+        public CreateHand(string uniqueName)
         {
             Instance = Guid.NewGuid();
-            Hand = hand;
+            Hand = uniqueName;
         }
     }
 }

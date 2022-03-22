@@ -12,12 +12,12 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         [PlayCard] public Guid? Card { get; set; }
         public Guid Instance { get; }
 
-        public PlayCard(string source, string destination, Guid? card = null)
+        public PlayCard(string from, string discardTo, Guid? card = null)
         {
             Instance = Guid.NewGuid();
             Card = card;
-            Source = source;
-            Destination = destination;
+            Source = from;
+            Destination = discardTo;
         }
     }
 }
