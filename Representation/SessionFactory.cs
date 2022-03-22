@@ -6,8 +6,9 @@ namespace dk.itu.game.msc.cgdl.Representation
     {
         public Session Create(Guid id)
         {
-            var service = new CGDLServiceFactory().CreateBasicGame();
-            return new Session(id, service);
+            var factory = new CGDLServiceFactory();
+            var service = factory.CreateBasicGame();
+            return new Session(id, service, factory.GetInterpolator());
         }
     }
 }

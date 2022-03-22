@@ -151,6 +151,13 @@ span.token.symbol {
     font-weight: 700;
 }
 
+span.token > span.intel {
+    font-weight: 100;
+    color: grey;
+    float: right;
+}
+
+
 /* For the highlight editor */
 
 .highlight-editor {

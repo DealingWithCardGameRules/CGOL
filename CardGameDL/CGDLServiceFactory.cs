@@ -31,5 +31,10 @@ namespace dk.itu.game.msc.cgdl
             new GameStateSetup().Setup(context);
             return CreateEmpty();
         }
+
+        public IInterpolator GetInterpolator()
+        {
+            return serviceProvider.GetRequiredService<IInterpolator>();
+        }
     }
 }

@@ -59,8 +59,17 @@
 			gameSim.Start(response.Headers.Location.AbsoluteUri);
 		}
 	}
-	protected override async Task OnInitializedAsync() => 
+	protected override async Task OnInitializedAsync()
+	{
 		game = await Http.GetFromJsonAsync<GameIndexResponse>("game");
+		var response = await Http.PostAsync("sessions", JsonContent.Create(string.Empty));
+		if (response.StatusCode == HttpStatusCode.Created)
+		{
+			var session = await Http.GetFromJsonAsync<SessionResponse>(response.Headers.Location);
+			if (session.Links.ContainsKey("concepts"))
+				highlighter.UpdateConcepts(session.Links["concepts"]);
+		}
+	}
 
 	private Dictionary<string, string> preloads = new Dictionary<string, string>
 	{

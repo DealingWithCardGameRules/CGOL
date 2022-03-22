@@ -1,4 +1,6 @@
-﻿@inject IJSRuntime JS
+﻿@using CardGameWebApp.Shared.DTOs
+@inject IJSRuntime JS
+@inject HttpClient Http
 
 <div class="highlight-editor">
     <textarea id="editing" class="editing" spellcheck="false" @bind="@Value" @bind:event="oninput" onscroll="sync_scroll();"></textarea>
@@ -9,7 +11,7 @@
 
 @code {
     // Inspiration:
-    // https://css-tricks.com/creating-an-editable-textarea-that-supports-syntax-highlighted-code/
+    // https://css-tricks.com/creating-an-editable-textarea-that-supports-syntax-highlighted-code/    
 
     private Highlighter highlighter = new Highlighter();
     private string source;
@@ -29,6 +31,18 @@
             return source;
         }
     }
+
+    public async void UpdateConcepts(string url)
+    {
+        var concepts = await Http.GetFromJsonAsync<IEnumerable<ConceptDTO>>(url);
+        var dict = new Dictionary<string, ConceptDTO>();
+        foreach (var concept in concepts)
+        {
+            dict[concept.Name] = concept;
+        }
+        highlighter.KnownConcept = dict;
+    }
+
 
     private string Highlight(string input)
     {
