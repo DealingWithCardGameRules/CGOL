@@ -10,12 +10,6 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
 
         public string Template { get; set; }
 
-        public string Name { get; set; }
-
-        public string Illustration { get; set; }
-
-        public string Description { get; set; }
-
         public IEnumerable<ICommand> Instantaneous => instantaneous;
 
         public IEnumerable<ICommand> Permanent => permanent;
@@ -30,12 +24,9 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
             permanent.Add(command);
         }
 
-        public SimpleTemplate(string template, string name, string illustration, string description)
+        public SimpleTemplate(string template)
         {
             Template = template;
-            Name = name;
-            Illustration = illustration;
-            Description = description;
         }
 
     }

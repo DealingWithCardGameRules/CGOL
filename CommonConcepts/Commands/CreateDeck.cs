@@ -10,10 +10,10 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public string Name { get; }
         public Guid Instance { get; }
 
-        public CreateDeck(string stack)
+        public CreateDeck(string uniqueName)
         {
             Instance = Guid.NewGuid();
-            Name = stack;
+            Name = uniqueName;
         }
     }
 }

@@ -225,3 +225,7 @@ span.token.symbol {
 .offcanvas-end {
     width: calc(100% - 32px);
 }
+
+.tooltip-inner {
+    max-width: 350px;
+}

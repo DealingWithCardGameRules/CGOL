@@ -11,7 +11,7 @@
 	<Deck Name="discardPile" FaceUp="true">
 		@if (TopDiscard != null)
 		{
-			<Card Title="@TopDiscard.Name" Illustration="@TopDiscard.Illustration" Classification="@TopDiscard.Classification">@TopDiscard.Description</Card>
+			<Card Template="@TopDiscard.Template" />
 		}
 		else
 		{
@@ -20,7 +20,7 @@
 	</Deck>
 	@foreach(var card in Hand)
 	{
-		<Card Title="@card.Name" Illustration="@card.Illustration" Classification="@card.Classification" Actions="@(() => GenerateActions(@card, @card.Actions))">@card.Description</Card>
+		<Card Template="@card.Template" Actions="@(() => GenerateActions(@card, @card.Actions))" />
 	}
 </div>
 

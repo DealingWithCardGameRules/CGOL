@@ -59,7 +59,7 @@ namespace CardGameWebApp.Server.Controllers
             service.Dispatch(new CreateDeck(deck));
             service.Dispatch(new CreateDeck(hand));
             service.Dispatch(new CreateDeck(discardPile));
-            service.Dispatch(new CreateCard("Pass", "Pass", "Pass", "Pass"));
+            service.Dispatch(new CreateCard("Pass"));
             service.Dispatch(new AddCard("Pass", deck));
 
             return new Draw1play1DemoDTO
@@ -104,11 +104,8 @@ namespace CardGameWebApp.Server.Controllers
             var card = service.Dispatch(new GetTopCard(collection));
             var dto = new CardDescriptionDTO
             {
-                Name = card.Name,
-                Illustration = card.Illustration,
-                Description = card.Description
+                Template = card.Template
             };
-
             if (collection == hand)
 			{
                 dto.Actions = new Dictionary<string, string> 

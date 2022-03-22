@@ -20,7 +20,7 @@ namespace CardGameGL.AcceptTest.Drivers
 
         internal void CreateLibrary()
         {
-            var card = new CreateCard("Pass", "Pass", "Pass", "Does nothing.");
+            var card = new CreateCard("Pass");
             cgdl.Dispatch(card);
         }
 

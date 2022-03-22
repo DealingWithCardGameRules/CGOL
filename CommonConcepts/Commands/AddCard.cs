@@ -11,11 +11,11 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 
         public Guid Instance { get; }
 
-        public AddCard(string template, string deck)
+        public AddCard(string uniqueCardName, string collection)
         {
             Instance = Guid.NewGuid();
-            Template = template;
-            Destination = deck;
+            Template = uniqueCardName;
+            Destination = collection;
         }
     }
 }
