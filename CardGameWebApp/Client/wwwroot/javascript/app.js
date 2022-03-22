@@ -6,3 +6,7 @@
     highlighting.scrollTop = editing.scrollTop;
     highlighting.scrollLeft = editing.scrollLeft;
 }
+
+$(document).ready(function () {
+    $("body").tooltip({ selector: '[data-toggle=tooltip]', html: true });
+});

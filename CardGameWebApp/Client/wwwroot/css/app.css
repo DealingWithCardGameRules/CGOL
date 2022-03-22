@@ -135,9 +135,10 @@ span.token {
     font-weight: 600;
 }
 
-span.token.concept {
-    color: blue;
-}
+    span.token.concept {
+        color: blue;
+        cursor: help;
+    }
 
 span.token.keyword {
     color: green;
@@ -151,15 +152,35 @@ span.token.symbol {
     font-weight: 700;
 }
 
-/* For the highlight editor */
+    span.token > span.intel {
+        font-size: 8pt !important;
+        color: grey;
+        float: right;
+        padding-left: 5px;
+        padding-right: 5px;
+        
+    }
 
+        span.token > span.intel > span.type.command {
+            font-size: 8pt !important;
+            color: black;
+        }
+
+        span.token > span.intel > span.type {
+            font-size: 8pt !important;
+            color: blue;
+            
+        }
+
+
+/* For the highlight editor */
 .highlight-editor {
     display: grid;
 }
 
 #editing, #highlighting, #highlighting * {
     /* Also add text styles to highlighting tokens */
-    font-size: 15pt;
+    font-size: 12pt;
     font-family: monospace;
     line-height: 20pt;
     tab-size: 2;
@@ -179,7 +200,7 @@ span.token.symbol {
 
 /* Move the textarea in front of the result */
 #editing {
-    z-index: 1;
+    z-index: 2;
     resize: none;
     color: transparent;
     background: transparent;
@@ -187,8 +208,18 @@ span.token.symbol {
     border: 1px solid black;
 }
 
-#highlighting {
+#editing.intel {
     z-index: 0;
+}
+
+#highlighting {
+    z-index: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .offcanvas-end {

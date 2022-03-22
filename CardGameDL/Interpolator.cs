@@ -11,6 +11,8 @@ namespace dk.itu.game.msc.cgdl
         public Dictionary<Type, object> conceptHandlers;
         public HashSet<Type> supported;
 
+        public IEnumerable<Type> SupportedTypes => supported;
+
         public Interpolator()
         {
             conceptHandlers = new Dictionary<Type, object>();

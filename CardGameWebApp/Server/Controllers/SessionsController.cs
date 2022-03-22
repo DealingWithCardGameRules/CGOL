@@ -1,4 +1,5 @@
 ﻿using CardGameWebApp.Shared;
+using CardGameWebApp.Shared.Responses;
 using dk.itu.game.msc.cgdl.Representation;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -26,20 +27,26 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([FromBody] Guid sessionId)
+        public ActionResult Create()
         {
-            service.Create(sessionId);
-            return CreatedAtAction(nameof(GetSession), new { id = sessionId });
+            var id = Guid.NewGuid();
+            service.Create(id);
+            return Created(Url.Action(nameof(GetSession), "sessions", new { id }, Request.Scheme), null);
         }
 
-        [HttpGet("{id:int}")]
-        public ActionResult<SessionDTO> GetSession(Guid id)
+        [HttpGet("{id:Guid}")]
+        public ActionResult<SessionResponse> GetSession(Guid id)
         {
             var session = service.GetSession(id);
             if (session == null)
                 return NotFound();
 
-            return new SessionDTO(session.Instance);
+            var output = new SessionResponse(Request.GetEncodedUrl())
+            {
+                Session = new SessionDTO(session.Instance)
+            };
+            output.Links.Add("concepts", Url.Action("Index", "concepts", new { id }, Request.Scheme));
+            return output;
         }
     }
 }

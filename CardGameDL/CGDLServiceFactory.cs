@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.GameState;
+using dk.itu.game.msc.cgdl.LanguageParser;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -24,9 +25,16 @@ namespace dk.itu.game.msc.cgdl
 
         public CGDLService CreateBasicGame()
         {
+            var context = serviceProvider.GetRequiredService<IPluginContext>();
             serviceProvider.GetRequiredService<SimpleGameSetup>().AddHandlers();
-            new GameStateSetup().Setup(serviceProvider.GetRequiredService<IInterpolator>());
-            return serviceProvider.GetRequiredService<CGDLService>();
+            serviceProvider.GetRequiredService<LanguageParserSetup>().Setup(context);
+            new GameStateSetup().Setup(context);
+            return CreateEmpty();
+        }
+
+        public IInterpolator GetInterpolator()
+        {
+            return serviceProvider.GetRequiredService<IInterpolator>();
         }
     }
 }

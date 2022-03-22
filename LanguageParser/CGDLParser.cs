@@ -13,7 +13,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
         private readonly IParser<ICommand> conceptParser;
         private IParserQueue queue;
 
-        public CGDLParser(IParserQueueFactory factory, IParser<ICommand> conceptParser)
+        public CGDLParser(IParserQueueFactory factory, IParser<ICommand?> conceptParser)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
             this.conceptParser = conceptParser ?? throw new ArgumentNullException(nameof(conceptParser));
