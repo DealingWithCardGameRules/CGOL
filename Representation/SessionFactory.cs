@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.Representation
         public Session Create(Guid id)
         {
             var factory = new CGDLServiceFactory();
-            var service = factory.CreateBasicGame();
+            var service = factory.CreateFluxxGame();
             return new Session(id, service, factory.GetInterpolator());
         }
     }

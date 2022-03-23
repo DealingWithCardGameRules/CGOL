@@ -1,4 +1,5 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
+using dk.itu.game.msc.cgdl.FluxxConcepts;
 using dk.itu.game.msc.cgdl.GameState;
 using dk.itu.game.msc.cgdl.LanguageParser;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,16 @@ namespace dk.itu.game.msc.cgdl
             serviceProvider.GetRequiredService<SimpleGameSetup>().AddHandlers();
             serviceProvider.GetRequiredService<LanguageParserSetup>().Setup(context);
             new GameStateSetup().Setup(context);
+            return CreateEmpty();
+        }
+
+        public CGDLService CreateFluxxGame()
+        {
+            var context = serviceProvider.GetRequiredService<IPluginContext>();
+            serviceProvider.GetRequiredService<SimpleGameSetup>().AddHandlers();
+            serviceProvider.GetRequiredService<LanguageParserSetup>().Setup(context);
+            new GameStateSetup().Setup(context);
+            new FluxxConceptsSetup().Setup(context);
             return CreateEmpty();
         }
 

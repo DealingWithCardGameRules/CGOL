@@ -76,8 +76,9 @@ namespace dk.itu.game.msc.cgdl
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            if (conceptHandlers.ContainsKey(typeof(T)))
-                throw new DuplicateConceptException(typeof(T));
+            
+            //if (conceptHandlers.ContainsKey(typeof(T)))
+            //    throw new DuplicateConceptException(typeof(T));
 
             conceptHandlers[typeof(T)] = obj;
         }
