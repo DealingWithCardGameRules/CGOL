@@ -10,7 +10,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             var drawCounter = new DrawCounter();
 
             // Command handlers
-            context.Interpolator.AddConcept(new DrawCardHandler(context.Dispatcher));
+            context.Interpolator.AddConcept(new DrawCardHandler(context.Dispatcher, 100));
             
             // Query handlers
             context.Interpolator.AddConcept(new CurrentPlayerHandler());

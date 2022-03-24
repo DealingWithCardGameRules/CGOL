@@ -12,10 +12,12 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
     public sealed class DrawCardHandler : ICommandHandler<DrawCard>
     {
         private readonly IQueryDispatcher dispatcher;
+        private readonly int maxiumDraws; // Should always have a hard limit
 
-        public DrawCardHandler(IQueryDispatcher dispatcher)
+        public DrawCardHandler(IQueryDispatcher dispatcher, int maxiumDraws)
         {
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
+            this.maxiumDraws = maxiumDraws;
         }
 
         public void Handle(DrawCard command, IEventDispatcher eventDispatcher)
@@ -25,8 +27,11 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
 
             var player = dispatcher.Dispatch(new CurrentPlayer());
 
-            while (!dispatcher.Dispatch(new DrawLimitReached(player)))
+            for (var i = 0; i < maxiumDraws; i++)
             {
+                if (dispatcher.Dispatch(new DrawLimitReached(player)))
+                    return;
+
                 eventDispatcher.Dispatch(new CardDrawn(DateTime.Now, command.ProcessId, command.Source, command.Destination));
             }
         }

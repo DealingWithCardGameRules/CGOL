@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Attributes
 {
-    public class PlayFromAttribute : Attribute
+    public class PlayCollectionAttribute : Attribute
     {
     }
 
@@ -16,7 +16,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Attributes
             return command.
                     GetType().
                     GetProperties().
-                    Where(p => p.IsDefined(typeof(PlayFromAttribute), false)).
+                    Where(p => p.IsDefined(typeof(PlayCollectionAttribute), false)).
                     Select(p => p.GetValue(command)).
                     Cast<string>();
         }

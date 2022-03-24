@@ -1,4 +1,5 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
+using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
@@ -6,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
     public class AddCard : ICommand
     {
         public Guid ProcessId => new Guid("C41ED5BD-D463-4B29-BD77-BCAB6FCF1853");
-        public string Destination { get; }
+        [PlayCollection] public string Destination { get; }
         public string Template { get; }
 
         public Guid Instance { get; }
