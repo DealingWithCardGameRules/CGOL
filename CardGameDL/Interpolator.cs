@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace dk.itu.game.msc.cgdl
 {
@@ -50,7 +49,12 @@ namespace dk.itu.game.msc.cgdl
 
         public void AddConcept<T>(IEventObserver<T> eventObserver) where T : IEvent
         {
-            Add<IEventObserver<T>>(eventObserver);
+            if (!conceptHandlers.ContainsKey(typeof(IEventObserver<T>)))
+                conceptHandlers[typeof(IEventObserver<T>)] = new EventObserverList<T>();
+
+            if (conceptHandlers[typeof(IEventObserver<T>)] is EventObserverList<T> list)
+                list.EventObservers.Add(eventObserver);
+
             supported.Add(typeof(T));
         }
 
@@ -68,17 +72,29 @@ namespace dk.itu.game.msc.cgdl
 
         public void RemoveConcept<T>(IEventObserver<T> eventObserver) where T : IEvent
         {
-            Remove(eventObserver);
-            supported.Remove(typeof(T));
+            if (conceptHandlers.ContainsKey(typeof(IEventObserver<T>)))
+            {
+                if (conceptHandlers[typeof(IEventObserver<T>)] is EventObserverList<T> list)
+                {
+                    list.EventObservers.Remove(eventObserver);
+                    if (!(list.EventObservers.Any()))
+                    {
+                        conceptHandlers.Remove(typeof(IEventObserver<T>));
+                        supported.Remove(typeof(T));
+                    }
+                }
+                else
+                {
+                    Remove(eventObserver);
+                    supported.Remove(typeof(T));
+                }
+            }            
         }
 
         private void Add<T>(T obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            
-            //if (conceptHandlers.ContainsKey(typeof(T)))
-            //    throw new DuplicateConceptException(typeof(T));
 
             conceptHandlers[typeof(T)] = obj;
         }
@@ -101,6 +117,21 @@ namespace dk.itu.game.msc.cgdl
             return supported
                 .Where(t => typeof(IQuery<TReturn>).IsAssignableFrom(t))
                 .FirstOrDefault(t => t.Name.Equals(concept));
+        }
+    }
+
+    public class EventObserverList<T> : IEventObserver<T> where T : IEvent
+    {
+        public List<IEventObserver<T>> EventObservers { get; }
+        public EventObserverList()
+        {
+            EventObservers = new List<IEventObserver<T>>();
+        }
+
+        public void Invoke(T @event)
+        {
+            foreach (var observer in EventObservers)
+                observer.Invoke(@event);
         }
     }
 }
