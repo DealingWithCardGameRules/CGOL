@@ -22,7 +22,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             // When, Then
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                new DrawCardHandler(dispatcher);
+                new DrawCardHandler(dispatcher, 1);
             });
         }
 
@@ -31,7 +31,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
         {
             // Given
             var dispatcher = Substitute.For<IDispatcher>();
-            var sut = new DrawCardHandler(dispatcher);
+            var sut = new DrawCardHandler(dispatcher, 1);
             var command = new DrawCard(string.Empty, string.Empty);
 
             dispatcher.Dispatch(Arg.Any<HasCards>()).Returns(false);
@@ -48,7 +48,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
         {
             // Given
             var dispatcher = Substitute.For<IDispatcher>();
-            var sut = new DrawCardHandler(dispatcher);
+            var sut = new DrawCardHandler(dispatcher, 1);
             var command = new DrawCard(string.Empty, string.Empty);
             var eventDispatcher = Substitute.For<IEventDispatcher>();
 
@@ -66,7 +66,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
         {
             // Given
             var dispatcherStub = Substitute.For<IDispatcher>();
-            var sut = new DrawCardHandler(dispatcherStub);
+            var sut = new DrawCardHandler(dispatcherStub, 1);
             var expectedSource = "Deck";
             var command = new DrawCard(expectedSource, string.Empty);
             var eventDispatcherMock = Substitute.For<IEventDispatcher>();
@@ -85,7 +85,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
         {
             // Given
             var dispatcherStub = Substitute.For<IDispatcher>();
-            var sut = new DrawCardHandler(dispatcherStub);
+            var sut = new DrawCardHandler(dispatcherStub, 1);
             var expectedDestination = "Deck";
             var command = new DrawCard(string.Empty, expectedDestination);
             var eventDispatcherMock = Substitute.For<IEventDispatcher>();

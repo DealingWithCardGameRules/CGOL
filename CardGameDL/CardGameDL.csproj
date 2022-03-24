@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CommandCentral\CommandCentral.csproj" />
+    <ProjectReference Include="..\FluxxConcepts\FluxxConcepts.csproj" />
     <ProjectReference Include="..\GameEvents\GameEvents.csproj" />
     <ProjectReference Include="..\GameState\GameState.csproj" />
     <ProjectReference Include="..\LanguageParser\LanguageParser.csproj" />

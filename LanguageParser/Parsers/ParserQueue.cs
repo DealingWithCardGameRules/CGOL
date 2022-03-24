@@ -16,7 +16,12 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
         {
             tokenStack = new Queue<IToken>();
             foreach (var token in tokens)
+            {
+                if (token is Comment)
+                    continue; // Skip comments
+
                 tokenStack.Enqueue(token);
+            }
 
             LookAhead1 = Pop();
             LookAhead2 = Pop();

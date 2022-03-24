@@ -11,12 +11,14 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
     {
         private readonly IParserQueueFactory factory;
         private readonly IParser<ICommand> conceptParser;
+        private readonly IParser<bool?> queryParser;
         private IParserQueue queue;
 
-        public CGDLParser(IParserQueueFactory factory, IParser<ICommand?> conceptParser)
+        public CGDLParser(IParserQueueFactory factory, IParser<ICommand?> commandParser, IParser<bool?> queryParser)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
-            this.conceptParser = conceptParser ?? throw new ArgumentNullException(nameof(conceptParser));
+            this.conceptParser = commandParser ?? throw new ArgumentNullException(nameof(commandParser));
+            this.queryParser = queryParser ?? throw new ArgumentNullException(nameof(queryParser));
         }
 
         public IEnumerable<ICommand> Parse(IEnumerable<IToken> tokens)
@@ -25,14 +27,35 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             // [<action>\n]*
             
             while (queue.HasTokens) {
-                yield return ParseAction();
+                if (!(queue.LookAhead1 is SequenceTerminator))
+                {
+                    var command = ParseAction();
+                    if (command != null)
+                        yield return command;
+                }
+
                 queue.DiscardToken<SequenceTerminator>();
             }
         }
 
-        private ICommand ParseAction()
+        private ICommand? ParseAction()
         {
-            // [Play ]<concept>
+            // [If (<query>) ][Play ]<concept>
+            if (queue.LookAhead1 is IfKeyword)
+            {
+                queue.DiscardToken();
+                queue.DiscardToken<ParenthesesStart>();
+                queryParser.Parse(queue);
+                queue.DiscardToken<ParenthesesEnd>();
+
+                if (!(queryParser.Result.HasValue && queryParser.Result.Value))
+                {
+                    while (!(queue.LookAhead1 is SequenceTerminator))
+                        queue.DiscardToken();
+                    return null; // If statement returned false
+                }
+            }
+
             bool play = false;
             if (queue.LookAhead1 is PlayKeyword)
             {

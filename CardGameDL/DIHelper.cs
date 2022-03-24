@@ -22,7 +22,8 @@ namespace dk.itu.game.msc.cgdl
         {
             services.AddSingleton<IParserQueueFactory, ParserQueueFactory>();
             services.AddSingleton<IParser<object?>, LiteralParser>();
-            services.AddSingleton<IParser<ICommand?>, ConceptParser>();
+            services.AddSingleton<IParser<ICommand?>, CommandConceptParser>();
+            services.AddSingleton<IParser<bool?>, QueryConceptParser>();
             services.AddSingleton<CGDLParser>();
             services.AddSingleton<LexerFactory>();
             services.AddSingleton<CardGameDLParser>();

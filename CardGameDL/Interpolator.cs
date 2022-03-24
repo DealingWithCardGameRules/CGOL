@@ -76,8 +76,9 @@ namespace dk.itu.game.msc.cgdl
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            if (conceptHandlers.ContainsKey(typeof(T)))
-                throw new DuplicateConceptException(typeof(T));
+            
+            //if (conceptHandlers.ContainsKey(typeof(T)))
+            //    throw new DuplicateConceptException(typeof(T));
 
             conceptHandlers[typeof(T)] = obj;
         }
@@ -95,10 +96,10 @@ namespace dk.itu.game.msc.cgdl
                 .FirstOrDefault(t => t.Name.Equals(concept));
         }
 
-        public Type? ResolveQuery(string concept)
+        public Type? ResolveQuery<TReturn>(string concept)
         {
             return supported
-                .Where(t => typeof(IQuery<>).IsAssignableFrom(t))
+                .Where(t => typeof(IQuery<TReturn>).IsAssignableFrom(t))
                 .FirstOrDefault(t => t.Name.Equals(concept));
         }
     }

@@ -4,14 +4,14 @@ using System;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
-    public class ConceptParser : IParser<ICommand?>
+    public class CommandConceptParser : IParser<ICommand?>
     {
         private readonly IInterpolator interpolator;
         private readonly IParser<object?> literalParser;
 
         public ICommand? Result { get; private set; }
 
-        public ConceptParser(IInterpolator interpolator, IParser<object?> literalParser)
+        public CommandConceptParser(IInterpolator interpolator, IParser<object?> literalParser)
         {
             this.interpolator = interpolator ?? throw new ArgumentNullException(nameof(interpolator));
             this.literalParser = literalParser ?? throw new ArgumentNullException(nameof(literalParser));
