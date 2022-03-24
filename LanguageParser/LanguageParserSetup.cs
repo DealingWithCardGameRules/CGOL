@@ -22,6 +22,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
         {
             // Setup command handlers
             context.Interpolator.AddConcept(new LoadCGDLHandler(context.TimeProvider, lexer, parser));
+            context.Interpolator.AddConcept(new SimpleConditionalCommandHandler(context.Dispatcher));
 
             // Setup event observers
             context.Interpolator.AddConcept(new DispatchLoadedCGDLEvent(context.Dispatcher));
