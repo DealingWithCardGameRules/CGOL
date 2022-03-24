@@ -51,21 +51,6 @@ namespace dk.itu.game.msc.cgdl.Test
         }
 
         [TestMethod]
-        public void GetService_KnownEventObserver_ReturnsEventObserver()
-        {
-            // Given
-            var sut = new Interpolator();
-            var expected = Substitute.For<IEventObserver<IEvent>>();
-            sut.AddConcept(expected);
-
-            // When
-            var result = sut.GetService(typeof(IEventObserver<IEvent>));
-
-            // Then
-            Assert.AreEqual(expected, result);
-        }
-
-        [TestMethod]
         public void GetService_ConcreteCommandHandler_ReturnsCommandHandler()
         {
             // Given
@@ -90,21 +75,6 @@ namespace dk.itu.game.msc.cgdl.Test
 
             // When
             var result = sut.GetService(typeof(IQueryHandler<QueryStub, bool>));
-
-            // Then
-            Assert.AreEqual(expected, result);
-        }
-
-        [TestMethod]
-        public void GetService_ConcreteEventObserver_ReturnsEventObserver()
-        {
-            // Given
-            var sut = new Interpolator();
-            var expected = new EventObserverStub();
-            sut.AddConcept(expected);
-
-            // When
-            var result = sut.GetService(typeof(IEventObserver<EventStub>));
 
             // Then
             Assert.AreEqual(expected, result);
@@ -343,8 +313,9 @@ namespace dk.itu.game.msc.cgdl.Test
         {
             // Given
             var sut = new Interpolator();
-            sut.AddConcept(new EventObserverStub());
-            sut.RemoveConcept(new EventObserverStub());
+            var observerStub = new EventObserverStub();
+            sut.AddConcept(observerStub);
+            sut.RemoveConcept(observerStub);
 
             // When
             var result = sut.Supports<EventStub>();
