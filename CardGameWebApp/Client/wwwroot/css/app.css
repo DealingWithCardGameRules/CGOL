@@ -144,6 +144,10 @@ span.token.keyword {
     color: green;
 }
 
+span.token.comment {
+    color: green;
+}
+
 span.token.literal {
     color: darkorange;
 }

@@ -27,9 +27,12 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             // [<action>\n]*
             
             while (queue.HasTokens) {
-                var command = ParseAction();
-                if (command != null)
-                yield return command;
+                if (!(queue.LookAhead1 is SequenceTerminator))
+                {
+                    var command = ParseAction();
+                    if (command != null)
+                        yield return command;
+                }
 
                 queue.DiscardToken<SequenceTerminator>();
             }
