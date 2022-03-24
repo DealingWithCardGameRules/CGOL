@@ -96,10 +96,10 @@ namespace dk.itu.game.msc.cgdl
                 .FirstOrDefault(t => t.Name.Equals(concept));
         }
 
-        public Type? ResolveQuery(string concept)
+        public Type? ResolveQuery<TReturn>(string concept)
         {
             return supported
-                .Where(t => typeof(IQuery<>).IsAssignableFrom(t))
+                .Where(t => typeof(IQuery<TReturn>).IsAssignableFrom(t))
                 .FirstOrDefault(t => t.Name.Equals(concept));
         }
     }

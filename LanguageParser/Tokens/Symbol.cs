@@ -11,4 +11,8 @@
             RawValue = value;
         }
     }
+
+    public class ParenthesesStart : Symbol { }
+
+    public class ParenthesesEnd : Symbol { }
 }

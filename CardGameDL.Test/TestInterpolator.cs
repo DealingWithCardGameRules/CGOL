@@ -383,51 +383,6 @@ namespace dk.itu.game.msc.cgdl.Test
             Assert.IsFalse(result);
         }
 
-        [TestMethod]
-        public void AddConcept_AlreadyKnownCommandHandler_ThrowsDuplicateConceptException()
-        {
-            // Given
-            var sut = new Interpolator();
-            var commandHandlerStub = new CommandHandlerStub();
-            sut.AddConcept(commandHandlerStub);
-
-            // When, Then
-            Assert.ThrowsException<DuplicateConceptException>(() =>
-            {
-                sut.AddConcept(Substitute.For<ICommandHandler<CommandStub>>());
-            });
-        }
-
-        [TestMethod]
-        public void AddConcept_AlreadyKnownQueryHandler_ThrowsDuplicateConceptException()
-        {
-            // Given
-            var sut = new Interpolator();
-            var queryHandlerStub = new QueryHandlerStub();
-            sut.AddConcept(queryHandlerStub);
-
-            // When, Then
-            Assert.ThrowsException<DuplicateConceptException>(() =>
-            {
-                sut.AddConcept(Substitute.For<IQueryHandler<QueryStub, bool>>());
-            });
-        }
-
-        [TestMethod]
-        public void AddConcept_AlreadyKnownEventObserver_ThrowsDuplicateConceptException()
-        {
-            // Given
-            var sut = new Interpolator();
-            var eventObserverStub = new EventObserverStub();
-            sut.AddConcept(eventObserverStub);
-
-            // When, Then
-            Assert.ThrowsException<DuplicateConceptException>(() =>
-            {
-                sut.AddConcept(Substitute.For<IEventObserver<EventStub>>());
-            });
-        }
-
         // Stub classes for concrete tests
 
         public class CommandStub : ICommand
