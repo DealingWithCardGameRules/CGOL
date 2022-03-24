@@ -10,11 +10,11 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
     public class CGDLParser
     {
         private readonly IParserQueueFactory factory;
-        private readonly IParser<ICommand> conceptParser;
-        private readonly IParser<bool?> queryParser;
+        private readonly IParser<ICommand?> conceptParser;
+        private readonly IParser<IQuery<bool>?> queryParser;
         private IParserQueue queue;
 
-        public CGDLParser(IParserQueueFactory factory, IParser<ICommand?> commandParser, IParser<bool?> queryParser)
+        public CGDLParser(IParserQueueFactory factory, IParser<ICommand?> commandParser, IParser<IQuery<bool>?> queryParser)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
             this.conceptParser = commandParser ?? throw new ArgumentNullException(nameof(commandParser));
@@ -41,19 +41,15 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
         private ICommand? ParseAction()
         {
             // [If (<query>) ][Play ]<concept>
+
+            IQuery<bool>? condition = null;
             if (queue.LookAhead1 is IfKeyword)
             {
                 queue.DiscardToken();
                 queue.DiscardToken<ParenthesesStart>();
                 queryParser.Parse(queue);
                 queue.DiscardToken<ParenthesesEnd>();
-
-                if (!(queryParser.Result.HasValue && queryParser.Result.Value))
-                {
-                    while (!(queue.LookAhead1 is SequenceTerminator))
-                        queue.DiscardToken();
-                    return null; // If statement returned false
-                }
+                condition = queryParser.Result;
             }
 
             bool play = false;
@@ -68,6 +64,9 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
 
             if (play)
                 output = new PostponedCommand(output);
+
+            if (condition != null)
+                output = new ConditionalCommand(condition, output);
 
             return output;
         }

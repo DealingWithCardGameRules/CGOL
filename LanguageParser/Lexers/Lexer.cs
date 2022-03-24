@@ -37,9 +37,8 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
                         remaining = remaining[1..];
                     }
                 }
-
-                yield return new SequenceTerminator();
             }
+            yield return new SequenceTerminator();
         }
     }
 }

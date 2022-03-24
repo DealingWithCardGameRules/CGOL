@@ -4,19 +4,17 @@ using System;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
-    public class QueryConceptParser : IParser<bool?>
+    public class QueryConceptParser : IParser<IQuery<bool>?>
     {
         private readonly IInterpolator interpolator;
         private readonly IParser<object?> literalParser;
-        private readonly IDispatcher dispatcher;
 
-        public bool? Result { get; private set; }
+        public IQuery<bool>? Result { get; private set; }
 
-        public QueryConceptParser(IInterpolator interpolator, IParser<object?> literalParser, IDispatcher dispatcher)
+        public QueryConceptParser(IInterpolator interpolator, IParser<object?> literalParser)
         {
             this.interpolator = interpolator ?? throw new ArgumentNullException(nameof(interpolator));
             this.literalParser = literalParser ?? throw new ArgumentNullException(nameof(literalParser));
-            this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
         public void Parse(IParserQueue queue)
@@ -37,7 +35,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
                 builder.SetNextArgument(literal);
             }
 
-            Result = dispatcher.Dispatch(builder.Build());
+            Result = builder.Build();
         }
     }
 }
