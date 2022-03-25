@@ -1,5 +1,4 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.GameState.CommandHandlers;
 using dk.itu.game.msc.cgdl.GameState.EventObservers;
 using dk.itu.game.msc.cgdl.GameState.QueryHandlers;
 
