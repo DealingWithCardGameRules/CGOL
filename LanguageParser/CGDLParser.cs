@@ -24,11 +24,17 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
         public IEnumerable<ICommand> Parse(IEnumerable<IToken> tokens)
         {
             queue = factory.Create(tokens);
-            // [<action>\n]*
+            // [[<template> ]<action>\n]*
             
-            while (queue.HasTokens) {
+            while (queue.HasTokens) 
+            {
                 if (!(queue.LookAhead1 is SequenceTerminator))
                 {
+                    if (queue.LookAhead1 is InstantaneousKeyword)
+                    {
+
+                    }
+
                     var command = ParseAction();
                     if (command != null)
                         yield return command;
@@ -63,7 +69,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             var output = conceptParser.Result;
 
             if (play)
-                output = new PostponedCommand(output);
+                output = new PostponeCommand(output);
 
             if (condition != null)
                 output = new ConditionalCommand(condition, output);

@@ -3,7 +3,7 @@ using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 {
-    public class PostponedCommand : ICommand
+    public class PostponeCommand : ICommand
     {
         public Guid ProcessId => new Guid("85A8EA4B-4945-4F41-B3CC-C4A127F00DC9");
 
@@ -11,7 +11,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 
         public Guid Instance { get; }
 
-        public PostponedCommand(ICommand command)
+        public PostponeCommand(ICommand command)
         {
             Instance = Guid.NewGuid();
             Command = command;
