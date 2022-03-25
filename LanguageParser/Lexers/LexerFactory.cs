@@ -23,7 +23,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
 
         private IEnumerable<RegexTokenDefinition> GetRequired()
         {
-            yield return new RegexTokenDefinition(new TokenFactory(() => new Comment()), @"^/\*([^*/]|\n)*\*/??");
+            yield return new RegexTokenDefinition(new TokenFactory(() => new Comment()), @"^/\*(.|\n)*?\*/");
             yield return new RegexTokenDefinition(new TokenFactory(() => new Comment()), "^//.*");
             yield return new RegexTokenDefinition(new TokenFactory(() => new SequenceTerminator()), @"^\r?\n");
             yield return new RegexTokenDefinition(new TokenFactory(() => new PlayKeyword()), @"^play\b");
