@@ -30,14 +30,31 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             {
                 if (!(queue.LookAhead1 is SequenceTerminator))
                 {
+                    string? inst = null;
+                    string? perm = null;
                     if (queue.LookAhead1 is InstantaneousKeyword)
                     {
-
+                        queue.DiscardToken();
+                        inst = queue.ReadToken<StringLiteral>().Value;
+                        queue.DiscardToken();
+                    }
+                    else if (queue.LookAhead1 is PermanentKeyword)
+                    {
+                        queue.DiscardToken();
+                        perm = queue.ReadToken<StringLiteral>().Value;
+                        queue.DiscardToken();
                     }
 
                     var command = ParseAction();
                     if (command != null)
-                        yield return command;
+                    {
+                        if (inst != null)
+                            yield return new AddInstantaniousEffectToCard(inst, command);
+                        else if (perm != null)
+                            yield return new AddPermanentEffectToCard(perm, command);
+                        else
+                            yield return command;
+                    }
                 }
 
                 queue.DiscardToken<SequenceTerminator>();

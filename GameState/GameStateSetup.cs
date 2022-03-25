@@ -41,6 +41,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new CardDeclaredObserver(library));
             context.Interpolator.AddConcept(new CommandPostponedObserver(globalCommands));
             context.Interpolator.AddConcept(new InstantaniousEffectAddedToCardObserver(library));
+            context.Interpolator.AddConcept(new PermanentEffectAddedToCardObserver(library));
         }
     }
 }
