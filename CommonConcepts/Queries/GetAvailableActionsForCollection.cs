@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Queries
 {
-    public class GetAvailableActionsForCollection : IQuery<IEnumerable<ICommand>>
+    public class GetAvailableActionsForCollection : IQuery<IEnumerable<IUserCommand>>
     {
         public string Collection { get; set; }
 

@@ -14,7 +14,8 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 
         public void Invoke(CommandPostponed @event)
         {
-            repository.AddCommand(@event.Command);
+            var label = @event.Label ?? @event.Command.GetType().Name;
+            repository.AddCommand(label, @event.Command);
         }
     }
 }

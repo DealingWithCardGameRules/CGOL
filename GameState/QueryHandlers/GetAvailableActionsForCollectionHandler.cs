@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 {
-    public class GetAvailableActionsForCollectionHandler : IQueryHandler<GetAvailableActionsForCollection, IEnumerable<ICommand>>
+    public class GetAvailableActionsForCollectionHandler : IQueryHandler<GetAvailableActionsForCollection, IEnumerable<IUserCommand>>
     {
         private readonly CommandRepository repository;
 
@@ -15,11 +15,11 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
         }
 
-        public IEnumerable<ICommand> Handle(GetAvailableActionsForCollection query)
+        public IEnumerable<IUserCommand> Handle(GetAvailableActionsForCollection query)
         {
             foreach (var command in repository.Commands)
             {
-                if (command.GetPlayFroms().Contains(query.Collection))
+                if (command.Command.GetPlayFroms().Contains(query.Collection))
                 {
                     yield return command;
                 }

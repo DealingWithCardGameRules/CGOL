@@ -80,12 +80,12 @@ namespace CardGameWebApp.Server.Controllers
         public CardCollectionResponse GetCollection(Guid id, string name)
         {
             var current = session.GetSession(id);
-            List<ICommand> colActions = new List<ICommand>();
-            List<ICommand> cardActions = new List<ICommand>();
+            List<IUserCommand> colActions = new List<IUserCommand>();
+            List<IUserCommand> cardActions = new List<IUserCommand>();
 
             foreach (var action in current.Service.Dispatch(new GetAvailableActionsForCollection(name)))
             {
-                if (action.GetPlayCard() != null)
+                if (action.Command.GetPlayCard() != null)
                     cardActions.Add(action);
                 else
                     colActions.Add(action);
@@ -104,18 +104,18 @@ namespace CardGameWebApp.Server.Controllers
                 }
             }
 
-            IDictionary<string, string> actionLink(IEnumerable<ICommand> commands, Guid? card = null)
+            IDictionary<string, string> actionLink(IEnumerable<IUserCommand> commands, Guid? card = null)
             {
                 Dictionary<string, string> output = new Dictionary<string, string>();
                 foreach (var command in commands)
                 {
                     dynamic obj = new ExpandoObject();
                     obj.id = id;
-                    obj.instance = command.Instance;
+                    obj.instance = command.Command.Instance;
                     if (card != null)
-                        (obj as IDictionary<string, object>).Add(command.GetPlayCard(), card);
+                        (obj as IDictionary<string, object>).Add(command.Command.GetPlayCard(), card);
 
-                    output[command.GetType().Name] = Url.Action(nameof(GetActions), "game", (object)obj, Request.Scheme);
+                    output[command.Label] = Url.Action(nameof(GetActions), "game", (object)obj, Request.Scheme);
                 }
                 return output;
             }

@@ -4,16 +4,16 @@ using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 using System;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
+namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
 {
-    public class SimplyRevealAndMove : ICommandHandler<PlayCard>
+    public class PlayCardHandler : ICommandHandler<PlayCard>
     {
         private readonly ITimeProvider timeProvider;
-        private readonly IQueryDispatcher dispatcher;
+        private readonly IDispatcher dispatcher;
 
-        public SimplyRevealAndMove(ITimeProvider timeProvider, IQueryDispatcher dispatcher)
+        public PlayCardHandler(ITimeProvider timeProvider, IDispatcher dispatcher)
         {
-            this.timeProvider = timeProvider ?? throw new System.ArgumentNullException(nameof(timeProvider));
+            this.timeProvider = timeProvider ?? throw new ArgumentNullException(nameof(timeProvider));
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
@@ -29,12 +29,13 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
             var revealEvent = new CardRevealed(timeProvider.Now, command.ProcessId, command.Source, card);
             eventDispatcher.Dispatch(revealEvent);
-            
-            if (command.Destination != null)
-            {
-                var moveEvent = new CardMoved(timeProvider.Now, command.ProcessId, command.Source, command.Destination, command.Card.Value);
-                eventDispatcher.Dispatch(moveEvent);
-            }
+
+            var template = dispatcher.Dispatch(new GetTemplate(card.Template));
+            if (template == null)
+                return; // No instantanious effects to resolve
+
+            foreach (var effect in template.Instantaneous)
+                dispatcher.Dispatch(effect);
         }
     }
 }
