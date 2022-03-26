@@ -11,7 +11,8 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
 
             // Command handlers
             context.Interpolator.AddConcept(new DrawCardHandler(context.Dispatcher, 100));
-            
+            context.Interpolator.AddConcept(new PlayCardHandler(context.TimeProvider, context.Dispatcher));
+
             // Query handlers
             context.Interpolator.AddConcept(new CurrentPlayerHandler());
             context.Interpolator.AddConcept(new DrawLimitReachedHandler(drawCounter));

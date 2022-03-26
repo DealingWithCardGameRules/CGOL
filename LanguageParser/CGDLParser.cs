@@ -24,14 +24,37 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
         public IEnumerable<ICommand> Parse(IEnumerable<IToken> tokens)
         {
             queue = factory.Create(tokens);
-            // [<action>\n]*
+            // [[<template> ]<action>\n]*
             
-            while (queue.HasTokens) {
+            while (queue.HasTokens) 
+            {
                 if (!(queue.LookAhead1 is SequenceTerminator))
                 {
+                    string? inst = null;
+                    string? perm = null;
+                    if (queue.LookAhead1 is InstantaneousKeyword)
+                    {
+                        queue.DiscardToken();
+                        inst = queue.ReadToken<StringLiteral>().Value;
+                        queue.DiscardToken();
+                    }
+                    else if (queue.LookAhead1 is PermanentKeyword)
+                    {
+                        queue.DiscardToken();
+                        perm = queue.ReadToken<StringLiteral>().Value;
+                        queue.DiscardToken();
+                    }
+
                     var command = ParseAction();
                     if (command != null)
-                        yield return command;
+                    {
+                        if (inst != null)
+                            yield return new AddInstantaniousEffectToCard(inst, command);
+                        else if (perm != null)
+                            yield return new AddPermanentEffectToCard(perm, command);
+                        else
+                            yield return command;
+                    }
                 }
 
                 queue.DiscardToken<SequenceTerminator>();
@@ -53,17 +76,24 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             }
 
             bool play = false;
+            string? playLabel = null;
             if (queue.LookAhead1 is PlayKeyword)
             {
                 queue.DiscardToken();
                 play = true;
+
+                if (queue.LookAhead1 is StringLiteral)
+                {
+                    playLabel = queue.ReadToken<StringLiteral>().Value;
+                    queue.DiscardToken();
+                }
             }
 
             conceptParser.Parse(queue);
             var output = conceptParser.Result;
 
             if (play)
-                output = new PostponedCommand(output);
+                output = new PostponeCommand(output, playLabel);
 
             if (condition != null)
                 output = new ConditionalCommand(condition, output);

@@ -5,7 +5,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
     public class DrawCounter
     {
         private Dictionary<string, int> drawCounter;
-        private int drawLimit = 1;
+        private int drawLimit = 2;
 
         public DrawCounter()
         {

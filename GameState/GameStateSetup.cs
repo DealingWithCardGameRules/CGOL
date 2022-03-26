@@ -1,5 +1,4 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.GameState.CommandHandlers;
 using dk.itu.game.msc.cgdl.GameState.EventObservers;
 using dk.itu.game.msc.cgdl.GameState.QueryHandlers;
 
@@ -20,9 +19,6 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         public void Setup(IPluginContext context)
         {
-            // Command handlers
-            context.Interpolator.AddConcept(new PostponedCommandHandler(globalCommands));
-
             // Query handlers
             context.Interpolator.AddConcept(new CardCounter(game));
             context.Interpolator.AddConcept(new TopCardGetter(game));
@@ -43,6 +39,9 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new CardDrawnObserver(game));
             context.Interpolator.AddConcept(new CardMovedObserver(game));
             context.Interpolator.AddConcept(new CardDeclaredObserver(library));
+            context.Interpolator.AddConcept(new CommandPostponedObserver(globalCommands));
+            context.Interpolator.AddConcept(new InstantaniousEffectAddedToCardObserver(library));
+            context.Interpolator.AddConcept(new PermanentEffectAddedToCardObserver(library));
         }
     }
 }
