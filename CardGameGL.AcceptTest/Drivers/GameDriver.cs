@@ -27,15 +27,15 @@ namespace CardGameGL.AcceptTest.Drivers
         internal void ChooseDrawCard()
         {
             var commands = cgdl.Dispatch(new GetAvailableActions());
-            var drawCommand = commands.First(c => c is DrawCard);
+            var drawCommand = commands.First(c => c.Command is DrawCard);
             if (drawCommand != null)
-                cgdl.Dispatch(drawCommand);
+                cgdl.Dispatch(drawCommand.Command);
         }
 
         internal void ChoosePLayCard()
         {
             var commands = cgdl.Dispatch(new GetAvailableActions());
-            var playCommand = (PlayCard)commands.First(c => c is PlayCard);
+            var playCommand = (PlayCard)commands.First(c => c.Command is PlayCard).Command;
             var card = cgdl.Dispatch(new GetTopCard(playCommand.Source)) ?? throw new Exception($"No cards in {playCommand.Source}");
             playCommand.Card = card.Instance;
             cgdl.Dispatch(playCommand);

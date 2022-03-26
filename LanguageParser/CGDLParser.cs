@@ -76,17 +76,24 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             }
 
             bool play = false;
+            string? playLabel = null;
             if (queue.LookAhead1 is PlayKeyword)
             {
                 queue.DiscardToken();
                 play = true;
+
+                if (queue.LookAhead1 is StringLiteral)
+                {
+                    playLabel = queue.ReadToken<StringLiteral>().Value;
+                    queue.DiscardToken();
+                }
             }
 
             conceptParser.Parse(queue);
             var output = conceptParser.Result;
 
             if (play)
-                output = new PostponeCommand(output);
+                output = new PostponeCommand(output, playLabel);
 
             if (condition != null)
                 output = new ConditionalCommand(condition, output);

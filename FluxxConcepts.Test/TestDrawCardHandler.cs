@@ -4,6 +4,7 @@ using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 using dk.itu.game.msc.cgdl.CommonConcepts.Exceptions;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
+using dk.itu.game.msc.cgdl.FluxxConcepts.Handler;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
@@ -23,23 +24,6 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
                 new DrawCardHandler(dispatcher, 1);
-            });
-        }
-
-        [TestMethod]
-        public void Handle_HasCardsReturnsFalse_ThrowsNoCardsException()
-        {
-            // Given
-            var dispatcher = Substitute.For<IDispatcher>();
-            var sut = new DrawCardHandler(dispatcher, 1);
-            var command = new DrawCard(string.Empty, string.Empty);
-
-            dispatcher.Dispatch(Arg.Any<HasCards>()).Returns(false);
-
-            // When, Then
-            Assert.ThrowsException<NoCardsException>(() =>
-            {
-                sut.Handle(command, Substitute.For<IEventDispatcher>());
             });
         }
 

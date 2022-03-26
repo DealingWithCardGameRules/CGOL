@@ -15,7 +15,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 
         public ICommand? Handle(GetAvailableAction query)
         {
-            return repository.Commands.FirstOrDefault(c => c.Instance == query.Instance);
+            return repository.Commands.FirstOrDefault(c => c.Command.Instance == query.Instance)?.Command;
         }
     }
 }
