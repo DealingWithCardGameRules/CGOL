@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts
 {
-    public interface ICardTemplate
+    public interface ICardTemplate : ITagable
     {
         string Template { get; }
         IEnumerable<ICommand> Instantaneous { get; }

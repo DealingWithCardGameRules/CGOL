@@ -73,7 +73,8 @@
 
 	private Dictionary<string, string> preloads = new Dictionary<string, string>
 	{
-		{"Draw 1 play 1", "CreateDeck \"deck\"\n" +
+		{"Draw 1 play 1", "SetPlayers 1\n" +
+							"CreateDeck \"deck\"\n" +
 							"CreateDeck \"discard pile\"\n" +
 							"CreateHand \"player\"\n" +
 							"CreateCard \"pass\"\n" +
