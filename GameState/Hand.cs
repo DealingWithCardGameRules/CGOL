@@ -56,6 +56,11 @@ namespace dk.itu.game.msc.cgdl.GameState
         public IEnumerable<ICard> GetRevieledCards()
         {
             return cards.Values;
-        }   
+        }
+
+        public bool HasCard(Guid cardId)
+        {
+            return cards.ContainsKey(cardId);
+        }
     }
 }
