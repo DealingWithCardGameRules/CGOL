@@ -23,13 +23,15 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
         public void Handle(DrawCard command, IEventDispatcher eventDispatcher)
         {
             var player = dispatcher.Dispatch(new CurrentPlayer());
+            if (player == null)
+                throw new Exception("No current player. Remember to setup players.");
 
             for (var i = 0; i < maxiumDraws; i++)
             {
                 if (!dispatcher.Dispatch(new HasCards(command.Source)))
                     return;
 
-                if (dispatcher.Dispatch(new DrawLimitReached(player)))
+                if (dispatcher.Dispatch(new DrawLimitReached(player.Identity)))
                     return;
                 
                 eventDispatcher.Dispatch(new CardDrawn(DateTime.Now, command.ProcessId, command.Source, command.Destination));

@@ -8,15 +8,35 @@ namespace dk.itu.game.msc.cgdl.GameState
     public class Game
     {
         private readonly Dictionary<string, ICardCollection> collections;
+        private readonly Dictionary<int, IPlayer> players;
+        private int currentPlayer = 0;
 
         public Game()
         {
             collections = new Dictionary<string, ICardCollection>();
+            players = new Dictionary<int, IPlayer>();
+        }
+
+        internal IPlayer? GetCurrentPlayer()
+        {
+            if (players.ContainsKey(currentPlayer))
+                return players[currentPlayer];
+            return null;
+        }
+
+        internal void SetCurrentPlayer(int index)
+        {
+            currentPlayer = index;
         }
 
         internal IEnumerable<ICard> GetRevieledCards(string collection)
         {
             return collections[collection].GetRevieledCards();
+        }
+
+        internal void SetPlayer(IPlayer player)
+        {
+            players[player.Index] = player;
         }
 
         internal IEnumerable<string> CollectionNames() => collections.Keys;

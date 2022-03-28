@@ -119,7 +119,7 @@ namespace CardGameWebApp.Server.Controllers
 
         private CGDLService GetService(Guid id) => repository.GetSession(id).Service ?? throw new Exception();
 
-        class PassCard : ICard
+        class PassCard : TagHandler, ICard
 		{
 			public PassCard()
 			{
