@@ -1,3 +1,4 @@
+using CardGameWebApp.Server.Hubs;
 using dk.itu.game.msc.cgdl;
 using dk.itu.game.msc.cgdl.Representation;
 using Microsoft.AspNetCore.Builder;
@@ -25,9 +26,15 @@ namespace CardGameWebApp.Server
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSignalR();
             services.AddSingleton(new SessionRepository());
             services.AddSingleton(new SessionFactory());
             services.AddSingleton<SessionService>();
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +61,7 @@ namespace CardGameWebApp.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chathub");
                 endpoints.MapFallbackToFile("index.html");
             });
         }
