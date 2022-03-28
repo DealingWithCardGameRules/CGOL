@@ -59,5 +59,17 @@ namespace dk.itu.game.msc.cgdl.GameState
         {
             yield break; // Never reviel
         }
+
+        public bool HasCard(Guid cardId)
+        {
+            for (int i = 0; i < cards.Count; i++)
+            {
+                if (cards[i].Instance == cardId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

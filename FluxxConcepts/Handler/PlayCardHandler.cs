@@ -2,6 +2,7 @@
 using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
+using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using System;
 
 namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
@@ -34,8 +35,11 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
             if (template == null)
                 return; // No instantanious effects to resolve
 
-            foreach (var effect in template.Instantaneous)
+            foreach (ICommand effect in template.Instantaneous)
+            {
+                effect.SetAffactSelfRef(card.Instance);
                 dispatcher.Dispatch(effect);
+            }
         }
     }
 }

@@ -15,5 +15,6 @@ namespace dk.itu.game.msc.cgdl.GameState
         ICard? Get(Guid cardId);
         int Count();
         IEnumerable<ICard> GetRevieledCards();
+        bool HasCard(Guid cardId);
     }
 }

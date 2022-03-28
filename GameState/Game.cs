@@ -21,6 +21,16 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         internal IEnumerable<string> CollectionNames() => collections.Keys;
 
+        internal string? WhoHas(Guid cardId)
+        {
+            foreach (var collection in collections)
+            {
+                if (collection.Value.HasCard(cardId))
+                    return collection.Key;
+            }
+            return null;
+        }
+
         internal IEnumerable<string> GetTags(string collection)
         {
             return collections[collection].Tags;
