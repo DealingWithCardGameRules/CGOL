@@ -11,13 +11,12 @@ $(document).ready(function () {
     $("body").tooltip({ selector: '[data-toggle=tooltip]', html: true });
 });
 
-window.clipboardCopy = {
-    copyText: function (text) {
-        navigator.clipboard.writeText(text).then(function () {
-            alert("Copied to clipboard!");
-        })
-            .catch(function (error) {
-                alert(error);
-            });
-    }
-};
+function copyText() {
+    let text = $("#gamelink").val();
+    navigator.clipboard.writeText(text).then(function () {
+        alert("Copied to clipboard!");
+    })
+    .catch(function (error) {
+        alert(error);
+    });
+}

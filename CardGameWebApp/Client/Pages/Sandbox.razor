@@ -35,14 +35,20 @@
 <HighlightEditor @ref=highlighter></HighlightEditor>
 
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="playArea" aria-labelledby="offcanvasRightLabel">
-  <div class="offcanvas-header">
-    <h5 id="offcanvasRightLabel">Game</h5>
-	<button type="button" class="btn btn-primary" @onclick="CopyUrl"><span class="oi oi-share"></span></button>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-	  <GameSimulator @ref=@gameSim></GameSimulator>
-  </div>
+	<div class="offcanvas-header">
+		<h5 id="offcanvasRightLabel" class="my-0">Game</h5>
+		<div class="input-group input-group-sm px-5">
+			<span class="input-group-text">Invite:</span>
+			<button class="btn btn-primary" type="button" onclick="$('#gamelink,#copygamelink').toggleClass('d-none');"><span class="oi oi-share"></span></button>
+			<input id="gamelink" type="text" class="form-control d-none" aria-label="Game link" aria-describedby="button-addon2" value="@gameUrl" readonly />
+			<button id="copygamelink" class="btn btn-primary d-none" type="button" onclick="copyText()"><span class="oi oi-clipboard"></span></button>
+		</div>
+		<!--<button type="button" class="btn btn-primary" @onclick="CopyUrl"><span class="oi oi-clipboard"></span></button>-->
+		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	</div>
+	<div class="offcanvas-body">
+		<GameSimulator @ref=@gameSim></GameSimulator>
+	</div>
 </div>
 
 
