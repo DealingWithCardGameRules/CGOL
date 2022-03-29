@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgdl.CommandCentral
 {
@@ -36,6 +37,11 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
             dynamic handler = provider.GetService(genericHandlerType);
             T result = handler.Handle((dynamic)query);
             return result;
+        }
+
+        public async Task<T> DispatchAsync<T>(IQuery<T> query)
+        {
+            return await Task.Run(() => Dispatch(query));
         }
     }
 }
