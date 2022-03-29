@@ -80,7 +80,7 @@ namespace CardGameWebApp.Server.Controllers
                 SessionId = id
             };
             //response.Links.Add("actions", Url.Action(nameof(GetActions), "game", new { id }, Request.Scheme));
-            response.Links.Add("hub", $"{Environment.GetEnvironmentVariable("ASPNETCORE_URLS")}/gamehub");
+            response.Links.Add("hub", $"{Request.Scheme}://{Request.Host}/gamehub");
 
             return response;
         }
