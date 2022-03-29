@@ -37,8 +37,7 @@
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="playArea" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
     <h5 id="offcanvasRightLabel">Game</h5>
-	<input type="text" value="@gameUrl" readonly />
-	<button type="button" class="btn btn-primary" @onclick="CopyUrl"><span class="oi oi-clipboard"></span></button>
+	<button type="button" class="btn btn-primary" @onclick="CopyUrl"><span class="oi oi-share"></span></button>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
@@ -63,6 +62,7 @@
 			var url = response.Headers.Location.AbsoluteUri;
 			gameUrl = $"{NavigationManager.ToAbsoluteUri("/play").AbsoluteUri}/{url.Encode64()}";
 			await gameSim.Start(url);
+			this.StateHasChanged();
 		}
 	}
 	protected override async Task OnInitializedAsync()

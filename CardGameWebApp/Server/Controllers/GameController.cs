@@ -12,6 +12,9 @@ using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using System.Linq;
 using System.Dynamic;
+using CardGameWebApp.Server.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -21,11 +24,13 @@ namespace CardGameWebApp.Server.Controllers
     {
         private readonly SessionService session;
         private readonly IUserEnquirerFactory userEnquirerFactory;
+        private readonly IHubContext<GameHub> gameHub;
 
-        public GameController(SessionService session, IUserEnquirerFactory userEnquirerFactory)
+        public GameController(SessionService session, IUserEnquirerFactory userEnquirerFactory, IHubContext<GameHub> gameHub)
         {
             this.session = session ?? throw new ArgumentNullException(nameof(session));
             this.userEnquirerFactory = userEnquirerFactory ?? throw new ArgumentNullException(nameof(userEnquirerFactory));
+            this.gameHub = gameHub ?? throw new ArgumentNullException(nameof(gameHub));
         }
 
         [HttpGet]
@@ -142,7 +147,6 @@ namespace CardGameWebApp.Server.Controllers
         [HttpGet("{id:Guid}/cards/{card:Guid}")]
         public ActionResult GetCard(Guid id, Guid card)
         {
-
             return Ok();
         }
 
@@ -174,7 +178,7 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpPost("{id:Guid}/actions/{instance:Guid}")]
-        public ActionResult PerformAction(Guid id, Guid instance, [FromBody]ActionDTO action)
+        public async Task<ActionResult> PerformAction(Guid id, Guid instance, [FromBody]ActionDTO action)
         {
             var current = session.GetSession(id);
             var command = current.Service.Dispatch(new GetAvailableAction(instance));
@@ -190,6 +194,7 @@ namespace CardGameWebApp.Server.Controllers
             }
 
             current.Service.Dispatch(command);
+            await gameHub.Clients.Group(id.ToString()).SendAsync("NewState");
             return Ok();
         }
 

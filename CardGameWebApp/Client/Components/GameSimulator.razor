@@ -101,6 +101,11 @@
 			players[i] = false; 
 			this.StateHasChanged();
 		});
+		hubConnection.On("NewState", async () =>
+		{ 
+			await updateCache();
+			this.StateHasChanged();
+		});
 		await hubConnection.StartAsync();
 		await hubConnection.SendAsync("join", game.SessionId);
 
