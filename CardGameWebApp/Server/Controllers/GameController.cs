@@ -20,10 +20,12 @@ namespace CardGameWebApp.Server.Controllers
     public class GameController : Controller
     {
         private readonly SessionService session;
+        private readonly IUserEnquirerFactory userEnquirerFactory;
 
-        public GameController(SessionService session)
+        public GameController(SessionService session, IUserEnquirerFactory userEnquirerFactory)
         {
             this.session = session ?? throw new ArgumentNullException(nameof(session));
+            this.userEnquirerFactory = userEnquirerFactory ?? throw new ArgumentNullException(nameof(userEnquirerFactory));
         }
 
         [HttpGet]
@@ -39,7 +41,7 @@ namespace CardGameWebApp.Server.Controllers
         public ActionResult Create([FromBody] CreateGameDTO game)
         {
             var sessionId = Guid.NewGuid();
-            session.Create(sessionId);
+            session.Create(sessionId, userEnquirerFactory);
             var current = session.GetSession(sessionId);
             current.Service.Parse(game.CGDLSource);
             return Created(Url.Action(nameof(GetGame), "game", new { id = sessionId }, Request.Scheme), null);
@@ -117,7 +119,7 @@ namespace CardGameWebApp.Server.Controllers
                     if (card != null)
                         (obj as IDictionary<string, object>).Add(command.Command.GetPlayCard(), card);
 
-                    output[command.Label] = Url.Action(nameof(GetActions), "game", (object)obj, Request.Scheme);
+                    output[command.Label] = Url.Action(nameof(GetAction), "game", (object)obj, Request.Scheme);
                 }
                 return output;
             }
@@ -145,7 +147,7 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpGet("{id:Guid}/actions/{instance:Guid}")]
-        public ActionResult<ActionResponse> GetActions(Guid id, Guid instance)
+        public ActionResult<ActionResponse> GetAction(Guid id, Guid instance)
         {
             var current = session.GetSession(id);
             var command = current.Service.Dispatch(new GetAvailableAction(instance));
@@ -172,7 +174,7 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpPost("{id:Guid}/actions/{instance:Guid}")]
-        public ActionResult GetActions(Guid id, Guid instance, [FromBody]ActionDTO action)
+        public ActionResult PerformAction(Guid id, Guid instance, [FromBody]ActionDTO action)
         {
             var current = session.GetSession(id);
             var command = current.Service.Dispatch(new GetAvailableAction(instance));

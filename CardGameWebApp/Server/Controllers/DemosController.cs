@@ -22,11 +22,13 @@ namespace CardGameWebApp.Server.Controllers
 
         private readonly SessionRepository repository;
         private readonly SessionFactory factory;
+        private readonly IUserEnquirerFactory userEnquirerFactory;
 
-        public DemosController(SessionRepository repository, SessionFactory factory)
+        public DemosController(SessionRepository repository, SessionFactory factory, IUserEnquirerFactory userEnquirerFactory)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            this.userEnquirerFactory = userEnquirerFactory ?? throw new ArgumentNullException(nameof(userEnquirerFactory));
         }
 
         [HttpGet]
@@ -45,7 +47,7 @@ namespace CardGameWebApp.Server.Controllers
                 return NotFound(game);
 
             var id = Guid.NewGuid();
-            var session = factory.Create(id);
+            var session = factory.Create(id, userEnquirerFactory);
             repository.AddSession(session);
             return Created(Url.Action("SetupD1P1", "demos", new { id }, Request.Scheme), null);
         }

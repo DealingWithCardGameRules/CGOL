@@ -40,5 +40,11 @@ namespace CardGameWebApp.Server.Hubs
             var session = service.GetSession(sessionId);
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, sessionId.ToString());
         }
+
+        public async Task CardSelected(Guid sessionId)
+        {
+            var session = service.GetSession(sessionId);
+
+        }
     }
 }

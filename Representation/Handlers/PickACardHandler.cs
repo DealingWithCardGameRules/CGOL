@@ -7,18 +7,20 @@ namespace dk.itu.game.msc.cgdl.Representation.Handlers
 {
     public class PickACardHandler : IQueryHandler<PickACard, Guid?>
     {
-        private readonly Func<PickACard, Guid> askPlayer;
+        private const int secondsToMiliseconds = 100;
+        private readonly IUserEnquirer enquirer;
 
-        public PickACardHandler(Func<PickACard, Guid> askPlayer)
+        public PickACardHandler(IUserEnquirer enquirer)
         {
-            this.askPlayer = askPlayer ?? throw new ArgumentNullException(nameof(askPlayer));
+            this.enquirer = enquirer ?? throw new ArgumentNullException(nameof(enquirer));
         }
 
         public Guid? Handle(PickACard query)
         {
-            Guid? returnValue = null;
-            new Task(() => returnValue = askPlayer(query)).Wait(query.TimeoutLimitSeconds * 100);
-            return returnValue;
+            Guid? cardId = null;
+            new Task(() => cardId = enquirer.SelectCard(query.Player, query.Collection, query.RequiredTags))
+                .Wait(query.TimeoutLimitSeconds * secondsToMiliseconds);
+            return cardId;
         }
     }
 }

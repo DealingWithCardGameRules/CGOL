@@ -19,9 +19,9 @@ namespace dk.itu.game.msc.cgdl.Representation
             return repository.ListSessions();
         }
 
-        public void Create(Guid id)
+        public void Create(Guid id, IUserEnquirerFactory userEnquirer)
         {
-            var session = factory.Create(id);
+            var session = factory.Create(id, userEnquirer);
             repository.AddSession(session);
         }
 

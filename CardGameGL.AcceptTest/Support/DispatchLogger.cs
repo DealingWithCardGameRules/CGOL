@@ -24,5 +24,13 @@ namespace CardGameGL.AcceptTest.Support
             Console.WriteLine($"Result for {query.GetType().Name}: {result}");
             return result;
         }
+
+        public async Task<T> DispatchAsync<T>(IQuery<T> query)
+        {
+            Console.WriteLine($"Dispatching query: {query.GetType().Name}");
+            var result = await decoratee.DispatchAsync<T>(query);
+            Console.WriteLine($"Result for {query.GetType().Name}: {result}");
+            return result;
+        }
     }
 }
