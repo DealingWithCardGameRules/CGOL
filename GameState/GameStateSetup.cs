@@ -33,6 +33,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new HasCardsHandler(game));
             context.Interpolator.AddConcept(new GetCollectionContainingCardHandler(game));
             context.Interpolator.AddConcept(new CurrentPlayerHandler(game));
+            context.Interpolator.AddConcept(new GetNumberOfPlayersHandler(game));
 
             // Event observers
             context.Interpolator.AddConcept(new CardStackDeclaredObserver(game));
@@ -46,7 +47,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new PermanentEffectAddedToCardObserver(library));
             context.Interpolator.AddConcept(new PlayerDeclaredObserver(game));
             context.Interpolator.AddConcept(new CurrentPlayerSelectedObserver(game));
-
         }
     }
 }
+

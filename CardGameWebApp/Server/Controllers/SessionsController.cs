@@ -13,10 +13,12 @@ namespace CardGameWebApp.Server.Controllers
     public class SessionsController : ControllerBase
     {
         private readonly SessionService service;
+        private readonly IUserEnquirerFactory userEnquirerFactory;
 
-        public SessionsController(SessionService service)
+        public SessionsController(SessionService service, IUserEnquirerFactory userEnquirerFactory)
         {
             this.service = service ?? throw new ArgumentNullException(nameof(service));
+            this.userEnquirerFactory = userEnquirerFactory;
         }
 
         [HttpGet]
@@ -30,7 +32,7 @@ namespace CardGameWebApp.Server.Controllers
         public ActionResult Create()
         {
             var id = Guid.NewGuid();
-            service.Create(id);
+            service.Create(id, userEnquirerFactory);
             return Created(Url.Action(nameof(GetSession), "sessions", new { id }, Request.Scheme), null);
         }
 

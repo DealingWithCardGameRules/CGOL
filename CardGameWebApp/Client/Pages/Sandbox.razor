@@ -2,7 +2,9 @@
 @using CardGameWebApp.Client.Components
 @using CardGameWebApp.Shared.Responses
 @using System.Net
+@inject NavigationManager NavigationManager
 @inject HttpClient Http
+@inject IJSRuntime JSRuntime
 
 <h1>Create and test sandbox</h1>
 
@@ -35,6 +37,7 @@
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="playArea" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
     <h5 id="offcanvasRightLabel">Game</h5>
+	<button type="button" class="btn btn-primary" @onclick="CopyUrl"><span class="oi oi-share"></span></button>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
@@ -56,7 +59,10 @@
 		var response = await Http.PostAsync(game.Links["self"], JsonContent.Create(game.Game));
 		if (response.StatusCode == HttpStatusCode.Created)
 		{
-			gameSim.Start(response.Headers.Location.AbsoluteUri);
+			var url = response.Headers.Location.AbsoluteUri;
+			gameUrl = $"{NavigationManager.ToAbsoluteUri("/play").AbsoluteUri}/{url.Encode64()}";
+			await gameSim.Start(url);
+			this.StateHasChanged();
 		}
 	}
 	protected override async Task OnInitializedAsync()
@@ -69,6 +75,11 @@
 			if (session.Links.ContainsKey("concepts"))
 				highlighter.UpdateConcepts(session.Links["concepts"]);
 		}
+	}
+
+	private async void CopyUrl()
+	{
+		await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", gameUrl);
 	}
 
 	private Dictionary<string, string> preloads = new Dictionary<string, string>

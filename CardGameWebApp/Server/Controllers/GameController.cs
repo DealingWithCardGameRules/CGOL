@@ -11,8 +11,10 @@ using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using System.Linq;
-using Microsoft.AspNetCore.WebUtilities;
 using System.Dynamic;
+using CardGameWebApp.Server.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -21,10 +23,14 @@ namespace CardGameWebApp.Server.Controllers
     public class GameController : Controller
     {
         private readonly SessionService session;
+        private readonly IUserEnquirerFactory userEnquirerFactory;
+        private readonly IHubContext<GameHub> gameHub;
 
-        public GameController(SessionService session)
+        public GameController(SessionService session, IUserEnquirerFactory userEnquirerFactory, IHubContext<GameHub> gameHub)
         {
             this.session = session ?? throw new ArgumentNullException(nameof(session));
+            this.userEnquirerFactory = userEnquirerFactory ?? throw new ArgumentNullException(nameof(userEnquirerFactory));
+            this.gameHub = gameHub ?? throw new ArgumentNullException(nameof(gameHub));
         }
 
         [HttpGet]
@@ -40,7 +46,7 @@ namespace CardGameWebApp.Server.Controllers
         public ActionResult Create([FromBody] CreateGameDTO game)
         {
             var sessionId = Guid.NewGuid();
-            session.Create(sessionId);
+            session.Create(sessionId, userEnquirerFactory);
             var current = session.GetSession(sessionId);
             current.Service.Parse(game.CGDLSource);
             return Created(Url.Action(nameof(GetGame), "game", new { id = sessionId }, Request.Scheme), null);
@@ -62,6 +68,7 @@ namespace CardGameWebApp.Server.Controllers
             var current = session.GetSession(id);
             var dto = new GameStateDTO
             {
+                NumberOfPlayers = current.Service.Dispatch(new GetNumberOfPlayers()),
                 Decks = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "deck" } })),
                 Hands = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "hand" } })),
                 Community = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "community" } }))
@@ -69,9 +76,11 @@ namespace CardGameWebApp.Server.Controllers
 
             var response = new GameOverviewResponse(Request.GetEncodedUrl())
             {
-                Game = dto
+                Game = dto,
+                SessionId = id
             };
-            response.Links.Add("actions", Url.Action(nameof(GetActions), "game", new { id }, Request.Scheme));
+            //response.Links.Add("actions", Url.Action(nameof(GetActions), "game", new { id }, Request.Scheme));
+            response.Links.Add("hub", $"{Environment.GetEnvironmentVariable("ASPNETCORE_URLS")}/gamehub");
 
             return response;
         }
@@ -115,7 +124,7 @@ namespace CardGameWebApp.Server.Controllers
                     if (card != null)
                         (obj as IDictionary<string, object>).Add(command.Command.GetPlayCard(), card);
 
-                    output[command.Label] = Url.Action(nameof(GetActions), "game", (object)obj, Request.Scheme);
+                    output[command.Label] = Url.Action(nameof(GetAction), "game", (object)obj, Request.Scheme);
                 }
                 return output;
             }
@@ -138,12 +147,11 @@ namespace CardGameWebApp.Server.Controllers
         [HttpGet("{id:Guid}/cards/{card:Guid}")]
         public ActionResult GetCard(Guid id, Guid card)
         {
-
             return Ok();
         }
 
         [HttpGet("{id:Guid}/actions/{instance:Guid}")]
-        public ActionResult<ActionResponse> GetActions(Guid id, Guid instance)
+        public ActionResult<ActionResponse> GetAction(Guid id, Guid instance)
         {
             var current = session.GetSession(id);
             var command = current.Service.Dispatch(new GetAvailableAction(instance));
@@ -170,7 +178,7 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpPost("{id:Guid}/actions/{instance:Guid}")]
-        public ActionResult GetActions(Guid id, Guid instance, [FromBody]ActionDTO action)
+        public async Task<ActionResult> PerformAction(Guid id, Guid instance, [FromBody]ActionDTO action)
         {
             var current = session.GetSession(id);
             var command = current.Service.Dispatch(new GetAvailableAction(instance));
@@ -186,6 +194,7 @@ namespace CardGameWebApp.Server.Controllers
             }
 
             current.Service.Dispatch(command);
+            await gameHub.Clients.Group(id.ToString()).SendAsync("NewState");
             return Ok();
         }
 

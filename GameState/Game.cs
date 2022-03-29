@@ -17,6 +17,11 @@ namespace dk.itu.game.msc.cgdl.GameState
             players = new Dictionary<int, IPlayer>();
         }
 
+        internal int CountPlayers()
+        {
+            return players.Count;
+        }
+
         internal IPlayer? GetCurrentPlayer()
         {
             if (players.ContainsKey(currentPlayer))

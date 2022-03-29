@@ -29,6 +29,8 @@ namespace CardGameWebApp.Server
             services.AddSignalR();
             services.AddSingleton(new SessionRepository());
             services.AddSingleton(new SessionFactory());
+            services.AddSingleton(new InquiryResponseOperator());
+            services.AddSingleton<IUserEnquirerFactory, UserEnquirerFactory>();
             services.AddSingleton<SessionService>();
             services.AddResponseCompression(opts =>
             {
@@ -62,6 +64,7 @@ namespace CardGameWebApp.Server
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chathub");
+                endpoints.MapHub<GameHub>("/gamehub");
                 endpoints.MapFallbackToFile("index.html");
             });
         }
