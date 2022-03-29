@@ -8,7 +8,8 @@ namespace dk.itu.game.msc.cgdl.Representation
         {
             var factory = new CGDLServiceFactory();
             var service = factory.CreateFluxxGame();
-            return new Session(id, service, factory.GetInterpolator());
+            var playerRepository = new PlayerRepository();
+            return new Session(id, service, factory.GetInterpolator(), playerRepository);
         }
     }
 }

@@ -1,7 +1,20 @@
 ﻿@using CardGameWebApp.Shared.DTOs
 @using CardGameWebApp.Shared.Responses
 @using System.Net
+@using Microsoft.AspNetCore.SignalR.Client
 @inject HttpClient Http
+
+<!-- Player select -->
+@if (players != null)
+{
+	<div class="btn-group" role="group">
+	@for(int i = 0; i < players.Count; i++)
+	{
+		var playerIndex = i;
+		<button type="button" class="btn @(players[playerIndex] ? "btn-primary" : "btn-outline-primary")" @onclick="@(() => TogglePlayer(playerIndex))" autocomplete="off">Player @(i+1)</button>
+	}
+	</div>
+}
 
 <!-- Community cards -->
 @if (communities != null && communities.Any())
@@ -61,14 +74,35 @@
 	private IDictionary<string, string> hands = null;
 	private IDictionary<string, string> decks = null;
 	private Dictionary<string, CardCollectionResponse> collectionCache;
+	private List<bool> players;
+	private HubConnection? hubConnection;
 
-	public async void Start(string gameUrl)
+	public async Task Start(string gameUrl)
 	{
 		collectionCache = new Dictionary<string, CardCollectionResponse>();
+		players = new List<bool>();
 		hands = null;
 		decks = null;
 
 		game = await Http.GetFromJsonAsync<GameOverviewResponse>(gameUrl);
+
+		for(int i = 0; i < game.Game.NumberOfPlayers; i++)
+		{
+			players.Add(false);
+		}
+		hubConnection = new HubConnectionBuilder().WithUrl(game.Links["hub"]).Build();
+		hubConnection.On<int>("PlayerJoined", (int i) =>
+		{ 
+			players[i] = true; 
+			this.StateHasChanged();
+		});
+		hubConnection.On<int>("PlayerLeft", (int i) =>
+		{ 
+			players[i] = false; 
+			this.StateHasChanged();
+		});
+		await hubConnection.StartAsync();
+		await hubConnection.SendAsync("join", game.SessionId);
 
 		foreach (var pair in game.Game.Hands)
 			await UpdateCollectionCache(pair.Key, pair.Value);
@@ -78,6 +112,20 @@
 		hands = game.Game.Hands;
 		decks = game.Game.Decks;
 		this.StateHasChanged();
+	}
+
+	public async void Stop()
+	{
+		await hubConnection.SendAsync("leave", game.SessionId);
+		await hubConnection.StopAsync();
+	}
+
+	private void TogglePlayer(int index)
+	{
+		if (!players[index])
+			hubConnection.SendAsync("selectPlayer", game.SessionId, index);
+		else
+			hubConnection.SendAsync("ReleasePlayer", game.SessionId, index);
 	}
 
 	private async Task updateCache()

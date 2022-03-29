@@ -11,7 +11,6 @@ using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using System.Linq;
-using Microsoft.AspNetCore.WebUtilities;
 using System.Dynamic;
 
 namespace CardGameWebApp.Server.Controllers
@@ -62,6 +61,7 @@ namespace CardGameWebApp.Server.Controllers
             var current = session.GetSession(id);
             var dto = new GameStateDTO
             {
+                NumberOfPlayers = current.Service.Dispatch(new GetNumberOfPlayers()),
                 Decks = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "deck" } })),
                 Hands = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "hand" } })),
                 Community = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "community" } }))
@@ -69,9 +69,11 @@ namespace CardGameWebApp.Server.Controllers
 
             var response = new GameOverviewResponse(Request.GetEncodedUrl())
             {
-                Game = dto
+                Game = dto,
+                SessionId = id
             };
-            response.Links.Add("actions", Url.Action(nameof(GetActions), "game", new { id }, Request.Scheme));
+            //response.Links.Add("actions", Url.Action(nameof(GetActions), "game", new { id }, Request.Scheme));
+            response.Links.Add("hub", $"{Environment.GetEnvironmentVariable("ASPNETCORE_URLS")}/gamehub");
 
             return response;
         }
