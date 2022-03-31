@@ -4,7 +4,6 @@
 @using System.Net
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
-@inject IJSRuntime JSRuntime
 
 <h1>Create and test sandbox</h1>
 
@@ -58,6 +57,7 @@
 	private string gameUrl = string.Empty;
 	private GameIndexResponse game;
 	private HighlightEditor highlighter;
+	private SelectCardPrompt test;
 
 	private async void PlayGame()
 	{
@@ -81,11 +81,6 @@
 			if (session.Links.ContainsKey("concepts"))
 				highlighter.UpdateConcepts(session.Links["concepts"]);
 		}
-	}
-
-	private async void CopyUrl()
-	{
-		await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", gameUrl);
 	}
 
 	private Dictionary<string, string> preloads = new Dictionary<string, string>
