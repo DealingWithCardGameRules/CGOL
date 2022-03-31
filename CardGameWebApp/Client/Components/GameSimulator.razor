@@ -1,8 +1,11 @@
 ﻿@using CardGameWebApp.Shared.DTOs
+@using CardGameWebApp.Shared.Inquiries
 @using CardGameWebApp.Shared.Responses
 @using System.Net
 @using Microsoft.AspNetCore.SignalR.Client
 @inject HttpClient Http
+
+<SelectCardPrompt></SelectCardPrompt>
 
 <!-- Player select -->
 @if (players != null)
@@ -106,6 +109,12 @@
 			await updateCache();
 			this.StateHasChanged();
 		});
+
+		hubConnection.On<SelectCardInquiry>("SelectCard", async (inquirt) =>
+		{
+			
+		});
+
 		await hubConnection.StartAsync();
 		await hubConnection.SendAsync("join", game.SessionId);
 
