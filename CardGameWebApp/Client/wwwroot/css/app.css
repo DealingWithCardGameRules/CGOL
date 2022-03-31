@@ -76,10 +76,14 @@ a, .btn-link {
         border-radius: 5px;
     }
 
-        .playcard .background h1 {
-            font-style: italic;
-            text-align: center;
-        }
+.playcard .selected {
+    border: 5px solid blue;
+}
+
+.playcard .background h1 {
+    font-style: italic;
+    text-align: center;
+}
 
     .playcard .illustration {
         display: block;

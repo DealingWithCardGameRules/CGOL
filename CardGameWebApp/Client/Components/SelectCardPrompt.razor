@@ -1,0 +1,44 @@
+﻿@using CardGameWebApp.Shared.DTOs
+
+<div class="modal fade show" id="selectCardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="selectCardModalLabel" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectCardModalLabel">Select a card</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            @foreach (var card in Cards)
+            {
+                var cardInfo = library.GetCard(card.Name);
+                <div class="playcard selected">
+                    <h3>@cardInfo.Name</h3>
+                    <img class="illustration" src="/illustrations/@(cardInfo.Illustration).png" />
+                    <p>@cardInfo.Classification</p>
+                    <p class="description">@cardInfo.Description</p>
+                </div>
+            }
+            </div>
+            <div class="modal-footer">
+                @if (!IsRequired)
+                {
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Pass</button>    
+                }
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Select</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private CardLibrary library = CardLibrary.Instance;
+
+    [Parameter]
+    public bool IsRequired { get; set; } = false;
+
+    [Parameter]
+    public IEnumerable<CardRefDTO> Cards { get; set; } = new CardRefDTO[0];
+
+    [Parameter]
+    public Action<Guid?> OnSelect { get; set; }
+}
