@@ -1,6 +1,5 @@
 ﻿using CardGameWebApp.Shared;
 using dk.itu.game.msc.cgdl;
-using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
@@ -12,7 +11,7 @@ using System.Collections.Generic;
 
 namespace CardGameWebApp.Server.Controllers
 {
-    [ApiController]
+	[ApiController]
     [Route("[controller]")]
     public class DemosController : Controller
     {
