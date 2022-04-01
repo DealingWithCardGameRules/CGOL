@@ -32,8 +32,7 @@ namespace CardGameWebApp.Server
                 Guid corId = Guid.NewGuid();
                 responseOperator.Expect<Guid?>(corId, (card) => returnValue = card);
                 gameHub.Clients.Client(clientId).SendAsync("SelectCard", new SelectCardInquiry(corId, collection, requiredTags));
-                while (returnValue == null) ;
-
+                while (returnValue == null);
             }).Wait();
             return returnValue;
         }

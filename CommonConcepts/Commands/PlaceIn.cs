@@ -11,12 +11,13 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public string Collection { get; }
 
         // Will be overwritten when resolving instantanious/permanent effects.
-        [AffectSelf] public Guid? CardId { get; set; } 
+        [AffectSelf] public Guid? CardId { get; set; }
 
-        public PlaceIn(string collection)
+        public PlaceIn(string collection, Guid? cardId = null)
         {
             Instance = Guid.NewGuid();
             Collection = collection;
+            CardId = cardId;
         }
     }
 }

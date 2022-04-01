@@ -24,7 +24,7 @@
 				{
 				<li>
 					<a class="dropdown-item" @onclick="() => SelectPreload(preload.Key)">@preload.Key</a>
-				</li>	
+				</li>
 				}
 			</ul>
 		</div>
@@ -50,7 +50,6 @@
 	</div>
 </div>
 
-
 @code {
 	private bool playing = false;
 	private GameSimulator gameSim;
@@ -71,6 +70,7 @@
 			this.StateHasChanged();
 		}
 	}
+
 	protected override async Task OnInitializedAsync()
 	{
 		game = await Http.GetFromJsonAsync<GameIndexResponse>("game");
@@ -101,5 +101,4 @@
 		highlighter.Value = preloads[preload];
 		this.StateHasChanged();
 	}
-
 }

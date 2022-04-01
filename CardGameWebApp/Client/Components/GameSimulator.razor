@@ -5,7 +5,7 @@
 @using Microsoft.AspNetCore.SignalR.Client
 @inject HttpClient Http
 
-<SelectCardPrompt></SelectCardPrompt>
+<SelectCardPrompt @ref="cardPrompt"></SelectCardPrompt>
 
 <!-- Player select -->
 @if (players != null)
@@ -79,6 +79,7 @@
 	private Dictionary<string, CardCollectionResponse> collectionCache;
 	private List<bool> players;
 	private HubConnection? hubConnection;
+	private SelectCardPrompt cardPrompt;
 
 	public async Task Start(string gameUrl)
 	{
@@ -96,7 +97,7 @@
 		hubConnection = new HubConnectionBuilder().WithUrl(game.Links["hub"]).Build();
 		hubConnection.On<int>("PlayerJoined", (int i) =>
 		{ 
-			players[i] = true; 
+			players[i] = true;
 			this.StateHasChanged();
 		});
 		hubConnection.On<int>("PlayerLeft", (int i) =>
@@ -112,7 +113,11 @@
 
 		hubConnection.On<SelectCardInquiry>("SelectCard", async (inquirt) =>
 		{
-			
+			var cards = collectionCache[inquirt.Collection].CardCollection.VisibleCards;
+			await cardPrompt.Select(cards, async (card) =>
+			{
+				await hubConnection.SendAsync("CardSelected", inquirt.CorrespondenceId, card);
+			}, required: true);
 		});
 
 		await hubConnection.StartAsync();

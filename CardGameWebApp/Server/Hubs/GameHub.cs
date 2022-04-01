@@ -8,10 +8,12 @@ namespace CardGameWebApp.Server.Hubs
     public class GameHub : Hub
     {
         private readonly SessionService service;
+        private readonly InquiryResponseOperator inquiryResponseOperator;
 
-        public GameHub(SessionService service)
+        public GameHub(SessionService service, InquiryResponseOperator inquiryResponseOperator)
         {
             this.service = service ?? throw new ArgumentNullException(nameof(service));
+            this.inquiryResponseOperator = inquiryResponseOperator ?? throw new ArgumentNullException(nameof(inquiryResponseOperator));
         }
 
         public async Task Join(Guid sessionId)
@@ -41,10 +43,9 @@ namespace CardGameWebApp.Server.Hubs
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, sessionId.ToString());
         }
 
-        public async Task CardSelected(Guid sessionId)
+        public async Task CardSelected(Guid correspondenceId, Guid? card)
         {
-            var session = service.GetSession(sessionId);
-
+            await Task.Run(() => inquiryResponseOperator.Redeem(correspondenceId, card));
         }
     }
 }
