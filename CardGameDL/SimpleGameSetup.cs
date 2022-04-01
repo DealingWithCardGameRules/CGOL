@@ -27,6 +27,7 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new SimplyDeclareCard(timeProvider));
             interpolator.AddConcept(new SimplyPlaceInCollection(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyDeclarePlayers(timeProvider));
+            interpolator.AddConcept(new DiscardCardHandler(dispatcher));
         }
     }
 }

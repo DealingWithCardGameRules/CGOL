@@ -3,10 +3,10 @@
 <BSModal @ref="modal" IsStaticBackdrop="true" DataId="selectCardModal" Size="Size.ExtraLarge">
     <Header>Select a card</Header>
     <Content>
-        @foreach (var card in Cards)
+        @foreach (var card in cards)
         {
             var cardInfo = library.GetCard(card.Name);
-            <div class="playcard selected">
+            <div class="playcard @(selected == card.Instance ? "selected": "")" @onclick="() => selected = card.Instance">
                 <h3>@cardInfo.Name</h3>
                 <img class="illustration" src="/illustrations/@(cardInfo.Illustration).png" />
                 <p>@cardInfo.Classification</p>
@@ -15,26 +15,45 @@
         }
     </Content>
     <Footer Context="modal">
-        <BSButton MarginStart="Margins.Auto" Color="BSColor.Secondary" @onclick="modal.HideAsync">Pass</BSButton>
-        <BSButton Color="BSColor.Primary">Select</BSButton>
+        @if(!required)
+        {
+        <BSButton MarginStart="Margins.Auto" Color="BSColor.Secondary" @onclick="Cancel">Pass</BSButton>    
+        }
+        <BSButton Color="BSColor.Primary" @onclick="Select">Select</BSButton>
     </Footer>
 </BSModal>
 
 @code {
+    private IEnumerable<CardRefDTO> cards = new CardRefDTO[0];
     private CardLibrary library = CardLibrary.Instance;
     private BSModal modal;
+    private bool required;
+    private Guid? selected;
+    private double maxWait;
+    private DateTime startTime;
+    private double elapsedTime => (startTime - DateTime.Now).TotalSeconds;
+    private Action<Guid?> onResult;
 
-    [Parameter]
-    public bool IsRequired { get; set; } = false;
-
-    [Parameter]
-    public IEnumerable<CardRefDTO> Cards { get; set; } = new CardRefDTO[0];
-
-    [Parameter]
-    public Action<Guid?> OnSelect { get; set; }
-
-    public async void Show()
+    public void Cancel()
     {
+        modal.HideAsync();
+        onResult.Invoke(null);
+    }
+
+    public void Select()
+    {
+        modal.HideAsync();
+        onResult.Invoke(selected);
+    }
+
+    public async Task Select(IEnumerable<CardRefDTO> cards, Action<Guid?> result, bool required = false)
+    {
+        this.cards = cards;
+        this.selected = cards.First().Instance;
+        this.required = required;
+        if (required)
+            modal.ButtonClass = "d-none";
         await modal.ShowAsync();
+        onResult = result;
     }
 }

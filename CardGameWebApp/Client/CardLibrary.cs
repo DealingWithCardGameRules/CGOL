@@ -35,7 +35,11 @@ namespace CardGameWebApp.Client
         {
             if (library.ContainsKey(template.ToLower()))
                 return library[template.ToLower()];
-            return null;
+            return new CardDetails
+			{
+                Name=template,
+                Illustration="placeholder"
+			};
         }
     }
 

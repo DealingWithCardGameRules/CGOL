@@ -57,7 +57,7 @@ namespace CardGameWebApp.Server.Controllers
         {
             IDictionary<string, string> colLink(IEnumerable<string> names)
             {
-                Dictionary<string, string> output = new Dictionary<string, string>();
+                Dictionary<string, string> output = new();
                 foreach (var name in names)
                 {
                     output[name] = Url.Action(nameof(GetCollection), "game", new { id, name }, Request.Scheme);
@@ -107,6 +107,7 @@ namespace CardGameWebApp.Server.Controllers
                     yield return new CardRefDTO
                     {
                         Name = card.Template,
+                        Instance = card.Instance,
                         //Link = Url.Action(nameof(GetCard), "game", new { id, card = card.Instance }, Request.Scheme),
                         Actions = actionLink(cardActions, card.Instance)
                     };

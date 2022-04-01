@@ -18,7 +18,7 @@ namespace dk.itu.game.msc.cgdl.Representation.Handlers
         public Guid? Handle(PickACard query)
         {
             Guid? cardId = null;
-            new Task(() => cardId = enquirer.SelectCard(query.Player, query.Collection, query.RequiredTags))
+            Task.Run(() => cardId = enquirer.SelectCard(query.Player, query.Collection, query.RequiredTags))
                 .Wait(query.TimeoutLimitSeconds * secondsToMiliseconds);
             return cardId;
         }
