@@ -51,5 +51,14 @@ namespace FileContext
                 yield return item.Name;
 			}
         }
+
+        public void CreateFolder(string uri)
+        {
+            var directory = new DirectoryInfo($"{dataPath}{uri}");
+            if (directory.Exists)
+                return;
+
+            directory.Create();
+        }
     }
 }

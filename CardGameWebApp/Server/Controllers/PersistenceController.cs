@@ -54,13 +54,10 @@ namespace CardGameWebApp.Server.Controllers
 		}
 
 		[HttpPost("folders/{*url}")]
-		public StorageResponse CreateFolder(string url)
+		public IActionResult CreateFolder(string url)
 		{
-			return new StorageResponse(Request.GetEncodedUrl())
-			{
-				folders = GenerateFolderLinks(storage.GetFolders($"{USER}/{url}"), url),
-				files = GenerateFileLinks(storage.GetFiles($"{USER}/{url}"), url)
-			};
+			storage.CreateFolder($"{USER}/{url}");
+			return Created(Request.GetEncodedUrl(), null);
 		}
 
 		[HttpGet("files/{*url}")]
