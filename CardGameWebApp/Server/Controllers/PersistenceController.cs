@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -60,6 +61,24 @@ namespace CardGameWebApp.Server.Controllers
 			return Created(Request.GetEncodedUrl(), null);
 		}
 
+		[HttpDelete("folders/{*url}")]
+		public IActionResult DeleteFolder(string url)
+		{
+            if (!bool.TryParse(Request.Query["recursive"], out bool recursive))
+                recursive = false;
+
+			try
+            {
+				storage.DeleteFolder($"{USER}/{url}", recursive);
+			}
+			catch(IOException ex)
+            {
+				return Conflict("Folder is not empty. Please empty folder or repeat the request with the parameter recursive set to true.");
+            }
+            
+			return Ok();
+		}
+
 		[HttpGet("files/{*url}")]
 		public string GetTextFile(string url)
 		{
@@ -77,5 +96,12 @@ namespace CardGameWebApp.Server.Controllers
 			
 			return Ok(Request.GetEncodedUrl());
 		}
+
+		[HttpDelete("files/{*url}")]
+		public ActionResult RemoveTextFile(string url)
+        {
+			storage.RemoveFile($"{USER}/{url}");
+			return Ok();
+        }
 	}
 }
