@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace FileContext
 {
@@ -50,6 +51,28 @@ namespace FileContext
 			{
                 yield return item.Name;
 			}
+        }
+
+        public void CreateFolder(string uri)
+        {
+            var directory = new DirectoryInfo($"{dataPath}{uri}");
+            if (directory.Exists)
+                return;
+
+            directory.Create();
+        }
+
+        public void RemoveFile(string uri)
+        {
+            var file = new FileInfo($"{dataPath}{uri}{dataFileExtension}");
+            if (file.Exists)
+                file.Delete();
+        }
+
+        internal void DeleteFolder(string uri, bool recursive = false)
+        {
+            var dir = new DirectoryInfo($"{dataPath}{uri}");
+            dir.Delete(recursive);
         }
     }
 }

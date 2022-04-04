@@ -1,0 +1,67 @@
+﻿@using System.Threading
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div class="toast-container">
+    @foreach (var toast in toasts)
+    {
+    var span = DateTime.Now - toast.eventTime;
+
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <!--<img src="..." class="rounded me-2" alt="...">-->
+            <strong class="me-auto">@toast.Title</strong>
+            <small class="text-muted">@span.Seconds</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" @onclick="() => Delete(toast)"></button>
+        </div>
+        <div class="toast-body">
+            @toast.Text
+        </div>
+    </div>
+    }
+    </div>
+</div>
+
+@code {
+    private List<Toast> toasts = new List<Toast>();
+    private Timer Timer;
+
+    private void Delete(Toast toast)
+    {
+        toasts.Remove(toast);
+    }
+
+    public void AddToast(string title, string text)
+    {
+        toasts.Add(new Toast
+            {
+                Title = title,
+                Text = text,
+                eventTime = DateTime.Now
+            });
+        Timer = new Timer(Tick, null, 0, 100);
+        this.StateHasChanged();
+    }
+
+    private void Tick(object _)
+    {
+        toasts.RemoveAll(t => (DateTime.Now - t.eventTime).Seconds > 5);
+        InvokeAsync(StateHasChanged);
+        if (!toasts.Any())
+        {
+            Timer.Dispose();
+            Timer = null;
+        }
+        
+    }
+
+    public void Dispose()
+    {
+        Timer?.Dispose();
+    }
+
+    class Toast
+    {
+        public string Title { get; set; }
+        public string Text { get; set; }
+        public DateTime eventTime { get; set; }
+    }
+}

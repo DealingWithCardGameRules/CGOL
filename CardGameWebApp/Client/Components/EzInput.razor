@@ -1,0 +1,30 @@
+﻿ <div class="input-group @Class" id="@id">
+    <input type="text" class="form-control" placeholder="Foldername" aria-label="Foldername" @bind="Value" @bind:event="oninput">
+    <button type="button" class="btn btn-outline-primary" title="@Title" data-placement="top" data-toggle="tooltip" @onclick="CmdClick">
+        @ChildContent
+    </button>
+</div>
+
+@code {
+    private string Value { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public Action<string> OnClick { get; set; }
+    
+    [Parameter]
+    public string Class { get; set; }
+
+    [Parameter]
+    public string id { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = null;
+
+    private void CmdClick()
+    {
+        OnClick.Invoke(Value);
+    }
+}
