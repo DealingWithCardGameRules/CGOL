@@ -47,11 +47,13 @@ namespace CardGameWebApp.Server.Controllers
 		[HttpGet("folders/{*url}")]
 		public StorageResponse Index(string url)
 		{
-			return new StorageResponse(Request.GetEncodedUrl())
+			var response = new StorageResponse(Url.Action(nameof(Index), "persistence", new { url = $"{url}" }, Request.Scheme).Replace("%2F", "/"))
 			{
 				folders = GenerateFolderLinks(storage.GetFolders($"{USER}/{url}"), url),
 				files = GenerateFileLinks(storage.GetFiles($"{USER}/{url}"), url)
 			};
+			response.Links.Add("file", Url.Action(nameof(GetTextFile), "persistence", new { url = $"{url}" }, Request.Scheme).Replace("%2F", "/"));
+			return response;
 		}
 
 		[HttpPost("folders/{*url}")]
@@ -67,11 +69,11 @@ namespace CardGameWebApp.Server.Controllers
             if (!bool.TryParse(Request.Query["recursive"], out bool recursive))
                 recursive = false;
 
-			try
+            try
             {
 				storage.DeleteFolder($"{USER}/{url}", recursive);
 			}
-			catch(IOException ex)
+			catch (IOException)
             {
 				return Conflict("Folder is not empty. Please empty folder or repeat the request with the parameter recursive set to true.");
             }
@@ -88,7 +90,7 @@ namespace CardGameWebApp.Server.Controllers
 		[HttpPost("files/{*url}")]
 		public async Task<ActionResult> StoreTextFile(string url)
 		{
-			using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+			using (StreamReader reader = new(Request.Body, Encoding.UTF8))
 			{
 				var content = await reader.ReadToEndAsync();
 				storage.StoreFile($"{USER}/{url}", content);

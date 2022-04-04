@@ -3,7 +3,6 @@ using dk.itu.game.msc.cgdl.LanguageParser.Lexers;
 using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
 using System.Collections.Generic;
 using System.Text;
-using static System.Net.WebRequestMethods;
 
 namespace CardGameWebApp.Client
 {

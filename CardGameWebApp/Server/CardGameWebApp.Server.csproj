@@ -6,15 +6,19 @@
 
   <ItemGroup>
     <Compile Remove="Classes\**" />
+    <Compile Remove="Data\anonymous\Fluxx\**" />
     <Compile Remove="Data\anonymous\Test2\**" />
     <Compile Remove="Data\anonymous\Test4\**" />
     <Content Remove="Classes\**" />
+    <Content Remove="Data\anonymous\Fluxx\**" />
     <Content Remove="Data\anonymous\Test2\**" />
     <Content Remove="Data\anonymous\Test4\**" />
     <EmbeddedResource Remove="Classes\**" />
+    <EmbeddedResource Remove="Data\anonymous\Fluxx\**" />
     <EmbeddedResource Remove="Data\anonymous\Test2\**" />
     <EmbeddedResource Remove="Data\anonymous\Test4\**" />
     <None Remove="Classes\**" />
+    <None Remove="Data\anonymous\Fluxx\**" />
     <None Remove="Data\anonymous\Test2\**" />
     <None Remove="Data\anonymous\Test4\**" />
   </ItemGroup>
