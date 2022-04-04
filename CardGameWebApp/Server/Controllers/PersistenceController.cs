@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+using dk.itu.game.msc.cgdl.Representation;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -17,11 +18,13 @@ namespace CardGameWebApp.Server.Controllers
 		const string USER = "anonymous";
 
 		private readonly StorageService storage;
+        private readonly SessionService session;
 
-		public PersistenceController(StorageService directorySearcher)
+        public PersistenceController(StorageService directorySearcher, SessionService session)
 		{
 			this.storage = directorySearcher ?? throw new System.ArgumentNullException(nameof(directorySearcher));
-		}
+            this.session = session ?? throw new ArgumentNullException(nameof(session));
+        }
 
 		private IDictionary<string, string> GenerateFolderLinks(IEnumerable<string> folders, string? url = null)
 		{
@@ -55,6 +58,16 @@ namespace CardGameWebApp.Server.Controllers
 			response.Links.Add("file", Url.Action(nameof(GetTextFile), "persistence", new { url = $"{url}" }, Request.Scheme).Replace("%2F", "/"));
 			return response;
 		}
+
+		[HttpPost("{id:Guid}/{*url}")]
+		public IActionResult LoadCGD(Guid id, string url)
+		{
+			var cgd = storage.GetFile($"{USER}/{url}");
+			var current = session.GetSession(id);
+			current.Service.Parse(cgd);
+			return Ok();
+		}
+
 
 		[HttpPost("folders/{*url}")]
 		public IActionResult CreateFolder(string url)

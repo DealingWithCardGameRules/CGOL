@@ -10,9 +10,10 @@
             <div class="list-group list-group-flush @(root?"list-group-root":"")">
             @foreach (var folder in folderInfo.folders)
             {
-                var folderid = Guid.NewGuid().ToString();
-                var fileid = Guid.NewGuid().ToString();
-                var folderPath = $"{path}/{folder.Key}";
+
+            var folderid = Guid.NewGuid().ToString();
+            var fileid = Guid.NewGuid().ToString();
+            var folderPath = $"{path}/{folder.Key}";
 
             <div class="list-group-item p-0 ps-3">
                 <div class="row">
@@ -85,7 +86,7 @@
 </ToastContainer>
 
 <div class="row">
-    <div class="col-2">
+    <div class="col-2 col-sm-4">
         <div>
             <h5 class="d-inline-block">Files:</h5>
             <div class="btn-group btn-group-sm float-end" role="group">
@@ -110,7 +111,7 @@
             ShowTree(".", true);
         }
     </div>
-    <div class="col-10">
+    <div class="col-10 col-sm-8">
     <h4>@SelectedFileName</h4>
     <HighlightEditor @ref="editor"></HighlightEditor>
     <button type="button" class="btn btn-primary" @onclick="SaveFile">Save</button>
