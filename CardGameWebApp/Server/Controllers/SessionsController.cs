@@ -1,6 +1,5 @@
 ﻿using CardGameWebApp.Shared;
 using CardGameWebApp.Shared.Responses;
-using dk.itu.game.msc.cgdl.Representation;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,13 +11,11 @@ namespace CardGameWebApp.Server.Controllers
     [Route("[controller]")]
     public class SessionsController : ControllerBase
     {
-        private readonly SessionService service;
-        private readonly IUserEnquirerFactory userEnquirerFactory;
+        private readonly SessionServiceWrapper service;
 
-        public SessionsController(SessionService service, IUserEnquirerFactory userEnquirerFactory)
+        public SessionsController(SessionServiceWrapper service)
         {
             this.service = service ?? throw new ArgumentNullException(nameof(service));
-            this.userEnquirerFactory = userEnquirerFactory;
         }
 
         [HttpGet]
@@ -32,7 +29,7 @@ namespace CardGameWebApp.Server.Controllers
         public ActionResult Create()
         {
             var id = Guid.NewGuid();
-            service.Create(id, userEnquirerFactory);
+            service.Create(id, new WebContext { User = "anonymous" });
             return Created(Url.Action(nameof(GetSession), "sessions", new { id }, Request.Scheme), null);
         }
 
