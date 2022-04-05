@@ -267,3 +267,20 @@ span.token.symbol {
 .list-group.list-group-root > .list-group > .list-group > .list-group-item {
     padding-left: 45px;
 }
+
+.top-toolbar {
+    border: 1px solid black;
+    border-radius: 10px;
+    border-start-end-radius: 0px;
+    border-start-start-radius: 0px;
+    background-color: #00000050;
+    position: relative;
+    top: -20px;
+    padding: 5px;
+    padding-top: 0px;
+}
+
+.top-toolbar > .btn {
+    border-start-end-radius: 0px;
+    border-start-start-radius: 0px;
+}

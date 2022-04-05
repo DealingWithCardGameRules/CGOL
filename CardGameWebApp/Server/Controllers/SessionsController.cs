@@ -48,6 +48,7 @@ namespace CardGameWebApp.Server.Controllers
                 Session = new SessionDTO(session.Instance)
             };
             output.Links.Add("concepts", Url.Action("Index", "concepts", new { id }, Request.Scheme));
+            output.Links.Add("game", Url.Action("GetGame", "game", new { id }, Request.Scheme));
             return output;
         }
     }

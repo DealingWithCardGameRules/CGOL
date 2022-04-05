@@ -59,7 +59,13 @@
                     </div>
                     <div class="col-4 clearfix">
                         <div class="btn-group btn-group-sm float-end">
-                            <button class="btn btn-link" @onclick="() => SelectFile(file.Value)" title="Edit file" data-placement="top" data-toggle="tooltip">
+                            @if (sessionId != null)
+                            {
+                            <button class="btn btn-link" @onclick="() => LoadFile(file.Value)" title="Load file into session" data-placement="top" data-toggle="tooltip">
+                                <i class="fa-solid fa-play"></i>
+                            </button>                
+                            }
+                            <button class="btn btn-link" @onclick="() => EditFile(file.Value)" title="Edit file" data-placement="top" data-toggle="tooltip">
                                 <i class="fa-solid fa-file-pen"></i>
                             </button>
                         </div>
@@ -129,8 +135,8 @@
     private string PopupTitle { get; set; }
     private string PopupText { get; set; }
     private BSModal Popup { get; set; }
-
     private ToastContainer Toast { get; set; }
+    public Guid? sessionId;
 
     protected override async Task OnInitializedAsync()
     {
@@ -172,11 +178,16 @@
         }
     }
 
-    private async void SelectFile(string url)
+    private async void EditFile(string url)
     {
         SelectedFile = url;
         var text = await Http.GetStringAsync(url);
         editor.Value = text;
+    }
+
+    private async void LoadFile(string url)
+    {
+        await Http.GetAsync($"{url}?session={sessionId}");
     }
 
     private async void DeleteFolder(string path)
@@ -212,6 +223,17 @@
         var topFolder = await Http.GetFromJsonAsync<StorageResponse>(Url);
         folderCache.Add(".", topFolder);
         await SearchFolder(".", true);
+        StateHasChanged();
+    }
+
+    public async Task UpdateConcepts(string url)
+    {
+        await editor.UpdateConcepts(url);
+    }
+
+    public void SetSessionId(Guid id)
+    {
+        this.sessionId = id;
         StateHasChanged();
     }
 }

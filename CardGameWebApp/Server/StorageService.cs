@@ -26,12 +26,7 @@ namespace FileContext
 
         public void StoreFile(string file, string contents)
         {
-            using (var stream = File.OpenWrite($"{dataPath}{file.Replace("/", @"\")}{dataFileExtension}"))
-            {
-                var streamWriter = new StreamWriter(stream);
-                streamWriter.Write(contents);
-                streamWriter.Close();
-            }
+            File.WriteAllText($"{dataPath}{file.Replace("/", @"\")}{dataFileExtension}", contents);
         }
 
         public IEnumerable<string> GetFiles(string uri)
