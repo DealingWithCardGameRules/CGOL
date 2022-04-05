@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
-namespace FileContext
+namespace CardGameWebApp.Server
 {
-	public class StorageService
+    public class StorageService
     {
         private const string dataFileExtension = ".cgd";
         private readonly string dataPath;
@@ -42,10 +41,10 @@ namespace FileContext
         public IEnumerable<string> GetFolders(string uri)
         {
             var directory = new DirectoryInfo($"{dataPath}{uri}");
-			foreach (var item in directory.GetDirectories())
-			{
+            foreach (var item in directory.GetDirectories())
+            {
                 yield return item.Name;
-			}
+            }
         }
 
         public void CreateFolder(string uri)

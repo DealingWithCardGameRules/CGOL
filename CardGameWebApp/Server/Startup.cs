@@ -1,7 +1,6 @@
 using CardGameWebApp.Server.Hubs;
 using dk.itu.game.msc.cgdl;
 using dk.itu.game.msc.cgdl.Representation;
-using FileContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -34,6 +33,7 @@ namespace CardGameWebApp.Server
             services.AddSingleton(new SessionFactory());
             services.AddSingleton(new InquiryResponseOperator());
             services.AddSingleton(new StorageService($@"{Environment.ContentRootPath}\Data\"));
+            services.AddSingleton<SessionServiceWrapper>();
             services.AddSingleton<IUserEnquirerFactory, UserEnquirerFactory>();
             services.AddSingleton<SessionService>();
             services.AddResponseCompression(opts =>

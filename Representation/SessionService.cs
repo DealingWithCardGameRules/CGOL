@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.Representation
 {
-    public class SessionService
+    public class SessionService : ISessionService
     {
         private readonly SessionRepository repository;
         private readonly SessionFactory factory;
