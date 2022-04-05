@@ -4,7 +4,7 @@ namespace CardGameWebApp.Shared
 {
     public class SessionDTO 
     {
-        public Guid SessionId { get; }
+        public Guid SessionId { get; set; }
 
         public SessionDTO() {  }
 

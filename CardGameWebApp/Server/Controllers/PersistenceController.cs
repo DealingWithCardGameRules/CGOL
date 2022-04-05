@@ -7,6 +7,9 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+using dk.itu.game.msc.cgdl.Representation;
+using Microsoft.AspNetCore.SignalR;
+using CardGameWebApp.Server.Hubs;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -17,11 +20,15 @@ namespace CardGameWebApp.Server.Controllers
 		const string USER = "anonymous";
 
 		private readonly StorageService storage;
+        private readonly SessionService session;
+        private readonly IHubContext<GameHub> gameHub;
 
-		public PersistenceController(StorageService directorySearcher)
+        public PersistenceController(StorageService directorySearcher, SessionService session, IHubContext<GameHub> gameHub)
 		{
 			this.storage = directorySearcher ?? throw new System.ArgumentNullException(nameof(directorySearcher));
-		}
+            this.session = session ?? throw new ArgumentNullException(nameof(session));
+            this.gameHub = gameHub ?? throw new ArgumentNullException(nameof(gameHub));
+        }
 
 		private IDictionary<string, string> GenerateFolderLinks(IEnumerable<string> folders, string? url = null)
 		{
@@ -82,9 +89,25 @@ namespace CardGameWebApp.Server.Controllers
 		}
 
 		[HttpGet("files/{*url}")]
-		public string GetTextFile(string url)
+		public async Task<ActionResult<string>> GetTextFile(string url)
 		{
+			if (Guid.TryParse(Request.Query["session"], out Guid sessionId))
+				return await LoadCGD(url, sessionId);
+
 			return storage.GetFile($"{USER}/{url}");
+		}
+
+		private async Task<ActionResult> LoadCGD(string url, Guid id)
+		{
+			var cgd = storage.GetFile($"{USER}/{url}");
+			var current = session.GetSession(id);
+			if (current == null)
+				return NotFound("Session not found");
+
+			current.Service.Parse(cgd);
+			await gameHub.Clients.Group(id.ToString()).SendAsync("NewState");
+
+			return Ok();
 		}
 
 		[HttpPost("files/{*url}")]

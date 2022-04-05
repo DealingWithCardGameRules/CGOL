@@ -47,7 +47,7 @@
         }
     }
 
-    public async void UpdateConcepts(string url)
+    public async Task UpdateConcepts(string url)
     {
         var concepts = await Http.GetFromJsonAsync<IEnumerable<ConceptDTO>>(url);
         var dict = new Dictionary<string, ConceptDTO>();
