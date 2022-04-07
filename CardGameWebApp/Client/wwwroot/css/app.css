@@ -144,21 +144,25 @@ span.token {
         cursor: help;
     }
 
-span.token.keyword {
-    color: green;
-}
+        span.token.concept.recognized {
+            text-decoration: dotted lightblue underline;
+        }
 
-span.token.comment {
-    color: green;
-}
+    span.token.keyword {
+        color: green;
+    }
 
-span.token.literal {
-    color: darkorange;
-}
+    span.token.comment {
+        color: green;
+    }
 
-span.token.symbol {
-    font-weight: 700;
-}
+    span.token.literal {
+        color: darkorange;
+    }
+
+    span.token.symbol {
+        font-weight: 700;
+    }
 
     span.token > span.intel {
         font-size: 8pt !important;
