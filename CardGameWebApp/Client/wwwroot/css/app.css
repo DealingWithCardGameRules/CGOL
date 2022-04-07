@@ -284,3 +284,7 @@ span.token.symbol {
     border-start-end-radius: 0px;
     border-start-start-radius: 0px;
 }
+
+.conceptinfo {
+    text-align: left;
+}

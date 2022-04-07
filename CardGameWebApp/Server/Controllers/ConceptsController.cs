@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -25,18 +27,19 @@ namespace CardGameWebApp.Server.Controllers
             var current = session.GetSession(id);
             foreach (var type in current.Interpolator.SupportedTypes)
             {
+                var ctor = type.GetConstructors().FirstOrDefault();
                 yield return new ConceptDTO
                 {
                     Name = type.Name,
                     Type = GetMessageType(type),
-                    Parameters = GetParameters(type)
+                    Parameters = GetParameters(ctor),
+                    Description = ctor.GetConceptDescription()
                 };
             }
         }
 
-        private IEnumerable<ActionParameterDTO> GetParameters(Type type)
+        private IEnumerable<ActionParameterDTO> GetParameters(ConstructorInfo? ctor)
         {
-            var ctor = type.GetConstructors().FirstOrDefault();
             if (ctor == null)
                 yield break;
 
@@ -57,7 +60,7 @@ namespace CardGameWebApp.Server.Controllers
                 return ActionParameterDTO.TYPE_NUMBER;
             if (type == typeof(string))
                 return ActionParameterDTO.TYPE_STRING;
-            return string.Empty;
+            return $"Unsupported type ({type.Name})";
         }
 
         private string GetMessageType(Type concept)

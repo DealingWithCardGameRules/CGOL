@@ -1,4 +1,5 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
+using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
@@ -10,6 +11,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public Guid Instance { get; }
         public int Amount { get; }
 
+        [Concept(Description = "Set the number of players.")]
         public SetPlayers(int amount)
         {
             Instance = Guid.NewGuid();

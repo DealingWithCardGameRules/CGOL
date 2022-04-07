@@ -13,6 +13,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         // Will be overwritten when resolving instantanious/permanent effects.
         [AffectSelf] public Guid? CardId { get; set; }
 
+        [Concept(Description = "Place a card in a named collection. When attached to a card template, the card will automatically be filled out with the instance of that card template.")]
         public PlaceIn(string collection, Guid? cardId = null)
         {
             Instance = Guid.NewGuid();

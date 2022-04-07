@@ -12,6 +12,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 
         public Guid Instance { get; }
 
+        [Concept(Description = "Create an instance of a card template and add it to a collection.")]
         public AddCard(string uniqueCardName, string collection)
         {
             Instance = Guid.NewGuid();

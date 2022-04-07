@@ -10,6 +10,8 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         [PlayCollection] public string Source { get; }
         public string Destination { get; }
         public Guid Instance { get; }
+
+        [Concept(Description = "Draw a card from one collection and place it in an other collection.")]
         public DrawCard(string from, string to)
         {
             Instance = Guid.NewGuid();
