@@ -12,6 +12,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         [PlayCard] public Guid? Card { get; set; }
         public Guid Instance { get; }
 
+        [Concept(Description = "Play a card from a collection. Can be supplied with a specific discard pile (which may be ignored if the card has a stated location). If not supplied, the card will be selected by the player based on the collection type.")]
         public PlayCard(string from, string? discardTo = null, Guid? card = null)
         {
             Instance = Guid.NewGuid();

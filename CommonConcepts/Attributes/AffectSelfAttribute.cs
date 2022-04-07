@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Attributes
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class AffectSelfAttribute : Attribute
     {
     }

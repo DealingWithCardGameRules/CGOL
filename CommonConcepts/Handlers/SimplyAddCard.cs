@@ -20,7 +20,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
         public void Handle(AddCard command, IEventDispatcher eventDispatcher)
         {
             var template = dispatcher.Dispatch(new GetTemplate(command.Template));
-            var card = new SimpleLabraryCard(template);
+            var card = new SimpleLibraryCard(template);
             var @event = new CardAdded(timeProvider.Now, command.ProcessId, card, command.Destination);
             eventDispatcher.Dispatch(@event);
         }

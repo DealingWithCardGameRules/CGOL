@@ -38,17 +38,27 @@ namespace CardGameWebApp.Client
                 {
                     var knowledge = KnownConcept[token.RawValue];
                     output.Append($"<span class=\"token {token.Type}\" data-placement=\"top\" data-toggle=\"tooltip\" data-html=\"true\" title=\"");
-                    output.Append($"<b>{knowledge.Name}</b>");
+                    output.Append("<p class='conceptinfo mb-0'>");
+                    output.Append($"<strong>{knowledge.Name}</strong>");
                     foreach (var parameter in knowledge.Parameters)
                     {
                         output.Append(' ');
-                        if (parameter.Required)
-                        {
-                            output.Append($"<em>{parameter.Name}</em>");
-                        }
+                        string name = "<span class='text-muted'>";
+                        if (parameter.Type == ActionParameterDTO.TYPE_NUMBER)
+                            name += "<i class='fa-solid fa-hashtag fa-2xs'></i>";
+                        else if (parameter.Type == ActionParameterDTO.TYPE_STRING)
+                            name += "<i class='fa-solid fa-t fa-2xs'></i>";
                         else
-                            output.Append($"[<em>{parameter.Name}</em>]");
+                            name += "<i class='fa-solid fa-question fa-2xs'></i>";
+                        name += "</span>";
+
+                        name += $"<em>{parameter.Name}</em>";
+                        output.Append(parameter.Required ? name : $"[{name}]");
                     }
+                    output.Append("</p>");
+                    if (!string.IsNullOrWhiteSpace(knowledge.Description))
+                        output.Append($"<p class='conceptinfo mb-0 text-info'><i>{knowledge.Description}</i></p>");
+
                     output.Append($"\">{token.RawValue}</span>");
                 }
                 else
