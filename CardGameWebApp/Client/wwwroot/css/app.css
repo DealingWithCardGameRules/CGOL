@@ -200,10 +200,10 @@ span.token {
 
 #editing, #highlighting {
     /* Both elements need the same text and space styling so they are directly on top of each other */
-    margin: 10px;
+    
     padding: 10px;
     border: 0;
-    width: calc(100% - 32px);
+    /*width: calc(100% - 32px);*/
     height: 500px;
     grid-area: 1/1;
     overflow: auto;
@@ -218,6 +218,11 @@ span.token {
     background: transparent;
     caret-color: black;
     border: 1px solid black;
+    border-radius: 0px;
+}
+
+#editing:active {
+    border-radius: 0px;
 }
 
 #editing.intel {
