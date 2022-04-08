@@ -22,11 +22,11 @@
                     </div>
                     <div class="col-4 clearfix">
                         <div class="btn-group btn-group-sm float-end">
-                            <button type="button" class="btn btn-link" title="Create file in @path.Replace("./", "")" data-placement="top" data-toggle="tooltip"
+                            <button type="button" class="btn btn-link" title="Create folder" data-placement="top" data-toggle="tooltip"
                                 onclick="$('#@folderid').toggleClass('d-none')">
                                 <i class="fa-solid fa-folder-plus"></i>
                             </button>
-                            <button type="button" class="btn btn-link" title="Create file in @path.Replace("./", "")" data-placement="top" data-toggle="tooltip"
+                            <button type="button" class="btn btn-link" title="Create card description" data-placement="top" data-toggle="tooltip"
                                 onclick="$('#@fileid').toggleClass('d-none')">
                                 <i class="fa-solid fa-file-circle-plus"></i>
                             </button>
@@ -37,10 +37,10 @@
                     </div>
                 </div>
                 <div>
-                    <EzInput id="@folderid" class="d-none" OnClick="(foldername) => CreateFolder(folderPath, foldername)">
+                    <EzInput id="@folderid" class="d-none" OnClick="(foldername) => CreateFolder(folderPath, foldername)" Placeholder="Foldername">
                         <i class="fa-solid fa-folder-plus"></i>
                     </EzInput>
-                    <EzInput id="@fileid" class="d-none" OnClick="(foldername) => CreateFile(folderPath, foldername)">
+                    <EzInput id="@fileid" class="d-none" OnClick="(foldername) => CreateFile(folderPath, foldername)" Placeholder="CardDescription">
                         <i class="fa-solid fa-file-circle-plus"></i>
                     </EzInput>
                 </div>
@@ -61,11 +61,11 @@
                         <div class="btn-group btn-group-sm float-end">
                             @if (sessionId != null)
                             {
-                            <button class="btn btn-link" @onclick="() => LoadFile(file.Value)" title="Load file into session" data-placement="top" data-toggle="tooltip">
+                            <button class="btn btn-link" @onclick="() => LoadFile(file.Value)" title="Card description into session" data-placement="top" data-toggle="tooltip">
                                 <i class="fa-solid fa-play"></i>
                             </button>                
                             }
-                            <button class="btn btn-link" @onclick="() => EditFile(file.Value)" title="Edit file" data-placement="top" data-toggle="tooltip">
+                            <button class="btn btn-link" @onclick="() => EditFile(file.Value)" title="Edit card description" data-placement="top" data-toggle="tooltip">
                                 <i class="fa-solid fa-file-pen"></i>
                             </button>
                         </div>
@@ -100,16 +100,16 @@
                 onclick="$('#topfolder').toggleClass('d-none')">
                     <i class="fa-solid fa-folder-plus"></i>
                 </button>
-                <button type="button" class="btn btn-link" title="Create new file" data-placement="top" data-toggle="tooltip"
+                <button type="button" class="btn btn-link" title="Create new card description" data-placement="top" data-toggle="tooltip"
                 onclick="$('#topfile').toggleClass('d-none')">
                     <i class="fa-solid fa-file-circle-plus"></i>
                 </button>
             </div>
             @{var path = ".";}
-            <EzInput id="topfolder" class="d-none" OnClick="(foldername) => CreateFolder(path, foldername)">
+            <EzInput id="topfolder" class="d-none" OnClick="(foldername) => CreateFolder(path, foldername)" Placeholder="Foldername">
                 <i class="fa-solid fa-folder-plus"></i>
             </EzInput>
-            <EzInput id="topfile" class="d-none" OnClick="(foldername) => CreateFile(path, foldername)">
+            <EzInput id="topfile" class="d-none" OnClick="(filename) => CreateFile(path, filename)" Placeholder="CardDescription">
                 <i class="fa-solid fa-file-circle-plus"></i>
             </EzInput>
         </div>

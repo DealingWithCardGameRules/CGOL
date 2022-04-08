@@ -1,20 +1,35 @@
 ﻿using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
+namespace dk.itu.game.msc.cgdl.FluxxConcepts
 {
     public class DrawCounter
     {
         private Dictionary<string, int> drawCounter;
-        private int drawLimit = 2;
+        private int drawLimit = 0;
 
         public DrawCounter()
         {
             drawCounter = new Dictionary<string, int>();
         }
 
+        internal void SetDrawLimit(int limit)
+        {
+            drawLimit = limit;
+        }
+
         internal bool ReachedFor(string player)
         {
-            return GetPlayer(player) >= drawLimit;
+            return drawLimit != 0 && GetPlayer(player) >= drawLimit;
+        }
+
+        internal int GetDrawLimit(string? player)
+        {
+            return drawLimit; // Currently the same for all players
+        }
+
+        internal void ResetPlayer(string player)
+        {
+            drawCounter[player] = 0;
         }
 
         internal void Aggregate(string player)

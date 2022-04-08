@@ -1,0 +1,8 @@
+// Load cards
+LoadCard "Draw2"
+LoadCard "RulesEscalation"
+
+// Add cards to deck
+CreateDeck "deck"
+AddCard "Draw 2" "deck"
+AddCard "Rules Escalation" "deck"

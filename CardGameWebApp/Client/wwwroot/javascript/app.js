@@ -20,3 +20,11 @@ function copyText() {
         alert(error);
     });
 }
+
+window.getSelectedStart = (element) => {
+    return element.selectionStart;
+}
+window.setCaret = (element, pos) => {
+    element.selectionStart = pos;
+    element.selectionEnd = pos;
+}
