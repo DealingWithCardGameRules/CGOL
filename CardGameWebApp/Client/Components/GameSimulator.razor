@@ -20,11 +20,27 @@
 }
 
 <!-- Community cards -->
-@if (communities != null && communities.Any())
+@if (zones != null && zones.Any())
 {
 	<div>
 		<h2>Community cards collections</h2>
-
+	@foreach (var zone in zones.Select(h => collectionCache[h.Key]))
+	{
+		<Zone NumberOfCards="zone.CardCollection.CardCount" FaceUp="true">
+			@foreach (var card in zone.CardCollection.VisibleCards)
+			{
+				<Card Template="@card.Name" Actions="() => GetActions(card.Actions)" />
+			}
+			@for(int i = 0; i < zone.CardCollection.CardCount - zone.CardCollection.VisibleCards.Count(); i++)
+			{
+				<div class="playcard">
+					<div class="background" style="background-color: lightblue;">
+						<p>@zone.CardCollection.Name</p>
+					</div>
+				</div>
+			}
+		</Zone>
+	}
 	</div>
 }
 
@@ -81,7 +97,7 @@
 
 @code {
 	private GameOverviewResponse game;
-	private IEnumerable<string> communities = null;
+	private IDictionary<string, string> zones = null;
 	private IDictionary<string, string> hands = null;
 	private IDictionary<string, string> decks = null;
 	private Dictionary<string, CardCollectionResponse> collectionCache;
@@ -138,9 +154,12 @@
 			await UpdateCollectionCache(pair.Key, pair.Value);
 		foreach (var pair in game.Game.Decks)
 			await UpdateCollectionCache(pair.Key, pair.Value);
+		foreach (var pair in game.Game.Zones)
+			await UpdateCollectionCache(pair.Key, pair.Value);
 
 		hands = game.Game.Hands;
 		decks = game.Game.Decks;
+		zones = game.Game.Zones;
 		this.StateHasChanged();
 	}
 
@@ -164,11 +183,12 @@
 			await UpdateCollectionCache(pair.Key, pair.Value);
 		foreach (var pair in decks)
 			await UpdateCollectionCache(pair.Key, pair.Value);		
+		foreach (var pair in zones)
+			await UpdateCollectionCache(pair.Key, pair.Value);		
 	}
 
 	private async Task UpdateCollectionCache(string name, string url)
 	{
-		
 		var response = await Http.GetFromJsonAsync<CardCollectionResponse>(url);
 		if (collectionCache.ContainsKey(name))
 			collectionCache[name] = response;

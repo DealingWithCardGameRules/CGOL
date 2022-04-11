@@ -1,0 +1,41 @@
+﻿@using CardGameWebApp.Shared
+
+<div class="playhand @(IsEmpty ? "empty" : "deck")">
+
+	@if (FaceUp) {
+		@ChildContent
+	}
+	else
+	{
+		for (int i = 0; i < NumberOfCards; i++)
+		{
+			<div class="playcard">
+				<div class="background" style="background-color: @Color;">
+					<p>@Name</p>
+				</div>
+			</div>
+		}
+	}
+</div>
+
+@code {
+	[Parameter]
+	public string Color { get; set; } = "lightblue";
+
+	[Parameter]
+	public string Name { get; set; } = "";
+
+	[Parameter]
+	public bool FaceUp { get; set; } = false;
+
+	[Parameter]
+	public int NumberOfCards { get; set; } = 0;
+
+	[Parameter]
+	public RenderFragment ChildContent { get; set; } = null;
+
+	[Parameter]
+	public Func<IEnumerable<CallBackAction>> Actions { get; set; }
+
+	public bool IsEmpty => NumberOfCards <= 0;
+}

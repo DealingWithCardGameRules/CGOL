@@ -69,7 +69,7 @@ namespace CardGameWebApp.Server.Controllers
                 NumberOfPlayers = current.Service.Dispatch(new GetNumberOfPlayers()),
                 Decks = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "deck" } })),
                 Hands = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "hand" } })),
-                Community = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "community" } }))
+                Zones = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "community" } }))
             };
 
             var response = new GameOverviewResponse(Request.GetEncodedUrl())
