@@ -10,6 +10,8 @@ namespace dk.itu.game.msc.cgdl.GameState
         public string Name { get; }
         public IEnumerable<string> Tags => tags;
 
+        public int? OwnerIndex { get; set; }
+
         readonly List<string> tags;
         readonly List<ICard> cards;
 
@@ -66,6 +68,19 @@ namespace dk.itu.game.msc.cgdl.GameState
             {
                 if (cards[i].Instance == cardId)
                 {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool TrySetCardOwner(Guid cardId, int playerIndex)
+        {
+            foreach (var card in cards)
+            {
+                if (card.Instance == cardId)
+                {
+                    card.OwnerIndex = playerIndex;
                     return true;
                 }
             }

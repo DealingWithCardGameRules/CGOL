@@ -11,6 +11,8 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         public IEnumerable<string> Tags => tags;
 
+        public int? OwnerIndex { get; set; }
+
         readonly List<string> tags;
         readonly Dictionary<Guid, ICard> cards;
         public Hand(string name)
@@ -61,6 +63,16 @@ namespace dk.itu.game.msc.cgdl.GameState
         public bool HasCard(Guid cardId)
         {
             return cards.ContainsKey(cardId);
+        }
+
+        public bool TrySetCardOwner(Guid cardId, int playerIndex)
+        {
+            if (cards.ContainsKey(cardId))
+            {
+                cards[cardId].OwnerIndex = playerIndex;
+                return true;
+            }
+            return false;
         }
     }
 }

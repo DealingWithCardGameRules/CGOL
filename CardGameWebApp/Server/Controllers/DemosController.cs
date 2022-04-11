@@ -136,6 +136,8 @@ namespace CardGameWebApp.Server.Controllers
             public string Description => "Does nothing.";
 
             public string Template => throw new NotImplementedException();
+
+            public int? OwnerIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         }
 	}
 }

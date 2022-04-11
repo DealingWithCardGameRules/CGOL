@@ -47,6 +47,9 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new PermanentEffectAddedToCardObserver(library));
             context.Interpolator.AddConcept(new PlayerDeclaredObserver(game));
             context.Interpolator.AddConcept(new CurrentPlayerSelectedObserver(game));
+            context.Interpolator.AddConcept(new CardOwnerSetObserver(game));
+            context.Interpolator.AddConcept(new CollectionOwnerSetObserver(game));
+
         }
     }
 }

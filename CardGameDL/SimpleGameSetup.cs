@@ -28,6 +28,8 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new SimplyPlaceInCollection(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyDeclarePlayers(timeProvider));
             interpolator.AddConcept(new DiscardCardHandler(dispatcher));
+            interpolator.AddConcept(new CardOwnerHandler(timeProvider, dispatcher));
+            interpolator.AddConcept(new CollectionOwnerHandler(timeProvider, dispatcher));
         }
     }
 }

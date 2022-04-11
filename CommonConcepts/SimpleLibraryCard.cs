@@ -7,6 +7,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
         public Guid Instance { get; }
 
         public string Template { get; }
+        public int? OwnerIndex { get; set; }
 
         public SimpleLibraryCard(ICardTemplate template) : base(template.Tags)
         {
