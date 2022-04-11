@@ -17,10 +17,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 
         public IEnumerable<ICard> Handle(GetVisibleCards query)
         {
-            var owner = game.GetCollectionOwner(query.Collection);
-            if (owner != null && query.PlayerIndexes.Contains(owner.Value))
-                foreach (var card in game.GetRevieledCards(query.Collection))
-                    yield return card;
+            return game.GetRevieledCards(query.Collection, query.PlayerIndices);
         }
     }
 }

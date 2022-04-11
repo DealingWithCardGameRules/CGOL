@@ -55,9 +55,9 @@ namespace dk.itu.game.msc.cgdl.GameState
             currentPlayer = index;
         }
 
-        internal IEnumerable<ICard> GetRevieledCards(string collection)
+        internal IEnumerable<ICard> GetRevieledCards(string collection, IEnumerable<int> playerIndices)
         {
-            return collections[collection].GetRevieledCards();
+            return collections[collection].GetRevieledCards(playerIndices);
         }
 
         internal void SetPlayer(IPlayer player)
@@ -90,7 +90,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             }
         }
 
-        internal void AddDeck(CardDeck collection)
+        internal void AddCollection(ICardCollection collection)
         {
             collections.Add(collection.Name, collection);
         }
@@ -108,11 +108,6 @@ namespace dk.itu.game.msc.cgdl.GameState
         internal ICard? GetCard(string collection, Guid cardId)
         {
             return collections[collection].Get(cardId);
-        }
-
-        internal void AddHand(Hand hand)
-        {
-            collections.Add(hand.Name, hand);
         }
 
         internal void AddCard(string collect, ICard card)

@@ -5,35 +5,28 @@ using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.GameState
 {
-    internal class Hand : TagHandler, ICardCollection
+    internal class CardZone : TagHandler, ICardCollection
     {
+        readonly Dictionary<Guid, ICard> cards;
+
         public string Name { get; }
 
         public int? OwnerIndex { get; set; }
 
-        readonly Dictionary<Guid, ICard> cards;
-        public Hand(string name) : base("hand")
+        public CardZone(string name)
         {
-            Name = name;
             cards = new Dictionary<Guid, ICard>();
+            Name = name;
         }
 
         public void AddCard(ICard card)
         {
-            cards[card.Instance] = card;
+            cards.Add(card.Instance, card);
         }
 
-        public void RemoveCard(Guid cardId)
+        public int Count()
         {
-            if (cards.ContainsKey(cardId))
-                cards.Remove(cardId);
-        }
-
-        public ICard? GetCard()
-        {
-            if (cards.Count > 0)
-                return cards.Last().Value;
-            return null;
+            return cards.Count();
         }
 
         public ICard? Get(Guid cardId)
@@ -43,16 +36,14 @@ namespace dk.itu.game.msc.cgdl.GameState
             return null;
         }
 
-        public int Count()
+        public ICard? GetCard()
         {
-            return cards.Count;
+            return cards.Values.FirstOrDefault();
         }
 
         public IEnumerable<ICard> GetRevieledCards(IEnumerable<int> playerIndices)
         {
-            if (!OwnerIndex.HasValue || playerIndices.Contains(OwnerIndex.Value))
-                return cards.Values;
-            return new ICard[0];
+            return cards.Values;
         }
 
         public bool HasCard(Guid cardId)
@@ -60,9 +51,14 @@ namespace dk.itu.game.msc.cgdl.GameState
             return cards.ContainsKey(cardId);
         }
 
+        public void RemoveCard(Guid cardId)
+        {
+            cards.Remove(cardId);
+        }
+
         public bool TrySetCardOwner(Guid cardId, int playerIndex)
         {
-            if (cards.ContainsKey(cardId))
+            if (!cards.ContainsKey(cardId))
             {
                 cards[cardId].OwnerIndex = playerIndex;
                 return true;

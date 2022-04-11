@@ -37,7 +37,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new GetCollectionOwnerIndexHandler(game));
 
             // Event observers
-            context.Interpolator.AddConcept(new CardStackDeclaredObserver(game));
+            context.Interpolator.AddConcept(new CardCollectionDeclaredObserver(game));
             context.Interpolator.AddConcept(new HandDeclaredObserver(game));
             context.Interpolator.AddConcept(new CardAddedObserver(game));
             context.Interpolator.AddConcept(new CardDrawnObserver(game));
@@ -50,7 +50,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new CurrentPlayerSelectedObserver(game));
             context.Interpolator.AddConcept(new CardOwnerSetObserver(game));
             context.Interpolator.AddConcept(new CollectionOwnerSetObserver(game));
-
+            context.Interpolator.AddConcept(new ZoneDeclaredObserver(game));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace dk.itu.game.msc.cgdl
         {
             // Command handlers
             interpolator.AddConcept(new SimplyDeclareCollection(timeProvider));
-            interpolator.AddConcept(new SimplyDeclareHand(timeProvider));
+            interpolator.AddConcept(new SimplyDeclareHand(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyAddCard(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyDrawCard(timeProvider));
             interpolator.AddConcept(new SimplyRevealAndMove(timeProvider, dispatcher));
@@ -30,6 +30,7 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new DiscardCardHandler(dispatcher));
             interpolator.AddConcept(new CardOwnerHandler(timeProvider, dispatcher));
             interpolator.AddConcept(new CollectionOwnerHandler(timeProvider, dispatcher));
+            interpolator.AddConcept(new SimplyDeclareZone(timeProvider, dispatcher));
         }
     }
 }
