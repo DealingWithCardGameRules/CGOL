@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.Representation
 {
@@ -26,6 +27,13 @@ namespace dk.itu.game.msc.cgdl.Representation
         public void RemovePlayer(int playerIndex)
         {
             players.Remove(playerIndex);
+        }
+
+        public IEnumerable<int> GetIndexes(string playerId)
+        {
+            return players
+                .Where(p => p.Value.Equals(playerId, System.StringComparison.OrdinalIgnoreCase))
+                .Select(p => p.Key);
         }
     }
 }

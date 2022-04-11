@@ -66,6 +66,14 @@
 			{
 				<Card Template="@card.Name" Actions="() => GetActions(card.Actions)" />
 			}
+			@for(int i = 0; i < hand.CardCollection.CardCount - hand.CardCollection.VisibleCards.Count(); i++)
+			{
+				<div class="playcard">
+					<div class="background" style="background-color: lightblue;">
+						<p>@hand.CardCollection.Name</p>
+					</div>
+				</div>
+			}
 		</Hand>
 	}
 	</div>
@@ -95,14 +103,16 @@
 			players.Add(false);
 		}
 		hubConnection = new HubConnectionBuilder().WithUrl(game.Links["hub"]).Build();
-		hubConnection.On<int>("PlayerJoined", (int i) =>
+		hubConnection.On<int>("PlayerJoined", async (int i) =>
 		{ 
 			players[i] = true;
+			await updateCache();
 			this.StateHasChanged();
 		});
-		hubConnection.On<int>("PlayerLeft", (int i) =>
+		hubConnection.On<int>("PlayerLeft", async (int i) =>
 		{ 
 			players[i] = false; 
+			await updateCache();
 			this.StateHasChanged();
 		});
 		hubConnection.On("NewState", async () =>
@@ -122,6 +132,7 @@
 
 		await hubConnection.StartAsync();
 		await hubConnection.SendAsync("join", game.SessionId);
+		Http.DefaultRequestHeaders.Add("ClientID", hubConnection.ConnectionId);
 
 		foreach (var pair in game.Game.Hands)
 			await UpdateCollectionCache(pair.Key, pair.Value);
@@ -157,6 +168,7 @@
 
 	private async Task UpdateCollectionCache(string name, string url)
 	{
+		
 		var response = await Http.GetFromJsonAsync<CardCollectionResponse>(url);
 		if (collectionCache.ContainsKey(name))
 			collectionCache[name] = response;

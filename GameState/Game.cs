@@ -22,6 +22,13 @@ namespace dk.itu.game.msc.cgdl.GameState
             collections[name].OwnerIndex = playerIndex;
         }
 
+        internal int? GetCollectionOwner(string collection)
+        {
+            if (collections.ContainsKey(collection))
+                return collections[collection].OwnerIndex;
+            return null;
+        }
+
         internal void SetCardOwner(Guid cardId, int playerIndex)
         {
             foreach (var collection in collections)

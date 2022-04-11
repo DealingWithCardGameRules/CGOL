@@ -14,6 +14,7 @@ using System.Dynamic;
 using CardGameWebApp.Server.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using dk.itu.game.msc.cgdl.Representation;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -126,11 +127,13 @@ namespace CardGameWebApp.Server.Controllers
                 }
                 return output;
             }
+            
+            var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
 
             var dto = new CardCollectionDTO
             {
                 Name = name,
-                VisibleCards = cardLink(current.Service.Dispatch(new GetVisibleCards(name))),
+                VisibleCards = cardLink(current.Service.Dispatch(new GetVisibleCards(name, playerIndexes))),
                 CardCount = current.Service.Dispatch(new CardCount(name)),
                 Tags = current.Service.Dispatch(new GetCollectionTags(name)),
                 Actions = actionLink(colActions)
