@@ -8,13 +8,14 @@ namespace dk.itu.game.msc.cgdl.GameState
     {
         string Name { get; }
         IEnumerable<string> Tags { get; }
-
+        int? OwnerIndex { get; set; } // The player index of the owner
         void AddCard(ICard card);
         void RemoveCard(Guid cardId);
         ICard? GetCard();
         ICard? Get(Guid cardId);
         int Count();
-        IEnumerable<ICard> GetRevieledCards();
+        IEnumerable<ICard> GetRevieledCards(IEnumerable<int> playerIndices);
         bool HasCard(Guid cardId);
+        bool TrySetCardOwner(Guid cardId, int playerIndex);
     }
 }

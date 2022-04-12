@@ -2,6 +2,7 @@
 using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 {
@@ -16,7 +17,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 
         public IEnumerable<ICard> Handle(GetVisibleCards query)
         {
-            return game.GetRevieledCards(query.Collection);
+            return game.GetRevieledCards(query.Collection, query.PlayerIndices);
         }
     }
 }

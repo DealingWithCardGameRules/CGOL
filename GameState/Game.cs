@@ -7,6 +7,8 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     public class Game
     {
+        public string? CurrentState { get; set; } = null;
+
         private readonly Dictionary<string, ICardCollection> collections;
         private readonly Dictionary<int, IPlayer> players;
         private int currentPlayer = 0;
@@ -15,6 +17,32 @@ namespace dk.itu.game.msc.cgdl.GameState
         {
             collections = new Dictionary<string, ICardCollection>();
             players = new Dictionary<int, IPlayer>();
+        }
+
+        internal bool HasCollection(string name)
+        {
+            return collections.ContainsKey(name);
+        }
+
+        internal void SetCollectionOwner(string name, int playerIndex)
+        {
+            collections[name].OwnerIndex = playerIndex;
+        }
+
+        internal int? GetCollectionOwner(string collection)
+        {
+            if (collections.ContainsKey(collection))
+                return collections[collection].OwnerIndex;
+            return null;
+        }
+
+        internal void SetCardOwner(Guid cardId, int playerIndex)
+        {
+            foreach (var collection in collections)
+            {
+                if (collection.Value.TrySetCardOwner(cardId, playerIndex))
+                    return;
+            }
         }
 
         internal int CountPlayers()
@@ -34,9 +62,9 @@ namespace dk.itu.game.msc.cgdl.GameState
             currentPlayer = index;
         }
 
-        internal IEnumerable<ICard> GetRevieledCards(string collection)
+        internal IEnumerable<ICard> GetRevieledCards(string collection, IEnumerable<int> playerIndices)
         {
-            return collections[collection].GetRevieledCards();
+            return collections[collection].GetRevieledCards(playerIndices);
         }
 
         internal void SetPlayer(IPlayer player)
@@ -69,7 +97,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             }
         }
 
-        internal void AddDeck(CardDeck collection)
+        internal void AddCollection(ICardCollection collection)
         {
             collections.Add(collection.Name, collection);
         }
@@ -87,11 +115,6 @@ namespace dk.itu.game.msc.cgdl.GameState
         internal ICard? GetCard(string collection, Guid cardId)
         {
             return collections[collection].Get(cardId);
-        }
-
-        internal void AddHand(Hand hand)
-        {
-            collections.Add(hand.Name, hand);
         }
 
         internal void AddCard(string collect, ICard card)

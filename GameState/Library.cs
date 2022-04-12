@@ -28,9 +28,11 @@ namespace dk.itu.game.msc.cgdl.GameState
             library[template].AddPermanent(command);
         }
 
-        public ICardTemplate GetCardTemplate(string template)
+        public ICardTemplate? GetCardTemplate(string template)
         {
-            return library[template];
+            if (library.ContainsKey(template))
+                return library[template];
+            return null;
         }
     }
 }

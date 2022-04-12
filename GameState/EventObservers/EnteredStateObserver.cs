@@ -3,18 +3,18 @@ using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 
 namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 {
-    public class HandDeclaredObserver : IEventObserver<HandDeclared>
+    public class EnteredStateObserver : IEventObserver<EnteredState>
     {
         private readonly Game game;
 
-        public HandDeclaredObserver(Game game)
+        public EnteredStateObserver(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }
 
-        public void Invoke(HandDeclared @event)
+        public void Invoke(EnteredState @event)
         {
-            game.AddCollection(new Hand(@event.Name));
+            game.CurrentState = @event.State;
         }
     }
 }

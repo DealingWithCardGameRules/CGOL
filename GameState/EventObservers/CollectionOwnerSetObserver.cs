@@ -1,20 +1,21 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
+using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 
 namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 {
-    public class HandDeclaredObserver : IEventObserver<HandDeclared>
+    public class CollectionOwnerSetObserver : IEventObserver<CollectionOwnerSet>
     {
         private readonly Game game;
 
-        public HandDeclaredObserver(Game game)
+        public CollectionOwnerSetObserver(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }
 
-        public void Invoke(HandDeclared @event)
+        public void Invoke(CollectionOwnerSet @event)
         {
-            game.AddCollection(new Hand(@event.Name));
+            game.SetCollectionOwner(@event.Collection, @event.PlayerIndex);
         }
     }
 }

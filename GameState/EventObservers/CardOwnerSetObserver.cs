@@ -3,18 +3,18 @@ using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 
 namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 {
-    public class CardStackDeclaredObserver : IEventObserver<CardCollectionDeclared>
+    public class CardOwnerSetObserver : IEventObserver<CardOwnerSet>
     {
         private readonly Game game;
 
-        public CardStackDeclaredObserver(Game game)
+        public CardOwnerSetObserver(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }
 
-        public void Invoke(CardCollectionDeclared @event)
+        public void Invoke(CardOwnerSet @event)
         {
-            game.AddDeck(new CardDeck(@event.Stack));
+            game.SetCardOwner(@event.CardId, @event.PlayerIndex);
         }
     }
 }

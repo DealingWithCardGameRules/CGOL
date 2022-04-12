@@ -9,6 +9,7 @@ using System;
 using dk.itu.game.msc.cgdl.Representation;
 using Microsoft.AspNetCore.SignalR;
 using CardGameWebApp.Server.Hubs;
+using dk.itu.game.msc.cgdl.LanguageParser;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -103,7 +104,15 @@ namespace CardGameWebApp.Server.Controllers
 			if (current == null)
 				return NotFound("Session not found");
 
-			current.Service.Parse(cgd);
+			try
+			{
+				current.Service.Parse(cgd);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+
 			await gameHub.Clients.Group(id.ToString()).SendAsync("NewState");
 
 			return Ok();

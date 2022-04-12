@@ -20,11 +20,27 @@
 }
 
 <!-- Community cards -->
-@if (communities != null && communities.Any())
+@if (zones != null && zones.Any())
 {
 	<div>
 		<h2>Community cards collections</h2>
-	
+	@foreach (var zone in zones.Select(h => collectionCache[h.Key]))
+	{
+		<Zone NumberOfCards="zone.CardCollection.CardCount" FaceUp="true">
+			@foreach (var card in zone.CardCollection.VisibleCards)
+			{
+				<Card Template="@card.Name" Actions="() => GetActions(card.Actions)" />
+			}
+			@for(int i = 0; i < zone.CardCollection.CardCount - zone.CardCollection.VisibleCards.Count(); i++)
+			{
+				<div class="playcard">
+					<div class="background" style="background-color: lightblue;">
+						<p>@zone.CardCollection.Name</p>
+					</div>
+				</div>
+			}
+		</Zone>
+	}
 	</div>
 }
 
@@ -66,6 +82,14 @@
 			{
 				<Card Template="@card.Name" Actions="() => GetActions(card.Actions)" />
 			}
+			@for(int i = 0; i < hand.CardCollection.CardCount - hand.CardCollection.VisibleCards.Count(); i++)
+			{
+				<div class="playcard">
+					<div class="background" style="background-color: lightblue;">
+						<p>@hand.CardCollection.Name</p>
+					</div>
+				</div>
+			}
 		</Hand>
 	}
 	</div>
@@ -73,7 +97,7 @@
 
 @code {
 	private GameOverviewResponse game;
-	private IEnumerable<string> communities = null;
+	private IDictionary<string, string> zones = null;
 	private IDictionary<string, string> hands = null;
 	private IDictionary<string, string> decks = null;
 	private Dictionary<string, CardCollectionResponse> collectionCache;
@@ -95,14 +119,16 @@
 			players.Add(false);
 		}
 		hubConnection = new HubConnectionBuilder().WithUrl(game.Links["hub"]).Build();
-		hubConnection.On<int>("PlayerJoined", (int i) =>
+		hubConnection.On<int>("PlayerJoined", async (int i) =>
 		{ 
 			players[i] = true;
+			await updateCache();
 			this.StateHasChanged();
 		});
-		hubConnection.On<int>("PlayerLeft", (int i) =>
+		hubConnection.On<int>("PlayerLeft", async (int i) =>
 		{ 
 			players[i] = false; 
+			await updateCache();
 			this.StateHasChanged();
 		});
 		hubConnection.On("NewState", async () =>
@@ -122,14 +148,18 @@
 
 		await hubConnection.StartAsync();
 		await hubConnection.SendAsync("join", game.SessionId);
+		Http.DefaultRequestHeaders.Add("ClientID", hubConnection.ConnectionId);
 
 		foreach (var pair in game.Game.Hands)
 			await UpdateCollectionCache(pair.Key, pair.Value);
 		foreach (var pair in game.Game.Decks)
 			await UpdateCollectionCache(pair.Key, pair.Value);
+		foreach (var pair in game.Game.Zones)
+			await UpdateCollectionCache(pair.Key, pair.Value);
 
 		hands = game.Game.Hands;
 		decks = game.Game.Decks;
+		zones = game.Game.Zones;
 		this.StateHasChanged();
 	}
 
@@ -152,6 +182,8 @@
 		foreach (var pair in hands)
 			await UpdateCollectionCache(pair.Key, pair.Value);
 		foreach (var pair in decks)
+			await UpdateCollectionCache(pair.Key, pair.Value);		
+		foreach (var pair in zones)
 			await UpdateCollectionCache(pair.Key, pair.Value);		
 	}
 

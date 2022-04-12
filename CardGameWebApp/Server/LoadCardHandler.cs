@@ -2,6 +2,8 @@
 using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.LanguageParser.Messages;
 using dk.itu.game.msc.cgdl.Representation.Command;
+using System;
+using System.IO;
 
 namespace CardGameWebApp.Server
 {
@@ -20,8 +22,15 @@ namespace CardGameWebApp.Server
 
         public void Handle(LoadCard command, IEventDispatcher eventDispatcher)
         {
-            var cgd = storage.GetFile($"{context.User}/{command.File}");
-            service.Dispatch(new LoadCGDL(cgd));
+            try
+            {
+                var cgd = storage.GetFile($"{context.User}/{command.File}");
+                service.Dispatch(new LoadCGDL(cgd));
+            }
+            catch (FileNotFoundException)
+            {
+                throw new Exception($"Unable to find {command.File}. Remember to add folders e.g. \"folder/{command.File}\" or \"folder/subfolder/{command.File}\"");
+            }
         }
     }
 }
