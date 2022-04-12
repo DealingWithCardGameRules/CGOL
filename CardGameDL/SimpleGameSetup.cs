@@ -31,6 +31,7 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new CardOwnerHandler(timeProvider, dispatcher));
             interpolator.AddConcept(new CollectionOwnerHandler(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyDeclareZone(timeProvider, dispatcher));
+            interpolator.AddConcept(new SimplyChangeState(timeProvider, dispatcher));
         }
     }
 }

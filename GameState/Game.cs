@@ -7,6 +7,8 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     public class Game
     {
+        public string? CurrentState { get; set; } = null;
+
         private readonly Dictionary<string, ICardCollection> collections;
         private readonly Dictionary<int, IPlayer> players;
         private int currentPlayer = 0;

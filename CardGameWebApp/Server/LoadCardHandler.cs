@@ -27,7 +27,7 @@ namespace CardGameWebApp.Server
                 var cgd = storage.GetFile($"{context.User}/{command.File}");
                 service.Dispatch(new LoadCGDL(cgd));
             }
-            catch (FileNotFoundException _)
+            catch (FileNotFoundException)
             {
                 throw new Exception($"Unable to find {command.File}. Remember to add folders e.g. \"folder/{command.File}\" or \"folder/subfolder/{command.File}\"");
             }
