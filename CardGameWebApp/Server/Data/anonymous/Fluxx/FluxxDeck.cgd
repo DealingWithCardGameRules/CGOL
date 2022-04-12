@@ -1,6 +1,6 @@
 // Load cards
 LoadCard "Draw2"
-LoadCard "RulesEscalation"
+LoadCard "Fluxx/RulesEscalation"
 
 // Add cards to deck
 CreateDeck "deck"

@@ -187,7 +187,11 @@
 
     private async void LoadFile(string url)
     {
-        await Http.GetAsync($"{url}?session={sessionId}");
+        var response = await Http.GetAsync($"{url}?session={sessionId}");
+        if (!response.IsSuccessStatusCode)
+        {
+            Toast.AddToast("Load fail", await response.Content.ReadAsStringAsync());
+        }
     }
 
     private async void DeleteFolder(string path)

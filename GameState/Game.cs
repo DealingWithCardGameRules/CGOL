@@ -17,6 +17,11 @@ namespace dk.itu.game.msc.cgdl.GameState
             players = new Dictionary<int, IPlayer>();
         }
 
+        internal bool HasCollection(string name)
+        {
+            return collections.ContainsKey(name);
+        }
+
         internal void SetCollectionOwner(string name, int playerIndex)
         {
             collections[name].OwnerIndex = playerIndex;

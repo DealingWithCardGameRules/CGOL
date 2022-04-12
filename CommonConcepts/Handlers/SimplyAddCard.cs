@@ -20,6 +20,12 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
         public void Handle(AddCard command, IEventDispatcher eventDispatcher)
         {
             var template = dispatcher.Dispatch(new GetTemplate(command.Template));
+            if (template == null)
+                throw new ArgumentException($"The card template \"{command.Template}\" was not found. Remember to declare a card template before refering to it. Try {nameof(CreateCard)}");
+
+            if (!dispatcher.Dispatch(new HasCollection(command.Destination)))
+                throw new ArgumentException($"The destination \"{command.Destination}\" was not found. Remember to declare a card collection before refering to it. Try {nameof(CreateDeck)}, {nameof(CreateHand)} or {nameof(CreateZone)}");
+
             var card = new SimpleLibraryCard(template);
             var @event = new CardAdded(timeProvider.Now, command.ProcessId, card, command.Destination);
             eventDispatcher.Dispatch(@event);
