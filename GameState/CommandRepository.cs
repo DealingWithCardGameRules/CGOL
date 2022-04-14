@@ -3,29 +3,36 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.GameState
 {
-    public class CommandRepository
+    public class CommandRepository : ICommandRepositoryQueries
     {
-        public IEnumerable<IUserCommand> Commands => repository;
-        private readonly List<IUserCommand> repository;
+        public IEnumerable<IUserAction> Commands => repository;
+        private readonly List<IUserAction> repository;
 
         public CommandRepository()
         {
-            repository = new List<IUserCommand>();
+            repository = new List<IUserAction>();
+        }
+
+        public void Clear()
+        {
+            repository.Clear();
         }
 
         public void AddCommand(string label, ICommand command)
         {
-            repository.Add(new UserCommand
-            {
-                Command = command,
-                Label = label
-            });
+            repository.Add(new UserCommand(label, command));
         }
 
-        class UserCommand : IUserCommand
+        class UserCommand : IUserAction
         {
-            public ICommand Command { get; set; }
-            public string Label { get; set; }
+            public ICommand Command { get; }
+            public string Label { get; }
+
+            public UserCommand(string label, ICommand command)
+            {
+                Label = label;
+                Command = command;
+            }
         }
     }
 }

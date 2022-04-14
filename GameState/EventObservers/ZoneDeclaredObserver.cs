@@ -14,7 +14,17 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
 
         public void Invoke(ZoneDeclared @event)
         {
-            game.AddCollection(new CardZone(@event.Zone));
+            var zone = new CardZone(@event.Zone);
+            
+            if (@event.OwnerIndex != null)
+            {
+                zone.AddTag("zone");
+                zone.OwnerIndex = @event.OwnerIndex;
+            }
+            else
+                zone.AddTag("community");
+
+            game.AddCollection(zone);
         }
     }
 }

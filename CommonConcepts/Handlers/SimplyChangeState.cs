@@ -27,8 +27,10 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
                 // Event to trigger end of state events
                 eventDispatcher.Dispatch(new StateTransitionDeclared(timeProvider.Now, command.ProcessId, state));
             }
-
+            
+            dispatcher.Dispatch(new ClearTemporaryActions());
             eventDispatcher.Dispatch(new EnteredState(timeProvider.Now, command.ProcessId, command.NewState));
+            dispatcher.Dispatch(new ResolvePermanents());
         }
     }
 }

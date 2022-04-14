@@ -19,6 +19,11 @@ namespace dk.itu.game.msc.cgdl.GameState
             players = new Dictionary<int, IPlayer>();
         }
 
+        internal void ClearTemporaryActions()
+        {
+            
+        }
+
         internal bool HasCollection(string name)
         {
             return collections.ContainsKey(name);

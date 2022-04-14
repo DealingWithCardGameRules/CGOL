@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CardGameWebApp.Client
 {
@@ -16,7 +17,7 @@ namespace CardGameWebApp.Client
         private Dictionary<string, CardDetails> library;
         private CardLibrary()
         {
-            library = new Dictionary<string, CardDetails>
+            library = new Dictionary<string, CardDetails>(StringComparer.OrdinalIgnoreCase)
             {
                 {
                     "pass",
@@ -27,14 +28,23 @@ namespace CardGameWebApp.Client
                         Description = "Does nothing.",
                         Classification = "Useless"
                     }
+                },
+                {
+                    "Draw 1 Play 1 Rules",
+                    new CardDetails {
+                        Name = "Draw 1 Play 1 Rules",
+                        Illustration="d1p1",
+                        Description="During their turn a player draws one card, then plays one card.",
+                        Classification = "Rule card"
+                    }
                 }
             };
         }
 
         public CardDetails GetCard(string template)
         {
-            if (library.ContainsKey(template.ToLower()))
-                return library[template.ToLower()];
+            if (library.ContainsKey(template))
+                return library[template];
             return new CardDetails
 			{
                 Name=template,

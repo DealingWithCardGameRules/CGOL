@@ -4,6 +4,7 @@ using dk.itu.game.msc.cgdl.LanguageParser.Parsers;
 using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.LanguageParser
 {
@@ -89,8 +90,17 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                 }
             }
 
-            conceptParser.Parse(queue);
-            var output = conceptParser.Result;
+            ICommand? output;
+            if (queue.LookAhead1 is Colon)
+            {
+                queue.DiscardToken();
+                output = new CommandBundle(ParseCommandBundle().ToArray());
+            }
+            else
+            {
+                conceptParser.Parse(queue);
+                output = conceptParser.Result;
+            }
 
             if (play)
                 output = new PostponeCommand(output, playLabel);
@@ -99,6 +109,19 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                 output = new ConditionalCommand(condition, output);
 
             return output;
+        }
+
+        private IEnumerable<ICommand> ParseCommandBundle()
+        {
+            while (queue.LookAhead1 is SequenceTerminator && queue.LookAhead2 is Tabulator)
+            {
+                queue.DiscardToken<SequenceTerminator>();
+                queue.DiscardToken<Tabulator>();
+
+                conceptParser.Parse(queue);
+                if (conceptParser.Result != null)
+                    yield return conceptParser.Result;
+            }
         }
     }
 }

@@ -87,8 +87,8 @@ namespace CardGameWebApp.Server.Controllers
         public CardCollectionResponse GetCollection(Guid id, string name)
         {
             var current = session.GetSession(id);
-            List<IUserCommand> colActions = new List<IUserCommand>();
-            List<IUserCommand> cardActions = new List<IUserCommand>();
+            List<IUserAction> colActions = new List<IUserAction>();
+            List<IUserAction> cardActions = new List<IUserAction>();
 
             foreach (var action in current.Service.Dispatch(new GetAvailableActionsForCollection(name)))
             {
@@ -112,7 +112,7 @@ namespace CardGameWebApp.Server.Controllers
                 }
             }
 
-            IDictionary<string, string> actionLink(IEnumerable<IUserCommand> commands, Guid? card = null)
+            IDictionary<string, string> actionLink(IEnumerable<IUserAction> commands, Guid? card = null)
             {
                 Dictionary<string, string> output = new Dictionary<string, string>();
                 foreach (var command in commands)

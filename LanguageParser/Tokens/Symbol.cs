@@ -15,4 +15,8 @@
     public class ParenthesesStart : Symbol { }
 
     public class ParenthesesEnd : Symbol { }
+
+    public class Colon : Symbol { }
+
+    public class Tabulator : Symbol { }
 }

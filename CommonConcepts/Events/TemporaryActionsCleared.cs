@@ -3,22 +3,18 @@ using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
 {
-    public class ZoneDeclared : IEvent
+    public class TemporaryActionsCleared : IEvent
     {
         public int Version => 1;
 
         public DateTime EventTime { get; }
 
         public Guid ProcessId { get; }
-        public string Zone { get; }
-        public int? OwnerIndex { get; }
 
-        public ZoneDeclared(DateTime eventTime, Guid processId, string zone, int? ownerIndex)
+        public TemporaryActionsCleared(DateTime eventTime, Guid processId)
         {
             EventTime = eventTime;
             ProcessId = processId;
-            Zone = zone;
-            OwnerIndex = ownerIndex;
         }
     }
 }

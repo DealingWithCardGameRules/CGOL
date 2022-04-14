@@ -6,9 +6,9 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 {
     public class GetAvailableActionHandler : IQueryHandler<GetAvailableAction, ICommand?>
     {
-        private readonly CommandRepository repository;
+        private readonly ICommandRepositoryQueries repository;
 
-        public GetAvailableActionHandler(CommandRepository repository)
+        public GetAvailableActionHandler(ICommandRepositoryQueries repository)
         {
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
         }

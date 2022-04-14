@@ -41,6 +41,10 @@ namespace CardGameWebApp.Client
                 {
                     output.Append($"<span class=\"token symbol\">\"</span><span class=\"token {token.Type}\">{literal.Value}</span><span class=\"token symbol\">\"</span>");
                 }
+                else if (token is Tabulator)
+                {
+                    output.Append($"<span class=\"token tabulator\">{token.RawValue}</span>");
+                }
                 else if (token is Symbol)
                 {
                     output.Append(token.RawValue);
@@ -50,7 +54,7 @@ namespace CardGameWebApp.Client
                     var knowledge = KnownConcept[token.RawValue];
                     output.Append($"<span class=\"token {token.Type} recognized\" data-placement=\"top\" data-toggle=\"tooltip\" data-html=\"true\" title=\"");
                     output.Append("<p class='conceptinfo mb-0'>");
-                    
+
                     if (knowledge.Type.Equals(ConceptDTO.TYPE_COMMAND))
                         output.Append("<i class='text-primary fa-solid fa-circle-exclamation me-1'></i>");
                     else if (knowledge.Type.Equals(ConceptDTO.TYPE_EVENT))
@@ -86,7 +90,7 @@ namespace CardGameWebApp.Client
                     if (currentPosition)
                     {
                         UpdateSuggestConcept(token.RawValue);
-                        output.Append($"<span class='text-muted'>{Suggestion??""} </span>");
+                        output.Append($"<span class='text-muted'>{Suggestion ?? ""} </span>");
                     }
                 }
                 else

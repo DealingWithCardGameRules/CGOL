@@ -1,4 +1,5 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
+using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
@@ -10,6 +11,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public ICommand Command { get; }
         public string? Label { get; }
         public Guid Instance { get; }
+        [AffectSelf] public Guid? SelfCardId { get; set; }
 
         public PostponeCommand(ICommand command, string? label = null)
         {
