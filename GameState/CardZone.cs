@@ -13,7 +13,7 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         public int? OwnerIndex { get; set; }
 
-        public CardZone(string name) : base("community")
+        public CardZone(string name)
         {
             cards = new Dictionary<Guid, ICard>();
             Name = name;

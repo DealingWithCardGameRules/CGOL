@@ -99,6 +99,8 @@ a, .btn-link {
 
     .playcard .description {
         overflow-y: scroll;
+        width: 187px;
+        height: 100px;
     }
 
     .playcard .cardbody {
@@ -154,6 +156,22 @@ span.token {
 
     span.token.comment {
         color: green;
+    }
+
+    span.token.tabulator:first-child:before {
+        content: '';
+        height: 26px;
+        width: 1px;
+        border-left: 1px dotted grey;
+        position: absolute;
+    }
+
+    br + span.token.tabulator:before {
+        content: '';
+        height: 26px;
+        width: 1px;
+        border-left: 1px dotted grey;
+        position: absolute;
     }
 
     span.token.literal {

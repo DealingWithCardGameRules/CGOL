@@ -3,8 +3,11 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Queries
 {
-    public class GetAvailableActions : IQuery<IEnumerable<IUserAction>>
+    public class GetCards : IQuery<IEnumerable<ICard>>
     {
+        public GetCards(string collection)
+        {
 
+        }
     }
 }

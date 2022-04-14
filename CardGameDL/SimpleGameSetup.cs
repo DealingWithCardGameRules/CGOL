@@ -30,8 +30,11 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new DiscardCardHandler(dispatcher));
             interpolator.AddConcept(new CardOwnerHandler(timeProvider, dispatcher));
             interpolator.AddConcept(new CollectionOwnerHandler(timeProvider, dispatcher));
-            interpolator.AddConcept(new SimplyDeclareZone(timeProvider, dispatcher));
+            interpolator.AddConcept(new SimplyDeclareZone(timeProvider));
             interpolator.AddConcept(new SimplyChangeState(timeProvider, dispatcher));
+            interpolator.AddConcept(new ResolvePermanentsHandler(dispatcher));
+            interpolator.AddConcept(new ClearTemporaryActionsHandler(timeProvider));
+            interpolator.AddConcept(new SimplyExecuteCommandBundle(dispatcher));
         }
     }
 }

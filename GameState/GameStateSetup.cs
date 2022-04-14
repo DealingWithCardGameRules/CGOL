@@ -8,13 +8,17 @@ namespace dk.itu.game.msc.cgdl.GameState
     {
         Game game;
         Library library;
-        CommandRepository globalCommands;
+        CommandRepository generalCommands;
+        CommandRepository stateCommands;
+        ICommandRepositoryQueries commandComposite;
 
         public GameStateSetup()
         {
             game = new Game();
             library = new Library();
-            globalCommands = new CommandRepository();
+            generalCommands = new CommandRepository();
+            stateCommands = new CommandRepository();
+            commandComposite = new CommandComposite(generalCommands, stateCommands);
         }
 
         public void Setup(IPluginContext context)
@@ -24,12 +28,12 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new TopCardGetter(game));
             context.Interpolator.AddConcept(new CardGetter(game));
             context.Interpolator.AddConcept(new TemplateGetter(library));
-            context.Interpolator.AddConcept(new GetAvailableActionsHandler(globalCommands));
+            context.Interpolator.AddConcept(new GetAvailableActionsHandler(commandComposite));
             context.Interpolator.AddConcept(new GetCollectionNamesHandler(game));
             context.Interpolator.AddConcept(new GetVisibleCardsHandler(game));
             context.Interpolator.AddConcept(new GetCollectionTagsHandler(game));
-            context.Interpolator.AddConcept(new GetAvailableActionsForCollectionHandler(globalCommands));
-            context.Interpolator.AddConcept(new GetAvailableActionHandler(globalCommands));
+            context.Interpolator.AddConcept(new GetAvailableActionsForCollectionHandler(commandComposite));
+            context.Interpolator.AddConcept(new GetAvailableActionHandler(commandComposite));
             context.Interpolator.AddConcept(new HasCardsHandler(game));
             context.Interpolator.AddConcept(new GetCollectionContainingCardHandler(game));
             context.Interpolator.AddConcept(new CurrentPlayerHandler(game));
@@ -46,7 +50,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new CardDrawnObserver(game));
             context.Interpolator.AddConcept(new CardMovedObserver(game));
             context.Interpolator.AddConcept(new CardDeclaredObserver(library));
-            context.Interpolator.AddConcept(new CommandPostponedObserver(globalCommands));
+            context.Interpolator.AddConcept(new CommandPostponedObserver(generalCommands));
             context.Interpolator.AddConcept(new InstantaniousEffectAddedToCardObserver(library));
             context.Interpolator.AddConcept(new PermanentEffectAddedToCardObserver(library));
             context.Interpolator.AddConcept(new PlayerDeclaredObserver(game));
@@ -55,6 +59,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new CollectionOwnerSetObserver(game));
             context.Interpolator.AddConcept(new ZoneDeclaredObserver(game));
             context.Interpolator.AddConcept(new EnteredStateObserver(game));
+            context.Interpolator.AddConcept(new TemporaryActionsClearedObserver(generalCommands));
         }
     }
 }

@@ -4,16 +4,16 @@ using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 
 namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 {
-    public class GetAvailableActionsHandler : IQueryHandler<GetAvailableActions, IEnumerable<IUserCommand>>
+    public class GetAvailableActionsHandler : IQueryHandler<GetAvailableActions, IEnumerable<IUserAction>>
     {
-        private readonly CommandRepository repository;
+        private readonly ICommandRepositoryQueries repository;
 
-        public GetAvailableActionsHandler(CommandRepository repository)
+        public GetAvailableActionsHandler(ICommandRepositoryQueries repository)
         {
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
         }
 
-        public IEnumerable<IUserCommand> Handle(GetAvailableActions _)
+        public IEnumerable<IUserAction> Handle(GetAvailableActions _)
         {
             return repository.Commands;
         }

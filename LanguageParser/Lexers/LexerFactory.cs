@@ -23,17 +23,26 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
 
         private IEnumerable<RegexTokenDefinition> GetRequired()
         {
+            // Symbols
             yield return new RegexTokenDefinition(new TokenFactory(() => new Comment()), @"^/\*(.|\n)*?\*/");
             yield return new RegexTokenDefinition(new TokenFactory(() => new Comment()), "^//.*");
             yield return new RegexTokenDefinition(new TokenFactory(() => new SequenceTerminator()), @"^\r?\n");
+            yield return new RegexTokenDefinition(new TokenFactory(() => new ParenthesesStart()), @"^\(");
+            yield return new RegexTokenDefinition(new TokenFactory(() => new ParenthesesEnd()), @"^\)");
+            yield return new RegexTokenDefinition(new TokenFactory(() => new Colon()), "^:");
+            yield return new RegexTokenDefinition(new TokenFactory(() => new Tabulator()), @"^(\t|\s{2})");
+
+            // Keywords
             yield return new RegexTokenDefinition(new TokenFactory(() => new PlayKeyword()), @"^play\b");
             yield return new RegexTokenDefinition(new TokenFactory(() => new IfKeyword()), @"^if\b");
             yield return new RegexTokenDefinition(new TokenFactory(() => new InstantaneousKeyword()), @"^(instantaneous|inst)\b");
             yield return new RegexTokenDefinition(new TokenFactory(() => new PermanentKeyword()), @"^(permanent|perm)\b");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new ParenthesesStart()), @"^\(");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new ParenthesesEnd()), @"^\)");
+
+            // Literals
             yield return new RegexTokenDefinition(new TokenFactory(() => new NumberLiteral()), @"^\d+");
             yield return new RegexTokenDefinition(new TokenFactory(() => new StringLiteral()), "^\"[^\"]*\"");
+
+            // Concepts
             yield return new RegexTokenDefinition(new TokenFactory(() => new Concept()), "^[a-zA-Z]+");
         }
     }
