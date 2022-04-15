@@ -26,7 +26,8 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Attributes
             var property = command.GetType().GetProperties().
                 Where(p => p.IsDefined(typeof(PlayCardAttribute), false)).FirstOrDefault();
 
-            property.SetValue(command, cardId);
+            if (property != null)
+                property.SetValue(command, cardId);
         }
     }
 }

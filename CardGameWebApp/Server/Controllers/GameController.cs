@@ -93,8 +93,7 @@ namespace CardGameWebApp.Server.Controllers
             {
                 if (action.Command.GetPlayCard() != null)
                     cardActions.Add(action);
-                else
-                    colActions.Add(action);
+                colActions.Add(action);
             }
 
             IEnumerable<CardRefDTO> cardLink(IEnumerable<ICard> cards)
@@ -106,7 +105,7 @@ namespace CardGameWebApp.Server.Controllers
                         Name = card.Template,
                         Instance = card.Instance,
                         //Link = Url.Action(nameof(GetCard), "game", new { id, card = card.Instance }, Request.Scheme),
-                        Actions = ActionLink(cardActions, card.Instance)
+                        Actions = ActionLink(cardActions, id, card.Instance)
                     };
                 }
             }
@@ -189,8 +188,11 @@ namespace CardGameWebApp.Server.Controllers
             if (playCardProperty != null)
             {
                 var value = action.Parameters.Single(p => p.Name.Equals(playCardProperty)).Value;
-                var cardId = Guid.Parse(value);
-                command.SetPlayCard(cardId);
+                if (value != null)
+                {
+                    var cardId = Guid.Parse(value);
+                    command.SetPlayCard(cardId);
+                }
             }
 
             current.Service.Dispatch(command);

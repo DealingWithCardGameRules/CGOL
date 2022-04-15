@@ -2,6 +2,7 @@
 using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 {
@@ -10,7 +11,30 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public Guid ProcessId => new Guid("38AF7C74-43E7-4252-BC2C-25C7B3290425");
 
         public Guid Instance { get; }
-        [AffectSelf] public Guid? SelfRef { get; set; }
+
+        private Guid? cardRef;
+
+        [AffectSelf, PlayCard] public Guid? SelfRef 
+        { 
+            get
+            {
+                return cardRef;
+            }
+            set
+            {
+                cardRef = value;
+                if (value.HasValue)
+                {
+                    foreach (var command in Commands)
+                    {
+                        command.SetPlayCard(value.Value);
+                    }
+                }
+            }
+        }
+
+        [PlayCollection] public IEnumerable<string> SourceRefs => Commands.SelectMany(c => c.GetPlayFroms());
+
         public IEnumerable<ICommand> Commands { get; }
 
         public CommandBundle(ICommand[] commands)

@@ -15,8 +15,12 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
         public void Handle(PostponeCommand command, IEventDispatcher eventDispatcher)
         {
-            eventDispatcher.Dispatch(
-                new CommandPostponed(timeProvider.Now, command.ProcessId, command.Command, command.Label));
+            if (command.SelfCardId != null)
+                eventDispatcher.Dispatch(
+                    new CommandPostponed(timeProvider.Now, command.ProcessId, command.Command, command.Label));
+            else
+                eventDispatcher.Dispatch(
+                    new CommandTemporarelyPostponed(timeProvider.Now, command.ProcessId, command.Command, command.Label));
         }
     }
 }
