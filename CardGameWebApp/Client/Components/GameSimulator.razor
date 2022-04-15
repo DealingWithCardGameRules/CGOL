@@ -6,94 +6,111 @@
 @inject HttpClient Http
 
 <SelectCardPrompt @ref="cardPrompt"></SelectCardPrompt>
+<div class="row">
+	<div class="col-2">
+		<!-- Player select -->
+		@if (players != null)
+		{
+			<h3>Players</h3>
+			<div class="btn-group" role="group">
+			@for(int i = 0; i < players.Count; i++)
+			{
+				var playerIndex = i;
+				<button type="button" class="btn @(players[playerIndex] ? "btn-primary" : "btn-outline-primary")" @onclick="@(() => TogglePlayer(playerIndex))" autocomplete="off">Player @(i+1)</button>
+			}
+			</div>
+		}
 
-<!-- Player select -->
-@if (players != null)
-{
-	<div class="btn-group" role="group">
-	@for(int i = 0; i < players.Count; i++)
-	{
-		var playerIndex = i;
-		<button type="button" class="btn @(players[playerIndex] ? "btn-primary" : "btn-outline-primary")" @onclick="@(() => TogglePlayer(playerIndex))" autocomplete="off">Player @(i+1)</button>
-	}
+		@if (GlobalActions != null)
+		{
+			<h3>Actions</h3>
+			<!-- Available actions -->
+			<div class="d-grid gap-2">
+			@foreach(var action in GlobalActions)
+			{
+				<button type="button" class="btn btn-primary" @onclick="action.Execute">@action.Name</button>
+			}
+			</div>
+		}
 	</div>
-}
+	<div class="col-10">
+		<!-- Community cards -->
+		@if (zones != null && zones.Any())
+		{
+			<div>
+				<h2>Community cards collections</h2>
+			@foreach (var zone in zones.Select(h => collectionCache[h.Key]))
+			{
+				<Zone NumberOfCards="zone.CardCollection.CardCount" FaceUp="true">
+					@foreach (var card in zone.CardCollection.VisibleCards)
+					{
+						<Card Template="@card.Name" Actions="() => GetActions(card.Actions)" />
+					}
+					@for(int i = 0; i < zone.CardCollection.CardCount - zone.CardCollection.VisibleCards.Count(); i++)
+					{
+						<div class="playcard">
+							<div class="background" style="background-color: lightblue;">
+								<p>@zone.CardCollection.Name</p>
+							</div>
+						</div>
+					}
+				</Zone>
+			}
+			</div>
+		}
 
-<!-- Community cards -->
-@if (zones != null && zones.Any())
-{
-	<div>
-		<h2>Community cards collections</h2>
-	@foreach (var zone in zones.Select(h => collectionCache[h.Key]))
-	{
-		<Zone NumberOfCards="zone.CardCollection.CardCount" FaceUp="true">
-			@foreach (var card in zone.CardCollection.VisibleCards)
+		<!-- Decks -->
+
+		@if (decks != null && decks.Any())
+		{
+			<div>
+				<h2>Decks</h2>
+			@foreach (var deck in decks.Select(d => collectionCache[d.Key]))
 			{
-				<Card Template="@card.Name" Actions="() => GetActions(card.Actions)" />
+				<Deck FaceUp="false" NumberOfCards="deck.CardCollection.CardCount" 
+					Name="@deck.CardCollection.Name" Actions="() => GetActions(deck.CardCollection.Actions)">
+					@if (deck.CardCollection.VisibleCards.Any())
+					{
+						@foreach (var card in deck.CardCollection.VisibleCards)
+						{
+							<Card Template="@card.Name" />
+						}
+					}
+					else
+					{
+						<p>@deck.CardCollection.Name</p>		
+					}
+				</Deck>
 			}
-			@for(int i = 0; i < zone.CardCollection.CardCount - zone.CardCollection.VisibleCards.Count(); i++)
+			</div>
+		}
+
+		<!-- Hands -->
+		@if (hands != null && hands.Any())
+		{
+			<div>
+				<h2>Hands</h2>
+			@foreach (var hand in hands.Select(h => collectionCache[h.Key]))
 			{
-				<div class="playcard">
-					<div class="background" style="background-color: lightblue;">
-						<p>@zone.CardCollection.Name</p>
-					</div>
-				</div>
+				<Hand NumberOfCards="hand.CardCollection.CardCount" FaceUp="true">
+					@foreach (var card in hand.CardCollection.VisibleCards)
+					{
+						<Card Template="@card.Name" Actions="() => GetActions(card.Actions)" />
+					}
+					@for(int i = 0; i < hand.CardCollection.CardCount - hand.CardCollection.VisibleCards.Count(); i++)
+					{
+						<div class="playcard">
+							<div class="background" style="background-color: lightblue;">
+								<p>@hand.CardCollection.Name</p>
+							</div>
+						</div>
+					}
+				</Hand>
 			}
-		</Zone>
-	}
+			</div>
+		}
 	</div>
-}
-
-<!-- Decks -->
-
-@if (decks != null && decks.Any())
-{
-	<div>
-		<h2>Decks</h2>
-	@foreach (var deck in decks.Select(d => collectionCache[d.Key]))
-	{
-		<Deck FaceUp="false" NumberOfCards="deck.CardCollection.CardCount" 
-			Name="@deck.CardCollection.Name" Actions="() => GetActions(deck.CardCollection.Actions)">
-			@if (deck.CardCollection.VisibleCards.Any())
-			{
-				@foreach (var card in deck.CardCollection.VisibleCards)
-				{
-					<Card Template="@card.Name" />
-				}
-			}
-			else
-			{
-				<p>@deck.CardCollection.Name</p>		
-			}
-		</Deck>
-	}
-	</div>
-}
-
-<!-- Hands -->
-@if (hands != null && hands.Any())
-{
-	<div>
-		<h2>Hands</h2>
-	@foreach (var hand in hands.Select(h => collectionCache[h.Key]))
-	{
-		<Hand NumberOfCards="hand.CardCollection.CardCount" FaceUp="true">
-			@foreach (var card in hand.CardCollection.VisibleCards)
-			{
-				<Card Template="@card.Name" Actions="() => GetActions(card.Actions)" />
-			}
-			@for(int i = 0; i < hand.CardCollection.CardCount - hand.CardCollection.VisibleCards.Count(); i++)
-			{
-				<div class="playcard">
-					<div class="background" style="background-color: lightblue;">
-						<p>@hand.CardCollection.Name</p>
-					</div>
-				</div>
-			}
-		</Hand>
-	}
-	</div>
-}
+</div>
 
 @code {
 	private GameOverviewResponse game;
@@ -104,6 +121,7 @@
 	private List<bool> players;
 	private HubConnection? hubConnection;
 	private SelectCardPrompt cardPrompt;
+	private IEnumerable<CallBackAction> GlobalActions;
 
 	public async Task Start(string gameUrl)
 	{
@@ -150,16 +168,11 @@
 		await hubConnection.SendAsync("join", game.SessionId);
 		Http.DefaultRequestHeaders.Add("ClientID", hubConnection.ConnectionId);
 
-		foreach (var pair in game.Game.Hands)
-			await UpdateCollectionCache(pair.Key, pair.Value);
-		foreach (var pair in game.Game.Decks)
-			await UpdateCollectionCache(pair.Key, pair.Value);
-		foreach (var pair in game.Game.Zones)
-			await UpdateCollectionCache(pair.Key, pair.Value);
-
 		hands = game.Game.Hands;
 		decks = game.Game.Decks;
 		zones = game.Game.Zones;
+		await updateCache();
+
 		this.StateHasChanged();
 	}
 
@@ -179,6 +192,9 @@
 
 	private async Task updateCache()
 	{
+		var response = await Http.GetFromJsonAsync<ActionListResponse>(game.Links["actions"]);
+		GlobalActions = GetActions(response.Actions);
+
 		foreach (var pair in hands)
 			await UpdateCollectionCache(pair.Key, pair.Value);
 		foreach (var pair in decks)

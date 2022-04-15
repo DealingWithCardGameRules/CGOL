@@ -14,7 +14,6 @@ using System.Dynamic;
 using CardGameWebApp.Server.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
-using dk.itu.game.msc.cgdl.Representation;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -77,7 +76,7 @@ namespace CardGameWebApp.Server.Controllers
                 Game = dto,
                 SessionId = id
             };
-            //response.Links.Add("actions", Url.Action(nameof(GetActions), "game", new { id }, Request.Scheme));
+            response.Links.Add("actions", Url.Action(nameof(GetActions), "game", new { id }, Request.Scheme));
             response.Links.Add("hub", $"{Request.Scheme}://{Request.Host}/gamehub");
 
             return response;
@@ -107,25 +106,9 @@ namespace CardGameWebApp.Server.Controllers
                         Name = card.Template,
                         Instance = card.Instance,
                         //Link = Url.Action(nameof(GetCard), "game", new { id, card = card.Instance }, Request.Scheme),
-                        Actions = actionLink(cardActions, card.Instance)
+                        Actions = ActionLink(cardActions, card.Instance)
                     };
                 }
-            }
-
-            IDictionary<string, string> actionLink(IEnumerable<IUserAction> commands, Guid? card = null)
-            {
-                Dictionary<string, string> output = new Dictionary<string, string>();
-                foreach (var command in commands)
-                {
-                    dynamic obj = new ExpandoObject();
-                    obj.id = id;
-                    obj.instance = command.Command.Instance;
-                    if (card != null)
-                        (obj as IDictionary<string, object>).Add(command.Command.GetPlayCard(), card);
-
-                    output[command.Label] = Url.Action(nameof(GetAction), "game", (object)obj, Request.Scheme);
-                }
-                return output;
             }
             
             var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
@@ -136,13 +119,29 @@ namespace CardGameWebApp.Server.Controllers
                 VisibleCards = cardLink(current.Service.Dispatch(new GetVisibleCards(name, playerIndexes))),
                 CardCount = current.Service.Dispatch(new CardCount(name)),
                 Tags = current.Service.Dispatch(new GetCollectionTags(name)),
-                Actions = actionLink(colActions)
+                Actions = ActionLink(colActions, id)
             };
             
             return new CardCollectionResponse(Request.GetEncodedUrl())
             {
                 CardCollection = dto
             };
+        }
+
+        private IDictionary<string, string> ActionLink(IEnumerable<IUserAction> commands, Guid id, Guid? card = null)
+        {
+            Dictionary<string, string> output = new Dictionary<string, string>();
+            foreach (var command in commands)
+            {
+                dynamic obj = new ExpandoObject();
+                obj.id = id;
+                obj.instance = command.Command.Instance;
+                if (card != null)
+                    (obj as IDictionary<string, object>).Add(command.Command.GetPlayCard(), card);
+
+                output[command.Label] = Url.Action(nameof(GetAction), "game", (object)obj, Request.Scheme);
+            }
+            return output;
         }
 
         [HttpGet("{id:Guid}/cards/{card:Guid}")]
@@ -200,11 +199,15 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpGet("{id:Guid}/actions")]
-        public ActionResult GetActions(Guid id)
+        public ActionListResponse GetActions(Guid id)
         {
             var current = session.GetSession(id);
             var actions = current.Service.Dispatch(new GetAvailableActions());
-            return Ok();
+
+            return new ActionListResponse(Request.GetEncodedUrl())
+            {
+                Actions = ActionLink(actions, id)
+            };
         }
     }
 }

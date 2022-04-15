@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CardGameWebApp.Shared
+﻿namespace CardGameWebApp.Shared
 {
     public class ActionCommandDTO
     {
