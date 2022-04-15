@@ -6,11 +6,11 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     public class GameStateSetup : IPluginSetup
     {
-        Game game;
-        Library library;
-        CommandRepository generalCommands;
-        CommandRepository stateCommands;
-        ICommandRepositoryQueries commandComposite;
+        private readonly Game game;
+        private readonly Library library;
+        private readonly CommandRepository generalCommands;
+        private readonly CommandRepository stateCommands;
+        private readonly ICommandRepositoryQueries commandComposite;
 
         public GameStateSetup()
         {
@@ -59,7 +59,8 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new CollectionOwnerSetObserver(game));
             context.Interpolator.AddConcept(new ZoneDeclaredObserver(game));
             context.Interpolator.AddConcept(new EnteredStateObserver(game));
-            context.Interpolator.AddConcept(new TemporaryActionsClearedObserver(generalCommands));
+            context.Interpolator.AddConcept(new TemporaryActionsClearedObserver(stateCommands));
+            context.Interpolator.AddConcept(new CommandTemporarelyPostponedObserver(stateCommands));
         }
     }
 }
