@@ -6,10 +6,10 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Observers
 {
     public class CardDrawnCounter : IEventObserver<CardDrawn>
     {
-        private readonly DrawCounter counter;
+        private readonly PlayerCounter counter;
         private readonly IDispatcher dispatcher;
 
-        public CardDrawnCounter(DrawCounter counter, IDispatcher dispatcher)
+        public CardDrawnCounter(PlayerCounter counter, IDispatcher dispatcher)
         {
             this.counter = counter;
             this.dispatcher = dispatcher;

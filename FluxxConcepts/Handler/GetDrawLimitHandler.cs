@@ -5,16 +5,16 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
 {
     public class GetDrawLimitHandler : IQueryHandler<GetDrawLimit, int>
     {
-        private readonly DrawCounter drawCounter;
+        private readonly PlayerCounter drawCounter;
 
-        public GetDrawLimitHandler(DrawCounter drawCounter)
+        public GetDrawLimitHandler(PlayerCounter drawCounter)
         {
             this.drawCounter = drawCounter ?? throw new System.ArgumentNullException(nameof(drawCounter));
         }
 
         public int Handle(GetDrawLimit query)
         {
-            return drawCounter.GetDrawLimit(query.Player);
+            return drawCounter.GetLimit(query.Player);
         }
     }
 }
