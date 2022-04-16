@@ -1,1 +1,2 @@
-ChangeState "Draw"
+CreateCard "Test"
+AddCardTags "Test" "A, B  , C"

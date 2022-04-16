@@ -63,6 +63,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new TemporaryActionsClearedObserver(stateCommands));
             context.Interpolator.AddConcept(new CommandTemporarelyPostponedObserver(stateCommands));
             context.Interpolator.AddConcept(new CardDealtObserver(game));
+            context.Interpolator.AddConcept(new TagsAddedToTemplateObserver(library));
         }
     }
 }
