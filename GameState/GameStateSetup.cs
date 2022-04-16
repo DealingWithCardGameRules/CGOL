@@ -42,6 +42,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new HasCollectionHandler(game));
             context.Interpolator.AddConcept(new CurrentStateHandler(game));
             context.Interpolator.AddConcept(new InStateHandler(game));
+            context.Interpolator.AddConcept(new GetPlayersHandHandler(game));
 
             // Event observers
             context.Interpolator.AddConcept(new CardCollectionDeclaredObserver(game));
@@ -61,6 +62,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new EnteredStateObserver(game));
             context.Interpolator.AddConcept(new TemporaryActionsClearedObserver(stateCommands));
             context.Interpolator.AddConcept(new CommandTemporarelyPostponedObserver(stateCommands));
+            context.Interpolator.AddConcept(new CardDealtObserver(game));
         }
     }
 }

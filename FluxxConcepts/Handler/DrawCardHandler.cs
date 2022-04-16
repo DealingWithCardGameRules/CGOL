@@ -24,6 +24,10 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
             if (player == null)
                 throw new Exception("No current player. Remember to setup players.");
 
+            var destination = command.Destination ?? dispatcher.Dispatch(new GetPlayersHand(player.Index));
+            if (destination == null)
+                throw new ArgumentNullException($"No destination found, please specify one by filling out the \"to\" parameter or make sure the current player has a hand.");
+
             for (var i = 0; i < maxiumDraws; i++)
             {
                 if (!dispatcher.Dispatch(new HasCards(command.Source)))
@@ -32,7 +36,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
                 if (dispatcher.Dispatch(new DrawLimitReached(player.Identity)))
                     return;
                 
-                eventDispatcher.Dispatch(new CardDrawn(DateTime.Now, command.ProcessId, command.Source, command.Destination));
+                eventDispatcher.Dispatch(new CardDrawn(DateTime.Now, command.ProcessId, command.Source, destination));
             }
         }
     }

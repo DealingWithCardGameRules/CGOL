@@ -22,7 +22,8 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new SimplyDeclareCollection(timeProvider));
             interpolator.AddConcept(new SimplyDeclareHand(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyAddCard(timeProvider, dispatcher));
-            interpolator.AddConcept(new SimplyDrawCard(timeProvider));
+            interpolator.AddConcept(new SimplyDrawCard(timeProvider, dispatcher));
+            interpolator.AddConcept(new SimplyDealCard(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyRevealAndMove(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyDeclareCard(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyPlaceInCollection(timeProvider, dispatcher));
@@ -35,6 +36,7 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new ResolvePermanentsHandler(dispatcher));
             interpolator.AddConcept(new ClearTemporaryActionsHandler(timeProvider));
             interpolator.AddConcept(new SimplyExecuteCommandBundle(dispatcher));
+            interpolator.AddConcept(new AllDrawHandler(dispatcher));
         }
     }
 }

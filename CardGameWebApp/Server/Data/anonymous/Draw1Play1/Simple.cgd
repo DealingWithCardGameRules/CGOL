@@ -1,9 +1,11 @@
-SetPlayers 1
+SetPlayers 2
 CreateDeck "deck"
 CreateDeck "discard pile"
-CreateHand "player"
+CreateHand "player1" 1
+CreateHand "player2" 2
 CreateCard "pass"
 Instantaneous "pass" PlaceIn "discard pile"
 AddCard "pass" "deck"
-Play DrawCard "deck" "player"
+AddCard "pass" "deck"
+AllDraw "deck" 1
 Play PlayCard "player"

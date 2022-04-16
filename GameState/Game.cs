@@ -19,9 +19,12 @@ namespace dk.itu.game.msc.cgdl.GameState
             players = new Dictionary<int, IPlayer>();
         }
 
-        internal void ClearTemporaryActions()
+        internal string? GetPlayerHand(int playerIndex)
         {
-            
+            return collections
+                    .Where(c => c.Value.Tags.Contains("hand") && c.Value.OwnerIndex == playerIndex)
+                    .Select(c=>c.Key)
+                    .FirstOrDefault();
         }
 
         internal bool HasCollection(string name)
