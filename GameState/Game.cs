@@ -19,6 +19,11 @@ namespace dk.itu.game.msc.cgdl.GameState
             players = new Dictionary<int, IPlayer>();
         }
 
+        internal void ShuffleCollection(string collection, int seed)
+        {
+            collections[collection].Shuffle(seed);
+        }
+
         internal string? GetPlayerHand(int playerIndex)
         {
             return collections

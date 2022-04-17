@@ -17,5 +17,6 @@ namespace dk.itu.game.msc.cgdl.GameState
         IEnumerable<ICard> GetRevieledCards(IEnumerable<int> playerIndices);
         bool HasCard(Guid cardId);
         bool TrySetCardOwner(Guid cardId, int playerIndex);
+        void Shuffle(int seed);
     }
 }

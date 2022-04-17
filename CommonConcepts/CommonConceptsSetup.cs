@@ -1,23 +1,16 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts.Handlers;
 
-namespace dk.itu.game.msc.cgdl
+namespace dk.itu.game.msc.cgdl.CommonConcepts
 {
-    public class SimpleGameSetup
+    public class CommonConceptsSetup : IPluginSetup
     {
-        private readonly IInterpolator interpolator;
-        private readonly ITimeProvider timeProvider;
-        private readonly IDispatcher dispatcher;
-
-        public SimpleGameSetup(IInterpolator interpolator, ITimeProvider timeProvider, IDispatcher dispatcher)
+        public void Setup(IPluginContext context)
         {
-            this.interpolator = interpolator;
-            this.timeProvider = timeProvider;
-            this.dispatcher = dispatcher;
-        }
+            var interpolator = context.Interpolator;
+            var timeProvider = context.TimeProvider;
+            var dispatcher = context.Dispatcher;
 
-        public void AddHandlers()
-        {
             // Command handlers
             interpolator.AddConcept(new SimplyDeclareCollection(timeProvider));
             interpolator.AddConcept(new SimplyDeclareHand(timeProvider, dispatcher));
@@ -38,6 +31,7 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new SimplyExecuteCommandBundle(dispatcher));
             interpolator.AddConcept(new DealAllHandler(dispatcher));
             interpolator.AddConcept(new AddCardTagsHandler(timeProvider, dispatcher));
+            interpolator.AddConcept(new ShuffleHandler(timeProvider, dispatcher));
         }
     }
 }

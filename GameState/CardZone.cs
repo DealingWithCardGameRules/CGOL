@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     internal class CardZone : TagHandler, ICardCollection
     {
-        readonly Dictionary<Guid, ICard> cards;
+        Dictionary<Guid, ICard> cards;
 
         public string Name { get; }
 
@@ -64,6 +64,11 @@ namespace dk.itu.game.msc.cgdl.GameState
                 return true;
             }
             return false;
+        }
+
+        public void Shuffle(int seed)
+        {
+            cards = new Shuffler(seed).Shuffle(cards);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dk.itu.game.msc.cgdl.CommandCentral;
+using System;
 using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.Representation
@@ -7,6 +8,7 @@ namespace dk.itu.game.msc.cgdl.Representation
     {
         private readonly SessionRepository repository;
         private readonly SessionFactory factory;
+        private readonly IPluginContext pluginContext;
 
         public SessionService(SessionRepository repository, SessionFactory factory)
         {
@@ -21,7 +23,7 @@ namespace dk.itu.game.msc.cgdl.Representation
 
         public void Create(Guid id, IUserEnquirerFactory userEnquirer)
         {
-            var session = factory.Create(id, userEnquirer);
+            var session = factory.CreateSession(id, userEnquirer);
             repository.AddSession(session);
         }
 

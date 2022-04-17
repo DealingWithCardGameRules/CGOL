@@ -11,7 +11,7 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         public int? OwnerIndex { get; set; }
 
-        readonly Dictionary<Guid, ICard> cards;
+        Dictionary<Guid, ICard> cards;
         public Hand(string name) : base("hand")
         {
             Name = name;
@@ -68,6 +68,11 @@ namespace dk.itu.game.msc.cgdl.GameState
                 return true;
             }
             return false;
+        }
+
+        public void Shuffle(int seed)
+        {
+            cards = new Shuffler(seed).Shuffle(cards);
         }
     }
 }

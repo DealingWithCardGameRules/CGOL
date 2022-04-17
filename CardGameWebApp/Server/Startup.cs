@@ -1,5 +1,6 @@
 using CardGameWebApp.Server.Hubs;
 using dk.itu.game.msc.cgdl;
+using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.Representation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,8 +56,6 @@ namespace CardGameWebApp.Server
             {
                 app.UseExceptionHandler("/Error");
             }
-
-            app.ApplicationServices.GetService<SimpleGameSetup>()?.AddHandlers();
 
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();

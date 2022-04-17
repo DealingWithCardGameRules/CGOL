@@ -46,7 +46,7 @@ namespace CardGameWebApp.Server.Controllers
                 return NotFound(game);
 
             var id = Guid.NewGuid();
-            var session = factory.Create(id, userEnquirerFactory);
+            var session = factory.CreateSession(id, userEnquirerFactory);
             repository.AddSession(session);
             return Created(Url.Action("SetupD1P1", "demos", new { id }, Request.Scheme), null);
         }
@@ -127,7 +127,7 @@ namespace CardGameWebApp.Server.Controllers
 				Instance = Guid.NewGuid();
 			}
 
-			public Guid Instance { get; }
+			public Guid Instance { get; set; }
 
             public string Name => "Pass";
 

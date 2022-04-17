@@ -1,5 +1,5 @@
-AddCard "Rule Card"
-Instantaneous "Rule Card" Shuffle "deck"
-Instantaneous "Rule Card" DealAll 3
-Instantaneous "Rule Card" AddCard "Draw 1" "Meta Rules"
-Instantaneous "Rule Card" AddCard "Play 1" "Meta Rules"
+// Is played right away
+Shuffle "deck"
+DealAll 3
+AddCard "Draw 1" "Meta Rules"
+AddCard "Play 1" "Meta Rules"

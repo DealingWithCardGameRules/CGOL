@@ -1,1 +1,6 @@
-LoadCard "Draw1Play1/Simple"
+CreateDeck "Discard Pile"
+CreateDeck "Exile" // For cards that are taken out of the game
+CreateDeck "Meta Rules"
+
+LoadCard "Fluxx/FluxxDeck"
+LoadCard "Fluxx/RuleCard"
