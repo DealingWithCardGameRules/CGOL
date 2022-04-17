@@ -36,7 +36,7 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new ResolvePermanentsHandler(dispatcher));
             interpolator.AddConcept(new ClearTemporaryActionsHandler(timeProvider));
             interpolator.AddConcept(new SimplyExecuteCommandBundle(dispatcher));
-            interpolator.AddConcept(new AllDrawHandler(dispatcher));
+            interpolator.AddConcept(new DealAllHandler(dispatcher));
             interpolator.AddConcept(new AddCardTagsHandler(timeProvider, dispatcher));
         }
     }

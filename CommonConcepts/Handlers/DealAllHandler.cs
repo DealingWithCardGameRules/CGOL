@@ -4,16 +4,16 @@ using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 {
-    public class AllDrawHandler : ICommandHandler<AllDraw>
+    public class DealAllHandler : ICommandHandler<DealAll>
     {
         private readonly IDispatcher dispatcher;
 
-        public AllDrawHandler(IDispatcher dispatcher)
+        public DealAllHandler(IDispatcher dispatcher)
         {
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(AllDraw command, IEventDispatcher eventDispatcher)
+        public void Handle(DealAll command, IEventDispatcher eventDispatcher)
         {
             var players = dispatcher.Dispatch(new GetNumberOfPlayers());
             for (int i = 0; i < players; i++)
