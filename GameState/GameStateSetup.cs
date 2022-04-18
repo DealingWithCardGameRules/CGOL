@@ -43,6 +43,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new CurrentStateHandler(game));
             context.Interpolator.AddConcept(new InStateHandler(game));
             context.Interpolator.AddConcept(new GetPlayersHandHandler(game));
+            context.Interpolator.AddConcept(new GetCardsHandler(game));
 
             // Event observers
             context.Interpolator.AddConcept(new CardCollectionDeclaredObserver(game));
