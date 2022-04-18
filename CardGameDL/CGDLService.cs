@@ -1,18 +1,17 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.LanguageParser.Messages;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace dk.itu.game.msc.cgdl
 {
     public class CGDLService
     {
         private readonly IDispatcher dispatcher;
-        private readonly CardGameDLParser parser;
+        private readonly IPluginContext pluginContext;
 
-        public CGDLService(IDispatcher dispatcher)
+        public CGDLService(IDispatcher dispatcher, IPluginContext pluginContext)
         {
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
+            this.pluginContext = pluginContext ?? throw new System.ArgumentNullException(nameof(pluginContext));
         }
 
         public void Dispatch(ICommand command)
@@ -27,7 +26,13 @@ namespace dk.itu.game.msc.cgdl
 
         public void Parse(string cgdl)
         {
-            dispatcher.Dispatch(new LoadCGDL(cgdl));
+            dispatcher.Dispatch(new LoadCGDL(cgdl));    
         }
+
+        public void LoadConcepts(IPluginSetup setup)
+        {
+            setup.Setup(pluginContext);
+        }
+
     }
 }

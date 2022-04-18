@@ -5,9 +5,9 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
 {
     public class DrawLimitReachedHandler : IQueryHandler<DrawLimitReached, bool>
     {
-        private readonly DrawCounter drawLimit;
+        private readonly PlayerCounter drawLimit;
 
-        public DrawLimitReachedHandler(DrawCounter drawLimit)
+        public DrawLimitReachedHandler(PlayerCounter drawLimit)
         {
             this.drawLimit = drawLimit;
         }

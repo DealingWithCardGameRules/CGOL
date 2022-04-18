@@ -1,4 +1,5 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
+using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.GameEvents;
 using dk.itu.game.msc.cgdl.LanguageParser;
 using dk.itu.game.msc.cgdl.LanguageParser.Lexers;
@@ -33,7 +34,7 @@ namespace dk.itu.game.msc.cgdl
         public static void AddCGDLService(this IServiceCollection services)
         {
             services.AddSingleton(p => p.GetRequiredService<DispatcherFactory>().Create());
-            services.AddSingleton<SimpleGameSetup>();
+            services.AddSingleton<CommonConceptsSetup>();
             services.AddSingleton<CGDLService>();
         }
     }

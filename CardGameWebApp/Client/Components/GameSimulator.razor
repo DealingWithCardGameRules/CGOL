@@ -15,8 +15,8 @@
 			<div class="btn-group" role="group">
 			@for(int i = 0; i < players.Count; i++)
 			{
-				var playerIndex = i;
-				<button type="button" class="btn @(players[playerIndex] ? "btn-primary" : "btn-outline-primary")" @onclick="@(() => TogglePlayer(playerIndex))" autocomplete="off">Player @(i+1)</button>
+				var playerIndex = i + 1;
+				<button type="button" class="btn @(players[i] ? "btn-primary" : "btn-outline-primary")" @onclick="@(() => TogglePlayer(playerIndex))" autocomplete="off">Player @(playerIndex)</button>
 			}
 			</div>
 		}
@@ -139,13 +139,13 @@
 		hubConnection = new HubConnectionBuilder().WithUrl(game.Links["hub"]).Build();
 		hubConnection.On<int>("PlayerJoined", async (int i) =>
 		{ 
-			players[i] = true;
+			players[i-1] = true;
 			await updateCache();
 			this.StateHasChanged();
 		});
 		hubConnection.On<int>("PlayerLeft", async (int i) =>
 		{ 
-			players[i] = false; 
+			players[i-1] = false; 
 			await updateCache();
 			this.StateHasChanged();
 		});
@@ -184,7 +184,7 @@
 
 	private void TogglePlayer(int index)
 	{
-		if (!players[index])
+		if (!players[index-1])
 			hubConnection.SendAsync("selectPlayer", game.SessionId, index);
 		else
 			hubConnection.SendAsync("ReleasePlayer", game.SessionId, index);

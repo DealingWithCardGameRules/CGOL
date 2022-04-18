@@ -11,7 +11,7 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         public int? OwnerIndex { get; set; }
 
-        readonly List<ICard> cards;
+        List<ICard> cards;
 
         public CardDeck(string name) : base("deck")
         {
@@ -79,6 +79,21 @@ namespace dk.itu.game.msc.cgdl.GameState
                 }
             }
             return false;
+        }
+
+        public void Shuffle(int seed)
+        {
+            cards = new Shuffler(seed).Shuffle(cards);
+        }
+
+        public IEnumerable<ICard> GetCards(IEnumerable<string>? tags)
+        {
+            foreach (var card in cards)
+            {
+                if (card.Tags.Intersect(tags).Count() == tags.Count())
+                    yield return card;
+            }
+
         }
     }
 }

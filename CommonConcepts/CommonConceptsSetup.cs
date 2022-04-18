@@ -1,28 +1,22 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts.Handlers;
 
-namespace dk.itu.game.msc.cgdl
+namespace dk.itu.game.msc.cgdl.CommonConcepts
 {
-    public class SimpleGameSetup
+    public class CommonConceptsSetup : IPluginSetup
     {
-        private readonly IInterpolator interpolator;
-        private readonly ITimeProvider timeProvider;
-        private readonly IDispatcher dispatcher;
-
-        public SimpleGameSetup(IInterpolator interpolator, ITimeProvider timeProvider, IDispatcher dispatcher)
+        public void Setup(IPluginContext context)
         {
-            this.interpolator = interpolator;
-            this.timeProvider = timeProvider;
-            this.dispatcher = dispatcher;
-        }
+            var interpolator = context.Interpolator;
+            var timeProvider = context.TimeProvider;
+            var dispatcher = context.Dispatcher;
 
-        public void AddHandlers()
-        {
             // Command handlers
             interpolator.AddConcept(new SimplyDeclareCollection(timeProvider));
             interpolator.AddConcept(new SimplyDeclareHand(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyAddCard(timeProvider, dispatcher));
-            interpolator.AddConcept(new SimplyDrawCard(timeProvider));
+            interpolator.AddConcept(new SimplyDrawCard(timeProvider, dispatcher));
+            interpolator.AddConcept(new SimplyDealCard(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyRevealAndMove(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyDeclareCard(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyPlaceInCollection(timeProvider, dispatcher));
@@ -35,6 +29,10 @@ namespace dk.itu.game.msc.cgdl
             interpolator.AddConcept(new ResolvePermanentsHandler(dispatcher));
             interpolator.AddConcept(new ClearTemporaryActionsHandler(timeProvider));
             interpolator.AddConcept(new SimplyExecuteCommandBundle(dispatcher));
+            interpolator.AddConcept(new DealAllHandler(dispatcher));
+            interpolator.AddConcept(new AddCardTagsHandler(timeProvider, dispatcher));
+            interpolator.AddConcept(new ShuffleHandler(timeProvider, dispatcher));
+            interpolator.AddConcept(new DiscardCardsHandler(timeProvider, dispatcher));
         }
     }
 }

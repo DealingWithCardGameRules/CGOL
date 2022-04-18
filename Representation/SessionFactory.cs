@@ -5,10 +5,10 @@ namespace dk.itu.game.msc.cgdl.Representation
 {
     public class SessionFactory
     {
-        public Session Create(Guid id, IUserEnquirerFactory userEnquirerFactory)
+        public Session CreateSession(Guid id, IUserEnquirerFactory userEnquirerFactory)
         {
             var factory = new CGDLServiceFactory();
-            var service = factory.CreateFluxxGame();
+            var service = factory.CreateBasicGame();
             var playerRepository = new PlayerRepository();
             var interpolator = factory.GetInterpolator();
             var userEnquirer = userEnquirerFactory.Create(playerRepository);
@@ -18,5 +18,6 @@ namespace dk.itu.game.msc.cgdl.Representation
 
             return new Session(id, service, interpolator, playerRepository);
         }
+
     }
 }
