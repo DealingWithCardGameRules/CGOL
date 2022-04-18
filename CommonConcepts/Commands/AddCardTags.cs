@@ -22,12 +22,8 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 
             Instance = Guid.NewGuid();
             Card = card ?? throw new ArgumentNullException(nameof(card));
-            Tags = Split(tags).Select(t => t.Trim());
+            Tags = tags.GetTagsTrimmed();
         }
 
-        private IEnumerable<string> Split(string commaSeperated)
-        {
-            return commaSeperated.Split(',');
-        }
     }
 }

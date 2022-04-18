@@ -7,5 +7,5 @@ CreateCard "pass"
 Instantaneous "pass" PlaceIn "discard pile"
 AddCard "pass" "deck"
 AddCard "pass" "deck"
-AllDraw "deck" 1
-Play PlayCard "player"
+DealAll "deck" 1
+Play PlayCard "player1"

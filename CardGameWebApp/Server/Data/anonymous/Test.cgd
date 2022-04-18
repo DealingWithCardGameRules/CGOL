@@ -1,2 +1,1 @@
-CreateCard "Test"
-AddCardTags "Test" "A, B  , C"
+AddCard "Draw 2" "Deck"

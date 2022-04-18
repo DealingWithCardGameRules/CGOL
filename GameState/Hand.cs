@@ -74,5 +74,19 @@ namespace dk.itu.game.msc.cgdl.GameState
         {
             cards = new Shuffler(seed).Shuffle(cards);
         }
+
+        public IEnumerable<ICard> GetCards(IEnumerable<string> tags)
+        {
+            foreach (var card in cards.Values)
+            {
+                if (card.Tags.Intersect(tags).Count() == tags.Count())
+                    yield return card;
+            }
+        }
+
+        public IEnumerable<ICard> GetCards()
+        {
+            return cards.Values;
+        }
     }
 }

@@ -24,6 +24,11 @@ namespace dk.itu.game.msc.cgdl.GameState
             collections[collection].Shuffle(seed);
         }
 
+        internal IEnumerable<ICard> GetCards(string collection, IEnumerable<string>? tags)
+        {
+            return collections[collection].GetCards(tags);
+        }
+
         internal string? GetPlayerHand(int playerIndex)
         {
             return collections

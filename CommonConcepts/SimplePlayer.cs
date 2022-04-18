@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace dk.itu.game.msc.cgdl.CommonConcepts
+﻿namespace dk.itu.game.msc.cgdl.CommonConcepts
 {
     internal class SimplePlayer : TagHandler, IPlayer
     {
