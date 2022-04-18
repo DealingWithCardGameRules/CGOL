@@ -23,8 +23,11 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
             if (dispatcher == null)
                 throw new ArgumentNullException($"No destination found, please specify one by filling out the \"to\" parameter or make sure the current player has a hand.");
 
-            var @event = new CardDealt(timeProvider.Now, command.ProcessId, command.Source, destination);
-            eventDispatcher.Dispatch(@event);
+            for (int i = 0; i < command.Cards; i++)
+            {
+                var @event = new CardDealt(timeProvider.Now, command.ProcessId, command.Source, destination);
+                eventDispatcher.Dispatch(@event);
+            }
         }
 
         private string? CurrentPlayersHand()
