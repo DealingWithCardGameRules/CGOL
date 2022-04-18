@@ -11,7 +11,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public string Source { get; }
         public int Cards { get; }
 
-        public DealAll(string source, int cards)
+        public DealAll(string source, int cards = 1)
         {
             Instance = Guid.NewGuid();
             Source = source;
