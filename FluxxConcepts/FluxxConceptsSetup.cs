@@ -12,7 +12,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             var playCounter = new PlayerCounter();
 
             // Command handlers
-            context.Interpolator.AddConcept(new DrawCardHandler(context.Dispatcher, 100));
+            context.Interpolator.AddConcept(new DrawCardHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new PlayCardHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new DrawLimitHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new PlayLimitHandler(context.TimeProvider, context.Dispatcher));

@@ -1,5 +1,5 @@
 // Is played right away
 Shuffle "Deck"
-DealAll "Deck" 3
+DealAll "Deck" 1
 AddCard "Draw 1" "Meta Rules"
 AddCard "Play 1" "Meta Rules"
