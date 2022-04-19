@@ -17,7 +17,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 
         public IEnumerable<IUserAction> Handle(GetAvailableActionsForCollection query)
         {
-            foreach (var command in repository.Commands)
+            foreach (var command in repository.GetCommands(query.PlayerIndex))
             {
                 if (command.Command.GetPlayFroms().Contains(query.Collection))
                 {

@@ -10,7 +10,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
         private readonly Queue<IToken> tokenStack;
         public IToken LookAhead1 { get; private set; }
         public IToken LookAhead2 { get; private set; }
-        public bool HasTokens => tokenStack.Any();
+        public bool HasTokens => tokenStack.Any() || !(LookAhead1 is SequenceTerminator);
 
         public ParserQueue(IEnumerable<IToken> tokens)
         {

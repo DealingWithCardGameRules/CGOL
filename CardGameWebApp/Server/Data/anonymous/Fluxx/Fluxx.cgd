@@ -1,13 +1,13 @@
 SetPlayers 2
-
 // Setup card collections
 CreateDeck "Deck"
 CreateDeck "Discard Pile"
 CreateZone "Meta Rules"
-
 // Player hands
 CreateHand "Player1" 1
 CreateHand "Player2" 2
-
 LoadCard "Fluxx/FluxxDeck"
 LoadCard "Fluxx/RuleCard"
+
+Play DrawCard "Deck"
+Play PlayCard

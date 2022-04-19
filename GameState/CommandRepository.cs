@@ -5,7 +5,6 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     public class CommandRepository : ICommandRepositoryQueries
     {
-        public IEnumerable<IUserAction> Commands => repository;
         private readonly List<IUserAction> repository;
 
         public CommandRepository()
@@ -21,6 +20,11 @@ namespace dk.itu.game.msc.cgdl.GameState
         public void AddCommand(string label, ICommand command)
         {
             repository.Add(new UserCommand(label, command));
+        }
+
+        public IEnumerable<IUserAction> GetCommands(int? _)
+        {
+            return repository;
         }
 
         class UserCommand : IUserAction

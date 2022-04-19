@@ -23,17 +23,19 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         public void Setup(IPluginContext context)
         {
+            var turnBasedRepository = new PlayerSpecificCommandRepository(context.Dispatcher, commandComposite);
+
             // Query handlers
             context.Interpolator.AddConcept(new CardCounter(game));
             context.Interpolator.AddConcept(new TopCardGetter(game));
             context.Interpolator.AddConcept(new CardGetter(game));
             context.Interpolator.AddConcept(new TemplateGetter(library));
-            context.Interpolator.AddConcept(new GetAvailableActionsHandler(commandComposite));
+            context.Interpolator.AddConcept(new GetAvailableActionsHandler(turnBasedRepository));
             context.Interpolator.AddConcept(new GetCollectionNamesHandler(game));
             context.Interpolator.AddConcept(new GetVisibleCardsHandler(game));
             context.Interpolator.AddConcept(new GetCollectionTagsHandler(game));
-            context.Interpolator.AddConcept(new GetAvailableActionsForCollectionHandler(commandComposite));
-            context.Interpolator.AddConcept(new GetAvailableActionHandler(commandComposite));
+            context.Interpolator.AddConcept(new GetAvailableActionsForCollectionHandler(turnBasedRepository));
+            context.Interpolator.AddConcept(new GetAvailableActionHandler(turnBasedRepository));
             context.Interpolator.AddConcept(new HasCardsHandler(game));
             context.Interpolator.AddConcept(new GetCollectionContainingCardHandler(game));
             context.Interpolator.AddConcept(new CurrentPlayerHandler(game));

@@ -26,6 +26,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new CardDrawnCounter(drawCounter, context.Dispatcher));
             context.Interpolator.AddConcept(new DrawLimitSetObserver(drawCounter));
             context.Interpolator.AddConcept(new PlayLimitSetObserver(playCounter));
+            context.Interpolator.AddConcept(new TurnStartedObserver(new[] { playCounter, drawCounter }, context.Dispatcher));
         }
     }
 }

@@ -27,10 +27,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
                 if (newPlayer != player.Index)
                     eventDispatcher.Dispatch(new CurrentPlayerSelected(timeProvider.Now, command.ProcessId, newPlayer));
             }
-
-            dispatcher.Dispatch(new ClearTemporaryActions());
-            eventDispatcher.Dispatch(new TurnStarted(timeProvider.Now, command.ProcessId));
-            dispatcher.Dispatch(new ResolvePermanents());
+            dispatcher.Dispatch(new Start());
         }
     }
 }
