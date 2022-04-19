@@ -9,7 +9,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
 
         public DrawLimitReachedHandler(PlayerCounter drawLimit)
         {
-            this.drawLimit = drawLimit;
+            this.drawLimit = drawLimit ?? throw new System.ArgumentNullException(nameof(drawLimit));
         }
 
         public bool Handle(DrawLimitReached query)

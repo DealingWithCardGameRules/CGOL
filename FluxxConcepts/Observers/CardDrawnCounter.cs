@@ -9,16 +9,17 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Observers
         private readonly PlayerCounter counter;
         private readonly IDispatcher dispatcher;
 
-        public CardDrawnCounter(PlayerCounter counter, IDispatcher dispatcher)
+        public CardDrawnCounter(PlayerCounter drawCounter, IDispatcher dispatcher)
         {
-            this.counter = counter;
+            this.counter = drawCounter;
             this.dispatcher = dispatcher;
         }
 
         public void Invoke(CardDrawn @event)
         {
             var player = dispatcher.Dispatch(new CurrentPlayer());
-            counter.Aggregate(player.Identity);
+            if (player != null)
+                counter.Aggregate(player.Identity);
         }
     }
 }

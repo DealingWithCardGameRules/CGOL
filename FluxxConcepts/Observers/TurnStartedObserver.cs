@@ -11,7 +11,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Observers
         private readonly PlayerCounter[] counters;
         private readonly IDispatcher dispatcher;
 
-        public TurnStartedObserver(PlayerCounter[] counters, IDispatcher dispatcher)
+        public TurnStartedObserver(IDispatcher dispatcher, params PlayerCounter[] counters)
         {
             this.counters = counters;
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
