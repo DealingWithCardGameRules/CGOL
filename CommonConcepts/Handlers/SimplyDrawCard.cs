@@ -20,7 +20,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
         public void Handle(DrawCard command, IEventDispatcher eventDispatcher)
         {
             var destination = command.Destination ?? CurrentPlayersHand();
-            if (dispatcher == null)
+            if (destination == null)
                 throw new ArgumentNullException($"No destination found, please specify one by filling out the \"to\" parameter or make sure the current player has a hand.");
 
             var @event = new CardDrawn(timeProvider.Now, command.ProcessId, command.Source, destination);
