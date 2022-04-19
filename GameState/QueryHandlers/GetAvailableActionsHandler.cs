@@ -13,9 +13,9 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
         }
 
-        public IEnumerable<IUserAction> Handle(GetAvailableActions _)
+        public IEnumerable<IUserAction> Handle(GetAvailableActions query)
         {
-            return repository.Commands;
+            return repository.GetCommands(query.PlayerIndex);
         }
     }
 }

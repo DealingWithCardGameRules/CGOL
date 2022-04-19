@@ -5,6 +5,6 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     public interface ICommandRepositoryQueries
     {
-        IEnumerable<IUserAction> Commands { get; }
+        IEnumerable<IUserAction> GetCommands(int? playerIndex = null);
     }
 }

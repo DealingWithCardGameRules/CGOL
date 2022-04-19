@@ -6,12 +6,11 @@ namespace dk.itu.game.msc.cgdl.GameState
     internal class CommandComposite : ICommandRepositoryQueries
     {
         private readonly ICommandRepositoryQueries[] repositories;
-        public IEnumerable<IUserAction> Commands => GetCommands();
 
-        private IEnumerable<IUserAction> GetCommands()
+        public IEnumerable<IUserAction> GetCommands(int? playerIndex = null)
         {
             foreach (var repository in repositories)
-                foreach (var command in repository.Commands)
+                foreach (var command in repository.GetCommands(playerIndex))
                     yield return command;
         }
 

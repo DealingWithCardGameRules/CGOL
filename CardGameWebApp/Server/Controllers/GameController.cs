@@ -14,6 +14,7 @@ using System.Dynamic;
 using CardGameWebApp.Server.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using dk.itu.game.msc.cgdl.Representation;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -89,11 +90,16 @@ namespace CardGameWebApp.Server.Controllers
             List<IUserAction> colActions = new List<IUserAction>();
             List<IUserAction> cardActions = new List<IUserAction>();
 
-            foreach (var action in current.Service.Dispatch(new GetAvailableActionsForCollection(name)))
+            var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
+
+            foreach (var playerIndex in playerIndexes)
             {
-                if (action.Command.GetPlayCard() != null)
-                    cardActions.Add(action);
-                colActions.Add(action);
+                foreach (var action in current.Service.Dispatch(new GetAvailableActionsForCollection(name, playerIndex)))
+                {
+                    if (action.Command.GetPlayCard() != null)
+                        cardActions.Add(action);
+                    colActions.Add(action);
+                }
             }
 
             IEnumerable<CardRefDTO> cardLink(IEnumerable<ICard> cards)
@@ -109,8 +115,6 @@ namespace CardGameWebApp.Server.Controllers
                     };
                 }
             }
-            
-            var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
 
             var dto = new CardCollectionDTO
             {
@@ -153,7 +157,19 @@ namespace CardGameWebApp.Server.Controllers
         public ActionResult<ActionResponse> GetAction(Guid id, Guid instance)
         {
             var current = session.GetSession(id);
-            var command = current.Service.Dispatch(new GetAvailableAction(instance));
+            
+            ICommand command = null;
+            var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
+            foreach (var playerIndex in playerIndexes)
+            {
+                var cmd = current.Service.Dispatch(new GetAvailableAction(instance, playerIndex));
+                if (cmd != null)
+                {
+                    command = cmd;
+                    break;
+                }
+            }
+                
             if (command == null)
                 return NotFound(); // Early out
 
@@ -180,7 +196,18 @@ namespace CardGameWebApp.Server.Controllers
         public async Task<ActionResult> PerformAction(Guid id, Guid instance, [FromBody]ActionDTO action)
         {
             var current = session.GetSession(id);
-            var command = current.Service.Dispatch(new GetAvailableAction(instance));
+            ICommand command = null;
+            var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
+            foreach (var playerIndex in playerIndexes)
+            {
+                var cmd = current.Service.Dispatch(new GetAvailableAction(instance, playerIndex));
+                if (cmd != null)
+                {
+                    command = cmd;
+                    break;
+                }
+            }
+
             if (command == null)
                 return NotFound(); // Early out
 
@@ -204,12 +231,25 @@ namespace CardGameWebApp.Server.Controllers
         public ActionListResponse GetActions(Guid id)
         {
             var current = session.GetSession(id);
-            var actions = current.Service.Dispatch(new GetAvailableActions());
+            var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
+            IEnumerable<IUserAction> actions = GetActions(current, playerIndexes);
 
             return new ActionListResponse(Request.GetEncodedUrl())
             {
                 Actions = ActionLink(actions, id)
             };
+        }
+
+        private IEnumerable<IUserAction> GetActions(Session session, IEnumerable<int> playerIndexes)
+        {
+            foreach (var playerIndex in playerIndexes)
+            {
+                var actions = session.Service.Dispatch(new GetAvailableActions(playerIndex));
+                foreach (var action in actions)
+                {
+                    yield return action;
+                }
+            }
         }
     }
 }

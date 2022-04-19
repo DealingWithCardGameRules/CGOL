@@ -4,6 +4,7 @@ using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using System;
+using dk.itu.game.msc.cgdl.CommonConcepts;
 
 namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
 {
@@ -11,6 +12,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
     {
         private readonly ITimeProvider timeProvider;
         private readonly IDispatcher dispatcher;
+        private IPlayer cachedPlayer;
 
         public PlayCardHandler(ITimeProvider timeProvider, IDispatcher dispatcher)
         {
@@ -20,15 +22,20 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
 
         public void Handle(PlayCard command, IEventDispatcher eventDispatcher)
         {
-            if (command.Card == null)
-                throw new Exception("No card selected");
+            var source = command.Source ?? CurrentPlayersHand();
+            if (source == null)
+                throw new ArgumentNullException($"No destination found, please specify one by filling out the \"from\" parameter or make sure the current player has a hand.");
 
-            var card = dispatcher.Dispatch(new GetCard(command.Source, command.Card.Value));
+            var selectedCard = command.Card ?? dispatcher.Dispatch(new PickACard(source, cachedPlayer.Index));
+            if (selectedCard == null)
+                throw new Exception("No card selected!");
+
+            var card = dispatcher.Dispatch(new GetCard(source, selectedCard.Value));
 
             if (card == null)
                 throw new Exception($"Card not found: {command.Card}");
 
-            var revealEvent = new CardRevealed(timeProvider.Now, command.ProcessId, command.Source, card);
+            var revealEvent = new CardRevealed(timeProvider.Now, command.ProcessId, source, card);
             eventDispatcher.Dispatch(revealEvent);
 
             var template = dispatcher.Dispatch(new GetTemplate(card.Template));
@@ -41,5 +48,15 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
                 dispatcher.Dispatch(effect);
             }
         }
+
+        private string? CurrentPlayersHand()
+        {
+            cachedPlayer = dispatcher.Dispatch(new CurrentPlayer());
+            if (cachedPlayer == null)
+                throw new ArgumentException("No source specified, please fill out the the \"source\" parameter or specify players with individual hands");
+
+            return dispatcher.Dispatch(new GetPlayersHand(cachedPlayer.Index));
+        }
+
     }
 }

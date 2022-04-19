@@ -1,1 +1,1 @@
-if (PlayerAgree 1 "Discard?") DiscardCards "a" "bla" "b"
+PassTurn
