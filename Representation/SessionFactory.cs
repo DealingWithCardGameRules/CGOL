@@ -15,7 +15,8 @@ namespace dk.itu.game.msc.cgdl.Representation
 
             // Setup handlers
             interpolator.AddConcept(new PickACardHandler(userEnquirer));
-
+            interpolator.AddConcept(new PlayerAgreeHandler(userEnquirer));
+            
             return new Session(id, service, interpolator, playerRepository);
         }
 
