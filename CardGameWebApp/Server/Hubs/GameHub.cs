@@ -47,5 +47,10 @@ namespace CardGameWebApp.Server.Hubs
         {
             await Task.Run(() => inquiryResponseOperator.Redeem(correspondenceId, card));
         }
+
+        public async Task PlayerAnswer(Guid correspondenceId, bool answer)
+        {
+            await Task.Run(() => inquiryResponseOperator.Redeem(correspondenceId, answer));
+        }
     }
 }

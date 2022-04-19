@@ -20,6 +20,24 @@ namespace CardGameWebApp.Server
             this.responseOperator = responseOperator ?? throw new ArgumentNullException(nameof(responseOperator));
         }
 
+        public bool AskPlayer(int playerIndex, string message)
+        {
+            var clientId = playerRepository.GetPlayer(playerIndex);
+            if (clientId == null)
+                return false;
+
+            bool? returnValue = null;
+            Task.Run(() =>
+            {
+                Guid corId = Guid.NewGuid();
+                responseOperator.Expect<bool>(corId, (result) => returnValue = result);
+                gameHub.Clients.Client(clientId).SendAsync("AskPlayer", new AskPlayerInquiry(corId, message));
+                while (returnValue == null);
+            }).Wait();
+            return returnValue ?? false;
+
+        }
+
         public Guid? SelectCard(int playerIndex, string collection, string[] requiredTags)
         {
             var clientId = playerRepository.GetPlayer(playerIndex);

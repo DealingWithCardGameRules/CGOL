@@ -6,6 +6,8 @@
 @inject HttpClient Http
 
 <SelectCardPrompt @ref="cardPrompt"></SelectCardPrompt>
+<YesNoPrompt @ref="Dialogue"></YesNoPrompt>
+
 <div class="row">
 	<div class="col-2">
 		<!-- Player select -->
@@ -122,6 +124,7 @@
 	private HubConnection? hubConnection;
 	private SelectCardPrompt cardPrompt;
 	private IEnumerable<CallBackAction> GlobalActions;
+	private YesNoPrompt Dialogue { get; set; }
 
 	public async Task Start(string gameUrl)
 	{
@@ -162,6 +165,14 @@
 			{
 				await hubConnection.SendAsync("CardSelected", inquirt.CorrespondenceId, card);
 			}, required: true);
+		});
+
+		hubConnection.On<AskPlayerInquiry>("AskPlayer", async (inquirt) =>
+		{
+			await Dialogue.ShowDialog(inquirt.Message , async (result) =>
+			{
+				await hubConnection.SendAsync("PlayerAnswer", inquirt.CorrespondenceId, result);
+			});
 		});
 
 		await hubConnection.StartAsync();

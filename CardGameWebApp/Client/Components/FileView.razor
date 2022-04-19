@@ -77,6 +77,7 @@
         }
     }
 }
+<YesNoPrompt @ref="Dialogue"></YesNoPrompt>
 
 <BSModal @ref="Popup">
     <Header>@PopupTitle</Header>
@@ -118,9 +119,9 @@
         }
     </div>
     <div class="col-10 col-sm-8">
-    <h4>@SelectedFileName</h4>
-    <HighlightEditor @ref="editor"></HighlightEditor>
-    <button type="button" class="btn btn-primary" @onclick="SaveFile">Save</button>
+        <h4>@SelectedFileName</h4>
+        <HighlightEditor @ref="editor" OnCtrlS="() => SaveFile()"></HighlightEditor>
+        <button type="button" class="btn btn-primary" @onclick="SaveFile">Save</button>
     </div>
 </div>
 
@@ -136,6 +137,7 @@
     private string PopupText { get; set; }
     private BSModal Popup { get; set; }
     private ToastContainer Toast { get; set; }
+    private YesNoPrompt Dialogue { get; set; }
     public Guid? sessionId;
 
     protected override async Task OnInitializedAsync()
@@ -175,14 +177,30 @@
         if (response.StatusCode == System.Net.HttpStatusCode.OK)
         {
             Toast.AddToast("File saved", $"{SelectedFileName} successfully saved.");
+            editor.HasChanges = false;
         }
     }
 
-    private async void EditFile(string url)
+    private async Task EditFile(string url)
+    {
+        if (editor.HasChanges)
+        {
+            await Dialogue.ShowDialog(
+                "If you continue all changes will be lost.",
+                async (result) => { if (result) await EditFileConfirmed(url); },
+                "Unsaved changes!",
+                "OK",
+                "Cancel");
+        }
+        else
+            await EditFileConfirmed(url);
+    }
+
+    private async Task EditFileConfirmed(string url)
     {
         SelectedFile = url;
         var text = await Http.GetStringAsync(url);
-        editor.Value = text;
+        editor.SetText(text);
     }
 
     private async void LoadFile(string url)
