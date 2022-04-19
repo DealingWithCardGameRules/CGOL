@@ -17,7 +17,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
             interpolator.AddConcept(new SimplyAddCard(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyDrawCard(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyDealCard(timeProvider, dispatcher));
-            interpolator.AddConcept(new SimplyRevealAndMove(timeProvider, dispatcher));
+            interpolator.AddConcept(new SimplePlayCardHandler(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyDeclareCard(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyPlaceInCollection(timeProvider, dispatcher));
             interpolator.AddConcept(new SimplyDeclarePlayers(timeProvider));

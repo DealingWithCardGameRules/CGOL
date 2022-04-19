@@ -1,8 +1,6 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Events;
-using dk.itu.game.msc.cgdl.CommonConcepts.Exceptions;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
 using dk.itu.game.msc.cgdl.FluxxConcepts.Handler;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,7 +21,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             // When, Then
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                new DrawCardHandler(dispatcher, 1);
+                new DrawCardHandler(Substitute.For<ITimeProvider>(), dispatcher);
             });
         }
 
@@ -32,7 +30,8 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
         {
             // Given
             var dispatcher = Substitute.For<IDispatcher>();
-            var sut = new DrawCardHandler(dispatcher, 1);
+            var timeProvider = Substitute.For<ITimeProvider>();
+            var sut = new DrawCardHandler(timeProvider, dispatcher);
             var command = new DrawCard(string.Empty, string.Empty);
             var eventDispatcher = Substitute.For<IEventDispatcher>();
 
@@ -50,7 +49,8 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
         {
             // Given
             var dispatcherStub = Substitute.For<IDispatcher>();
-            var sut = new DrawCardHandler(dispatcherStub, 1);
+            var timeProvider = Substitute.For<ITimeProvider>();
+            var sut = new DrawCardHandler(timeProvider, dispatcherStub);
             var expectedSource = "Deck";
             var command = new DrawCard(expectedSource, string.Empty);
             var eventDispatcherMock = Substitute.For<IEventDispatcher>();
@@ -69,7 +69,8 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
         {
             // Given
             var dispatcherStub = Substitute.For<IDispatcher>();
-            var sut = new DrawCardHandler(dispatcherStub, 1);
+            var timeProvider = Substitute.For<ITimeProvider>();
+            var sut = new DrawCardHandler(timeProvider, dispatcherStub);
             var expectedDestination = "Deck";
             var command = new DrawCard(string.Empty, expectedDestination);
             var eventDispatcherMock = Substitute.For<IEventDispatcher>();

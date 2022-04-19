@@ -12,7 +12,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             var playCounter = new PlayerCounter();
 
             // Command handlers
-            context.Interpolator.AddConcept(new DrawCardHandler(context.Dispatcher, 100));
+            context.Interpolator.AddConcept(new DrawCardHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new PlayCardHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new DrawLimitHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new PlayLimitHandler(context.TimeProvider, context.Dispatcher));
@@ -21,12 +21,14 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new DrawLimitReachedHandler(drawCounter));
             context.Interpolator.AddConcept(new GetDrawLimitHandler(drawCounter));
             context.Interpolator.AddConcept(new GetPlayLimitHandler(playCounter));
+            context.Interpolator.AddConcept(new PlayLimitReachedHandler(playCounter));
 
             // Event handler
             context.Interpolator.AddConcept(new CardDrawnCounter(drawCounter, context.Dispatcher));
             context.Interpolator.AddConcept(new DrawLimitSetObserver(drawCounter));
             context.Interpolator.AddConcept(new PlayLimitSetObserver(playCounter));
-            context.Interpolator.AddConcept(new TurnStartedObserver(new[] { playCounter, drawCounter }, context.Dispatcher));
+            context.Interpolator.AddConcept(new TurnStartedObserver(context.Dispatcher, playCounter, drawCounter));
+            context.Interpolator.AddConcept(new CardResolvedObserver(playCounter, context.Dispatcher));
         }
     }
 }

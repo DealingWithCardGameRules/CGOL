@@ -3,18 +3,18 @@ using dk.itu.game.msc.cgdl.FluxxConcepts.Events;
 
 namespace dk.itu.game.msc.cgdl.FluxxConcepts.Observers
 {
-    public class PlayLimitSetObserver : IEventObserver<DrawLimitSet>
+    public class PlayLimitSetObserver : IEventObserver<PlayLimitSet>
     {
         private readonly PlayerCounter drawCounter;
 
-        public PlayLimitSetObserver(PlayerCounter drawCounter)
+        public PlayLimitSetObserver(PlayerCounter playCounter)
         {
-            this.drawCounter = drawCounter ?? throw new System.ArgumentNullException(nameof(drawCounter));
+            this.drawCounter = playCounter ?? throw new System.ArgumentNullException(nameof(playCounter));
         }
 
-        public void Invoke(DrawLimitSet @event)
+        public void Invoke(PlayLimitSet @event)
         {
-            drawCounter.SetLimit(@event.DrawLimit);
+            drawCounter.SetLimit(@event.Limit);
         }
     }
 }
