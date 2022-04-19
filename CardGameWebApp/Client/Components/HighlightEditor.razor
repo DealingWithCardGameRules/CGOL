@@ -78,6 +78,11 @@
     private string intel;
     private bool keyEventHandled = false;
 
+    [Parameter]
+    public Action OnCtrlS { get; set; }
+
+    public bool HasChanges { get; set; } = false;
+
     private async Task KeyDown(KeyboardEventArgs args)
     {
         keyEventHandled = false;
@@ -89,6 +94,15 @@
         {
             keyEventHandled = true;
             await InsertTextAtCaret(highlighter.Suggestion ?? "\t");
+        }
+        if (args.CtrlKey && args.Key.Equals("s"))
+        {
+            keyEventHandled = true;
+            if (OnCtrlS != null)
+            {
+                OnCtrlS.Invoke();
+                HasChanges = false;
+            }
         }
     }
 
@@ -120,10 +134,17 @@
         }
     }
 
+    public void SetText(string cgd)
+    {
+        Value = cgd;
+        HasChanges = false;
+    }
+
     private async Task TextChanged(ChangeEventArgs args)
     {
         source = args.Value.ToString();
         await HighlightText();
+        HasChanges = true;
     }
 
     private async Task HighlightText()
