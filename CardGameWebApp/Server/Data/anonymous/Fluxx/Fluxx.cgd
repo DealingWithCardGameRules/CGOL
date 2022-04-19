@@ -1,11 +1,12 @@
 SetPlayers 2
 Play DrawCard "Deck"
 Play PlayCard
-
 // Setup card collections
 CreateDeck "Deck"
 CreateDeck "Discard Pile"
 CreateZone "Meta Rules"
+CreateZone "Rules"
+
 // Player hands
 CreateHand "Player1" 1
 CreateHand "Player2" 2
