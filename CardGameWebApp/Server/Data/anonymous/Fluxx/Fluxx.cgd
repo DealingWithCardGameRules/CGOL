@@ -1,6 +1,8 @@
 SetPlayers 2
 Play DrawCard "Deck"
 Play PlayCard
+Play PassTurn
+
 // Setup card collections
 CreateDeck "Deck"
 CreateDeck "Discard Pile"
