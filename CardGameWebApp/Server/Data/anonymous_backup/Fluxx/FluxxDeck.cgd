@@ -1,0 +1,16 @@
+// Load cards
+LoadCard "Fluxx/Play1"
+LoadCard "Fluxx/Draw1"
+LoadCard "Fluxx/Draw2"
+LoadCard "Fluxx/Play2"
+//LoadCard "Fluxx/RulesEscalation"
+
+// Add cards to deck
+AddCard "Draw 2" "Deck"
+AddCard "Play 2" "Deck"
+
+AddCard "Draw 2" "Deck"
+AddCard "Play 2" "Deck"
+AddCard "Draw 2" "Deck"
+AddCard "Play 2" "Deck"
+//AddCard "Rules Escalation" "deck"

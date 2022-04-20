@@ -1,0 +1,4 @@
+CreateCard "Rules Reset"
+AddCardTags "Rules Reset" "rule, discard"
+Instantaneous "Rules Reset" DiscardCards "Rules" "rule" "Discard Pile"
+Instantaneous "Rules Reset" PlaceIn "Discard Pile"

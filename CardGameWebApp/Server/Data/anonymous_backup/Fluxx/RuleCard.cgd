@@ -1,4 +1,4 @@
-// Play immediately
+// Is played right away
 Shuffle "Deck"
 DealAll "Deck" 1
 AddCard "Draw 1" "Meta Rules"
