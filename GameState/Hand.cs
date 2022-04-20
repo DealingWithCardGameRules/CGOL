@@ -79,7 +79,7 @@ namespace dk.itu.game.msc.cgdl.GameState
         {
             foreach (var card in cards.Values)
             {
-                if (card.Tags.Intersect(tags).Count() == tags.Count())
+                if (tags == null || card.Tags.Intersect(tags).Count() == tags.Count())
                     yield return card;
             }
         }

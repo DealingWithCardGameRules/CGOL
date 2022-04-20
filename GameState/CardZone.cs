@@ -58,7 +58,7 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         public bool TrySetCardOwner(Guid cardId, int playerIndex)
         {
-            if (!cards.ContainsKey(cardId))
+            if (cards.ContainsKey(cardId))
             {
                 cards[cardId].OwnerIndex = playerIndex;
                 return true;
@@ -75,7 +75,7 @@ namespace dk.itu.game.msc.cgdl.GameState
         {
             foreach (var card in cards.Values)
             {
-                if (card.Tags.Intersect(tags).Count() == tags.Count())
+                if (tags == null || card.Tags.Intersect(tags).Count() == tags.Count())
                     yield return card;
             }
         }
