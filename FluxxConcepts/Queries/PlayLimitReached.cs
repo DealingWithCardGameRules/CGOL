@@ -4,11 +4,11 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Queries
 {
     public class PlayLimitReached : IQuery<bool>
     {
-        public string Player { get; }
+        public int PlayerIndex { get; }
 
-        public PlayLimitReached(string player)
+        public PlayLimitReached(int playerIndex)
         {
-            Player = player;
+            PlayerIndex = playerIndex;
         }
     }
 }

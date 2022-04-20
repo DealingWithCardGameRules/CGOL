@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
 
         public int Handle(GetPlayLimit query)
         {
-            return playCounter.GetLimit(query.Player);
+            return playCounter.GetLimit(query.PlayerIndex);
         }
     }
 }
