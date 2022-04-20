@@ -68,6 +68,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new CardDealtObserver(game));
             context.Interpolator.AddConcept(new TagsAddedToTemplateObserver(library));
             context.Interpolator.AddConcept(new CollectionShuffledObserver(game));
+            context.Interpolator.AddConcept(new CardsTransferredObserver(game));
         }
     }
 }

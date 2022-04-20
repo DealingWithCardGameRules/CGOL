@@ -21,7 +21,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             // When, Then
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                new DrawCardHandler(Substitute.For<ITimeProvider>(), dispatcher);
+                new DrawCardHandler(Substitute.For<ITimeProvider>(), dispatcher, new RecycleRules());
             });
         }
 
@@ -31,7 +31,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             // Given
             var dispatcher = Substitute.For<IDispatcher>();
             var timeProvider = Substitute.For<ITimeProvider>();
-            var sut = new DrawCardHandler(timeProvider, dispatcher);
+            var sut = new DrawCardHandler(timeProvider, dispatcher, new RecycleRules());
             var command = new DrawCard(string.Empty, string.Empty);
             var eventDispatcher = Substitute.For<IEventDispatcher>();
 
@@ -50,7 +50,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             // Given
             var dispatcherStub = Substitute.For<IDispatcher>();
             var timeProvider = Substitute.For<ITimeProvider>();
-            var sut = new DrawCardHandler(timeProvider, dispatcherStub);
+            var sut = new DrawCardHandler(timeProvider, dispatcherStub, new RecycleRules());
             var expectedSource = "Deck";
             var command = new DrawCard(expectedSource, string.Empty);
             var eventDispatcherMock = Substitute.For<IEventDispatcher>();
@@ -70,7 +70,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             // Given
             var dispatcherStub = Substitute.For<IDispatcher>();
             var timeProvider = Substitute.For<ITimeProvider>();
-            var sut = new DrawCardHandler(timeProvider, dispatcherStub);
+            var sut = new DrawCardHandler(timeProvider, dispatcherStub, new RecycleRules());
             var expectedDestination = "Deck";
             var command = new DrawCard(string.Empty, expectedDestination);
             var eventDispatcherMock = Substitute.For<IEventDispatcher>();

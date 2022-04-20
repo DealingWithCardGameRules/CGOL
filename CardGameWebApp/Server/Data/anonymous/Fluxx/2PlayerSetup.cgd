@@ -10,6 +10,7 @@ CreateZone "Meta Rules" // First permanents to resolve
 CreateDeck "Deck"
 CreateDeck "Discard Pile"
 CreateZone "Rules"
+SetRecycle "Discard Pile" "Deck"
 
 // Player hands
 CreateHand "Player1" 1
