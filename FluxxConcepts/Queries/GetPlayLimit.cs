@@ -4,11 +4,12 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Queries
 {
     public class GetPlayLimit : IQuery<int>
     {
-        public string? Player { get; }
+        public int? PlayerIndex { get; }
 
-        public GetPlayLimit(string player = null)
+        public GetPlayLimit(int playerIndex = 0)
         {
-            Player = player;
+            if (playerIndex > 0)
+                PlayerIndex = playerIndex;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Observers
             if (player == null)
                 throw new Exception($"No current player. Remember to set players using {nameof(SetPlayers)}");
             foreach (var counter in counters)
-                counter.ResetPlayer(player.Identity);
+                counter.ResetPlayer(player.Index);
         }
     }
 }

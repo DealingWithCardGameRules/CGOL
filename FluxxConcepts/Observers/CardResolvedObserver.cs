@@ -18,9 +18,8 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Observers
 
         public void Invoke(CardResolved @event)
         {
-            var player = dispatcher.Dispatch(new CurrentPlayer());
-            if (player != null)
-                playCounter.Aggregate(player.Identity);
+            if (@event.Card.OwnerIndex.HasValue && @event.Card.OwnerIndex > 0)
+                playCounter.Aggregate(@event.Card.OwnerIndex.Value);
         }
     }
 }

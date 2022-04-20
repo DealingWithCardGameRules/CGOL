@@ -24,8 +24,11 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
             var player = dispatcher.Dispatch(new CurrentPlayer());
             if (player == null)
                 throw new Exception("No current player. Remember to setup players.");
-            if (!dispatcher.Dispatch(new DrawLimitReached(player.Identity)))
+            if (!dispatcher.Dispatch(new DrawLimitReached(player.Index)))
+            {
                 drawCardHandler.Handle(command, eventDispatcher);
+                dispatcher.Dispatch(new ClaimOwnership());
+            }
         }
     }
 }

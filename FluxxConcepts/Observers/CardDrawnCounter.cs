@@ -19,7 +19,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Observers
         {
             var player = dispatcher.Dispatch(new CurrentPlayer());
             if (player != null)
-                counter.Aggregate(player.Identity);
+                counter.Aggregate(player.Index);
         }
     }
 }

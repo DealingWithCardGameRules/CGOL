@@ -4,12 +4,12 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
 {
     public class PlayerCounter
     {
-        private Dictionary<string, int> counter;
+        private Dictionary<int, int> counter;
         private int limit = 0;
 
         public PlayerCounter()
         {
-            counter = new Dictionary<string, int>();
+            counter = new Dictionary<int, int>();
         }
 
         internal void SetLimit(int limit)
@@ -17,32 +17,32 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             this.limit = limit;
         }
 
-        internal bool ReachedFor(string player)
+        internal bool ReachedFor(int playerIndex)
         {
-            return limit != 0 && GetPlayer(player) >= limit;
+            return limit != 0 && GetPlayer(playerIndex) >= limit;
         }
 
-        internal int GetLimit(string? player)
+        internal int GetLimit(int? playerIndex)
         {
             return limit; // Currently the same for all players
         }
 
-        internal void ResetPlayer(string player)
+        internal void ResetPlayer(int playerIndex)
         {
-            counter[player] = 0;
+            counter[playerIndex] = 0;
         }
 
-        internal void Aggregate(string player)
+        internal void Aggregate(int playerIndex)
         {
-            counter[player] = GetPlayer(player) + 1;
+            counter[playerIndex] = GetPlayer(playerIndex) + 1;
         }
 
-        private int GetPlayer(string player)
+        private int GetPlayer(int playerIndex)
         {
-            if (!counter.ContainsKey(player))
-                counter[player] = 0;
+            if (!counter.ContainsKey(playerIndex))
+                counter[playerIndex] = 0;
 
-            return counter[player];
+            return counter[playerIndex];
         }
     }
 }
