@@ -12,17 +12,6 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
         private readonly ITimeProvider timeProvider;
         private readonly IDispatcher dispatcher;
 
-        private IPlayer? cachedPlayer;
-        private IPlayer? Player
-        { 
-            get
-            {
-                if (cachedPlayer == null)
-                    cachedPlayer = dispatcher.Dispatch(new CurrentPlayer());
-                return cachedPlayer;
-            }
-        }
-
         public SimplePlayCardHandler(ITimeProvider timeProvider, IDispatcher dispatcher)
         {
             this.timeProvider = timeProvider ?? throw new System.ArgumentNullException(nameof(timeProvider));
@@ -68,18 +57,20 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
         private Guid? SelectCard(string collection)
         {
-            if (Player == null)
+            var player = dispatcher.Dispatch(new CurrentPlayer());
+            if (player == null)
                 throw new ArgumentException("No card select and no player to ask.");
 
-            return dispatcher.Dispatch(new PickACard(collection, Player.Index));
+            return dispatcher.Dispatch(new PickACard(collection, player.Index));
         }
 
         private string? CurrentPlayersHand()
         {
-            if (Player == null)
+            var player = dispatcher.Dispatch(new CurrentPlayer());
+            if (player == null)
                 throw new ArgumentException("No source specified, please fill out the the \"source\" parameter or specify players with individual hands");
 
-            return dispatcher.Dispatch(new GetPlayersHand(Player.Index));
+            return dispatcher.Dispatch(new GetPlayersHand(player.Index));
         }
     }
 }
