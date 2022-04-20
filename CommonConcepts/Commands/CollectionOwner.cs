@@ -9,15 +9,16 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public Guid ProcessId => new Guid("35939A28-D2C2-4098-B0B1-C1AB9FBA685A");
 
         public Guid Instance { get; set; }
-        public int PlayerIndex { get; }
+        public int? PlayerIndex { get; }
         public string Collection { get; set; }
 
         [Concept(Description = "Set the owner of a card collection to a given player index.")]
-        public CollectionOwner(string collection, int playerIndex)
+        public CollectionOwner(string collection, int playerIndex = 0)
         {
             Instance = Guid.NewGuid();
             Collection = collection;
-            PlayerIndex = playerIndex;
+            if (playerIndex != 0)
+                PlayerIndex = playerIndex;
         }
     }
 }
