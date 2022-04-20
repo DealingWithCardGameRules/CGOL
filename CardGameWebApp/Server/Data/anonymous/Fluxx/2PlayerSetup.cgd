@@ -1,0 +1,22 @@
+/*******************************************
+* Load this file for a 2 player Fluxx game *
+*******************************************/
+SetPlayers 2
+Play DrawCard "Deck"
+Play PlayCard
+Play PassTurn
+
+CreateZone "Meta Rules" // First permanents to resolve
+CreateDeck "Deck"
+CreateDeck "Discard Pile"
+CreateZone "Rules"
+SetRecycle "Discard Pile" "Deck"
+
+// Player hands
+CreateHand "Player1" 1
+CreateHand "Player2" 2
+
+LoadCard "Fluxx/FluxxDeck"
+LoadCard "Fluxx/RuleCard"
+
+Start

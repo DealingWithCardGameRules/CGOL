@@ -1,0 +1,6 @@
+CreateCard "Draw 3"
+AddCardTags "Draw 3" "rule, draw"
+Instantaneous "Draw 3" DiscardCards "Rules" "draw" "Discard Pile"
+Instantaneous "Draw 3" DrawLimit 3
+Instantaneous "Draw 3" PlaceIn "Rules"
+Permanent "Draw 3" DrawLimit 3

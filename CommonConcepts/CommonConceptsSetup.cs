@@ -36,6 +36,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
             interpolator.AddConcept(new PassTurnHandler(timeProvider, dispatcher));
             interpolator.AddConcept(new StartHandler(timeProvider, dispatcher));
             interpolator.AddConcept(new ClaimOwnershipHandler(dispatcher));
+            interpolator.AddConcept(new ShuffleIntoHandler(timeProvider, dispatcher));
         }
     }
 }

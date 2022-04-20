@@ -11,11 +11,13 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
     public sealed class DrawCardHandler : ICommandHandler<DrawCard>
     {
         private readonly IDispatcher dispatcher;
+        private readonly RecycleRules recycleRules;
         private readonly SimplyDrawCard drawCardHandler;
 
-        public DrawCardHandler(ITimeProvider timeProvider, IDispatcher dispatcher)
+        public DrawCardHandler(ITimeProvider timeProvider, IDispatcher dispatcher, RecycleRules recycleRules)
         {
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
+            this.recycleRules = recycleRules ?? throw new ArgumentNullException(nameof(recycleRules));
             drawCardHandler = new SimplyDrawCard(timeProvider, dispatcher);
         }
 
@@ -26,6 +28,9 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
                 throw new Exception("No current player. Remember to setup players.");
             if (!dispatcher.Dispatch(new DrawLimitReached(player.Index)))
             {
+                if (!dispatcher.Dispatch(new HasCards(command.Source)))
+                    recycleRules.ApplyRule(command.Source, (from, to) => dispatcher.Dispatch(new ShuffleInto(from, to)));
+
                 drawCardHandler.Handle(command, eventDispatcher);
                 dispatcher.Dispatch(new ClaimOwnership());
             }

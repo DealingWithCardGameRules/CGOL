@@ -24,7 +24,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             collections[collection].Shuffle(seed);
         }
 
-        internal IEnumerable<ICard> GetCards(string collection, IEnumerable<string>? tags)
+        internal IEnumerable<ICard> GetCards(string collection, IEnumerable<string>? tags = null)
         {
             return collections[collection].GetCards(tags);
         }
