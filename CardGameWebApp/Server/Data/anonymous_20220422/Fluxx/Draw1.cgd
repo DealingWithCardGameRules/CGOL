@@ -1,0 +1,3 @@
+CreateCard "Draw 1"
+Instantaneous "Draw 1" PlaceIn "Meta rules"
+Permanent "Draw 1" DrawLimit 1
