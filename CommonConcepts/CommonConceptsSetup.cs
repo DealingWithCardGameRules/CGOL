@@ -11,6 +11,9 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
             var timeProvider = context.TimeProvider;
             var dispatcher = context.Dispatcher;
 
+            // Query handlers
+            interpolator.AddConcept(new HasNoCardsHandler(dispatcher));
+
             // Command handlers
             interpolator.AddConcept(new SimplyDeclareCollection(timeProvider));
             interpolator.AddConcept(new SimplyDeclareHand(timeProvider, dispatcher));
