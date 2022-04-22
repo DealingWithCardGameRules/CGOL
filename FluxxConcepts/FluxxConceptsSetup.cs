@@ -10,14 +10,12 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
         {
             var drawCounter = new PlayerCounter();
             var playCounter = new PlayerCounter();
-            var recycleRules = new RecycleRules();
 
             // Command handlers
-            context.Interpolator.AddConcept(new DrawCardHandler(context.TimeProvider, context.Dispatcher, recycleRules));
+            context.Interpolator.AddConcept(new DrawCardHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new PlayCardHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new DrawLimitHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new PlayLimitHandler(context.TimeProvider, context.Dispatcher));
-            context.Interpolator.AddConcept(new SetRecycleHandler(context.TimeProvider));
 
             // Query handlers
             context.Interpolator.AddConcept(new DrawLimitReachedHandler(drawCounter));
@@ -31,7 +29,6 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new PlayLimitSetObserver(playCounter));
             context.Interpolator.AddConcept(new TurnStartedObserver(context.Dispatcher, playCounter, drawCounter));
             context.Interpolator.AddConcept(new CardResolvedObserver(playCounter, context.Dispatcher));
-            context.Interpolator.AddConcept(new RecycleRuleSetObserver(recycleRules));
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using System;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts.Events
+namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
 {
-    public class RecycleRuleSet : IEvent
+    public class ReshuffleRuleSet : IEvent
     {
         public int Version => 1;
 
@@ -13,7 +13,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Events
         public string From { get; }
         public string To { get; }
 
-        public RecycleRuleSet(DateTime eventTime, Guid processId, string from, string to)
+        public ReshuffleRuleSet(DateTime eventTime, Guid processId, string from, string to)
         {
             EventTime = eventTime;
             ProcessId = processId;

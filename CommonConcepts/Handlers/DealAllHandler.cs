@@ -20,7 +20,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
             {
                 var hand = dispatcher.Dispatch(new GetPlayersHand(i+1));
                 if (hand != null)
-                    dispatcher.Dispatch(new DealCard(command.Source, hand, command.Cards));
+                    dispatcher.Dispatch(new DealCard(command.Source, command.Cards, hand));
             }
         }
     }

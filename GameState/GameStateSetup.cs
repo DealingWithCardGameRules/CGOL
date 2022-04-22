@@ -24,7 +24,8 @@ namespace dk.itu.game.msc.cgdl.GameState
         public void Setup(IPluginContext context)
         {
             var turnBasedRepository = new PlayerSpecificCommandRepository(context.Dispatcher, commandComposite);
-
+            var recycleRules = new ReshuffleRules();
+            
             // Query handlers
             context.Interpolator.AddConcept(new CardCounter(game));
             context.Interpolator.AddConcept(new TopCardGetter(game));
@@ -46,6 +47,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new InStateHandler(game));
             context.Interpolator.AddConcept(new GetPlayersHandHandler(game));
             context.Interpolator.AddConcept(new GetCardsHandler(game));
+            context.Interpolator.AddConcept(new GetReshuffleFromForHandler(recycleRules));
 
             // Event observers
             context.Interpolator.AddConcept(new CardCollectionDeclaredObserver(game));
@@ -69,6 +71,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new TagsAddedToTemplateObserver(library));
             context.Interpolator.AddConcept(new CollectionShuffledObserver(game));
             context.Interpolator.AddConcept(new CardsTransferredObserver(game));
+            context.Interpolator.AddConcept(new ReshuffleRuleSetObserver(recycleRules));
         }
     }
 }
