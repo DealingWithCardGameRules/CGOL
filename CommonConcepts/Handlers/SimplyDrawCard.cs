@@ -23,6 +23,24 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
             if (destination == null)
                 throw new ArgumentNullException($"No destination found, please specify one by filling out the \"to\" parameter or make sure the current player has a hand.");
 
+            if (!dispatcher.Dispatch(new HasCards(command.Source)))
+            {
+                var from = dispatcher.Dispatch(new GetReshuffleFromFor(command.Source));
+                if (from == null)
+                {
+                    eventDispatcher.Dispatch(new CollectionBust(timeProvider.Now, command.ProcessId, command.Source));
+                    throw new Exception($"No cards in collection {command.Source} and no reshuffle rule set.");
+                }
+
+                dispatcher.Dispatch(new ShuffleInto(from, command.Source));
+
+                if (dispatcher.Dispatch(new HasCards(command.Source)))
+                {
+                    eventDispatcher.Dispatch(new CollectionBust(timeProvider.Now, command.ProcessId, command.Source));
+                    throw new Exception($"No cards in collection {command.Source}");
+                }
+            }
+
             var @event = new CardDrawn(timeProvider.Now, command.ProcessId, command.Source, destination);
             eventDispatcher.Dispatch(@event);
         }

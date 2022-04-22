@@ -11,7 +11,7 @@ CreateDeck "Deck"
 CreateDeck "Discard Pile"
 CreateZone "Rules"
 // Make sure the Discard Pile recycles into Deck if empty.
-SetRecycle "Discard Pile" "Deck"
+SetReshuffle "Discard Pile" "Deck"
 
 // Player hands
 CreateHand "Player1" 1
