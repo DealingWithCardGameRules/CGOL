@@ -1,0 +1,32 @@
+// Load cards
+LoadCard "Fluxx/Draw1"
+LoadCard "Fluxx/Play1"
+LoadCard "Fluxx/Draw2"
+LoadCard "Fluxx/Draw3"
+LoadCard "Fluxx/Play2"
+LoadCard "Fluxx/Play3"
+LoadCard "Fluxx/Jackpot!"
+LoadCard "Fluxx/RulesReset"
+LoadCard "Fluxx/Draw2andUseEm"
+//LoadCard "Fluxx/RulesEscalation"
+
+// Add cards to deck
+AddCard "Draw 2" "Deck"
+AddCard "Draw 3" "Deck"
+AddCard "Play 2" "Deck"
+AddCard "Play 3" "Deck"
+AddCard "Jackpot!" "Deck"
+AddCard "Rules Reset" "Deck"
+AddCard "Draw 2 and Use 'em" "Deck"
+
+// Workaround for missing cards
+/*
+CreateCard "pass"
+Instantaneous "pass" PlaceIn "Discard Pile"
+AddCard "pass" "Deck"
+AddCard "pass" "Deck"
+AddCard "pass" "Deck"
+AddCard "pass" "Deck"
+AddCard "pass" "Deck"
+*/
+// AddCard "Rules Escalation" "deck"

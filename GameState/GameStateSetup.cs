@@ -36,7 +36,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new GetCollectionTagsHandler(game));
             context.Interpolator.AddConcept(new GetAvailableActionsForCollectionHandler(turnBasedRepository));
             context.Interpolator.AddConcept(new GetAvailableActionHandler(turnBasedRepository));
-            context.Interpolator.AddConcept(new HasCardsHandler(game));
+            context.Interpolator.AddConcept(new HasCardsHandler(game, context.Dispatcher));
             context.Interpolator.AddConcept(new GetCollectionContainingCardHandler(game));
             context.Interpolator.AddConcept(new CurrentPlayerHandler(game));
             context.Interpolator.AddConcept(new GetNumberOfPlayersHandler(game));

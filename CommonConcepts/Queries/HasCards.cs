@@ -5,9 +5,9 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Queries
 {
     public class HasCards : IQuery<bool>
     {
-        public string Collection { get; }
+        public string? Collection { get; }
 
-        public HasCards(string collection)
+        public HasCards(string collection = null)
         {
             Collection = collection;
         }
