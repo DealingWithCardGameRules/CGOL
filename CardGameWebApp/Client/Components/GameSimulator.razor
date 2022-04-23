@@ -167,7 +167,7 @@
 			await cardPrompt.Select(cards, async (card) =>
 			{
 				await hubConnection.SendAsync("CardSelected", inquirt.CorrespondenceId, card);
-			}, required: true);
+			}, required: inquirt.Required);
 		});
 
 		hubConnection.On<AskPlayerInquiry>("AskPlayer", async (inquirt) =>

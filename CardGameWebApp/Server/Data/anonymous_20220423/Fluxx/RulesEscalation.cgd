@@ -1,0 +1,5 @@
+CreateCard "Rules Escalation" 
+Instantaneous "Rules Escalation" if (AnyDisagree "Do you want to limit the game?") PlaceIn "Discard pile"
+Instantaneous "Rules Escalation" CountShuffles "deck"
+// What does it do?
+// Permanent "Rules Escalation" if (ShuffleCountExceeds "deck" 3)

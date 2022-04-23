@@ -1,0 +1,6 @@
+CreateCard "Play 3"
+AddCardTags "Play 3" "rule, play"
+Instantaneous "Play 3" DiscardCards "Rules" "play" "Discard Pile"
+Instantaneous "Play 3" PlayLimit 3
+Instantaneous "Play 3" PlaceIn "Rules"
+Permanent "Play 3" PlayLimit 3

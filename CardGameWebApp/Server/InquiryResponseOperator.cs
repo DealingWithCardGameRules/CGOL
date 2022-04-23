@@ -42,10 +42,18 @@ namespace CardGameWebApp.Server
 
             public void Redeem(object result)
             {
-                if (result is not T)
+                if (result is null && Nullable.GetUnderlyingType(typeof(T)) != null)
+                {
+                    action.Invoke(default);
+                }
+                else if (result is not T)
+                {
                     throw new ArgumentException($"Argument type {result.GetType().Name} does not match expected value {typeof(T).Name}", nameof(result));
-
-                action.Invoke((T)result);
+                }
+                else
+                {
+                    action.Invoke((T)result);
+                }
             }
         }
     }

@@ -61,7 +61,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
             if (player == null)
                 throw new ArgumentException("No card select and no player to ask.");
 
-            return dispatcher.Dispatch(new PickACard(collection, player.Index));
+            return dispatcher.Dispatch(new PickACard(collection, player.Index, required: false));
         }
 
         private string? CurrentPlayersHand()

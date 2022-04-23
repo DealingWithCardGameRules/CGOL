@@ -1,1 +1,1 @@
-AddCard "Draw 2 and Use 'em" "Deck"
+if (PlayerAgree 2 "Du er Eskild?") Start	
