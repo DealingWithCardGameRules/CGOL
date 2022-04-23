@@ -11,6 +11,10 @@ $(document).ready(function () {
     $("body").tooltip({ selector: '[data-toggle=tooltip]', html: true });
 });
 
+function hideNavBar() {
+    $(".sidebar").hide();
+}
+
 function copyText() {
     let text = $("#gamelink").val();
     navigator.clipboard.writeText(text).then(function () {

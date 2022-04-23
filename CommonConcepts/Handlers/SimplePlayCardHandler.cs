@@ -14,8 +14,8 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
         public SimplePlayCardHandler(ITimeProvider timeProvider, IDispatcher dispatcher)
         {
-            this.timeProvider = timeProvider ?? throw new System.ArgumentNullException(nameof(timeProvider));
-            this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
+            this.timeProvider = timeProvider ?? throw new ArgumentNullException(nameof(timeProvider));
+            this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
         public void Handle(PlayCard command, IEventDispatcher eventDispatcher)
