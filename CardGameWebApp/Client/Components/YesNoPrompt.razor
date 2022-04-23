@@ -12,7 +12,10 @@
     </Content>
     <Footer Context="modal">
         <BSButton Color="BSColor.Primary" @onclick="CmdYes">@(YesLabel??"Yes")</BSButton>
-        <BSButton Color="BSColor.Secondary" @onclick="CmdNo">@(NoLabel??"No")</BSButton>
+        @if (ShowNoLabel)
+        {
+        <BSButton Color="BSColor.Secondary" @onclick="CmdNo">@(NoLabel??"No")</BSButton>    
+        }
     </Footer>
 </BSModal>
 @code {
@@ -32,7 +35,20 @@
     public string NoLabel { get; set; }
 
     [Parameter]
+    public bool ShowNoLabel { get; set; } = true;
+
+    [Parameter]
     public Action<bool> OnSelect { get; set; }
+
+    public async Task ShowInfo(string information, string title)
+    {
+        Description = information;
+        OnSelect = (r) => { };
+        Title = title;
+        YesLabel = "OK";
+        ShowNoLabel = false;
+        await modal.ShowAsync();
+    }
 
     public async Task ShowDialog(string description, Action<bool> resultCB, string title = null, string yesLabel = null, string noLabel = null)
     {

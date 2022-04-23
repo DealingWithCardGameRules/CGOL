@@ -173,9 +173,14 @@
 		hubConnection.On<AskPlayerInquiry>("AskPlayer", async (inquirt) =>
 		{
 			await Dialogue.ShowDialog(inquirt.Message , async (result) =>
-						{
-						await hubConnection.SendAsync("PlayerAnswer", inquirt.CorrespondenceId, result);
-					});
+								{
+								await hubConnection.SendAsync("PlayerAnswer", inquirt.CorrespondenceId, result);
+							});
+		});
+
+		hubConnection.On<string>("Conclusion", async (message) =>
+		{
+			await Dialogue.ShowInfo(message, "Game ended");
 		});
 
 		await hubConnection.StartAsync();
