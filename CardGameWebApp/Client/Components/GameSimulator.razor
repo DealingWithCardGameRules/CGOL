@@ -160,6 +160,9 @@
 
 		hubConnection.On<SelectCardInquiry>("SelectCard", async (inquirt) =>
 		{
+			await updateCache();
+			this.StateHasChanged();
+
 			var cards = collectionCache[inquirt.Collection].CardCollection.VisibleCards;
 			await cardPrompt.Select(cards, async (card) =>
 			{

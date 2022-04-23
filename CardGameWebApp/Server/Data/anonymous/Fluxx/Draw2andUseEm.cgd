@@ -5,4 +5,5 @@ Instantaneous "Draw 2 and Use 'em":
 	DealCard "Deck" 2 "tempHand"
 	PlayCard "tempHand"
 	PlayCard "tempHand"
+	RemoveCollection "tempHand"
 Instantaneous "Draw 2 and Use 'em" PlaceIn "Discard Pile"

@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 
         private Guid? cardRef;
 
-        [AffectSelf, PlayCard] public Guid? SelfRef 
+        [AffectSelf] public Guid? SelfRef 
         { 
             get
             {
@@ -27,7 +27,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
                 {
                     foreach (var command in Commands)
                     {
-                        command.SetPlayCard(value.Value);
+                        command.SetAffactSelfRef(value.Value);
                     }
                 }
             }
