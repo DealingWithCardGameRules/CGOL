@@ -1,8 +1,8 @@
 ﻿@page "/play/{Url}"
 @using CardGameWebApp.Client.Components
+@inject IJSRuntime JS
 
 <GameSimulator @ref=@gameSim></GameSimulator>
-
 @code {
 	private GameSimulator gameSim;
 
@@ -10,8 +10,9 @@
 	public string Url { get; set; }
 
 	protected async override Task OnAfterRenderAsync(bool firstRender)
-	{
+	{	
 		if (firstRender)
 			await gameSim.Start(Url.Decode64());
+		JS.InvokeVoidAsync("hideNavBar");
 	}
 }

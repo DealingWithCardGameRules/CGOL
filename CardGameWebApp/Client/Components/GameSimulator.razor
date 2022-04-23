@@ -173,9 +173,9 @@
 		hubConnection.On<AskPlayerInquiry>("AskPlayer", async (inquirt) =>
 		{
 			await Dialogue.ShowDialog(inquirt.Message , async (result) =>
-			{
-				await hubConnection.SendAsync("PlayerAnswer", inquirt.CorrespondenceId, result);
-			});
+						{
+						await hubConnection.SendAsync("PlayerAnswer", inquirt.CorrespondenceId, result);
+					});
 		});
 
 		await hubConnection.StartAsync();
@@ -186,7 +186,6 @@
 		decks = game.Game.Decks;
 		zones = game.Game.Zones;
 		await updateCache();
-
 		this.StateHasChanged();
 	}
 
@@ -207,6 +206,18 @@
 	private async Task updateCache()
 	{
 		game = await Http.GetFromJsonAsync<GameOverviewResponse>(game.Links["self"]);
+		
+		if (game.Game.NumberOfPlayers < players.Count)
+		{
+			for(int i = players.Count-1; i > game.Game.NumberOfPlayers-1; i--)
+				players.RemoveAt(i);
+		}
+		else if (game.Game.NumberOfPlayers > players.Count)
+		{
+			for(int i = players.Count; i < game.Game.NumberOfPlayers; i++)
+				players.Add(false);		
+		}
+
 		hands = game.Game.Hands;
 		decks = game.Game.Decks;
 		zones = game.Game.Zones;
