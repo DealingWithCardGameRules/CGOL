@@ -206,7 +206,13 @@
 
 	private async Task updateCache()
 	{
+		game = await Http.GetFromJsonAsync<GameOverviewResponse>(game.Links["self"]);
+		hands = game.Game.Hands;
+		decks = game.Game.Decks;
+		zones = game.Game.Zones;
+
 		var response = await Http.GetFromJsonAsync<ActionListResponse>(game.Links["actions"]);
+
 		GlobalActions = GetActions(response.Actions);
 
 		foreach (var pair in hands)

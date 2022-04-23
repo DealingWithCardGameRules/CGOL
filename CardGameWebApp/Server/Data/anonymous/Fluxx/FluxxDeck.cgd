@@ -17,7 +17,7 @@ AddCard "Play 2" "Deck"
 AddCard "Play 3" "Deck"
 AddCard "Jackpot!" "Deck"
 AddCard "Rules Reset" "Deck"
-AddCard "Draw 2 and Use 'em" "Deck"
+//AddCard "Draw 2 and Use 'em" "Deck"
 
 // Workaround for missing cards
 /*
