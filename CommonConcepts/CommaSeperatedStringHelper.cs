@@ -3,17 +3,16 @@ using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts
 {
-    internal static class CommaSeperatedStringHelper
+    public static class CommaSeperatedStringHelper
     {
-        public static IEnumerable<string> GetTagsTrimmed(this string input)
+        public static IEnumerable<string> CommaSeperateTrimmed(this string input)
         {
-            return input.GetTags().Select(t => t.Trim());
+            return input.CommaSeperate().Select(t => t.Trim());
         }
 
-        private static IEnumerable<string> GetTags(this string input)
+        private static IEnumerable<string> CommaSeperate(this string input)
         {
             return input.Split(',');
         }
-
     }
 }
