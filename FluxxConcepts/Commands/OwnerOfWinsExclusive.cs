@@ -8,7 +8,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Commands
 {
     public class OwnerOfWinsExclusive : ICommand
     {
-        public Guid ProcessId => new Guid("A3AC5528-2F6F-4A20-8859-0A6E3A3C3303");
+        public Guid ProcessId => new Guid("B75CAC58-ADEE-412E-A685-4C5B0E98B7F7");
 
         public Guid Instance { get; }
 
