@@ -1,0 +1,55 @@
+name: 🚀 Deploy website
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  web-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core 3.1	
+        uses: actions/setup-dotnet@v1	
+        with:	
+          dotnet-version: 3.1.x
+      - name: Setup .NET Core 6.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal 
+      - name: Publish
+        #run: dotnet publish CardGameDL.sln --configuration Release --framework net6.0 --output ./publish --runtime win-x86 --self-contained true -p:PublishTrimmed=true -p:PublishSingleFile=true
+        run: dotnet publish -c Release --output ./Release -r win-x86
+      - name: Deactivate website
+        shell: python
+        run: |
+          import ftplib
+          with ftplib.FTP('${{ secrets.ftp_host }}') as ftp:
+            ftp.login('${{ secrets.ftp_username }}', '${{ secrets.ftp_password }}')
+            ftp.cwd('cgdl-demo')
+            ftp.rename('_app_offline.htm', 'app_offline.htm')
+            ftp.quit()
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.ftp_host }}
+          server-dir: cgdl-demo/
+          username: ${{ secrets.ftp_username }}
+          password: ${{ secrets.ftp_password }}
+          local-dir: ./Release/
+      - name: Activate website
+        shell: python
+        run: |
+          import ftplib
+          with ftplib.FTP('${{ secrets.ftp_host }}') as ftp:
+            ftp.login('${{ secrets.ftp_username }}', '${{ secrets.ftp_password }}')
+            ftp.cwd('cgdl-demo')
+            ftp.rename('app_offline.htm', '_app_offline.htm')
+            ftp.quit()
