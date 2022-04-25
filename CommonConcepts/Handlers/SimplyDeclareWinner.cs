@@ -18,8 +18,8 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
         public void Handle(Win command, IEventDispatcher eventDispatcher)
         {
-            var player = dispatcher.Dispatch(new CurrentPlayer());
-            eventDispatcher.Dispatch(new PlayerWon(timeProvider.Now, command.ProcessId, player?.Index));
+            var playerIndex = command.PlayerIndex ?? dispatcher.Dispatch(new CurrentPlayer())?.Index;
+            eventDispatcher.Dispatch(new PlayerWon(timeProvider.Now, command.ProcessId, playerIndex));
         }
     }
 }
