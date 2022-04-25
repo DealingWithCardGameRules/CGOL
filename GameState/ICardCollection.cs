@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.GameState
 {
-    internal interface ICardCollection
+    internal interface ICardCollection : ITagable
     {
         string Name { get; }
-        IEnumerable<string> Tags { get; }
         int? OwnerIndex { get; set; } // The player index of the owner
         void AddCard(ICard card);
         void RemoveCard(Guid cardId);

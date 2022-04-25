@@ -43,6 +43,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
             interpolator.AddConcept(new SetReshuffleHandler(timeProvider));
             interpolator.AddConcept(new RemoveCollectionHandler(timeProvider));
             interpolator.AddConcept(new SimplyDeclareWinner(timeProvider, dispatcher));
+            interpolator.AddConcept(new AddCollectionTagsHandler(timeProvider, dispatcher));
         }
     }
 }

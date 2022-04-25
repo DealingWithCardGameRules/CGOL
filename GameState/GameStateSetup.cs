@@ -73,6 +73,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new CardsTransferredObserver(game));
             context.Interpolator.AddConcept(new ReshuffleRuleSetObserver(recycleRules));
             context.Interpolator.AddConcept(new CollectionRemovedObserver(game));
+            context.Interpolator.AddConcept(new TagsAddedToCollectionObserver(game));
         }
     }
 }
