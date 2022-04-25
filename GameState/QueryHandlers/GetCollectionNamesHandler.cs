@@ -15,20 +15,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 
         public IEnumerable<string> Handle(GetCollectionNames query)
         {
-            if (query.WithTags == null)
-            {
-                foreach (var item in game.CollectionNames())
-                {
-                    yield return item;
-                }
-            }
-            else
-            {
-                foreach (var item in game.CollectionNames(query.WithTags))
-                {
-                    yield return item;
-                }
-            }
+            return game.CollectionNames(query.OwnedBy, query.WithTags);
         }
     }
 }

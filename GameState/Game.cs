@@ -100,8 +100,6 @@ namespace dk.itu.game.msc.cgdl.GameState
             players[player.Index] = player;
         }
 
-        internal IEnumerable<string> CollectionNames() => collections.Keys;
-
         internal string? WhoHas(Guid cardId)
         {
             foreach (var collection in collections)
@@ -117,12 +115,17 @@ namespace dk.itu.game.msc.cgdl.GameState
             return collections[collection].Tags;
         }
 
-        internal IEnumerable<string> CollectionNames(IEnumerable<string> tags)
+        private IEnumerable<KeyValuePair<string, ICardCollection>> CollectionOf(int owner)
         {
-            foreach (var collection in collections.Where(p => p.Value.Tags.Count(t => tags.Contains(t)) == tags.Count()))
-            {
-                yield return collection.Key;
-            }
+            return collections.Where(c => c.Value.OwnerIndex.Equals(owner));
+        }
+
+        internal IEnumerable<string> CollectionNames(int? owner = null, IEnumerable<string>? tags = null)
+        {
+            var cols = owner.HasValue ? CollectionOf(owner.Value): collections;
+            if (tags != null)
+                cols = cols.Where(p => p.Value.Tags.Count(t => tags.Contains(t)) == tags.Count());
+            return cols.Select(c => c.Key);
         }
 
         internal void AddCollection(ICardCollection collection)
