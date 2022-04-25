@@ -17,6 +17,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new DrawLimitHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new PlayLimitHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new OwnerOfWinsHandler(context.Dispatcher));
+            context.Interpolator.AddConcept(new OwnerOfWinsExclusiveHandler(context.Dispatcher));
 
             // Query handlers
             context.Interpolator.AddConcept(new DrawLimitReachedHandler(drawCounter));
@@ -24,6 +25,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new GetPlayLimitHandler(playCounter));
             context.Interpolator.AddConcept(new PlayLimitReachedHandler(playCounter));
             context.Interpolator.AddConcept(new HasKeepersHandler(context.Dispatcher));
+            context.Interpolator.AddConcept(new OnlyHasKeepersHandler(context.Dispatcher));
 
             // Event handler
             context.Interpolator.AddConcept(new CardDrawnCounter(drawCounter, context.Dispatcher));
