@@ -1,4 +1,4 @@
-name: 🚀 Deploy website
+name: 🚀 Deploy demosite
 
 on:
   # Allows you to run this workflow manually from the Actions tab
