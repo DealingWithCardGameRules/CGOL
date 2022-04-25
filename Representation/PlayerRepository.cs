@@ -6,10 +6,12 @@ namespace dk.itu.game.msc.cgdl.Representation
     public class PlayerRepository
     {
         private readonly Dictionary<int, string> players;
+        public string Group { get; }
 
-        public PlayerRepository()
+        public PlayerRepository(string group)
         {
             players = new Dictionary<int, string>();
+            Group = group;
         }
 
         public void AddPlayer(int index, string playerId)

@@ -19,6 +19,11 @@ namespace dk.itu.game.msc.cgdl.GameState
             players = new Dictionary<int, IPlayer>();
         }
 
+        internal void AddTag(string collection, string tag)
+        {
+            collections[collection].AddTag(tag);
+        }
+
         internal void RemoveCollection(string collection)
         {
             collections.Remove(collection);

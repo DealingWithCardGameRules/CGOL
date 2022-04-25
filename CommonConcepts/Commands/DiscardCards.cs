@@ -18,7 +18,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         {
             Instance = Guid.NewGuid();
             Source = from;
-            Tags = tags.GetTagsTrimmed();
+            Tags = tags.CommaSeperateTrimmed();
             Destination = to;
         }
     }

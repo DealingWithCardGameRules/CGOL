@@ -6,5 +6,6 @@ namespace dk.itu.game.msc.cgdl.Representation
     {
         Guid? SelectCard(int playerIndex, string collection, string[]? requiredTags, bool required);
         bool AskPlayer(int playerIndex, string message);
+        void SendConclusion(string message);
     }
 }

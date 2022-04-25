@@ -2,7 +2,6 @@
 using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 {
@@ -22,7 +21,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 
             Instance = Guid.NewGuid();
             Card = card ?? throw new ArgumentNullException(nameof(card));
-            Tags = tags.GetTagsTrimmed();
+            Tags = tags.CommaSeperateTrimmed();
         }
 
     }

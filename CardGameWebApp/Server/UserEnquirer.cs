@@ -35,7 +35,6 @@ namespace CardGameWebApp.Server
                 while (returnValue == null);
             }).Wait();
             return returnValue ?? false;
-
         }
 
         public Guid? SelectCard(int playerIndex, string collection, string[] requiredTags, bool required)
@@ -53,6 +52,11 @@ namespace CardGameWebApp.Server
                 while (returnValue == null);
             }).Wait();
             return returnValue;
+        }
+
+        public void SendConclusion(string message)
+        {
+            gameHub.Clients.Group(playerRepository.Group).SendAsync("Conclusion", message);
         }
     }
 }
