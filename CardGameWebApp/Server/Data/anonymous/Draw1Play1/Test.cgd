@@ -1,1 +1,3 @@
-DiscardDownTo "Player1" 0 "Discard Pile"
+CreateCard "test"
+Permanent "test" HandLimit 3 "Discard Pile"
+AddCard "test" "Meta Rules"
