@@ -45,6 +45,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
             interpolator.AddConcept(new SimplyDeclareWinner(timeProvider, dispatcher));
             interpolator.AddConcept(new AddCollectionTagsHandler(timeProvider, dispatcher));
             interpolator.AddConcept(new PlaceWithHandler(timeProvider, dispatcher));
+            interpolator.AddConcept(new DiscardDownToHandler(dispatcher));
         }
     }
 }

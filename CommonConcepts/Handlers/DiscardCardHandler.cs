@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
+using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 {
@@ -10,14 +11,20 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
 		public DiscardCardHandler(IDispatcher dispatcher)
 		{
-			this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
+			this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
 		}
 
 		public void Handle(DiscardCard command, IEventDispatcher eventDispatcher)
 		{
-			var card = dispatcher.Dispatch(new PickACard("player", command.PlayerIndex));
-			if (card != null)
-				dispatcher.Dispatch(new PlaceIn("discard pile", card));
+			var playerIndex = command.PlayerIndex ?? dispatcher.Dispatch(new GetCollectionOwnerIndex(command.From));
+			if (!playerIndex.HasValue)
+				throw new Exception($"No player specified and no owner found for collection \"{command.From}\"");
+
+			var card = dispatcher.Dispatch(new PickACard(command.From, playerIndex.Value));
+			if (card == null)
+				throw new Exception("No card selected.");
+
+			dispatcher.Dispatch(new PlaceIn(command.To, card));
 		}
 	}
 }

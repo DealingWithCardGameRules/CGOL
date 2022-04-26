@@ -4,22 +4,22 @@ using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 {
-    public class DiscardCard : ICommand
+    public class DiscardDownTo : ICommand
     {
-        public Guid ProcessId => new Guid("611C60C2-6D26-4E09-9366-F8C8222C7990");
+        public Guid ProcessId => new Guid("F1884D87-BE82-4B2B-BADD-44FA653A86F7");
+
         public Guid Instance { get; }
-		public int? PlayerIndex { get; }
         public string From { get; }
+        public int Size { get; }
         public string To { get; }
 
-        [Concept(Description = "Ask a player to discard a card from one collection into an other collection. If no player index is set, the owner of the collection will be asked.")]
-		public DiscardCard(string from, string to, int playerIndex = 0)
+        [Concept(Description = "Ask a player to discard cards down to a given size.")]
+        public DiscardDownTo(string from, int size, string to)
         {
             Instance = Guid.NewGuid();
             From = from ?? throw new ArgumentNullException(nameof(from));
+            Size = size;
             To = to ?? throw new ArgumentNullException(nameof(to));
-            if (playerIndex > 0)
-                PlayerIndex = playerIndex;
         }
     }
 }
