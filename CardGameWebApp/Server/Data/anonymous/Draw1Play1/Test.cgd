@@ -1,1 +1,6 @@
-Win
+CreateCard "test"
+perm "test" KeeperLimit 0 "Discard Pile"
+CreateZone "Keepers" 1
+AddCollectionTags "Keepers" "keepers"
+AddCard "test" "Keepers"
+AddCard "test" "Meta Rules"

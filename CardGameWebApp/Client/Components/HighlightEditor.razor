@@ -4,59 +4,61 @@
 
 <div class="mt-1">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark pb-0">
-      <div class="container-fluid">
-        <span class="navbar-brand">
-            <i class="fa-solid fa-chess-board"></i>
-        </span>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="text-primary fa-solid fa-circle-exclamation"></i> 
-                Commands
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                @foreach (var command in highlighter.KnownConcept.Where(c => c.Value.Type.Equals(ConceptDTO.TYPE_COMMAND)))
-                {
-                    <li>
-                        <a class="dropdown-item" @onclick="() => InsertTextAtCaret(command.Key)">@command.Key</a>
-                    </li>    
-                }
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="text-info fa-solid fa-circle-question"></i> 
-                Queries
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                @foreach (var query in highlighter.KnownConcept.Where(c => !(c.Value.Type.Equals(ConceptDTO.TYPE_COMMAND) || c.Value.Type.Equals(ConceptDTO.TYPE_EVENT))))
-                {
-                    <li>
-                        <a class="dropdown-item" @onclick="() => InsertTextAtCaret(query.Key)">
-                            @query.Key
+        <div class="container-fluid">
+            <!--<span class="navbar-brand">
+                <i class="fa-solid fa-chess-board"></i>
+            </span>-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="text-primary fa-solid fa-circle-exclamation"></i> 
+                            Commands
                         </a>
-                    </li>    
-                }
-              </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">
-                 Help
-                </a>
-            </li>
-          </ul>
-          <!--
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-          -->
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @foreach (var command in highlighter.KnownConcept.Where(c => c.Value.Type.Equals(ConceptDTO.TYPE_COMMAND)))
+                        {
+                            <li>
+                                <a class="dropdown-item" @onclick="() => InsertTextAtCaret(command.Key)">@command.Key</a>
+                            </li>    
+                        }
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="text-info fa-solid fa-circle-question"></i> 
+                            Queries
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @foreach (var query in highlighter.KnownConcept.Where(c => !(c.Value.Type.Equals(ConceptDTO.TYPE_COMMAND) || c.Value.Type.Equals(ConceptDTO.TYPE_EVENT))))
+                        {
+                            <li>
+                                <a class="dropdown-item" @onclick="() => InsertTextAtCaret(query.Key)">
+                                    @query.Key
+                                </a>
+                            </li>    
+                        }
+                        </ul>
+                    </li>
+                    <!--
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Help
+                        </a>
+                    </li>
+                    -->
+                </ul>
+                <!--
+                <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                -->
+            </div>
         </div>
-      </div>
     </nav>
 
     <div class="highlight-editor">

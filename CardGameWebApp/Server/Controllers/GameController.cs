@@ -64,12 +64,15 @@ namespace CardGameWebApp.Server.Controllers
             }
 
             var current = session.GetSession(id);
+            var zones = current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "community" } });
+            zones = zones.Union( current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "zone" }}) );
+
             var dto = new GameStateDTO
             {
                 NumberOfPlayers = current.Service.Dispatch(new GetNumberOfPlayers()),
                 Decks = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "deck" } })),
                 Hands = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "hand" } })),
-                Zones = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "community" } }))
+                Zones = colLink(zones)
             };
 
             var response = new GameOverviewResponse(Request.GetEncodedUrl())

@@ -3,37 +3,80 @@
 @using System.Net.Http
 @inject HttpClient Http
 
-<h1>Card Game Description Language</h1>
+<div class="row">
+    <div class="col-xxl-5 col-xl-8">
+        <h1>Welcome</h1>
 
-<p>This site will serve as the main interface for the GDL.</p>
+        <p><em>
+                This is a prototype page for our master thesis project. 
+                The subject of the thesis is to develop a game description language specifically for card games. 
+                We call it Card Game Description Language or CGDL for short.
+        </em></p>
 
-@if (demo != null)
-{
-	<p>To test implementation, please pick a simple game from the list:</p>
+        <h2>Why a language for card games?</h2>
 
-	<ul>
-		@foreach (var demo in demo.Links)
-		{
-			@if (knownDemos.ContainsKey(demo.Key))
-			{
-			<li>
-				<a href="@(knownDemos[demo.Key])/@demo.Value.Encode64()">
-					@demo.Key
-				</a>
-			</li>
-			}
-		}
-	</ul>	
-}
+        <p>
+            There are plenty of languages that can be used to describe games, 
+            such as board games or even classic puzzle games. 
+            Such languages can allow a computer to simulate or even play a described game.
+        </p>
 
-@code {
-    private Dictionary<string, string> knownDemos = new Dictionary<string, string>
-	{
-		{"Draw one play one", "d1p1"}
-	};
+        <p>
+            Where many existing languges aim to describe simple games, 
+            such as tic-tac-toe, we aim to create a language that can describe some of the most complex games.
+        </p>
 
-	private DemoList demo;
+        <p>
+            The main features of CGDL are: Concepts and keywords.
+        </p>
 
-    protected override async Task OnInitializedAsync() => 
-        demo = await Http.GetFromJsonAsync<DemoList>("demos");
-}
+        <h3>Concepts</h3>
+        <p>
+            There are three types of concepts: Commands, Queries and Events.<br />
+            <em>This termology is taken from the command query segregation pattern and event sourcing.</em>
+        </p>
+
+        <p>
+            All you need to know is that a command can be used to request change, such as shuffle a deck. 
+            A query can be used to gain information from the current state, such as the current player.
+            The last concept, the Even is an actual change and is mainly used by the system to keep track of state changes.
+        </p>
+
+        <p>
+            The concepts are developed using C# and can be loaded at runtime if needed. 
+            Once a concept is loaded, it can be used in the editor.
+        </p>
+
+        <h3>Keywords</h3>
+        <p>
+            Keywords are a special kind of concepts that can be applied.
+            The following keywords are supported:
+        </p>
+        <ul>
+            <li><strong>If (</strong><em>query</em><strong>)</strong> <em>command</em></li>
+            <li><strong>Play</strong> <em>command</em></li>
+            <li><strong>Instantaneous</strong> "<em>card name</em>" <em>command</em></li>
+            <li><strong>Permanent</strong> "<em>card name</em>" <em>command</em></li>
+        </ul>
+
+        <h2>The page</h2>
+        <p>This page is designed to support you while you work with CGDL. There three main features for this is:</p>
+        <ul>
+            <li>Highlight editor</li>
+            <li>Game simulator</li>
+            <li>File management studio</li>
+        </ul>
+
+        <h2>Highlight editor</h2>
+
+        <p>
+            The editor will assist you with colors and feedback as you type.
+            The blue color symbolizes a concept and is supplied with an underline if the concept is recognized.
+            The orange color symbolizes a literal input. The current literals supported is <strong>"string"</strong> and <strong>number</strong>.
+        </p>
+
+        <p>
+            In the top of the 
+        </p>
+    </div>
+</div>
