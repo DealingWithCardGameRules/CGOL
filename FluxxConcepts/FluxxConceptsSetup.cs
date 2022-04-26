@@ -19,6 +19,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new OwnerOfWinsHandler(context.Dispatcher));
             context.Interpolator.AddConcept(new OwnerOfWinsExclusiveHandler(context.Dispatcher));
             context.Interpolator.AddConcept(new HandLimitHandler(context.TimeProvider, context.Dispatcher));
+            context.Interpolator.AddConcept(new KeeperLimitHandler(context.TimeProvider, context.Dispatcher));
 
             // Query handlers
             context.Interpolator.AddConcept(new DrawLimitReachedHandler(drawCounter));
