@@ -8,6 +8,10 @@ a, .btn-link {
     color: #0366d6;
 }
 
+.content {
+    padding-top: 4rem;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -297,7 +301,8 @@ span.token {
     border-start-end-radius: 0px;
     border-start-start-radius: 0px;
     background-color: #00000050;
-    position: sticky;
+    position: fixed;
+    top: 50px;
     padding: 5px;
 }
 
