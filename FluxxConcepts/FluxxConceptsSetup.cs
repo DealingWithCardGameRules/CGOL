@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.FluxxConcepts.Handler;
 using dk.itu.game.msc.cgdl.FluxxConcepts.Observers;
+using dk.itu.game.msc.cgdl.FluxxConcepts.Queries;
 
 namespace dk.itu.game.msc.cgdl.FluxxConcepts
 {
@@ -10,6 +11,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
         {
             var drawCounter = new PlayerCounter();
             var playCounter = new PlayerCounter();
+            var keeperCounter = new KeeperCounter(context.Dispatcher);
 
             // Command handlers
             context.Interpolator.AddConcept(new DrawCardHandler(context.TimeProvider, context.Dispatcher));
@@ -28,7 +30,8 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new PlayLimitReachedHandler(playCounter));
             context.Interpolator.AddConcept(new HasKeepersHandler(context.Dispatcher));
             context.Interpolator.AddConcept(new OnlyHasKeepersHandler(context.Dispatcher));
-            context.Interpolator.AddConcept(new KeepersComparerHandler(context.Dispatcher));
+            context.Interpolator.AddConcept(new MostKeepersHandler(keeperCounter));
+            context.Interpolator.AddConcept(new FewestKeepersHandler(keeperCounter));
 
             // Event handler
             context.Interpolator.AddConcept(new CardDrawnCounter(drawCounter, context.Dispatcher));
