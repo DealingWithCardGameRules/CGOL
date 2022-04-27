@@ -4,6 +4,7 @@
 SetPlayers 2
 
 // Player hands
+
 CreateHand "Player1" 1
 CreateHand "Player2" 2
 

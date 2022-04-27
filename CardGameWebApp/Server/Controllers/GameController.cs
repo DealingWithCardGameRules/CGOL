@@ -57,9 +57,7 @@ namespace CardGameWebApp.Server.Controllers
             {
                 Dictionary<string, string> output = new();
                 foreach (var name in names)
-                {
                     output[name] = Url.Action(nameof(GetCollection), "game", new { id, name }, Request.Scheme);
-                }
                 return output;
             }
 
@@ -90,8 +88,8 @@ namespace CardGameWebApp.Server.Controllers
         public CardCollectionResponse GetCollection(Guid id, string name)
         {
             var current = session.GetSession(id);
-            List<IUserAction> colActions = new List<IUserAction>();
-            List<IUserAction> cardActions = new List<IUserAction>();
+            List<IUserAction> colActions = new();
+            List<IUserAction> cardActions = new();
 
             var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
 
