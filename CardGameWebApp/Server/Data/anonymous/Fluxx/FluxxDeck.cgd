@@ -1,4 +1,5 @@
 // Load cards
+
 LoadCard "Fluxx/Draw1"
 LoadCard "Fluxx/Play1"
 LoadCard "Fluxx/Draw2"

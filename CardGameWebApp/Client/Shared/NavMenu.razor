@@ -1,5 +1,31 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Card Game DL</a>
+﻿<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <NavLink class="navbar-brand" href="" Match="NavLinkMatch.All">
+        Card Game DL
+    </NavLink>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topbar" aria-controls="topbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="topbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <NavLink class="nav-link" href="sandbox">
+                <span class="oi oi-play-circle" aria-hidden="true"></span> Sandbox
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="studio">
+                <i class="fa-solid fa-briefcase me-3" aria-hidden="true"></i> Studio
+            </NavLink>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!--
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href=""></a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -29,14 +55,14 @@
         </li>
     </ul>
 </div>
-
+-->
 @code {
     private bool collapseNavMenu = true;
     private bool loggedIn = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
+    public void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
