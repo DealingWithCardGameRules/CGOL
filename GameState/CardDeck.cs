@@ -93,7 +93,11 @@ namespace dk.itu.game.msc.cgdl.GameState
                 if (tags == null || card.Tags.Intersect(tags).Count() == tags.Count())
                     yield return card;
             }
+        }
 
+        public ICard? GetRandomCard()
+        {
+            return cards.RandomOrDefault();
         }
     }
 }
