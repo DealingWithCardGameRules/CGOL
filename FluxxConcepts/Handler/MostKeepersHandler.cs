@@ -7,18 +7,18 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
 {
     public class MostKeepersHandler : IQueryHandler<MostKeepers, bool>
     {
-        private readonly KeeperCounter keeperCounter;
+        private readonly CardCounter cardCounter;
 
-        public MostKeepersHandler(KeeperCounter keeperCounter)
+        public MostKeepersHandler(CardCounter cardCounter)
         {
-            this.keeperCounter = keeperCounter ?? throw new ArgumentNullException(nameof(keeperCounter));
+            this.cardCounter = cardCounter ?? throw new ArgumentNullException(nameof(cardCounter));
         }
 
         public bool Handle(MostKeepers query)
         {
-            var counts = keeperCounter.CountKeepers();
-            var most = counts.Where(x => x.Value == counts.Values.Max()).Any(c => c.Key.Equals(keeperCounter.PlayersKeeperZone()));
-            return most;
+            var counts = cardCounter.Count("zone", "keepers");
+            var playersKeeperZone = cardCounter.PlayersCollection("zone", "keepers");
+            return counts.Where(x => x.Value == counts.Values.Max()).Any(c => c.Key.Equals(playersKeeperZone));
         }
     }
 }
