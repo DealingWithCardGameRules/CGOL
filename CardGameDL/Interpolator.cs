@@ -25,6 +25,13 @@ namespace dk.itu.game.msc.cgdl
 
             return conceptHandlers[serviceType];
         }
+        public T GetService<T>()
+        {
+            if (!conceptHandlers.ContainsKey(typeof(T)))
+                throw new UnknownConceptException(typeof(T));
+
+            return (T) conceptHandlers[typeof(T)];
+        }
 
         public bool Supports(object type)
         {

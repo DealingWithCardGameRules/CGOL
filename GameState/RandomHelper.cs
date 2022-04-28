@@ -6,7 +6,7 @@ namespace dk.itu.game.msc.cgdl.GameState
 {
     internal static class RandomHelper
     {
-        private static Random random = new Random();
+        private static readonly Random random = new Random();
 
         internal static T RandomOrDefault<T>(this IEnumerable<T> list, T defaultValue = default)
         {

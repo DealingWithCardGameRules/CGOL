@@ -16,5 +16,6 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
         void RemoveConcept<T>(ICommandHandler<T> commandHandler) where T : ICommand;
         void RemoveConcept<T, TResult>(IQueryHandler<T, TResult> queryHandler) where T : IQuery<TResult>;
         void RemoveConcept<T>(IEventObserver<T> eventObserver) where T : IEvent;
+        T GetService<T>();
     }
 }
