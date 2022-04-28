@@ -33,6 +33,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new OnlyHasKeepersHandler(context.Dispatcher));
             context.Interpolator.AddConcept(new MostKeepersHandler(keeperCounter));
             context.Interpolator.AddConcept(new FewestKeepersHandler(keeperCounter));
+            context.Interpolator.AddConcept(new PlayLimitAboveHandler(context.Dispatcher));
 
             // Event handler
             context.Interpolator.AddConcept(new CardDrawnCounter(drawCounter, context.Dispatcher));
