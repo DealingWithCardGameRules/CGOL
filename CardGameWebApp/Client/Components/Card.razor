@@ -4,10 +4,19 @@
 		@{
 			var card = library.GetCard(Template);
 		}
-		<h3>@card.Name</h3>
-		<img class="illustration" src="/illustrations/@(card.Illustration).png" />
-		<p>@card.Classification</p>
-		<p class="description">@card.Description</p>
+		<h3>@(card.Name ?? Template)</h3>
+		@if(card.Illustration!=null)
+		{
+			<img class="illustration" src="/illustrations/@(card.Illustration).png" />
+		}
+		@if(card.Classification != null)
+		{
+		<p>@card.Classification</p>	
+		}
+		@if(card.Description != null)
+		{
+		<p class="description">@card.Description</p>	
+		}
 	</ActionPrompt>
 </div>
 

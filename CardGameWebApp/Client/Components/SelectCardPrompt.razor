@@ -7,10 +7,19 @@
         {
             var cardInfo = library.GetCard(card.Name);
             <div class="playcard @(selected == card.Instance ? "selected": "")" @onclick="() => selected = card.Instance">
-                <h3>@cardInfo.Name</h3>
-                <img class="illustration" src="/illustrations/@(cardInfo.Illustration).png" />
-                <p>@cardInfo.Classification</p>
-                <p class="description">@cardInfo.Description</p>
+                <h3>@(card.Name ?? card.Name)</h3>
+		        @if(cardInfo.Illustration!=null)
+		        {
+			        <img class="illustration" src="/illustrations/@(cardInfo.Illustration).png" />
+		        }
+		        @if(cardInfo.Classification != null)
+		        {
+		        <p>@cardInfo.Classification</p>	
+		        }
+		        @if(cardInfo.Description != null)
+		        {
+		        <p class="description">@cardInfo.Description</p>	
+		        }
             </div>
         }
     </Content>
