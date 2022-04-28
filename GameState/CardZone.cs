@@ -84,5 +84,10 @@ namespace dk.itu.game.msc.cgdl.GameState
         {
             return cards.Values;
         }
+
+        public ICard? GetRandomCard()
+        {
+            return cards.Values.RandomOrDefault();
+        }
     }
 }

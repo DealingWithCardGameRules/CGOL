@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgdl.CommandCentral;
 using dk.itu.game.msc.cgdl.FluxxConcepts.Handler;
 using dk.itu.game.msc.cgdl.FluxxConcepts.Observers;
+using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 
 namespace dk.itu.game.msc.cgdl.FluxxConcepts
 {
@@ -10,6 +11,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
         {
             var drawCounter = new PlayerCounter();
             var playCounter = new PlayerCounter();
+            var cardCounter = new CardCounter(context.Dispatcher);
 
             // Command handlers
             context.Interpolator.AddConcept(new DrawCardHandler(context.TimeProvider, context.Dispatcher));
@@ -20,6 +22,8 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new OwnerOfWinsExclusiveHandler(context.Dispatcher));
             context.Interpolator.AddConcept(new HandLimitHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new KeeperLimitHandler(context.TimeProvider, context.Dispatcher));
+            context.Interpolator.AddConcept(new FluxxWinHandler(context.Interpolator.GetService<ICommandHandler<Win>>(), context.Dispatcher));
+            context.Interpolator.AddConcept(new MostCardsWinsHandler(cardCounter, context.Dispatcher));
 
             // Query handlers
             context.Interpolator.AddConcept(new DrawLimitReachedHandler(drawCounter));
@@ -28,6 +32,9 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new PlayLimitReachedHandler(playCounter));
             context.Interpolator.AddConcept(new HasKeepersHandler(context.Dispatcher));
             context.Interpolator.AddConcept(new OnlyHasKeepersHandler(context.Dispatcher));
+            context.Interpolator.AddConcept(new MostKeepersHandler(cardCounter));
+            context.Interpolator.AddConcept(new FewestKeepersHandler(cardCounter));
+            context.Interpolator.AddConcept(new PlayLimitAboveHandler(context.Dispatcher));
 
             // Event handler
             context.Interpolator.AddConcept(new CardDrawnCounter(drawCounter, context.Dispatcher));

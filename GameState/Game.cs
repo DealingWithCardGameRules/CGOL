@@ -19,6 +19,11 @@ namespace dk.itu.game.msc.cgdl.GameState
             players = new Dictionary<int, IPlayer>();
         }
 
+        internal ICard? GetRandomCard(string collection)
+        {
+            return collections[collection].GetRandomCard();
+        }
+
         internal void AddTag(string collection, string tag)
         {
             collections[collection].AddTag(tag);

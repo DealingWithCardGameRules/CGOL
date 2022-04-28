@@ -48,6 +48,7 @@ namespace dk.itu.game.msc.cgdl.GameState
             context.Interpolator.AddConcept(new GetPlayersHandHandler(game));
             context.Interpolator.AddConcept(new GetCardsHandler(game));
             context.Interpolator.AddConcept(new GetReshuffleFromForHandler(recycleRules));
+            context.Interpolator.AddConcept(new GetRandomCardHandler(game));
 
             // Event observers
             context.Interpolator.AddConcept(new CardCollectionDeclaredObserver(game));
