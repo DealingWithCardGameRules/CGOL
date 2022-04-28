@@ -54,7 +54,7 @@ a, .btn-link {
     display: inline-block;
     border: 1px solid black;
     border-radius: 5px;
-    /*width: 200px;*/
+    width: 200px;
     height: 275px;
     padding-left: 5px;
     padding-right: 5px;
@@ -88,7 +88,7 @@ a, .btn-link {
     .playcard .illustration {
         display: block;
         border: 1px solid black;
-        width: 187px;
+        
         height: 100px;
     }
 
