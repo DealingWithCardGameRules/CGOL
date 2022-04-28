@@ -24,6 +24,11 @@ namespace dk.itu.game.msc.cgdl.GameState
             library[template].AddInstantaneous(command);
         }
 
+        internal void AddAcquisition(string template, ICommand command)
+        {
+            library[template].AddAcquisition(command);
+        }
+
         internal void AddTags(string template, IEnumerable<string> tags)
         {
             foreach (var tag in tags)

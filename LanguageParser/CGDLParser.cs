@@ -33,7 +33,19 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                 {
                     string? inst = null;
                     string? perm = null;
-                    if (queue.LookAhead1 is InstantaneousKeyword)
+                    string? when = null;
+                    SupportedEvent? whenEvent = null;
+
+                    if (queue.LookAhead1 is WhenKeyword)
+                    {
+                        queue.DiscardToken();
+                        when = queue.ReadToken<StringLiteral>().Value;
+                        queue.DiscardToken();
+                        whenEvent = queue.ReadToken<EventType>().Value;
+                        queue.DiscardToken();
+                    }
+                    // Obsolete
+                    else if (queue.LookAhead1 is InstantaneousKeyword)
                     {
                         queue.DiscardToken();
                         inst = queue.ReadToken<StringLiteral>().Value;
@@ -49,7 +61,23 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                     var command = ParseAction();
                     if (command != null)
                     {
-                        if (inst != null)
+                        if (when != null && whenEvent != null)
+                        {
+                            switch(whenEvent.Value)
+                            {
+                                case SupportedEvent.Played:
+                                    yield return new AddInstantaniousEffectToCard(when, command);
+                                    break;
+                                case SupportedEvent.Active:
+                                    yield return new AddPermanentEffectToCard(when, command);
+                                    break;
+                                case SupportedEvent.Drawn:
+                                    yield return new AddAcquisitionEffectToCard(when, command);
+                                    break;
+                            }
+                        }
+                        // Obsolete
+                        else if (inst != null)
                             yield return new AddInstantaniousEffectToCard(inst, command);
                         else if (perm != null)
                             yield return new AddPermanentEffectToCard(perm, command);
