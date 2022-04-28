@@ -8,7 +8,9 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
         string Template { get; }
         IEnumerable<ICommand> Instantaneous { get; }
         IEnumerable<ICommand> Permanent { get; }
+        IEnumerable<ICommand> Acquisition { get; }
         void AddInstantaneous(ICommand command);
         void AddPermanent(ICommand command);
+        void AddAcquisition(ICommand command);
     }
 }

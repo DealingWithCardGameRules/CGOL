@@ -7,12 +7,15 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
     {
         private List<ICommand> instantaneous = new List<ICommand>();
         private List<ICommand> permanent = new List<ICommand>();
+        private List<ICommand> acquisition = new List<ICommand>();
 
         public string Template { get; set; }
 
         public IEnumerable<ICommand> Instantaneous => instantaneous;
 
         public IEnumerable<ICommand> Permanent => permanent;
+
+        public IEnumerable<ICommand> Acquisition => acquisition;
 
         public void AddInstantaneous(ICommand command)
         {
@@ -22,6 +25,11 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
         public void AddPermanent(ICommand command)
         {
             permanent.Add(command);
+        }
+
+        public void AddAcquisition(ICommand command)
+        {
+            acquisition.Add(command);
         }
 
         public SimpleTemplate(string template)

@@ -71,6 +71,9 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                                 case SupportedEvent.Active:
                                     yield return new AddPermanentEffectToCard(when, command);
                                     break;
+                                case SupportedEvent.Drawn:
+                                    yield return new AddAcquisitionEffectToCard(when, command);
+                                    break;
                             }
                         }
                         // Obsolete

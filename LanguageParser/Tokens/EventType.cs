@@ -25,7 +25,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
     internal enum SupportedEvent
     {
         Played,
-        //Drawn,
+        Drawn,
         Active
     }
 }
