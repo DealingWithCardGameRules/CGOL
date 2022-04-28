@@ -98,9 +98,8 @@ a, .btn-link {
     }
 
     .playcard .description {
-        overflow-y: scroll;
+        overflow-y: hidden;
         width: 187px;
-        height: 100px;
     }
 
     .playcard .cardbody {
