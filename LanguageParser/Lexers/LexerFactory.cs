@@ -1,4 +1,5 @@
 ﻿using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,10 +36,12 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
             // Keywords
             yield return new RegexTokenDefinition(new TokenFactory(() => new PlayKeyword()), @"^play\b");
             yield return new RegexTokenDefinition(new TokenFactory(() => new IfKeyword()), @"^if\b");
+            yield return new RegexTokenDefinition(new TokenFactory(() => new WhenKeyword()), @"^when\b");
             yield return new RegexTokenDefinition(new TokenFactory(() => new InstantaneousKeyword()), @"^(instantaneous|inst)\b");
             yield return new RegexTokenDefinition(new TokenFactory(() => new PermanentKeyword()), @"^(permanent|perm)\b");
 
             // Literals
+            yield return new RegexTokenDefinition(new TokenFactory(() => new EventType()), @$"^({string.Join('|', Enum.GetNames(typeof(SupportedEvent)))})\b");
             yield return new RegexTokenDefinition(new TokenFactory(() => new NumberLiteral()), @"^\d+");
             yield return new RegexTokenDefinition(new TokenFactory(() => new StringLiteral()), "^\"[^\"]*\"");
 
