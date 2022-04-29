@@ -1,15 +1,15 @@
-SetPlayers 2
+SetPlayers 1
 DrawLimit 1
 CreateDeck "deck"
 CreateDeck "discard pile"
-CreateHand "player"
+CreateHand "player" 1
 
 CreateCard "Draw 1 Play 1 Rules"
 Permanent "Draw 1 Play 1 Rules" If (InState "Draw") Play "Draw":
-	DrawCard "deck" "player"
+	DrawCard "deck"
 	ChangeState "Play"
 Permanent "Draw 1 Play 1 Rules" If (InState "Play") Play "Play":
-	PlayCard "player"
+	PlayCard
 	ChangeState "Draw"
 CreateZone "One Player Rules"
 AddCard "Draw 1 Play 1 Rules" "One Player Rules"
