@@ -15,6 +15,7 @@ using CardGameWebApp.Server.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using dk.itu.game.msc.cgdl.Representation;
+using Microsoft.Extensions.Primitives;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -48,6 +49,27 @@ namespace CardGameWebApp.Server.Controllers
             var current = session.GetSession(sessionId);
             current.Service.Parse(game.CGDLSource);
             return Created(Url.Action(nameof(GetGame), "game", new { id = sessionId }, Request.Scheme), null);
+        }
+
+        [HttpPost("{id:Guid}")]
+        public async Task<ActionResult> ExtendGame(Guid id, [FromBody] CreateGameDTO game)
+        {
+            var current = session.GetSession(id);
+            if (current == null)
+                return NotFound("Session not found");
+
+            try
+            {
+                current.Service.Parse(game.CGDLSource);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            await gameHub.Clients.Group(id.ToString()).SendAsync("NewState");
+
+            return Ok();
         }
 
         [HttpGet("{id:Guid}")]
@@ -91,7 +113,7 @@ namespace CardGameWebApp.Server.Controllers
             List<IUserAction> colActions = new();
             List<IUserAction> cardActions = new();
 
-            var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
+            var playerIndexes = GetPlayerIndexes(current, Request.Headers["clientid"]);
 
             foreach (var playerIndex in playerIndexes)
             {
@@ -160,7 +182,7 @@ namespace CardGameWebApp.Server.Controllers
             var current = session.GetSession(id);
             
             ICommand command = null;
-            var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
+            var playerIndexes = GetPlayerIndexes(current, Request.Headers["clientid"]);
             foreach (var playerIndex in playerIndexes)
             {
                 var cmd = current.Service.Dispatch(new GetAvailableAction(instance, playerIndex));
@@ -198,7 +220,7 @@ namespace CardGameWebApp.Server.Controllers
         {
             var current = session.GetSession(id);
             ICommand command = null;
-            var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
+            var playerIndexes = GetPlayerIndexes(current, Request.Headers["clientid"]);
             foreach (var playerIndex in playerIndexes)
             {
                 var cmd = current.Service.Dispatch(new GetAvailableAction(instance, playerIndex));
@@ -232,13 +254,22 @@ namespace CardGameWebApp.Server.Controllers
         public ActionListResponse GetActions(Guid id)
         {
             var current = session.GetSession(id);
-            var playerIndexes = current.PlayerRepository.GetIndexes(Request.Headers["clientid"]);
+            var playerIndexes = GetPlayerIndexes(current, Request.Headers["clientid"]);
             IEnumerable<IUserAction> actions = GetActions(current, playerIndexes);
 
             return new ActionListResponse(Request.GetEncodedUrl())
             {
                 Actions = ActionLink(actions, id)
             };
+        }
+
+        private IEnumerable<int> GetPlayerIndexes(Session session, StringValues stringValues)
+        {
+
+            var clientIds = Request.Headers["clientid"].ToString().CommaSeperateTrimmed();
+            foreach (var clientId in clientIds)
+                foreach (var index in session.PlayerRepository.GetIndexes(clientId))
+                    yield return index;
         }
 
         private IEnumerable<IUserAction> GetActions(Session session, IEnumerable<int> playerIndexes)
