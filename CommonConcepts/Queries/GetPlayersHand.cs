@@ -4,11 +4,12 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Queries
 {
     public class GetPlayersHand : IQuery<string?>
     {
-        public int PlayerIndex { get; }
+        public int? PlayerIndex { get; }
 
-        public GetPlayersHand(int playerIndex)
+        public GetPlayersHand(int? playerIndex = 0)
         {
-            PlayerIndex = playerIndex;
+            if (playerIndex > 0)
+                PlayerIndex = playerIndex;
         }
     }
 }

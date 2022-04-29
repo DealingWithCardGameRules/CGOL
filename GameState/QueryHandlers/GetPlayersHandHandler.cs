@@ -14,7 +14,10 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
 
         public string? Handle(GetPlayersHand query)
         {
-            return game.GetPlayerHand(query.PlayerIndex);
+            var player = query.PlayerIndex ?? game.GetCurrentPlayer()?.Index;
+            if (!player.HasValue)
+                return null;
+            return game.GetPlayerHand(player.Value);
         }
     }
 }
