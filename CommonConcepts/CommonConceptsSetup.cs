@@ -49,7 +49,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts
             interpolator.AddConcept(new PlayRandomHandler(dispatcher));
             interpolator.AddConcept(new AddAcquisitionEffectToCardHandler(timeProvider));
             interpolator.AddConcept(new ResolveAcquisitionEffectsHandler(dispatcher));
-            
+
         }
     }
 }

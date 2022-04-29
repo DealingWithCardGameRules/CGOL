@@ -24,6 +24,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts
             context.Interpolator.AddConcept(new KeeperLimitHandler(context.TimeProvider, context.Dispatcher));
             context.Interpolator.AddConcept(new FluxxWinHandler(context.Interpolator.GetService<ICommandHandler<Win>>(), context.Dispatcher));
             context.Interpolator.AddConcept(new MostCardsWinsHandler(cardCounter, context.Dispatcher));
+            context.Interpolator.AddConcept(new RefreshHandHandler(context.Dispatcher));
 
             // Query handlers
             context.Interpolator.AddConcept(new DrawLimitReachedHandler(drawCounter));
