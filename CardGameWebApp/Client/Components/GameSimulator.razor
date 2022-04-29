@@ -126,19 +126,8 @@
 	private IEnumerable<CallBackAction> GlobalActions;
 	private YesNoPrompt Dialogue { get; set; }
 
-	public async Task Start(string gameUrl)
+	public async Task Reset()
 	{
-		collectionCache = new Dictionary<string, CardCollectionResponse>();
-		players = new List<bool>();
-		hands = null;
-		decks = null;
-
-		game = await Http.GetFromJsonAsync<GameOverviewResponse>(gameUrl);
-
-		for(int i = 0; i < game.Game.NumberOfPlayers; i++)
-		{
-			players.Add(false);
-		}
 		hubConnection = new HubConnectionBuilder().WithUrl(game.Links["hub"]).Build();
 		hubConnection.On<int>("PlayerJoined", async (int i) =>
 		{ 
@@ -174,8 +163,8 @@
 		{
 			await Dialogue.ShowDialog(inquirt.Message , async (result) =>
 								{
-								await hubConnection.SendAsync("PlayerAnswer", inquirt.CorrespondenceId, result);
-							});
+									await hubConnection.SendAsync("PlayerAnswer", inquirt.CorrespondenceId, result);
+								});
 		});
 
 		hubConnection.On<string>("Conclusion", async (message) =>
@@ -186,6 +175,23 @@
 		await hubConnection.StartAsync();
 		await hubConnection.SendAsync("join", game.SessionId);
 		Http.DefaultRequestHeaders.Add("ClientID", hubConnection.ConnectionId);
+	}
+
+	public async Task Start(string gameUrl)
+	{
+		collectionCache = new Dictionary<string, CardCollectionResponse>();
+		players = new List<bool>();
+		hands = null;
+		decks = null;
+
+		game = await Http.GetFromJsonAsync<GameOverviewResponse>(gameUrl);
+		await Reset();
+
+		for(int i = 0; i < game.Game.NumberOfPlayers; i++)
+		{
+			players.Add(false);
+		}
+		
 
 		hands = game.Game.Hands;
 		decks = game.Game.Decks;

@@ -38,7 +38,7 @@ namespace CardGameWebApp.Server.Controllers
             }
         }
 
-        private IEnumerable<ActionParameterDTO> GetParameters(ConstructorInfo? ctor)
+        private IEnumerable<ActionParameterDTO> GetParameters(ConstructorInfo ctor)
         {
             if (ctor == null)
                 yield break;

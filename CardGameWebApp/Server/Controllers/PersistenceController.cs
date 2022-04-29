@@ -30,7 +30,7 @@ namespace CardGameWebApp.Server.Controllers
             this.gameHub = gameHub ?? throw new ArgumentNullException(nameof(gameHub));
         }
 
-		private IDictionary<string, string> GenerateFolderLinks(IEnumerable<string> folders, string? url = null)
+		private IDictionary<string, string> GenerateFolderLinks(IEnumerable<string> folders, string url = null)
 		{
 			Dictionary<string, string> links = new();
 			url = url == null ? string.Empty: $"{url}/";

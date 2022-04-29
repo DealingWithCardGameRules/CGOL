@@ -32,14 +32,14 @@
 
         <h3>Concepts</h3>
         <p>
-            There are three types of concepts: Commands, Queries and Events.<br />
+            There are three types of concepts: Command, Query and Events.<br />
             <em>This termology is taken from the command query segregation pattern and event sourcing.</em>
         </p>
 
         <p>
             All you need to know is that a command can be used to request change, such as shuffle a deck. 
             A query can be used to gain information from the current state, such as the current player.
-            The last concept, the Even is an actual change and is mainly used by the system to keep track of state changes.
+            The last concept, the Even is an actual change and is mainly used by the system to keep track of state change events.
         </p>
 
         <p>
@@ -55,9 +55,37 @@
         <ul>
             <li><strong>If (</strong><em>query</em><strong>)</strong> <em>command</em></li>
             <li><strong>Play</strong> <em>command</em></li>
-            <li><strong>Instantaneous</strong> "<em>card name</em>" <em>command</em></li>
-            <li><strong>Permanent</strong> "<em>card name</em>" <em>command</em></li>
+            <li><strong>When</strong> "<em>card name</em>" <strong>played</strong> <em>command</em></li>
+            <li><strong>When</strong> "<em>card name</em>" <strong>active</strong> <em>command</em></li>
+            <li><strong>When</strong> "<em>card name</em>" <strong>drawn</strong> <em>command</em></li>
         </ul>
+
+        <h4><strong>If (</strong><em>query</em><strong>)</strong> <em>command</em></h4>
+        <p>
+            The command is only executed if the query returns true. This means that the query must return either true or false.
+        </p>
+
+        <h4><strong>Play</strong> <em>command</em></h4>
+        <p>
+            The command is stored as a possible action that a user can take.
+            The option displayed to the user will by default be the command name.
+            This can be overwritten with a string literal following the play keyword.
+            Example: <strong>Play</strong> "<em>displayed label</em>" <em>command</em>
+        </p>
+        <h4><strong>When</strong> "<em>card name</em>" <strong>played</strong> <em>command</em></h4>
+        <p>
+            Set up a command to run when the card is played.
+            <em>This syntax replaces the (Inst)anteneous keyword.</em>
+        </p>
+        <h4><strong>When</strong> "<em>card name</em>" <strong>active</strong> <em>command</em></h4>
+        <p>
+            Set up a command to run when the card is placed in a zone.
+            <em>This syntax replaces the (Perm)anent keyword.</em>
+        </p>
+        <h4><strong>When</strong> "<em>card name</em>" <strong>drawn</strong> <em>command</em></h4>
+        <p>
+            Set up a command to run when the card is dealt or drawn.
+        </p>
 
         <h2>The page</h2>
         <p>This page is designed to support you while you work with CGDL. There three main features for this is:</p>
@@ -72,11 +100,57 @@
         <p>
             The editor will assist you with colors and feedback as you type.
             The blue color symbolizes a concept and is supplied with an underline if the concept is recognized.
-            The orange color symbolizes a literal input. The current literals supported is <strong>"string"</strong> and <strong>number</strong>.
+            The orange color symbolizes a literal input. 
+            The current literals supported is <strong>"string"</strong> and <strong>number</strong>.
         </p>
 
         <p>
-            In the top of the 
+            There is a list of commands and queries in the top of the editor.
+            These commands and queries will also be suggested as you type.
+        </p>
+
+        <p>
+            If you hold down CTRL and hover a known concept, a toolbox will appear above the concept.
+            This toolbox shows a icon representing the type of the concept (<i class="text-primary fa-solid fa-circle-exclamation"></i> command, <i class="text-info fa-solid fa-circle-question"></i> query or <i class="text-danger fa-solid fa-calendar-check"></i> event).
+        </p>
+        <p>
+            The type is followed by the concept name and required or optional parameters.
+            Optional parameters are incapsulated with brackets ([optionalParameter]).
+            Parameter types are symbolized with icons representing: <i class="fa-solid fa-t fa-2xs"></i> text, <i class="fa-solid fa-hashtag fa-2xs"></i> number or <i class="fa-solid fa-question fa-2xs"></i> unknown.
+        </p>
+        <p>
+            Unknown types can not be filled out in CGDL and will often be filled out by the command handler.
+        </p>
+
+        <h2>Game simulator</h2>
+        <p>
+            This simulator allows users to interact with the game. 
+            The simulator is usually accessed via a link.
+            This link can be shared with others who wants to participate or observe a game.
+        </p>
+        <p>
+            The simulator is split into 3 main areas: Players, Actions and card collections.
+        </p>
+        <p>
+            Players are represented as toggle buttons, where any user can click to represent a player.
+            If a player is already occupied, any user can click it to unoccupy it.
+            Selecting a player allows a user to see cards and select actions that are limited to that player.
+            It is possible for a user to select multiple players at the same time.
+        </p>
+        <p>
+            Actions are a list of user actions, which has been set up using the <strong>Play</strong> keyword.
+        </p>
+        <p>
+            Card collections are split into zones, decks and hands.
+        </p>
+
+        <h2>File management studio</h2>
+        <p>
+            This allows a user to store card rules in cgd files and load them into a running session.
+        </p>
+        <p>
+            A link to the simulator for the current session is present in the top. 
+            A new session can be generated using the <i class="fa-solid fa-rotate-right"></i> button.
         </p>
     </div>
 </div>
