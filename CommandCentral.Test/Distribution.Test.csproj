@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CommandCentral\CommandCentral.csproj" />
+    <ProjectReference Include="..\CommandCentral\Distribution.csproj" />
   </ItemGroup>
 
 </Project>

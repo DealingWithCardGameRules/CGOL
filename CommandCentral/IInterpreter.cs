@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.CommandCentral
 {
-    public interface IInterpolator : IServiceProvider
+    public interface IInterpreter : IServiceProvider
     {
         IEnumerable<Type> SupportedTypes { get; }
         bool Supports(object type);

@@ -4,9 +4,9 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
 {
     public sealed class EventDispatcher : IEventDispatcher
     {
-        private readonly IInterpolator interpolator;
+        private readonly IInterpreter interpolator;
 
-        public EventDispatcher(IInterpolator interpolator)
+        public EventDispatcher(IInterpreter interpolator)
         {
             this.interpolator = interpolator ?? throw new ArgumentNullException(nameof(interpolator));
         }

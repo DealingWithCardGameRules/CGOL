@@ -7,9 +7,9 @@ namespace dk.itu.game.msc.cgdl
     public class DispatcherFactory
     {
         private readonly EventLoggerFactory factory;
-        private readonly IInterpolator interpolator;
+        private readonly IInterpreter interpolator;
 
-        public DispatcherFactory(EventLoggerFactory factory, IInterpolator interpolator)
+        public DispatcherFactory(EventLoggerFactory factory, IInterpreter interpolator)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
             this.interpolator = interpolator ?? throw new ArgumentNullException(nameof(interpolator));

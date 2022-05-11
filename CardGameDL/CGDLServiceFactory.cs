@@ -34,9 +34,9 @@ namespace dk.itu.game.msc.cgdl
             return CreateEmpty();
         }
 
-        public IInterpolator GetInterpolator()
+        public IInterpreter GetInterpolator()
         {
-            return serviceProvider.GetRequiredService<IInterpolator>();
+            return serviceProvider.GetRequiredService<IInterpreter>();
         }
     }
 }

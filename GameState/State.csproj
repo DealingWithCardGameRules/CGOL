@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CommandCentral\CommandCentral.csproj" />
-    <ProjectReference Include="..\CommonConcepts\CommonConcepts.csproj" />
+    <ProjectReference Include="..\CommandCentral\Distribution.csproj" />
+    <ProjectReference Include="..\CommonConcepts\Common.csproj" />
   </ItemGroup>
 
 </Project>

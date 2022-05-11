@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\LanguageParser\LanguageParser.csproj" />
+    <ProjectReference Include="..\..\LanguageParser\Parser.csproj" />
     <ProjectReference Include="..\Shared\CardGameWebApp.Shared.csproj" />
   </ItemGroup>
 

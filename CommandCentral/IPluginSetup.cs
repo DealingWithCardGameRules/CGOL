@@ -7,7 +7,7 @@
 
     public interface IPluginContext
     {
-        IInterpolator Interpolator { get; }
+        IInterpreter Interpolator { get; }
         ITimeProvider TimeProvider { get; }
         IDispatcher Dispatcher { get; }
     }
