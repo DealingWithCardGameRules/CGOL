@@ -1,4 +1,4 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
+﻿using dk.itu.game.msc.cgdl.Distribution;
 using dk.itu.game.msc.cgdl.LanguageParser.Parsers;
 using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

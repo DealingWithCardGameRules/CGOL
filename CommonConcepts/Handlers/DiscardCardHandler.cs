@@ -1,11 +1,11 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
+using dk.itu.game.msc.cgdl.Distribution;
 using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 {
-	public class DiscardCardHandler : ICommandHandler<DiscardCard>
+    public class DiscardCardHandler : ICommandHandler<DiscardCard>
 	{
 		private readonly IDispatcher dispatcher;
 

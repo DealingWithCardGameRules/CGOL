@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace dk.itu.game.msc.cgdl.CommandCentral
+namespace dk.itu.game.msc.cgdl.Distribution
 {
+    // This class is based on the Message class from https://github.com/vkhorikov/CqrsInPractice
     public sealed class MessageDispatcher : IDispatcher
     {
         private readonly IServiceProvider provider;
@@ -19,7 +20,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
             // Identify command handler
             Type commandHandlerType = typeof(ICommandHandler<>);
             Type[] commandType = { command.GetType() };
-            Type genericHandlerType  = commandHandlerType.MakeGenericType(commandType);
+            Type genericHandlerType = commandHandlerType.MakeGenericType(commandType);
 
             // Engage command handler
             dynamic handler = provider.GetService(genericHandlerType);
@@ -30,7 +31,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral
         {
             // Identify query handler
             Type queryHandlerType = typeof(IQueryHandler<,>);
-            Type[] queryType = { query.GetType(), typeof(T) }; 
+            Type[] queryType = { query.GetType(), typeof(T) };
             Type genericHandlerType = queryHandlerType.MakeGenericType(queryType);
 
             // Engage query handler

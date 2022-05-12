@@ -1,4 +1,4 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
+﻿using dk.itu.game.msc.cgdl.Distribution;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 

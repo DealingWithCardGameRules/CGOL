@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dk.itu.game.msc.cgdl.CommandCentral
+namespace dk.itu.game.msc.cgdl.Distribution
 {
     public interface ITimeProvider
     {
