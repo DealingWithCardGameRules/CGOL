@@ -1,6 +1,7 @@
 ﻿namespace dk.itu.game.msc.cgdl.Distribution
 {
-    public interface IDispatcher : ICommandDispatcher, IQueryDispatcher
+    public interface IDispatcher : IQueryDispatcher
     {
+        void Dispatch(ICommand command);
     }
 }
