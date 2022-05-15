@@ -57,17 +57,17 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         }
 
         [TestMethod]
-        public void Match_Match_ReturnMatchHasRemainingText()
+        public void Match_Match_ReturnMatchHasCharacterLength()
         {
             // Given
-            var expected = "est";
+            var expected = 1;
             var sut = new RegexTokenDefinition(Substitute.For<ITokenFactory>(), $"^T");
 
             // When
             var result = sut.Match("Test");
 
             // Then
-            Assert.AreEqual(expected, result.RemainingText);
+            Assert.AreEqual(expected, result.CharacterLength);
         }
 
         [TestMethod]

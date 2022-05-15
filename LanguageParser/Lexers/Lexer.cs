@@ -30,7 +30,8 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
                     if (match != null)
                     {
                         yield return match.Token;
-                        remaining = match.RemainingText;
+                        var skip = Math.Max(1, match.CharacterLength);
+                        remaining = remaining[skip..];
                     }
                     else
                     {

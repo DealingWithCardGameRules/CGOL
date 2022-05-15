@@ -23,13 +23,14 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
             var match = regex.Match(input);
             if (match.Success)
             {
-                string remainingText = string.Empty;
-                if (match.Length != input.Length)
-                    remainingText = input.Substring(match.Length);
+                //string remainingText = string.Empty;
+                //if (match.Length != input.Length)
+                //    remainingText = input.Substring(match.Length);
 
                 return new TokenMatch(factory.Create(match.Value))
                 {
-                    RemainingText = remainingText
+                    //RemainingText = remainingText
+                    CharacterLength = match.Length
                 };
             }
             return null;
