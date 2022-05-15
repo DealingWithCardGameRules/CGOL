@@ -2,16 +2,13 @@
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
 {
-    public class NumberLiteral : IToken
+    public class NumberLiteral : Token
     {
         public int Value { get; private set; }
-        public string RawValue { get; private set; }
+        public override string Type => "literal";
 
-        public string Type => "literal";
-
-        public void Parse(string value)
+        public NumberLiteral(string value) : base(value)
         {
-            RawValue = value;
             Value = Convert.ToInt32(value);
         }
 

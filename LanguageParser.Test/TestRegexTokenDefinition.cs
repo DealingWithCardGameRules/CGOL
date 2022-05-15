@@ -20,21 +20,21 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         public void Ctor_NullRegexPattern_ThrowsArgumentNullException()
         {
             // When, Then
-            Assert.ThrowsException<ArgumentNullException>(() => new RegexTokenDefinition(Substitute.For<ITokenFactory>(), null));
+            Assert.ThrowsException<ArgumentNullException>(() => new RegexTokenDefinition((_)=>Substitute.For<Token>(), null));
         }
 
         [TestMethod]
         public void Ctor_EmptyRegexPattern_ThrowsArgumentNullException()
         {
             // When, Then
-            Assert.ThrowsException<ArgumentNullException>(() => new RegexTokenDefinition(Substitute.For<ITokenFactory>(), ""));
+            Assert.ThrowsException<ArgumentNullException>(() => new RegexTokenDefinition((_)=>Substitute.For<Token>(), ""));
         }
 
         [TestMethod]
         public void Match_NoMatch_ReturnsNull()
         {
             // Given
-            var sut = new RegexTokenDefinition(Substitute.For<ITokenFactory>(), @"\d");
+            var sut = new RegexTokenDefinition((_)=>Substitute.For<Token>(), @"\d");
 
             // When
             var result = sut.Match("Test");
@@ -47,7 +47,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         public void Match_Match_ReturnsIMatch()
         {
             // Given
-            var sut = new RegexTokenDefinition(Substitute.For<ITokenFactory>(), @".*");
+            var sut = new RegexTokenDefinition((val) => Substitute.For<Token>(val), @".*");
 
             // When
             var result = sut.Match("Test");
@@ -61,23 +61,21 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
         {
             // Given
             var expected = 1;
-            var sut = new RegexTokenDefinition(Substitute.For<ITokenFactory>(), $"^T");
+            var sut = new RegexTokenDefinition((val) => Substitute.For<Token>(val), $"^T");
 
             // When
             var result = sut.Match("Test");
 
             // Then
-            Assert.AreEqual(expected, result.CharacterLength);
+            Assert.AreEqual(expected, result.Length);
         }
 
         [TestMethod]
         public void Match_Match_ReturnMatchHasToken()
         {
             // Given
-            var expected = Substitute.For<IToken>();
-            var factoryStub = Substitute.For<ITokenFactory>();
-            var sut = new RegexTokenDefinition(factoryStub, $"^T");
-            factoryStub.Create(Arg.Any<string>()).Returns(expected);
+            var expected = Substitute.For<Token>("");
+            var sut = new RegexTokenDefinition((_)=> expected, $"^T");
 
             // When
             var result = sut.Match("Test");

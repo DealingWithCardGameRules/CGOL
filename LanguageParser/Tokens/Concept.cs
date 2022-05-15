@@ -1,16 +1,13 @@
 ﻿namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
 {
-    public class Concept : IToken
+    public class Concept : Token
     {
         public string Name { get; private set; }
 
-        public string RawValue { get; private set; }
+        public override string Type => "concept";
 
-        public string Type => "concept";
-
-        public void Parse(string value)
+        public Concept(string value) : base(value) 
         {
-            RawValue = value;
             Name = value;
         }
 

@@ -22,7 +22,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             this.queryParser = queryParser ?? throw new ArgumentNullException(nameof(queryParser));
         }
 
-        public IEnumerable<ICommand> Parse(IEnumerable<IToken> tokens)
+        public IEnumerable<ICommand> Parse(IEnumerable<Token> tokens)
         {
             queue = factory.Create(tokens);
             // [[<template> ]<action>\n]*

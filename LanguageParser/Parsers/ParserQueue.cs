@@ -7,14 +7,14 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
     internal class ParserQueue : IParserQueue
     {
-        private readonly Queue<IToken> tokenStack;
-        public IToken LookAhead1 { get; private set; }
-        public IToken LookAhead2 { get; private set; }
+        private readonly Queue<Token> tokenStack;
+        public Token LookAhead1 { get; private set; }
+        public Token LookAhead2 { get; private set; }
         public bool HasTokens => tokenStack.Any() || !(LookAhead1 is SequenceTerminator);
 
-        public ParserQueue(IEnumerable<IToken> tokens)
+        public ParserQueue(IEnumerable<Token> tokens)
         {
-            tokenStack = new Queue<IToken>();
+            tokenStack = new Queue<Token>();
             foreach (var token in tokens)
             {
                 if (token is Comment)
@@ -27,13 +27,13 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
             LookAhead2 = Pop();
         }
 
-        public IToken ReadToken(Type type)
+        public Token ReadToken(Type type)
         {
             dynamic token = GetType().GetMethod(nameof(ReadToken)).MakeGenericMethod(type).Invoke(this, new object[0]);
             return token;
         }
 
-        public T ReadToken<T>() where T : IToken
+        public T ReadToken<T>() where T : Token
         {
             Validate<T>(LookAhead1);
             return (T)LookAhead1;
@@ -51,18 +51,18 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
             DiscardToken();
         }
 
-        private IToken Pop()
+        private Token Pop()
         {
             return tokenStack.Any() ? tokenStack.Dequeue() : new SequenceTerminator();
         }
 
-        private void Validate<T>(IToken token)
+        private void Validate<T>(Token token)
         {
             if (!(token is T))
                 throw new GDLParserException($"Expected {typeof(T).Name} but found {LookAhead1}");
         }
 
-        public void ApplyToken<T>(Action<T> callback) where T : IToken
+        public void ApplyToken<T>(Action<T> callback) where T : Token
         {
             // We only call the callback action if the types are a match
             if (LookAhead1 is T value)

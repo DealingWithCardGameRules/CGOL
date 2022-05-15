@@ -1,12 +1,10 @@
 ﻿namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
 {
-    public class SequenceTerminator : IToken
+    public class SequenceTerminator : Token
     {
-        public string RawValue => @"\n";
+        public override string Type => "symbol";
 
-        public string Type => "symbol";
-
-        public void Parse(string value) { }
+        public SequenceTerminator() : base(@"\n") { }
 
         public override string ToString()
         {

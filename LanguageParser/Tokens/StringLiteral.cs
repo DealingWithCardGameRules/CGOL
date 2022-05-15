@@ -1,16 +1,13 @@
 ﻿namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
 {
-    public class StringLiteral : IToken
+    public class StringLiteral : Token
     {
         public string? Value { get; private set; }
 
-        public string RawValue { get; private set; } = "\"\"";
+        public override string Type => "literal";
 
-        public string Type => "literal";
-
-        public void Parse(string value)
+        public StringLiteral(string value) : base(value)
         {
-            RawValue = value;
             // Remove quotes
             Value = value[1..^1];
         }

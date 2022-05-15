@@ -3,7 +3,7 @@
     public interface ITokenMatch
     {
         //string RemainingText { get; set; }
-        int CharacterLength { get; set; }
-        IToken Token { get; set; }
+        int Length { get; set; }
+        Token Token { get; set; }
     }
 }

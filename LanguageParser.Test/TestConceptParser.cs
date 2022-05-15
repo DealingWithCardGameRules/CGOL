@@ -53,7 +53,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var interpolatorMock = Substitute.For<IInterpreter>();
             var sut = new CommandConceptParser(interpolatorMock, Substitute.For<IParser<object>>());
             var stackStub = Substitute.For<IParserQueue>();
-            stackStub.ReadToken<Concept>().Returns(new Concept());
+            stackStub.ReadToken<Concept>().Returns(new Concept(""));
 
             // When
             try {
@@ -70,7 +70,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             // Given
             var sut = new CommandConceptParser(Substitute.For<IInterpreter>(), Substitute.For<IParser<object>>());
             var stackStub = Substitute.For<IParserQueue>();
-            stackStub.ReadToken<Concept>().Returns(new Concept());
+            stackStub.ReadToken<Concept>().Returns(new Concept(""));
 
             // When, Then
             Assert.ThrowsException<GDLParserException>(() => sut.Parse(stackStub));
@@ -83,7 +83,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var interpolatorStub = Substitute.For<IInterpreter>();
             var sut = new CommandConceptParser(interpolatorStub, Substitute.For<IParser<object>>());
             var stackStub = Substitute.For<IParserQueue>();
-            stackStub.ReadToken<Concept>().Returns(new Concept());
+            stackStub.ReadToken<Concept>().Returns(new Concept(""));
             interpolatorStub.ResolveCommand(Arg.Any<string>()).Returns(typeof(SimpleCommand));
 
             // When
@@ -100,7 +100,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var interpolatorStub = Substitute.For<IInterpreter>();
             var sut = new CommandConceptParser(interpolatorStub, Substitute.For<IParser<object>>());
             var stackStub = Substitute.For<IParserQueue>();
-            stackStub.ReadToken<Concept>().Returns(new Concept());
+            stackStub.ReadToken<Concept>().Returns(new Concept(""));
             interpolatorStub.ResolveCommand(Arg.Any<string>()).Returns(typeof(string));
 
             // When, Then
@@ -115,7 +115,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var parseMock = Substitute.For<IParser<object>>();
             var sut = new CommandConceptParser(interpolatorStub, parseMock);
             var stackStub = Substitute.For<IParserQueue>();
-            stackStub.ReadToken<Concept>().Returns(new Concept());
+            stackStub.ReadToken<Concept>().Returns(new Concept(""));
             interpolatorStub.ResolveCommand(Arg.Any<string>()).Returns(typeof(ComplexCommand));
 
             // When
@@ -135,7 +135,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var parseMock = Substitute.For<IParser<object>>();
             var sut = new CommandConceptParser(interpolatorStub, parseMock);
             var stackStub = Substitute.For<IParserQueue>();
-            stackStub.ReadToken<Concept>().Returns(new Concept());
+            stackStub.ReadToken<Concept>().Returns(new Concept(""));
             interpolatorStub.ResolveCommand(Arg.Any<string>()).Returns(typeof(ComplexCommand));
 
             // When, Then
@@ -150,7 +150,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var parseMock = Substitute.For<IParser<object>>();
             var sut = new CommandConceptParser(interpolatorStub, parseMock);
             var stackStub = Substitute.For<IParserQueue>();
-            stackStub.ReadToken<Concept>().Returns(new Concept());
+            stackStub.ReadToken<Concept>().Returns(new Concept(""));
             interpolatorStub.ResolveCommand(Arg.Any<string>()).Returns(typeof(SimpleCommand));
 
             // When
@@ -169,7 +169,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var parseStub = Substitute.For<IParser<object>>();
             var sut = new CommandConceptParser(interpolatorStub, parseStub);
             var stackStub = Substitute.For<IParserQueue>();
-            stackStub.ReadToken<Concept>().Returns(new Concept());
+            stackStub.ReadToken<Concept>().Returns(new Concept(""));
             interpolatorStub.ResolveCommand(Arg.Any<string>()).Returns(typeof(ComplexCommand));
             _ = parseStub.Result.Returns("test", 0);
 

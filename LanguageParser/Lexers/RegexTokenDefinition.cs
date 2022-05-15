@@ -7,9 +7,9 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
     public class RegexTokenDefinition : ITokenDefinition
     {
         private readonly Regex regex;
-        private readonly ITokenFactory factory;
+        private readonly Func<string, Token> factory;
 
-        public RegexTokenDefinition(ITokenFactory factory, string regexPattern)
+        public RegexTokenDefinition(Func<string, Token> factory, string regexPattern)
         {
             if (string.IsNullOrEmpty(regexPattern))
                 throw new ArgumentNullException(nameof(regexPattern));
@@ -23,14 +23,9 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
             var match = regex.Match(input);
             if (match.Success)
             {
-                //string remainingText = string.Empty;
-                //if (match.Length != input.Length)
-                //    remainingText = input.Substring(match.Length);
-
-                return new TokenMatch(factory.Create(match.Value))
+                return new TokenMatch(factory.Invoke(match.Value))
                 {
-                    //RemainingText = remainingText
-                    CharacterLength = match.Length
+                    Length = match.Length
                 };
             }
             return null;

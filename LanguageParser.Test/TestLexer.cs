@@ -48,7 +48,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var sut = new Lexer(definitionStub);
             var expected = 2;
             var matchMock = Substitute.For<ITokenMatch>();
-            var _ = matchMock.CharacterLength.Returns(4);
+            var _ = matchMock.Length.Returns(4);
             definitionStub.Match(Arg.Any<string>()).Returns(matchMock);
 
             // When
@@ -82,7 +82,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             // Given
             var definitionStub = Substitute.For<ITokenDefinition>();
             var sut = new Lexer(definitionStub);
-            var expected = Substitute.For<IToken>();
+            var expected = Substitute.For<Token>("");
             var matchStub = Substitute.For<ITokenMatch>();
             
             definitionStub.Match(Arg.Any<string>()).Returns(matchStub);

@@ -5,11 +5,11 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
 {
     public class TokenMatch : ITokenMatch
     {
-        public IToken Token { get; set; }
+        public Token Token { get; set; }
         //public string RemainingText { get; set; } = string.Empty;
-        public int CharacterLength { get; set; } = 0;
+        public int Length { get; set; } = 0;
 
-        public TokenMatch(IToken token)
+        public TokenMatch(Token token)
         {
             Token = token ?? throw new ArgumentNullException(nameof(token));
         }

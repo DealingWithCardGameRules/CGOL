@@ -1,14 +1,9 @@
 ﻿namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
 {
-    public class Comment : IToken
+    public class Comment : Token
     {
-        public string Type => "comment";
+        public override string Type => "comment";
 
-        public string RawValue { get; private set; }
-
-        public void Parse(string value)
-        {
-            RawValue = value;
-        }
+        public Comment(string value) : base(value) { }
     }
 }
