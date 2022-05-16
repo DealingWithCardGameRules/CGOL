@@ -40,7 +40,11 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 
         private Token Pop()
         {
-            hasNext = tokenEnumerator.MoveNext();
+            do
+            {
+                hasNext = tokenEnumerator.MoveNext();
+            }
+            while (hasNext && tokenEnumerator.Current is Comment);
             return hasNext ? tokenEnumerator.Current : new SequenceTerminator();
         }
 
