@@ -11,7 +11,6 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
         void DiscardToken();
         void DiscardToken<T>();
 
-        Token ReadToken(Type type);
         T ReadToken<T>() where T : Token;
         void ApplyToken<T>(Action<T> callback) where T : Token;
         bool HasTokens { get; }
