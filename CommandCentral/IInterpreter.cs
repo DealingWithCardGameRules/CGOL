@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.CommandCentral
+namespace dk.itu.game.msc.cgdl.Distribution
 {
-    public interface IInterpolator : IServiceProvider
+    public interface IInterpreter : IServiceProvider
     {
         IEnumerable<Type> SupportedTypes { get; }
         bool Supports(object type);

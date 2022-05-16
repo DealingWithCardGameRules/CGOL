@@ -1,11 +1,11 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
+﻿using dk.itu.game.msc.cgdl.Distribution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace dk.itu.game.msc.cgdl
 {
-    public class Interpolator : IInterpolator
+    public class Interpolator : IInterpreter
     {
         public Dictionary<Type, object> conceptHandlers;
         public HashSet<Type> supported;

@@ -61,8 +61,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             // Given
             var sut = new LiteralParser();
             var stackStub = Substitute.For<IParserQueue>();
-            var literal = new StringLiteral();
-            literal.Parse("\"\"");
+            var literal = new StringLiteral("\"\"");
             stackStub.ApplyToken(Arg.Do<Action<StringLiteral>>(a => a(literal)));
 
             // When
@@ -79,8 +78,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             // Given
             var sut = new LiteralParser();
             var stackStub = Substitute.For<IParserQueue>();
-            var literal = new NumberLiteral();
-            literal.Parse("0");
+            var literal = new NumberLiteral("0");
             stackStub.ApplyToken(Arg.Do<Action<NumberLiteral>>(a => a(literal)));
 
             // When

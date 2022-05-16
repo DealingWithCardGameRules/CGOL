@@ -1,4 +1,4 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
+﻿using dk.itu.game.msc.cgdl.Distribution;
 using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
 using System;
 
@@ -6,12 +6,12 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
     public class CommandConceptParser : IParser<ICommand?>
     {
-        private readonly IInterpolator interpolator;
+        private readonly IInterpreter interpolator;
         private readonly IParser<object?> literalParser;
 
         public ICommand? Result { get; private set; }
 
-        public CommandConceptParser(IInterpolator interpolator, IParser<object?> literalParser)
+        public CommandConceptParser(IInterpreter interpolator, IParser<object?> literalParser)
         {
             this.interpolator = interpolator ?? throw new ArgumentNullException(nameof(interpolator));
             this.literalParser = literalParser ?? throw new ArgumentNullException(nameof(literalParser));

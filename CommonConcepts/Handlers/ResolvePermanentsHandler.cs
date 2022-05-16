@@ -1,7 +1,7 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
 using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
+using dk.itu.game.msc.cgdl.Distribution;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,7 +52,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
                         yield break;
 
                     foreach (var command in template.Permanent)
-                    {
+                    { 
                         command.SetAffactSelfRef(card.Instance);
                         yield return command;
                     }

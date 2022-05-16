@@ -1,4 +1,4 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
+﻿using dk.itu.game.msc.cgdl.Distribution;
 using dk.itu.game.msc.cgdl.FluxxConcepts.Events;
 
 namespace dk.itu.game.msc.cgdl.FluxxConcepts.Observers

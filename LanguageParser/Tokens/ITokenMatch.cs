@@ -2,7 +2,8 @@
 {
     public interface ITokenMatch
     {
-        string RemainingText { get; set; }
-        IToken Token { get; set; }
+        //string RemainingText { get; set; }
+        int Length { get; set; }
+        Token Token { get; set; }
     }
 }

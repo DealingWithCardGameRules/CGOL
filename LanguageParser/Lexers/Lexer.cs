@@ -13,12 +13,12 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
             this.tokenDefinition = tokenDefinition;
         }
 
-        public IEnumerable<IToken> Tokenize(params string[] input)
+        public IEnumerable<Token> Tokenize(params string[] input)
         {
             return Tokenize((IEnumerable<string>)input);
         }
 
-        public IEnumerable<IToken> Tokenize(IEnumerable<string> input)
+        public IEnumerable<Token> Tokenize(IEnumerable<string> input)
         {
             foreach (var text in input)
             {
@@ -30,7 +30,8 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
                     if (match != null)
                     {
                         yield return match.Token;
-                        remaining = match.RemainingText;
+                        var skip = Math.Max(1, match.Length);
+                        remaining = remaining[skip..];
                     }
                     else
                     {

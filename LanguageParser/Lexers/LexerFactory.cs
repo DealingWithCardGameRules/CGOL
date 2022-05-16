@@ -16,7 +16,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
         public Lexer CreateTolerant()
         {
             List<RegexTokenDefinition> definitions = GetRequired().ToList();
-            definitions.Add(new RegexTokenDefinition(new TokenFactory(() => new Symbol()), "^."));
+            definitions.Add(new RegexTokenDefinition((value) => new Symbol(value), "^."));
             var composite = new TokenDefinitionComposite(definitions.ToArray());
 
             return new Lexer(composite);
@@ -25,28 +25,28 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
         private IEnumerable<RegexTokenDefinition> GetRequired()
         {
             // Symbols
-            yield return new RegexTokenDefinition(new TokenFactory(() => new Comment()), @"^/\*(.|\n)*?\*/");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new Comment()), "^//.*");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new SequenceTerminator()), @"^\r?\n");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new ParenthesesStart()), @"^\(");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new ParenthesesEnd()), @"^\)");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new Colon()), "^:");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new Tabulator()), @"^(\t|\s{2})");
+            yield return new RegexTokenDefinition((value) => new Comment(value), @"^/\*(.|\n)*?\*/");
+            yield return new RegexTokenDefinition((value) => new Comment(value), "^//.*");
+            yield return new RegexTokenDefinition((_) => new SequenceTerminator(), @"^\r?\n");
+            yield return new RegexTokenDefinition((value) => new ParenthesesStart(value), @"^\(");
+            yield return new RegexTokenDefinition((value) => new ParenthesesEnd(value), @"^\)");
+            yield return new RegexTokenDefinition((value) => new Colon(value), "^:");
+            yield return new RegexTokenDefinition((value) => new Tabulator(value), @"^(\t|\s{2})");
 
             // Keywords
-            yield return new RegexTokenDefinition(new TokenFactory(() => new PlayKeyword()), @"^play\b");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new IfKeyword()), @"^if\b");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new WhenKeyword()), @"^when\b");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new InstantaneousKeyword()), @"^(instantaneous|inst)\b");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new PermanentKeyword()), @"^(permanent|perm)\b");
+            yield return new RegexTokenDefinition((value) => new PlayKeyword(value), @"^play\b");
+            yield return new RegexTokenDefinition((value) => new IfKeyword(value), @"^if\b");
+            yield return new RegexTokenDefinition((value) => new WhenKeyword(value), @"^when\b");
+            yield return new RegexTokenDefinition((value) => new InstantaneousKeyword(value), @"^(instantaneous|inst)\b");
+            yield return new RegexTokenDefinition((value) => new PermanentKeyword(value), @"^(permanent|perm)\b");
 
             // Literals
-            yield return new RegexTokenDefinition(new TokenFactory(() => new EventType()), @$"^({string.Join('|', Enum.GetNames(typeof(SupportedEvent)))})\b");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new NumberLiteral()), @"^\d+");
-            yield return new RegexTokenDefinition(new TokenFactory(() => new StringLiteral()), "^\"[^\"]*\"");
+            yield return new RegexTokenDefinition((value) => new EventType(value), @$"^({string.Join('|', Enum.GetNames(typeof(SupportedEvent)))})\b");
+            yield return new RegexTokenDefinition((value) => new NumberLiteral(value), @"^\d+");
+            yield return new RegexTokenDefinition((value) => new StringLiteral(value), "^\"[^\"]*\"");
 
             // Concepts
-            yield return new RegexTokenDefinition(new TokenFactory(() => new Concept()), "^[a-zA-Z]+");
+            yield return new RegexTokenDefinition((value) => new Concept(value), "^[a-zA-Z]+");
         }
     }
 }

@@ -5,7 +5,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
     public class ParserQueueFactory : IParserQueueFactory
     {
-        public IParserQueue Create(IEnumerable<IToken> tokens)
+        public IParserQueue Create(IEnumerable<Token> tokens)
         {
             return new ParserQueue(tokens);
         }

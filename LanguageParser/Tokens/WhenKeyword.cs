@@ -1,15 +1,10 @@
 ﻿namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
 {
-    internal class WhenKeyword : IToken
+    internal class WhenKeyword : Token
     {
-        public string RawValue { get; private set; }
+        public override string Type => "keyword";
 
-        public string Type => "keyword";
-
-        public void Parse(string value)
-        {
-            RawValue = value;
-        }
+        public WhenKeyword(string value) : base(value) { }
 
         public override string ToString()
         {

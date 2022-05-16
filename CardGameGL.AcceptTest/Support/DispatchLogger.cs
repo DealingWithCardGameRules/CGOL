@@ -1,4 +1,4 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
+﻿using dk.itu.game.msc.cgdl.Distribution;
 
 namespace CardGameGL.AcceptTest.Support
 {

@@ -2,10 +2,15 @@
 
 namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
 {
-    public interface IToken
+    public abstract class Token
     {
-        string Type { get; }
-        string RawValue { get; }
-        void Parse(string value);
+        public string RawValue { get; }
+
+        public Token(string value)
+        {
+            RawValue = value;
+        }
+        
+        public abstract string Type { get; }
     }
 }

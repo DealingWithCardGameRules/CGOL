@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandCentral", "CommandCentral\CommandCentral.csproj", "{A13C870B-43D1-4E98-9C62-FC1ADD5987B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Distribution", "CommandCentral\Distribution.csproj", "{A13C870B-43D1-4E98-9C62-FC1ADD5987B4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandCentral.Test", "CommandCentral.Test\CommandCentral.Test.csproj", "{33BF0073-2228-410F-9897-0C889B29A414}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Distribution.Test", "CommandCentral.Test\Distribution.Test.csproj", "{33BF0073-2228-410F-9897-0C889B29A414}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluxxConcepts", "FluxxConcepts\FluxxConcepts.csproj", "{4E042DB1-3A57-4C2F-AD33-550ACAF564A5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonConcepts", "CommonConcepts\CommonConcepts.csproj", "{5AC9C996-5F6A-4EF0-9B4D-74CC14BAF8F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "CommonConcepts\Common.csproj", "{5AC9C996-5F6A-4EF0-9B4D-74CC14BAF8F0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluxxConcepts.Test", "FluxxConcepts.Test\FluxxConcepts.Test.csproj", "{66436B03-B4AB-47CC-ABC1-2570F3637423}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameState", "GameState\GameState.csproj", "{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "State", "GameState\State.csproj", "{7AA73B0D-35F0-42CB-AA10-46B100A3ECC6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameEvents", "GameEvents\GameEvents.csproj", "{164ED6DC-7DE0-40A1-B6E5-93B21CDF7E55}"
 EndProject
@@ -35,9 +35,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{64D1BC7C-B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Representation", "Representation\Representation.csproj", "{3E8C1ADE-6E53-4732-A8D6-C6BAFE6C49DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageParser", "LanguageParser\LanguageParser.csproj", "{EB5F59CA-4CA2-4FD0-8E12-EB15B2788683}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser", "LanguageParser\Parser.csproj", "{EB5F59CA-4CA2-4FD0-8E12-EB15B2788683}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageParser.Test", "LanguageParser.Test\LanguageParser.Test.csproj", "{99DA9251-EC9F-4416-B45C-7FFD42817826}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser.Test", "LanguageParser.Test\Parser.Test.csproj", "{99DA9251-EC9F-4416-B45C-7FFD42817826}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

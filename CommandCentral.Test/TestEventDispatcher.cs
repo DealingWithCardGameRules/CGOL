@@ -1,4 +1,5 @@
-﻿using Microsoft.CSharp.RuntimeBinder;
+﻿using dk.itu.game.msc.cgdl.Distribution;
+using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
@@ -12,7 +13,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         public void Dispatch_AnyEvent_CallsSupports()
         {
             // Given
-            var providerMock = Substitute.For<IInterpolator>();
+            var providerMock = Substitute.For<IInterpreter>();
             var sut = new EventDispatcher(providerMock);
 
             // When
@@ -26,7 +27,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         public void Dispatch_NotSupported_DoesNotCallGetService()
         {
             // Given
-            var providerMock = Substitute.For<IInterpolator>();
+            var providerMock = Substitute.For<IInterpreter>();
             var sut = new EventDispatcher(providerMock);
             providerMock.Supports(Arg.Any<IEvent>()).Returns(false);
 
@@ -42,7 +43,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var eventStub = new EventStub();
-            var providerMock = Substitute.For<IInterpolator>();
+            var providerMock = Substitute.For<IInterpreter>();
             var sut = new EventDispatcher(providerMock);
             providerMock.Supports(Arg.Any<IEvent>()).Returns(true);
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<IEventObserver<IEvent>>());
@@ -59,7 +60,7 @@ namespace dk.itu.game.msc.cgdl.CommandCentral.Test
         {
             // Given
             var eventStub = new EventStub();
-            var providerMock = Substitute.For<IInterpolator>();
+            var providerMock = Substitute.For<IInterpreter>();
             var eventObserverMock = Substitute.For<IEventObserver<IEvent>>();
             var sut = new EventDispatcher(providerMock);
             providerMock.Supports(Arg.Any<IEvent>()).Returns(true);

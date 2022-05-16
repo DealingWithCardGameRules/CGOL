@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace dk.itu.game.msc.cgdl.CommandCentral
+﻿namespace dk.itu.game.msc.cgdl.Distribution
 {
     public interface IUserAction
     {

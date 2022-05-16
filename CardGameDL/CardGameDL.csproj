@@ -13,11 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CommandCentral\CommandCentral.csproj" />
+    <ProjectReference Include="..\CommandCentral\Distribution.csproj" />
     <ProjectReference Include="..\FluxxConcepts\FluxxConcepts.csproj" />
     <ProjectReference Include="..\GameEvents\GameEvents.csproj" />
-    <ProjectReference Include="..\GameState\GameState.csproj" />
-    <ProjectReference Include="..\LanguageParser\LanguageParser.csproj" />
+    <ProjectReference Include="..\GameState\State.csproj" />
+    <ProjectReference Include="..\LanguageParser\Parser.csproj" />
   </ItemGroup>
 
 </Project>

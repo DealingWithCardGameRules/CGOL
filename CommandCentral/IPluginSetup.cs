@@ -1,4 +1,4 @@
-﻿namespace dk.itu.game.msc.cgdl.CommandCentral
+﻿namespace dk.itu.game.msc.cgdl.Distribution
 {
     public interface IPluginSetup
     {
@@ -7,7 +7,7 @@
 
     public interface IPluginContext
     {
-        IInterpolator Interpolator { get; }
+        IInterpreter Interpolator { get; }
         ITimeProvider TimeProvider { get; }
         IDispatcher Dispatcher { get; }
     }

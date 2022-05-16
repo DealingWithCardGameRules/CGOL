@@ -1,6 +1,6 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.CommonConcepts.Events;
+using dk.itu.game.msc.cgdl.Distribution;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 {
@@ -15,7 +15,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
 
         public void Handle(PostponeCommand command, IEventDispatcher eventDispatcher)
         {
-            if (command.SelfCardId == null)
+            if (command.SelfRef == null)
                 eventDispatcher.Dispatch(
                     new CommandPostponed(timeProvider.Now, command.ProcessId, command.Command, command.Label));
             else

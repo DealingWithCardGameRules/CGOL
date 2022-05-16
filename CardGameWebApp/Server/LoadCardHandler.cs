@@ -1,5 +1,5 @@
 ﻿using dk.itu.game.msc.cgdl;
-using dk.itu.game.msc.cgdl.CommandCentral;
+using dk.itu.game.msc.cgdl.Distribution;
 using dk.itu.game.msc.cgdl.LanguageParser.Messages;
 using dk.itu.game.msc.cgdl.Representation.Command;
 using System;

@@ -5,15 +5,14 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
 {
     public interface IParserQueue
     {
-        IToken LookAhead1 { get; }
-        IToken LookAhead2 { get; }
+        Token LookAhead1 { get; }
+        Token LookAhead2 { get; }
 
         void DiscardToken();
         void DiscardToken<T>();
 
-        IToken ReadToken(Type type);
-        T ReadToken<T>() where T : IToken;
-        void ApplyToken<T>(Action<T> callback) where T : IToken;
+        T ReadToken<T>() where T : Token;
+        void ApplyToken<T>(Action<T> callback) where T : Token;
         bool HasTokens { get; }
     }
 }

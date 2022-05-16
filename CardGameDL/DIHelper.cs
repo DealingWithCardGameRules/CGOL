@@ -1,5 +1,5 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.CommonConcepts;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts;
+using dk.itu.game.msc.cgdl.Distribution;
 using dk.itu.game.msc.cgdl.GameEvents;
 using dk.itu.game.msc.cgdl.LanguageParser;
 using dk.itu.game.msc.cgdl.LanguageParser.Lexers;
@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgdl
         {
             services.AddSingleton<EventLoggerFactory>();
             services.AddSingleton<DispatcherFactory>();
-            services.AddSingleton<IInterpolator, Interpolator>();
+            services.AddSingleton<IInterpreter, Interpolator>();
             services.AddSingleton<ITimeProvider, UtcTime>();
             services.AddSingleton<IPluginContext, PluginContext>();
         }

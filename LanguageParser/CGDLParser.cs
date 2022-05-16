@@ -1,5 +1,5 @@
-﻿using dk.itu.game.msc.cgdl.CommandCentral;
-using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
+using dk.itu.game.msc.cgdl.Distribution;
 using dk.itu.game.msc.cgdl.LanguageParser.Parsers;
 using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
 using System;
@@ -22,7 +22,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             this.queryParser = queryParser ?? throw new ArgumentNullException(nameof(queryParser));
         }
 
-        public IEnumerable<ICommand> Parse(IEnumerable<IToken> tokens)
+        public IEnumerable<ICommand> Parse(IEnumerable<Token> tokens)
         {
             queue = factory.Create(tokens);
             // [[<template> ]<action>\n]*
@@ -31,92 +31,71 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
             {
                 if (!(queue.LookAhead1 is SequenceTerminator))
                 {
-                    string? inst = null;
-                    string? perm = null;
-                    string? when = null;
-                    SupportedEvent? whenEvent = null;
-
-                    if (queue.LookAhead1 is WhenKeyword)
-                    {
-                        queue.DiscardToken();
-                        when = queue.ReadToken<StringLiteral>().Value;
-                        queue.DiscardToken();
-                        whenEvent = queue.ReadToken<EventType>().Value;
-                        queue.DiscardToken();
-                    }
-                    // Obsolete
-                    else if (queue.LookAhead1 is InstantaneousKeyword)
-                    {
-                        queue.DiscardToken();
-                        inst = queue.ReadToken<StringLiteral>().Value;
-                        queue.DiscardToken();
-                    }
-                    else if (queue.LookAhead1 is PermanentKeyword)
-                    {
-                        queue.DiscardToken();
-                        perm = queue.ReadToken<StringLiteral>().Value;
-                        queue.DiscardToken();
-                    }
-
+                    var wrapper = ParseTemplate();
                     var command = ParseAction();
+                    
                     if (command != null)
-                    {
-                        if (when != null && whenEvent != null)
-                        {
-                            switch(whenEvent.Value)
-                            {
-                                case SupportedEvent.Played:
-                                    yield return new AddInstantaniousEffectToCard(when, command);
-                                    break;
-                                case SupportedEvent.Active:
-                                    yield return new AddPermanentEffectToCard(when, command);
-                                    break;
-                                case SupportedEvent.Drawn:
-                                    yield return new AddAcquisitionEffectToCard(when, command);
-                                    break;
-                            }
-                        }
-                        // Obsolete
-                        else if (inst != null)
-                            yield return new AddInstantaniousEffectToCard(inst, command);
-                        else if (perm != null)
-                            yield return new AddPermanentEffectToCard(perm, command);
-                        else
-                            yield return command;
-                    }
+                        yield return wrapper?.Invoke(command) ?? command;
                 }
 
                 queue.DiscardToken<SequenceTerminator>();
             }
         }
 
+        private Func<ICommand, ICommand>? ParseTemplate()
+        {
+            Func<ICommand, ICommand>? wrapper = null;
+            queue.ApplyToken<WhenKeyword>(_ =>
+            {
+                queue.DiscardToken();
+                var card = queue.ReadToken<StringLiteral>().Value;
+                queue.DiscardToken();
+                var whenEvent = queue.ReadToken<EventType>().Value;
+                queue.DiscardToken();
+
+                if (card != null)
+                {
+                    wrapper = cmd => whenEvent switch
+                    {
+                        SupportedEvent.Played => new AddInstantaniousEffectToCard(card, cmd),
+                        SupportedEvent.Active => new AddPermanentEffectToCard(card, cmd),
+                        SupportedEvent.Drawn => new AddAcquisitionEffectToCard(card, cmd),
+                    };
+                }
+            });
+            if (wrapper != null)
+                return wrapper;
+
+            // Obsolete
+            queue.ApplyToken<InstantaneousKeyword>(_ =>
+            {
+                queue.DiscardToken();
+                var inst = queue.ReadToken<StringLiteral>().Value;
+                queue.DiscardToken();
+                if (inst != null)
+                    wrapper = cmd => new AddInstantaniousEffectToCard(inst, cmd);
+            });
+            if (wrapper != null)
+                return wrapper;
+
+            // Obsolete
+            queue.ApplyToken<PermanentKeyword>(_ =>
+            {
+                queue.DiscardToken();
+                var perm = queue.ReadToken<StringLiteral>().Value;
+                queue.DiscardToken();
+                if (perm != null)
+                    wrapper = cmd => new AddPermanentEffectToCard(perm, cmd);
+            });
+            return wrapper;
+        }
+
         private ICommand? ParseAction()
         {
             // [If (<query>) ][Play ]<concept>
 
-            IQuery<bool>? condition = null;
-            if (queue.LookAhead1 is IfKeyword)
-            {
-                queue.DiscardToken();
-                queue.DiscardToken<ParenthesesStart>();
-                queryParser.Parse(queue);
-                queue.DiscardToken<ParenthesesEnd>();
-                condition = queryParser.Result;
-            }
-
-            bool play = false;
-            string? playLabel = null;
-            if (queue.LookAhead1 is PlayKeyword)
-            {
-                queue.DiscardToken();
-                play = true;
-
-                if (queue.LookAhead1 is StringLiteral)
-                {
-                    playLabel = queue.ReadToken<StringLiteral>().Value;
-                    queue.DiscardToken();
-                }
-            }
+            var condition = ParseCondition();
+            var play = ParsePlay();
 
             ICommand? output;
             if (queue.LookAhead1 is Colon)
@@ -129,14 +108,50 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                 conceptParser.Parse(queue);
                 output = conceptParser.Result;
             }
+            
+            if (output == null)
+                return null;
 
-            if (play)
-                output = new PostponeCommand(output, playLabel);
+            if (play != null)
+                output = play.Invoke(output);
 
             if (condition != null)
-                output = new ConditionalCommand(condition, output);
+                output = condition.Invoke(output);
 
             return output;
+        }
+
+        private Func<ICommand, ICommand>? ParseCondition()
+        {
+            Func<ICommand, ICommand>? wrapper = null;
+            queue.ApplyToken<IfKeyword>(_ =>
+            {
+                queue.DiscardToken();
+                queue.DiscardToken<ParenthesesStart>();
+                queryParser.Parse(queue);
+                queue.DiscardToken<ParenthesesEnd>();
+                var condition = queryParser.Result;
+
+                if (condition != null)
+                    wrapper = cmd => new ConditionalCommand(condition, cmd);
+            });
+            return wrapper;
+        }
+        private Func<ICommand, ICommand>? ParsePlay()
+        {
+            Func<ICommand, ICommand>? wrapper = null;
+            queue.ApplyToken<PlayKeyword>(_ =>
+            {
+                queue.DiscardToken();
+                string? label = null;
+                queue.ApplyToken<StringLiteral>(value =>
+                {
+                    label = value.Value;
+                    queue.DiscardToken();
+                });
+                wrapper = cmd => new PostponeCommand(cmd, label);
+            });
+            return wrapper;
         }
 
         private IEnumerable<ICommand> ParseCommandBundle()
@@ -151,5 +166,6 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                     yield return conceptParser.Result;
             }
         }
+
     }
 }

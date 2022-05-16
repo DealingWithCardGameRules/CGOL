@@ -19,7 +19,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var expected = "Test";
 
             // When
-            sut.Tokenize(aList(expected)).ToArray(); // ToArray forces the IEnumerable to run
+            sut.Tokenize(expected).ToArray(); // ToArray forces the IEnumerable to run
 
             // Then
             definitionMock.Received().Match(expected);
@@ -34,7 +34,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             definitionStub.Match(Arg.Any<string>()).ReturnsNull();
 
             // When
-            var result = sut.Tokenize(aList("Test"));
+            var result = sut.Tokenize("Test");
 
             // Then
             Assert.IsInstanceOfType(result.Single(), typeof(SequenceTerminator));
@@ -47,10 +47,12 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             var definitionStub = Substitute.For<ITokenDefinition>();
             var sut = new Lexer(definitionStub);
             var expected = 2;
-            definitionStub.Match(Arg.Any<string>()).Returns(Substitute.For<ITokenMatch>());
+            var matchMock = Substitute.For<ITokenMatch>();
+            var _ = matchMock.Length.Returns(4);
+            definitionStub.Match(Arg.Any<string>()).Returns(matchMock);
 
             // When
-            var result = sut.Tokenize(aList("Test"));
+            var result = sut.Tokenize("Test");
 
             // Then
             Assert.AreEqual(expected, result.Count());
@@ -67,7 +69,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             definitionStub.Match(Arg.Any<string>()).Returns(matchMock);
 
             // When
-            sut.Tokenize(aList("Test")).ToArray(); // ToArray forces the IEnumerable to run
+            sut.Tokenize("Test").ToArray(); // ToArray forces the IEnumerable to run
 
             // Then
             _ = matchMock.Received().Token;
@@ -80,19 +82,17 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Test
             // Given
             var definitionStub = Substitute.For<ITokenDefinition>();
             var sut = new Lexer(definitionStub);
-            var expected = Substitute.For<IToken>();
+            var expected = Substitute.For<Token>("");
             var matchStub = Substitute.For<ITokenMatch>();
             
             definitionStub.Match(Arg.Any<string>()).Returns(matchStub);
             matchStub.Token.Returns(expected);
 
             // When
-            var result = sut.Tokenize(aList("Test"));
+            var result = sut.Tokenize("Test");
 
             // Then
             result.Contains(expected);
         }
-
-        private T[] aList<T>(params T[] list) => list;
     }
 }
