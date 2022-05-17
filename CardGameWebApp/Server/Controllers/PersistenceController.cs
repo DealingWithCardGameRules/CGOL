@@ -9,7 +9,6 @@ using System;
 using dk.itu.game.msc.cgdl.Representation;
 using Microsoft.AspNetCore.SignalR;
 using CardGameWebApp.Server.Hubs;
-using dk.itu.game.msc.cgdl.LanguageParser;
 
 namespace CardGameWebApp.Server.Controllers
 {

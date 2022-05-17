@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
+namespace dk.itu.game.msc.cgdl.Parser.Tokens
 {
     public abstract class Token
     {
@@ -10,7 +10,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
         {
             RawValue = value;
         }
-        
+
         public abstract string Type { get; }
     }
 }

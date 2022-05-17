@@ -1,9 +1,10 @@
 ﻿using dk.itu.game.msc.cgdl.CommonConcepts.Events;
 using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.LanguageParser.Lexers;
+using dk.itu.game.msc.cgdl.Parser;
+using dk.itu.game.msc.cgdl.Parser.Lexers;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser.Messages
+namespace dk.itu.game.msc.cgdl.Parser.Messages
 {
     public class LoadCGDLHandler : ICommandHandler<LoadCGDL>
     {

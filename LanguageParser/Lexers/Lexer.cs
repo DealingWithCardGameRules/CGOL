@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
+﻿using dk.itu.game.msc.cgdl.Parser.Tokens;
 using System;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser.Lexers
+namespace dk.itu.game.msc.cgdl.Parser.Lexers
 {
     public class Lexer
     {

@@ -11,7 +11,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void GetService_UnknownType_ThrowsUnknownConceptException()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
 
             // When, Then
             Assert.ThrowsException<UnknownConceptException>(() =>
@@ -24,7 +24,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void GetService_KnownCommandHandler_ReturnsCommandHandler()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             var expected = Substitute.For<ICommandHandler<ICommand>>();
             sut.AddConcept(expected);
 
@@ -39,7 +39,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void GetService_KnownQueryHandler_ReturnsQueryHandler()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             var expected = Substitute.For<IQueryHandler<IQuery<int>, int>>();
             sut.AddConcept(expected);
 
@@ -54,7 +54,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void GetService_ConcreteCommandHandler_ReturnsCommandHandler()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             var expected = new CommandHandlerStub();
             sut.AddConcept(expected);
 
@@ -69,7 +69,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void GetService_ConcreteQueryHandler_ReturnsQueryHandler()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             var expected = new QueryHandlerStub();
             sut.AddConcept(expected);
 
@@ -84,7 +84,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void GetService_RemovedCommandHandler_ThrowsUnknownConceptException()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             var commandHandlerStud = new CommandHandlerStub();
             sut.AddConcept(commandHandlerStud);
             sut.RemoveConcept(commandHandlerStud);
@@ -100,7 +100,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void GetService_RemovedQueryHandler_ThrowsUnknownConceptException()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             var queryHandlerStud = new QueryHandlerStub();
             sut.AddConcept(queryHandlerStud);
             sut.RemoveConcept(queryHandlerStud);
@@ -116,7 +116,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void GetService_RemovedEventObserver_ThrowsUnknownConceptException()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             var eventObserverStud = new EventObserverStub();
             sut.AddConcept(eventObserverStud);
             sut.RemoveConcept(eventObserverStud);
@@ -132,7 +132,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_UnknownEvent_ReturnsFalse()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
 
             // When
             var result = sut.Supports<EventStub>();
@@ -146,7 +146,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_UnknownCommand_ReturnsFalse()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
 
             // When
             var result = sut.Supports<CommandStub>();
@@ -159,7 +159,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_UnknownQuery_ReturnsFalse()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
 
             // When
             var result = sut.Supports<QueryStub>();
@@ -172,7 +172,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_OtherUnknownQuery_ReturnsFalse()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(Substitute.For<IQueryHandler<IQuery<bool>, bool>>());
 
             // When
@@ -186,7 +186,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_AskForQueryInterface_ReturnsFalse()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(new QueryHandlerStub());
 
             // When
@@ -200,7 +200,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_AskForCommandInterface_ReturnsFalse()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(new CommandHandlerStub());
 
             // When
@@ -214,7 +214,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_AskForEventInterface_ReturnsFalse()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(new EventObserverStub());
 
             // When
@@ -228,7 +228,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_KnownEvent_ReturnsTrue()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(Substitute.For<IEventObserver<IEvent>>());
 
             // When
@@ -242,7 +242,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_KnownQuery_ReturnsTrue()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(Substitute.For<IQueryHandler<IQuery<int>, int>>());
 
             // When
@@ -256,7 +256,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_KnownCommand_ReturnsTrue()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(Substitute.For<ICommandHandler<ICommand>>());
 
             // When
@@ -270,7 +270,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_ConcreteCommand_ReturnsTrue()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(new CommandHandlerStub());
 
             // When
@@ -284,7 +284,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_ConcreteQuery_ReturnsTrue()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(new QueryHandlerStub());
 
             // When
@@ -298,7 +298,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_ConcreteEvent_ReturnsTrue()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(new EventObserverStub());
 
             // When
@@ -312,7 +312,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_RemovedEvent_ReturnsFalse()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             var observerStub = new EventObserverStub();
             sut.AddConcept(observerStub);
             sut.RemoveConcept(observerStub);
@@ -328,7 +328,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_RemovedCommand_ReturnsFalse()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(new CommandHandlerStub());
             sut.RemoveConcept(new CommandHandlerStub());
 
@@ -343,7 +343,7 @@ namespace dk.itu.game.msc.cgdl.Test
         public void Supports_RemovedQuery_ReturnsFalse()
         {
             // Given
-            var sut = new Interpolator();
+            var sut = new Interpreter();
             sut.AddConcept(new QueryHandlerStub());
             sut.RemoveConcept(new QueryHandlerStub());
 

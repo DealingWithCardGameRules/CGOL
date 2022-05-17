@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace dk.itu.game.msc.cgdl
 {
-    public class Interpolator : IInterpreter
+    public class Interpreter : IInterpreter
     {
         public Dictionary<Type, object> conceptHandlers;
         public HashSet<Type> supported;
 
         public IEnumerable<Type> SupportedTypes => supported;
 
-        public Interpolator()
+        public Interpreter()
         {
             conceptHandlers = new Dictionary<Type, object>();
             supported = new HashSet<Type>();
@@ -112,18 +112,11 @@ namespace dk.itu.game.msc.cgdl
                 conceptHandlers.Remove(typeof(T));
         }
 
-        public Type? ResolveCommand(string concept)
+        public Type? Resolve<TConcept>(string concept)
         {
             return supported
-                .Where(t => typeof(ICommand).IsAssignableFrom(t))
-                .FirstOrDefault(t => t.Name.Equals(concept));
-        }
-
-        public Type? ResolveQuery<TReturn>(string concept)
-        {
-            return supported
-                .Where(t => typeof(IQuery<TReturn>).IsAssignableFrom(t))
-                .FirstOrDefault(t => t.Name.Equals(concept));
+                .Where(t => typeof(TConcept).IsAssignableFrom(t))
+                .FirstOrDefault(t => t.Name.Equals(concept, StringComparison.OrdinalIgnoreCase));
         }
     }
 

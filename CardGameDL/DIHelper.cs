@@ -1,9 +1,9 @@
 ﻿using dk.itu.game.msc.cgdl.CommonConcepts;
 using dk.itu.game.msc.cgdl.Distribution;
 using dk.itu.game.msc.cgdl.GameEvents;
-using dk.itu.game.msc.cgdl.LanguageParser;
-using dk.itu.game.msc.cgdl.LanguageParser.Lexers;
-using dk.itu.game.msc.cgdl.LanguageParser.Parsers;
+using dk.itu.game.msc.cgdl.Parser;
+using dk.itu.game.msc.cgdl.Parser.Lexers;
+using dk.itu.game.msc.cgdl.Parser.Parsers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace dk.itu.game.msc.cgdl
@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgdl
         {
             services.AddSingleton<EventLoggerFactory>();
             services.AddSingleton<DispatcherFactory>();
-            services.AddSingleton<IInterpreter, Interpolator>();
+            services.AddSingleton<IInterpreter, Interpreter>();
             services.AddSingleton<ITimeProvider, UtcTime>();
             services.AddSingleton<IPluginContext, PluginContext>();
         }
@@ -23,8 +23,8 @@ namespace dk.itu.game.msc.cgdl
         {
             services.AddSingleton<IParserQueueFactory, ParserQueueFactory>();
             services.AddSingleton<IParser<object?>, LiteralParser>();
-            services.AddSingleton<IParser<ICommand?>, CommandConceptParser>();
-            services.AddSingleton<IParser<IQuery<bool>?>, QueryConceptParser>();
+            services.AddSingleton<IParser<ICommand?>, ConceptParser<ICommand?>>();
+            services.AddSingleton<IParser<IQuery<bool>?>, ConceptParser<IQuery<bool>?>>();
             services.AddSingleton<CGDLParser>();
             services.AddSingleton<LexerFactory>();
             services.AddSingleton<CardGameDLParser>();

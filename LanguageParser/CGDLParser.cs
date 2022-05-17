@@ -1,12 +1,12 @@
 ﻿using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
 using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.LanguageParser.Parsers;
-using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
+using dk.itu.game.msc.cgdl.Parser.Parsers;
+using dk.itu.game.msc.cgdl.Parser.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser
+namespace dk.itu.game.msc.cgdl.Parser
 {
     public class CGDLParser
     {
@@ -18,7 +18,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
         public CGDLParser(IParserQueueFactory factory, IParser<ICommand?> commandParser, IParser<IQuery<bool>?> queryParser)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
-            this.conceptParser = commandParser ?? throw new ArgumentNullException(nameof(commandParser));
+            conceptParser = commandParser ?? throw new ArgumentNullException(nameof(commandParser));
             this.queryParser = queryParser ?? throw new ArgumentNullException(nameof(queryParser));
         }
 
@@ -26,14 +26,14 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
         {
             queue = factory.Create(tokens);
             // [[<template> ]<action>\n]*
-            
-            while (queue.HasTokens) 
+
+            while (queue.HasTokens)
             {
                 if (!(queue.LookAhead1 is SequenceTerminator))
                 {
                     var wrapper = ParseTemplate();
                     var command = ParseAction();
-                    
+
                     if (command != null)
                         yield return wrapper?.Invoke(command) ?? command;
                 }
@@ -108,7 +108,7 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                 conceptParser.Parse(queue);
                 output = conceptParser.Result;
             }
-            
+
             if (output == null)
                 return null;
 

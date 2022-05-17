@@ -1,9 +1,9 @@
 ﻿using dk.itu.game.msc.cgdl.CommonConcepts.Handlers;
 using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.LanguageParser.Lexers;
-using dk.itu.game.msc.cgdl.LanguageParser.Messages;
+using dk.itu.game.msc.cgdl.Parser.Lexers;
+using dk.itu.game.msc.cgdl.Parser.Messages;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser
+namespace dk.itu.game.msc.cgdl.Parser
 {
     public class LanguageParserSetup
     {

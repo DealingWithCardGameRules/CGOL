@@ -1,4 +1,4 @@
-﻿namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
+﻿namespace dk.itu.game.msc.cgdl.Parser.Tokens
 {
     public class InstantaneousKeyword : Token
     {
