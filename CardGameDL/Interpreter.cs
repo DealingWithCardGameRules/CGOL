@@ -112,25 +112,11 @@ namespace dk.itu.game.msc.cgdl
                 conceptHandlers.Remove(typeof(T));
         }
 
-        public Type? ResolveCommand(string concept)
-        {
-            return supported
-                .Where(t => typeof(ICommand).IsAssignableFrom(t))
-                .FirstOrDefault(t => t.Name.Equals(concept));
-        }
-
-        public Type? ResolveQuery<TReturn>(string concept)
-        {
-            return supported
-                .Where(t => typeof(IQuery<TReturn>).IsAssignableFrom(t))
-                .FirstOrDefault(t => t.Name.Equals(concept));
-        }
-
         public Type? Resolve<TConcept>(string concept)
         {
             return supported
                 .Where(t => typeof(TConcept).IsAssignableFrom(t))
-                .FirstOrDefault(t => t.Name.Equals(concept));
+                .FirstOrDefault(t => t.Name.Equals(concept, StringComparison.OrdinalIgnoreCase));
         }
     }
 
