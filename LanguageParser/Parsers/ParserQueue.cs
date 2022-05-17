@@ -1,12 +1,11 @@
-﻿using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
+﻿using dk.itu.game.msc.cgdl.Parser.Tokens;
 using System;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
+namespace dk.itu.game.msc.cgdl.Parser.Parsers
 {
     internal class ParserQueue : IParserQueue
     {
-        //private readonly Queue<Token> tokenStack;
         private readonly IEnumerator<Token> tokenEnumerator;
         public Token LookAhead1 { get; private set; }
         public Token LookAhead2 { get; private set; }
@@ -38,6 +37,13 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
             DiscardToken();
         }
 
+        public void ApplyToken<T>(Action<T> callback) where T : Token
+        {
+            // We only call the callback action if the types are a match
+            if (LookAhead1 is T value)
+                callback(value);
+        }
+
         private Token Pop()
         {
             do
@@ -52,13 +58,6 @@ namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
         {
             if (!(token is T))
                 throw new GDLParserException($"Expected {typeof(T).Name} but found {LookAhead1}");
-        }
-
-        public void ApplyToken<T>(Action<T> callback) where T : Token
-        {
-            // We only call the callback action if the types are a match
-            if (LookAhead1 is T value)
-                callback(value);
         }
     }
 }

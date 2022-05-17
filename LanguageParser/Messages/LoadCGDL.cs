@@ -1,7 +1,7 @@
 ﻿using dk.itu.game.msc.cgdl.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser.Messages
+namespace dk.itu.game.msc.cgdl.Parser.Messages
 {
     public class LoadCGDL : ICommand
     {

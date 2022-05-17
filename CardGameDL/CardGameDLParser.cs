@@ -1,6 +1,6 @@
 ﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.LanguageParser;
-using dk.itu.game.msc.cgdl.LanguageParser.Lexers;
+using dk.itu.game.msc.cgdl.Parser;
+using dk.itu.game.msc.cgdl.Parser.Lexers;
 using System.Collections.Generic;
 using System.IO;
 

@@ -1,4 +1,4 @@
-﻿namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
+﻿namespace dk.itu.game.msc.cgdl.Parser.Parsers
 {
     public interface IParser<T>
     {

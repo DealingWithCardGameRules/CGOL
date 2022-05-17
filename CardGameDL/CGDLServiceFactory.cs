@@ -2,7 +2,7 @@
 using dk.itu.game.msc.cgdl.Distribution;
 using dk.itu.game.msc.cgdl.FluxxConcepts;
 using dk.itu.game.msc.cgdl.GameState;
-using dk.itu.game.msc.cgdl.LanguageParser;
+using dk.itu.game.msc.cgdl.Parser;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

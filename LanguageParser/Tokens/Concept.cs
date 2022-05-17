@@ -1,4 +1,4 @@
-﻿namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
+﻿namespace dk.itu.game.msc.cgdl.Parser.Tokens
 {
     public class Concept : Token
     {
@@ -6,7 +6,7 @@
 
         public override string Type => "concept";
 
-        public Concept(string value) : base(value) 
+        public Concept(string value) : base(value)
         {
             Name = value;
         }

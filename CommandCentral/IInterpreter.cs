@@ -8,8 +8,7 @@ namespace dk.itu.game.msc.cgdl.Distribution
         IEnumerable<Type> SupportedTypes { get; }
         bool Supports(object type);
         bool Supports<T>();
-        Type? ResolveCommand(string concept);
-        Type? ResolveQuery<TReturn>(string concept);
+        Type? Resolve<TConcept>(string concept);
         void AddConcept<T>(ICommandHandler<T> commandHandler) where T : ICommand;
         void AddConcept<T, TResult>(IQueryHandler<T, TResult> queryHandler) where T : IQuery<TResult>;
         void AddConcept<T>(IEventObserver<T> eventObserver) where T : IEvent;

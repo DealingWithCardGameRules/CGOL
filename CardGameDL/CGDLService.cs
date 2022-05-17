@@ -1,5 +1,5 @@
 ﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.LanguageParser.Messages;
+using dk.itu.game.msc.cgdl.Parser.Messages;
 
 namespace dk.itu.game.msc.cgdl
 {

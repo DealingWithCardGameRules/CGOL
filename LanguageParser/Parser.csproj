@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Parsers\CommandConceptParser.cs" />
+    <Compile Remove="Parsers\QueryConceptParser.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Pluralize.NET" Version="1.0.2" />
   </ItemGroup>
 

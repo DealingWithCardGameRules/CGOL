@@ -1,5 +1,5 @@
-﻿using dk.itu.game.msc.cgdl.LanguageParser.Lexers;
-using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
+﻿using dk.itu.game.msc.cgdl.Parser.Lexers;
+using dk.itu.game.msc.cgdl.Parser.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;

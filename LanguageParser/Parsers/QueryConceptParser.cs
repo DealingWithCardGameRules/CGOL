@@ -1,8 +1,8 @@
 ﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.LanguageParser.Tokens;
+using dk.itu.game.msc.cgdl.Parser.Tokens;
 using System;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser.Parsers
+namespace dk.itu.game.msc.cgdl.Parser.Parsers
 {
     public class QueryConceptParser : IParser<IQuery<bool>?>
     {

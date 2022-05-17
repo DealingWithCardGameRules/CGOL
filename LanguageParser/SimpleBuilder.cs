@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser
+namespace dk.itu.game.msc.cgdl.Parser
 {
     public class SimpleBuilder<T>
     {
@@ -52,15 +52,15 @@ namespace dk.itu.game.msc.cgdl.LanguageParser
                         throw new GDLParserException($"The concept {type.Name} expects {requiredParameters} arguments but found {arguments.Count().Pluralize("arguments")}");
                     else
                         throw new GDLParserException($"The concept {type.Name} expects between {requiredParameters.Pluralize("arguments")} and {optionalParameters.Pluralize("arguments")} but found {arguments.Count().Pluralize("arguments")}");
-                }  
-                
+                }
+
                 for (int i = 0; i < arguments.Count(); i++)
                 {
                     if (arguments.ElementAt(i)?.GetType() != ArgumentTypes.ElementAt(i))
-                        throw new GDLParserException($"The concept {type.Name} expects the following parameter {"types".Pluralize(optionalParameters)} [{string.Join(",", ArgumentTypes.Select(t => t.Name))}] but found [{string.Join(",", arguments.Select(a => a?.GetType().Name??"<none>"))}] {"arguments".Pluralize(arguments.Count())}");
+                        throw new GDLParserException($"The concept {type.Name} expects the following parameter {"types".Pluralize(optionalParameters)} [{string.Join(",", ArgumentTypes.Select(t => t.Name))}] but found [{string.Join(",", arguments.Select(a => a?.GetType().Name ?? "<none>"))}] {"arguments".Pluralize(arguments.Count())}");
                 }
 
-                return (T)Activator.CreateInstance(type, 
+                return (T)Activator.CreateInstance(type,
                     BindingFlags.CreateInstance |
                     BindingFlags.Public |
                     BindingFlags.Instance |

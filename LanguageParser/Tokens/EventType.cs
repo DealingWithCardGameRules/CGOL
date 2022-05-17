@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser.Tokens
+namespace dk.itu.game.msc.cgdl.Parser.Tokens
 {
     internal class EventType : Token
     {
