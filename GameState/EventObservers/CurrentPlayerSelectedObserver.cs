@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
     {
         private readonly Game game;
 
-        public CurrentPlayerSelectedObserver(Game game)
+        internal CurrentPlayerSelectedObserver(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }

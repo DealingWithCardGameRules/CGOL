@@ -9,7 +9,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
         private readonly Game game;
         private readonly IQueryDispatcher dispatcher;
 
-        public HasCardsHandler(Game game, IQueryDispatcher dispatcher)
+        internal HasCardsHandler(Game game, IQueryDispatcher dispatcher)
         {
             this.game = game ?? throw new ArgumentNullException(nameof(game));
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));

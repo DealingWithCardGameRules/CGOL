@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.GameState
 {
-    public class CommandRepository : ICommandRepositoryQueries
+    internal class CommandRepository : ICommandRepositoryQueries
     {
         private readonly List<IUserAction> repository;
 

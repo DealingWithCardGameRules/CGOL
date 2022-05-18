@@ -12,7 +12,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
         private readonly Game game;
         private readonly IDispatcher dispatcher;
 
-        public CardDealtObserver(Game game, IDispatcher dispatcher)
+        internal CardDealtObserver(Game game, IDispatcher dispatcher)
         {
             this.game = game ?? throw new ArgumentNullException(nameof(game));
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));

@@ -8,7 +8,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
     {
         private readonly Game game;
 
-        public GetCollectionTagsHandler(Game game)
+        internal GetCollectionTagsHandler(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }

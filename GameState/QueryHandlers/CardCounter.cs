@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
     {
         private readonly Game game;
 
-        public CardCounter(Game game)
+        internal CardCounter(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }

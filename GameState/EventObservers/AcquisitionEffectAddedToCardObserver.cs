@@ -8,7 +8,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
     {
         private readonly Library library;
 
-        public AcquisitionEffectAddedToCardObserver(Library library)
+        internal AcquisitionEffectAddedToCardObserver(Library library)
         {
             this.library = library ?? throw new ArgumentNullException(nameof(library));
         }

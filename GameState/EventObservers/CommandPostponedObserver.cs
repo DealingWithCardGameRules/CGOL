@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
     {
         private readonly CommandRepository repository;
 
-        public CommandPostponedObserver(CommandRepository repository)
+        internal CommandPostponedObserver(CommandRepository repository)
         {
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
         }

@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
     {
         private readonly Game game;
 
-        public ZoneDeclaredObserver(Game game)
+        internal ZoneDeclaredObserver(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }

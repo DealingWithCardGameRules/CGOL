@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
     {
         private readonly Library library;
 
-        public InstantaniousEffectAddedToCardObserver(Library library)
+        internal InstantaniousEffectAddedToCardObserver(Library library)
         {
             this.library = library ?? throw new System.ArgumentNullException(nameof(library));
         }

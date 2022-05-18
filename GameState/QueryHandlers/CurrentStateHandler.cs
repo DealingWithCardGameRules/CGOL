@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
     {
         private readonly Game game;
 
-        public CurrentStateHandler(Game game)
+        internal CurrentStateHandler(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }

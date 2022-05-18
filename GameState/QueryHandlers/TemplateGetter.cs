@@ -8,7 +8,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
     {
         private readonly Library library;
 
-        public TemplateGetter(Library library)
+        internal TemplateGetter(Library library)
         {
             this.library = library ?? throw new System.ArgumentNullException(nameof(library));
         }

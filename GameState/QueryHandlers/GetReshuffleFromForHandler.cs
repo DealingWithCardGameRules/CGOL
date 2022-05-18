@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
     {
         private readonly ReshuffleRules reshuffleRules;
 
-        public GetReshuffleFromForHandler(ReshuffleRules reshuffleRules)
+        internal GetReshuffleFromForHandler(ReshuffleRules reshuffleRules)
         {
             this.reshuffleRules = reshuffleRules ?? throw new System.ArgumentNullException(nameof(reshuffleRules));
         }

@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
     {
         private readonly Game game;
 
-        public CollectionShuffledObserver(Game game)
+        internal CollectionShuffledObserver(Game game)
         {
             this.game = game;
         }

@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
     {
         private readonly Game game;
 
-        public GetPlayersHandHandler(Game game)
+        internal GetPlayersHandHandler(Game game)
         {
             this.game = game;
         }

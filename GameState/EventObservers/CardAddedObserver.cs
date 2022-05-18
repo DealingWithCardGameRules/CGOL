@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
     {
         private readonly Game game;
 
-        public CardAddedObserver(Game game)
+        internal CardAddedObserver(Game game)
         {
             this.game = game;
         }

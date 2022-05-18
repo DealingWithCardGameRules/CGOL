@@ -7,7 +7,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
     {
         private readonly ReshuffleRules reshuffleRules;
 
-        public ReshuffleRuleSetObserver(ReshuffleRules ReshuffleRules)
+        internal ReshuffleRuleSetObserver(ReshuffleRules ReshuffleRules)
         {
             reshuffleRules = ReshuffleRules ?? throw new System.ArgumentNullException(nameof(ReshuffleRules));
         }

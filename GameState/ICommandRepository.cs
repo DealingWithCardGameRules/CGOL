@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.GameState
 {
-    public interface ICommandRepositoryQueries
+    internal interface ICommandRepositoryQueries
     {
         IEnumerable<IUserAction> GetCommands(int? playerIndex = null);
     }
