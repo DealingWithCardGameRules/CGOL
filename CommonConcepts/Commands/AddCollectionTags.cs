@@ -13,7 +13,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public string Collection { get; }
         public IEnumerable<string> Tags { get; }
 
-        [Concept(Description = "Add tags to a given collections. Tags are comma seperated.")]
+        [Concept(Description = "Add tags to a given collection. Tags are comma separated.")]
         public AddCollectionTags(string collection, string tags)
         {
             Collection = collection;

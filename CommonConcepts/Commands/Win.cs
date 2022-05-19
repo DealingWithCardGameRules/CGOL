@@ -11,7 +11,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public Guid Instance { get; }
         public int? PlayerIndex { get; }
 
-        [Concept(Description = "Declare game won. Specify winning player index otherwise the current player is declared winner.")]
+        [Concept(Description = "Declare the game won. Specify winning player index otherwise the current player is declared winner.")]
         public Win(int playerIndex = 0)
         {
             Instance = Guid.NewGuid();

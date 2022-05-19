@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgdl.Distribution;
 using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Queries
@@ -8,6 +9,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Queries
         public string Collection { get; set; }
         public int? PlayerIndex { get; }
 
+        [Concept(Description = "Get available player actions for a given collection, for a given player or all players if no player is specified.")]
         public GetAvailableActionsForCollection(string collection, int? playerIndex = null)
         {
             Collection = collection ?? throw new System.ArgumentNullException(nameof(collection));

@@ -32,6 +32,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
             }
         }
 
+        [Concept(Description = "Only dispatch the command if the query returns true. Use the If keyword to utilize this.")]
         public ConditionalCommand(IQuery<bool> query, ICommand command)
         {
             Instance = Guid.NewGuid();

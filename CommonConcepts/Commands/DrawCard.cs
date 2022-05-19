@@ -11,7 +11,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public string? Destination { get; }
         public Guid Instance { get; }
 
-        [Concept(Description = "Draw a card from one collection and place it in an other collection. If the to parameter is not set, the destination is set to the current players hand.")]
+        [Concept(Description = "Draw a card from one collection and place it in another collection. If the to parameter is not set, the destination is set to the current players hand.")]
         public DrawCard(string from, string to = null)
         {
             Instance = Guid.NewGuid();

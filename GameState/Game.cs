@@ -138,14 +138,14 @@ namespace dk.itu.game.msc.cgdl.GameState
             collections.Add(collection.Name, collection);
         }
 
-        internal int CollectionSize(string stack)
+        internal int CollectionSize(string collection)
         {
-            return collections[stack].Count();
+            return collections[collection].Count();
         }
 
-        internal ICard? GetCard(string stack)
+        internal ICard? GetCard(string collection)
         {
-            return collections[stack].GetCard();
+            return collections[collection].GetCard();
         }
 
         internal ICard? GetCard(string collection, Guid cardId)

@@ -13,7 +13,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public IEnumerable<string>? Tags { get; }
         public string Destination { get; }
 
-        [Concept(Description = "Discard cards from a collection of card to an other collection. If tags are set, only cars with those specific tags are discarded.")]
+        [Concept(Description = "Discard cards from a collection of cards to another collection. If tags are set, only cars with those specific tags are discarded.")]
         public DiscardCards(string from, string to, string tags = null)
         {
             Instance = Guid.NewGuid();

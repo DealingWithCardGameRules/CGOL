@@ -37,6 +37,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 
         public IEnumerable<ICommand> Commands { get; }
 
+        [Concept(Description = "Bundle a number of commands to be distributed at the same time. Use the colon, newline-tab syntax to utilize.")]
         public CommandBundle(ICommand[] commands)
         {
             Instance = Guid.NewGuid();

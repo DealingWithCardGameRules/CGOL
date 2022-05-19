@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgdl.Distribution;
 using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
@@ -10,6 +11,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public Guid Instance { get; }
         public string? Collection { get; }
 
+        [Concept(Description = "Play a random card from the collection. If collection is not specified, the players hand is assumed.")]
         public PlayRandom(string collection = null)
         {
             Instance = Guid.NewGuid();

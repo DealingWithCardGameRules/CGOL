@@ -13,7 +13,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public string Card { get; }
         public IEnumerable<string> Tags { get; }
 
-        [Concept(Description = "Add tags to a card template. Refer to the template by the unique card template name and a comma seperated list of tags.")]
+        [Concept(Description = "Add tags to a card template. Refer to the template by the unique card template name and a comma separated list of tags.")]
         public AddCardTags(string card, string tags)
         {
             if (tags is null)

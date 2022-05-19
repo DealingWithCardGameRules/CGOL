@@ -81,7 +81,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             sut.Handle(command, eventDispatcherMock);
 
             // Then
-            eventDispatcherMock.Received().Dispatch(Arg.Is<CardDrawn>(result => expectedDestination == result.Distination));
+            eventDispatcherMock.Received().Dispatch(Arg.Is<CardDrawn>(result => expectedDestination == result.Destination));
         }
     }
 }

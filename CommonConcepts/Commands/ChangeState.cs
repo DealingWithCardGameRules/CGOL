@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgdl.Distribution;
 using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
@@ -10,6 +11,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public Guid Instance { get; }
         public string NewState { get; }
 
+        [Concept(Description = "Change the game state. This triggers when active effects.")]
         public ChangeState(string newState)
         {
             Instance = Guid.NewGuid();

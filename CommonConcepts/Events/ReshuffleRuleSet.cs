@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgdl.Distribution;
 using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
@@ -12,7 +13,8 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
         public Guid ProcessId { get; }
         public string From { get; }
         public string To { get; }
-
+        
+        [Concept(Description = "A reshuffle rule was set up. The from collection will be shuffled into the to collection if the to collection runs out of cards.")]
         public ReshuffleRuleSet(DateTime eventTime, Guid processId, string from, string to)
         {
             EventTime = eventTime;

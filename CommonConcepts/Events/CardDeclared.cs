@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgdl.Distribution;
 using System;
 
 namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
@@ -14,6 +15,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
         public ICardTemplate Card { get; }
         public string Name { get; }
 
+        [Concept(Description = "A card was declared.")]
         public CardDeclared(DateTime eventTime, Guid processId, string template, ICardTemplate card)
         {
             EventTime = eventTime;

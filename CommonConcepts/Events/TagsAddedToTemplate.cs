@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgdl.Distribution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
         public string Template { get; }
         public string[] Tags { get; }
 
+        [Concept(Description = "Tags were added to the card template.")]
         public TagsAddedToTemplate(DateTime eventTime, Guid processId, string template, IEnumerable<string> tags)
         {
             EventTime = eventTime;

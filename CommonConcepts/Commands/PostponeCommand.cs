@@ -31,6 +31,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
             }
         }
 
+        [Concept(Description = "Set up a player action. If the label is not supplied, the command name is displayed for the player. If attached to a card, the action is considered temporary. Use the Play keyword to utilize.")]
         public PostponeCommand(ICommand command, string? label = null)
         {
             Instance = Guid.NewGuid();
