@@ -21,7 +21,7 @@ namespace dk.itu.game.msc.cgdl.GameState.EventObservers
         public void Invoke(CardDealt @event)
         {
             var card = game.GetCard(@event.Source) ?? throw new NullReferenceException($"Fatal event exception, no cards in source: {@event.Source}");
-            game.AddCard(@event.Distination, card);
+            game.AddCard(@event.Destination, card);
             game.RemoveCard(@event.Source, card.Instance);
 
             var template = dispatcher.Dispatch(new GetTemplate(card.Template));
