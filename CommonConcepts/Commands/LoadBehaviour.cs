@@ -11,7 +11,7 @@ namespace dk.itu.game.msc.cgdl.Common.Commands
         public string AssemblyName { get; }
         public string? SetupClass { get; }
 
-        [Concept(Description = "Load handlers via a .net assembly name, then instantitate and invoke setup for a class inheriting from IPluginSetup. If no setup class is defined, the first public class inherting from IPluginSetup is used.")]
+        [Concept(Description = "Proof of concept command. Load handlers via a .net assembly name, then instantiate and invoke setup for a class inheriting from IPluginSetup. If no setup class is defined, the first public class inheriting from IPluginSetup is used.")]
         public LoadBehaviour(string assemblyName, string setupClass = null)
         {
             Instance = Guid.NewGuid();
