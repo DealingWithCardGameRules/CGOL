@@ -77,8 +77,12 @@
 	{
 		game.Game.CGDLSource = highlighter.Value;
 		var response = await Http.PostAsync(session.Links["game"], JsonContent.Create(game.Game));
-		if (response.StatusCode == HttpStatusCode.Created)
+		if (response.StatusCode == HttpStatusCode.OK)
 		{
+			session = await Http.GetFromJsonAsync<SessionResponse>(session.Links["self"]);
+			if (session.Links.ContainsKey("concepts"))
+				await highlighter.UpdateConcepts(session.Links["concepts"]);
+
 			this.StateHasChanged();
 		}
 	}
