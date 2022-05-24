@@ -6,16 +6,16 @@ using System.Reflection;
 
 namespace dk.itu.game.msc.cgdl.Handlers
 {
-    public class LoadBehaviourHandler : ICommandHandler<LoadBehaviour>
+    public class LoadBehaviorHandler : ICommandHandler<LoadBehavior>
     {
         private readonly IPluginContext context;
 
-        public LoadBehaviourHandler(IPluginContext context)
+        public LoadBehaviorHandler(IPluginContext context)
         {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public void Handle(LoadBehaviour command, IEventDispatcher eventDispatcher)
+        public void Handle(LoadBehavior command, IEventDispatcher eventDispatcher)
         {
             var assembly = Assembly.Load(command.AssemblyName);
             Type type;

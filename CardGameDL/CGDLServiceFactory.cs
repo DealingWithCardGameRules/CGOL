@@ -30,7 +30,7 @@ namespace dk.itu.game.msc.cgdl
             var context = serviceProvider.GetRequiredService<IPluginContext>();
             serviceProvider.GetRequiredService<CommonConceptsSetup>().Setup(context);
             serviceProvider.GetRequiredService<LanguageParserSetup>().Setup(context);
-            context.Interpolator.AddConcept(new LoadBehaviourHandler(context));
+            context.Interpolator.AddConcept(new LoadBehaviorHandler(context));
 
             new GameStateSetup().Setup(context);
             return CreateEmpty();

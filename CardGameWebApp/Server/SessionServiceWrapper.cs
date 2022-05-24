@@ -22,7 +22,7 @@ namespace CardGameWebApp.Server
         {
             session.Create(id, userEnquirerFactory);
             var ses = session.GetSession(id);
-            ses.Service.LoadConcepts(new FluxxConceptsSetup());
+            //ses.Service.LoadConcepts(new FluxxConceptsSetup());
             ses.Interpolator.AddConcept(new LoadCardHandler(ses.Service, storage, context));
         }
 
