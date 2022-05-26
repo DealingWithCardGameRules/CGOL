@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "State", "GameState\State.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameEvents", "GameEvents\GameEvents.csproj", "{164ED6DC-7DE0-40A1-B6E5-93B21CDF7E55}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameOL", "CardGameDL\CardGameOL.csproj", "{24B9AB8D-0470-43C3-881D-9149098909B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CGOL", "CardGameDL\CGOL.csproj", "{24B9AB8D-0470-43C3-881D-9149098909B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameOL.Test", "CardGameDL.Test\CardGameOL.Test.csproj", "{F0CFCF37-1796-4E32-AA44-FBB61F9BE72C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CGOL.Test", "CardGameDL.Test\CGOL.Test.csproj", "{F0CFCF37-1796-4E32-AA44-FBB61F9BE72C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameOL.AcceptTest", "CardGameGL.AcceptTest\CardGameOL.AcceptTest.csproj", "{743FAE35-282F-4BC6-81B3-7E556CA18D20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CGOL.AcceptTest", "CardGameGL.AcceptTest\CGOL.AcceptTest.csproj", "{743FAE35-282F-4BC6-81B3-7E556CA18D20}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameWebApp.Server", "CardGameWebApp\Server\CardGameWebApp.Server.csproj", "{FE3C32B0-ED1C-47D7-82E5-261C3E828047}"
 EndProject
