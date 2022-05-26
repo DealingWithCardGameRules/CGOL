@@ -3,7 +3,7 @@ using CardGameGL.AcceptTest.Drivers;
 namespace CardGameGL.AcceptTest.StepDefinitions
 {
     [Binding]
-    public class CGDLStepDefinitions
+    public class CGOLStepDefinitions
     {
         GameDriver gameDriver = new GameDriver();
 
@@ -32,9 +32,9 @@ namespace CardGameGL.AcceptTest.StepDefinitions
         }
 
         [Given(@"the following:")]
-        public void GivenTheFollowing(string cgdl)
+        public void GivenTheFollowing(string cgol)
         {
-            gameDriver.Process(cgdl);
+            gameDriver.Process(cgol);
         }
     }
 }

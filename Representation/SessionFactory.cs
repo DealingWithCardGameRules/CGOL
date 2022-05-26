@@ -1,14 +1,14 @@
-﻿using dk.itu.game.msc.cgdl.Representation.Handlers;
-using dk.itu.game.msc.cgdl.Representation.Observers;
+﻿using dk.itu.game.msc.cgol.Representation.Handlers;
+using dk.itu.game.msc.cgol.Representation.Observers;
 using System;
 
-namespace dk.itu.game.msc.cgdl.Representation
+namespace dk.itu.game.msc.cgol.Representation
 {
     public class SessionFactory
     {
         public Session CreateSession(Guid id, IUserEnquirerFactory userEnquirerFactory)
         {
-            var factory = new CGDLServiceFactory();
+            var factory = new CGOLServiceFactory();
             var service = factory.CreateBasicGame();
             var playerRepository = new PlayerRepository(id.ToString());
             var interpolator = factory.GetInterpolator();

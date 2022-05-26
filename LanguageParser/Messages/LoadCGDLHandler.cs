@@ -1,31 +1,31 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Events;
-using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.Parser;
-using dk.itu.game.msc.cgdl.Parser.Lexers;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
+using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.Parser;
+using dk.itu.game.msc.cgol.Parser.Lexers;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.Parser.Messages
+namespace dk.itu.game.msc.cgol.Parser.Messages
 {
-    public class LoadCGDLHandler : ICommandHandler<LoadCGDL>
+    public class LoadCGOLHandler : ICommandHandler<LoadCGOL>
     {
         private readonly ITimeProvider timeProvider;
         private readonly Lexer lexer;
-        private readonly CGDLParser parser;
+        private readonly CGOLParser parser;
 
-        public LoadCGDLHandler(ITimeProvider timeProvider, Lexer lexer, CGDLParser parser)
+        public LoadCGOLHandler(ITimeProvider timeProvider, Lexer lexer, CGOLParser parser)
         {
             this.timeProvider = timeProvider ?? throw new System.ArgumentNullException(nameof(timeProvider));
             this.lexer = lexer ?? throw new System.ArgumentNullException(nameof(lexer));
             this.parser = parser ?? throw new System.ArgumentNullException(nameof(parser));
         }
 
-        public void Handle(LoadCGDL command, IEventDispatcher eventDispatcher)
+        public void Handle(LoadCGOL command, IEventDispatcher eventDispatcher)
         {
-            var tokens = lexer.Tokenize(command.CGDL);
+            var tokens = lexer.Tokenize(command.CGOL);
             var commands = parser.Parse(tokens);
             if (commands.Any())
             {
-                var @event = new CGDLLoaded(timeProvider.Now, command.ProcessId, commands);
+                var @event = new CGOLLoaded(timeProvider.Now, command.ProcessId, commands);
                 eventDispatcher.Dispatch(@event);
             }
         }

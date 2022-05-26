@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace dk.itu.game.msc.cgdl.GameEvents
+namespace dk.itu.game.msc.cgol.GameEvents
 {
     public class EventLoggerFactory
     {

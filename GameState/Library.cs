@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts;
+using dk.itu.game.msc.cgol.Distribution;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.GameState
+namespace dk.itu.game.msc.cgol.GameState
 {
     internal class Library
     {

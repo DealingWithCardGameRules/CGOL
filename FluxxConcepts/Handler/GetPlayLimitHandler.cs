@@ -1,7 +1,7 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.FluxxConcepts.Queries;
+﻿using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.FluxxConcepts.Queries;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
+namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
     public class GetPlayLimitHandler : IQueryHandler<GetPlayLimit, int>
     {

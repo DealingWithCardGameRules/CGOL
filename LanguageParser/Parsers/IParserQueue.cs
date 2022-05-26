@@ -1,7 +1,7 @@
-﻿using dk.itu.game.msc.cgdl.Parser.Tokens;
+﻿using dk.itu.game.msc.cgol.Parser.Tokens;
 using System;
 
-namespace dk.itu.game.msc.cgdl.Parser.Parsers
+namespace dk.itu.game.msc.cgol.Parser.Parsers
 {
     public interface IParserQueue
     {

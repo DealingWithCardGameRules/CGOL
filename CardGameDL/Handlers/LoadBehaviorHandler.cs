@@ -1,10 +1,10 @@
-﻿using dk.itu.game.msc.cgdl.Common.Commands;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Common.Commands;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Linq;
 using System.Reflection;
 
-namespace dk.itu.game.msc.cgdl.Handlers
+namespace dk.itu.game.msc.cgol.Handlers
 {
     public class LoadBehaviorHandler : ICommandHandler<LoadBehavior>
     {

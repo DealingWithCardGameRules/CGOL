@@ -1,11 +1,11 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
-using dk.itu.game.msc.cgdl.CommonConcepts.Events;
-using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
+using dk.itu.game.msc.cgol.CommonConcepts.Events;
+using dk.itu.game.msc.cgol.CommonConcepts.Queries;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.GameState.EventObservers
+namespace dk.itu.game.msc.cgol.GameState.EventObservers
 {
     public class CardDealtObserver : IEventObserver<CardDealt>
     {

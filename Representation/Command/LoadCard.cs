@@ -1,7 +1,7 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.Representation.Command
+namespace dk.itu.game.msc.cgol.Representation.Command
 {
     public class LoadCard : ICommand
     {

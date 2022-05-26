@@ -75,7 +75,7 @@
 
 	private async void PlayGame()
 	{
-		game.Game.CGDLSource = highlighter.Value;
+		game.Game.CGOLSource = highlighter.Value;
 		var response = await Http.PostAsync(session.Links["game"], JsonContent.Create(game.Game));
 		if (response.StatusCode == HttpStatusCode.OK)
 		{

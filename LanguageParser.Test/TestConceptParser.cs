@@ -1,12 +1,12 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.Parser;
-using dk.itu.game.msc.cgdl.Parser.Parsers;
-using dk.itu.game.msc.cgdl.Parser.Tokens;
+﻿using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.Parser;
+using dk.itu.game.msc.cgol.Parser.Parsers;
+using dk.itu.game.msc.cgol.Parser.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser.Test
+namespace dk.itu.game.msc.cgol.LanguageParser.Test
 {
     [TestClass]
     public class TestConceptParser

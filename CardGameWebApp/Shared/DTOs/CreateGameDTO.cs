@@ -2,6 +2,6 @@
 {
     public class CreateGameDTO
     {
-        public string CGDLSource { get; set; } = string.Empty;
+        public string CGOLSource { get; set; } = string.Empty;
     }
 }

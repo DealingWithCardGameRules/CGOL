@@ -3,7 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
-	<RootNamespace>dk.itu.game.msc.cgdl.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	<RootNamespace>dk.itu.game.msc.cgol.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

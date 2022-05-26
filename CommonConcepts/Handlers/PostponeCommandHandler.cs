@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
-using dk.itu.game.msc.cgdl.CommonConcepts.Events;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
+using dk.itu.game.msc.cgol.CommonConcepts.Events;
+using dk.itu.game.msc.cgol.Distribution;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
+namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
     public class PostponeCommandHandler : ICommandHandler<PostponeCommand>
     {

@@ -1,7 +1,7 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.FluxxConcepts.Events;
+﻿using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.FluxxConcepts.Events;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts.Observers
+namespace dk.itu.game.msc.cgol.FluxxConcepts.Observers
 {
     public class DrawLimitSetObserver : IEventObserver<DrawLimitSet>
     {

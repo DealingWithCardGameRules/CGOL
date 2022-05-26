@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.Representation
+namespace dk.itu.game.msc.cgol.Representation
 {
     public class PlayerRepository
     {

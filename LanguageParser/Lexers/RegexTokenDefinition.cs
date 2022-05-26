@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.Parser.Tokens;
+﻿using dk.itu.game.msc.cgol.Parser.Tokens;
 using System;
 using System.Text.RegularExpressions;
 
-namespace dk.itu.game.msc.cgdl.Parser.Lexers
+namespace dk.itu.game.msc.cgol.Parser.Lexers
 {
     public class RegexTokenDefinition : ITokenDefinition
     {

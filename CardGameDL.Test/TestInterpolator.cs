@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 
-namespace dk.itu.game.msc.cgdl.Test
+namespace dk.itu.game.msc.cgol.Test
 {
     [TestClass]
     public class TestInterpolator

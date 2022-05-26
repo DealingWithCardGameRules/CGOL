@@ -1,9 +1,9 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Queries;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Threading.Tasks;
 
-namespace dk.itu.game.msc.cgdl.Representation.Handlers
+namespace dk.itu.game.msc.cgol.Representation.Handlers
 {
     public class PickACardHandler : IQueryHandler<PickACard, Guid?>
     {

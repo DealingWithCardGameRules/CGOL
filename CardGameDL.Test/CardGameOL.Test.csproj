@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-	<RootNamespace>dk.itu.game.msc.cgdl.Test</RootNamespace>
+	<RootNamespace>dk.itu.game.msc.cgol.Test</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CardGameDL\CardGameDL.csproj" />
+    <ProjectReference Include="..\CardGameDL\CardGameOL.csproj" />
   </ItemGroup>
 
 </Project>

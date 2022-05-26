@@ -1,18 +1,18 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Events;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
+using dk.itu.game.msc.cgol.Distribution;
 
-namespace dk.itu.game.msc.cgdl.Parser.Messages
+namespace dk.itu.game.msc.cgol.Parser.Messages
 {
-    public class DispatchLoadedCGDLEvent : IEventObserver<CGDLLoaded>
+    public class DispatchLoadedCGOLEvent : IEventObserver<CGOLLoaded>
     {
         private readonly IDispatcher dispatcher;
 
-        public DispatchLoadedCGDLEvent(IDispatcher dispatcher)
+        public DispatchLoadedCGOLEvent(IDispatcher dispatcher)
         {
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Invoke(CGDLLoaded @event)
+        public void Invoke(CGOLLoaded @event)
         {
             foreach (var command in @event.Commands)
             {

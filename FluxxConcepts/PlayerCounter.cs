@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts
+namespace dk.itu.game.msc.cgol.FluxxConcepts
 {
     public class PlayerCounter
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Attributes
+namespace dk.itu.game.msc.cgol.CommonConcepts.Attributes
 {
     [AttributeUsage(AttributeTargets.Constructor)]
     public class ConceptAttribute : Attribute

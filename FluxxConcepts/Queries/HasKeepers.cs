@@ -1,9 +1,9 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts;
-using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts;
+using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts.Queries
+namespace dk.itu.game.msc.cgol.FluxxConcepts.Queries
 {
     public class HasKeepers : IQuery<bool>
     {

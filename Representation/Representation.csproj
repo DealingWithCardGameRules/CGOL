@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-	<PackageId>dk.itu.game.msc.cgdl.$(AssemblyName)</PackageId>
-	<RootNamespace>dk.itu.game.msc.cgdl.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	<PackageId>dk.itu.game.msc.cgol.$(AssemblyName)</PackageId>
+	<RootNamespace>dk.itu.game.msc.cgol.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CardGameDL\CardGameDL.csproj" />
+    <ProjectReference Include="..\CardGameDL\CardGameOL.csproj" />
   </ItemGroup>
 
 </Project>

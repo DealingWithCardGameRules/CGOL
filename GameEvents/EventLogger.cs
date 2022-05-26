@@ -1,9 +1,9 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using Newtonsoft.Json;
 using System;
 using System.IO;
 
-namespace dk.itu.game.msc.cgdl.GameEvents
+namespace dk.itu.game.msc.cgol.GameEvents
 {
     internal class EventLogger : IEventLogger
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.GameState
+namespace dk.itu.game.msc.cgol.GameState
 {
     internal class ReshuffleRules
     {

@@ -1,7 +1,7 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Queries
+namespace dk.itu.game.msc.cgol.CommonConcepts.Queries
 {
     public class GetCollectionNames : IQuery<IEnumerable<string>>
     {

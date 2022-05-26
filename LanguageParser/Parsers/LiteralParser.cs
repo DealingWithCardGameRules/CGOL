@@ -1,6 +1,6 @@
-﻿using dk.itu.game.msc.cgdl.Parser.Tokens;
+﻿using dk.itu.game.msc.cgol.Parser.Tokens;
 
-namespace dk.itu.game.msc.cgdl.Parser.Parsers
+namespace dk.itu.game.msc.cgol.Parser.Parsers
 {
     public class LiteralParser : IParser<object?>
     {

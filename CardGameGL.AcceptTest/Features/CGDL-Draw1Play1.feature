@@ -1,4 +1,4 @@
-﻿Feature: Draw one, play one - defined in CGDL
+﻿Feature: Draw one, play one - defined in CGOL
 
 A very simple draw one play one card game
 where none of the cards has any effect! How fun!

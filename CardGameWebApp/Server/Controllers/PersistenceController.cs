@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System;
-using dk.itu.game.msc.cgdl.Representation;
+using dk.itu.game.msc.cgol.Representation;
 using Microsoft.AspNetCore.SignalR;
 using CardGameWebApp.Server.Hubs;
 

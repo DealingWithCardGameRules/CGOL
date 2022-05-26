@@ -1,9 +1,9 @@
 ﻿using CardGameWebApp.Shared;
-using dk.itu.game.msc.cgdl;
-using dk.itu.game.msc.cgdl.CommonConcepts;
-using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
-using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using dk.itu.game.msc.cgdl.Representation;
+using dk.itu.game.msc.cgol;
+using dk.itu.game.msc.cgol.CommonConcepts;
+using dk.itu.game.msc.cgol.CommonConcepts.Commands;
+using dk.itu.game.msc.cgol.CommonConcepts.Queries;
+using dk.itu.game.msc.cgol.Representation;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -118,7 +118,7 @@ namespace CardGameWebApp.Server.Controllers
             yield return dto;
         }
 
-        private CGDLService GetService(Guid id) => repository.GetSession(id).Service ?? throw new Exception();
+        private CGOLService GetService(Guid id) => repository.GetSession(id).Service ?? throw new Exception();
 
         class PassCard : TagHandler, ICard
 		{

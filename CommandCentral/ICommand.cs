@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dk.itu.game.msc.cgdl.Distribution
+namespace dk.itu.game.msc.cgol.Distribution
 {
     public interface ICommand
     {

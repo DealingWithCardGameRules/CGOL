@@ -1,16 +1,16 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Handlers;
-using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.Parser.Lexers;
-using dk.itu.game.msc.cgdl.Parser.Messages;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Handlers;
+using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.Parser.Lexers;
+using dk.itu.game.msc.cgol.Parser.Messages;
 
-namespace dk.itu.game.msc.cgdl.Parser
+namespace dk.itu.game.msc.cgol.Parser
 {
     public class LanguageParserSetup
     {
         private readonly Lexer lexer;
-        private readonly CGDLParser parser;
+        private readonly CGOLParser parser;
 
-        public LanguageParserSetup(LexerFactory lexer, CGDLParser parser)
+        public LanguageParserSetup(LexerFactory lexer, CGOLParser parser)
         {
             if (lexer == null)
                 throw new System.ArgumentNullException(nameof(lexer));
@@ -22,14 +22,14 @@ namespace dk.itu.game.msc.cgdl.Parser
         public void Setup(IPluginContext context)
         {
             // Setup command handlers
-            context.Interpolator.AddConcept(new LoadCGDLHandler(context.TimeProvider, lexer, parser));
-            context.Interpolator.AddConcept(new SimpleConditionalCommandHandler(context.Dispatcher));
-            context.Interpolator.AddConcept(new AddInstantaniousEffectToCardHandler(context.TimeProvider));
-            context.Interpolator.AddConcept(new AddPermanentEffectToCardHandler(context.TimeProvider));
-            context.Interpolator.AddConcept(new PostponeCommandHandler(context.TimeProvider));
+            context.Interpreter.AddConcept(new LoadCGOLHandler(context.TimeProvider, lexer, parser));
+            context.Interpreter.AddConcept(new SimpleConditionalCommandHandler(context.Dispatcher));
+            context.Interpreter.AddConcept(new AddInstantaniousEffectToCardHandler(context.TimeProvider));
+            context.Interpreter.AddConcept(new AddPermanentEffectToCardHandler(context.TimeProvider));
+            context.Interpreter.AddConcept(new PostponeCommandHandler(context.TimeProvider));
 
             // Setup event observers
-            context.Interpolator.AddConcept(new DispatchLoadedCGDLEvent(context.Dispatcher));
+            context.Interpreter.AddConcept(new DispatchLoadedCGOLEvent(context.Dispatcher));
         }
     }
 }

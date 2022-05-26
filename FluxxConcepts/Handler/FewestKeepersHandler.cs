@@ -1,9 +1,9 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.FluxxConcepts.Queries;
+﻿using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.FluxxConcepts.Queries;
 using System;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
+namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
     public class FewestKeepersHandler : IQueryHandler<FewestKeepers, bool>
     {

@@ -1,10 +1,10 @@
-﻿using dk.itu.game.msc.cgdl.Parser.Lexers;
-using dk.itu.game.msc.cgdl.Parser.Tokens;
+﻿using dk.itu.game.msc.cgol.Parser.Lexers;
+using dk.itu.game.msc.cgol.Parser.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 
-namespace dk.itu.game.msc.cgdl.LanguageParser.Test
+namespace dk.itu.game.msc.cgol.LanguageParser.Test
 {
     [TestClass]
     public class TestTokenDefinitionComposite

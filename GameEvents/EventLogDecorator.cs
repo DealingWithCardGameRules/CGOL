@@ -1,7 +1,7 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.GameEvents
+namespace dk.itu.game.msc.cgol.GameEvents
 {
     public class EventLogDecorator : IEventDispatcher
     {

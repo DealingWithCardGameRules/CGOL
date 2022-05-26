@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.Representation
+namespace dk.itu.game.msc.cgol.Representation
 {
     public class SessionRepository
     {

@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.Representation
+namespace dk.itu.game.msc.cgol.Representation
 {
     public class SessionService : ISessionService
     {

@@ -1,7 +1,7 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
+using dk.itu.game.msc.cgol.Distribution;
 
-namespace dk.itu.game.msc.cgdl.Parser.Messages
+namespace dk.itu.game.msc.cgol.Parser.Messages
 {
     public class SimpleConditionalCommandHandler : ICommandHandler<ConditionalCommand>
     {

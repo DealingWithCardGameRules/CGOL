@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.Distribution
+namespace dk.itu.game.msc.cgol.Distribution
 {
     public interface IInterpreter : IServiceProvider
     {

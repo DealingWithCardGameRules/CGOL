@@ -1,14 +1,14 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.Parser.Messages;
+﻿using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.Parser.Messages;
 
-namespace dk.itu.game.msc.cgdl
+namespace dk.itu.game.msc.cgol
 {
-    public class CGDLService
+    public class CGOLService
     {
         private readonly IDispatcher dispatcher;
         private readonly IPluginContext pluginContext;
 
-        public CGDLService(IDispatcher dispatcher, IPluginContext pluginContext)
+        public CGOLService(IDispatcher dispatcher, IPluginContext pluginContext)
         {
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
             this.pluginContext = pluginContext ?? throw new System.ArgumentNullException(nameof(pluginContext));
@@ -24,9 +24,9 @@ namespace dk.itu.game.msc.cgdl
             return dispatcher.Dispatch<T>(query);
         }
 
-        public void Parse(string cgdl)
+        public void Parse(string cgol)
         {
-            dispatcher.Dispatch(new LoadCGDL(cgdl));    
+            dispatcher.Dispatch(new LoadCGOL(cgol));    
         }
 
         public void LoadConcepts(IPluginSetup setup)
