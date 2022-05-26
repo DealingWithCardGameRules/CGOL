@@ -22,4 +22,10 @@
     <Folder Include="wwwroot\css\bootstrap\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\illustrations\logo.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
