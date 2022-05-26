@@ -1,7 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
+namespace dk.itu.game.msc.cgol.CommonConcepts.Commands
 {
     public class CreateZone : ICommand
     {
@@ -12,6 +13,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public string? Tags { get; }
         public int? PlayerIndex { get; }
 
+        [Concept(Description = "Create a card zone. Assign ownership to a player to only trigger when active for that player. If no owner is set, the zone is considered a community zone.")]
         public CreateZone(string name, int playerIndex = -1, string tags = null)
         {
             Instance = Guid.NewGuid();

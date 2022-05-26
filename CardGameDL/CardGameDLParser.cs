@@ -1,17 +1,17 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.Parser;
-using dk.itu.game.msc.cgdl.Parser.Lexers;
+﻿using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.Parser;
+using dk.itu.game.msc.cgol.Parser.Lexers;
 using System.Collections.Generic;
 using System.IO;
 
-namespace dk.itu.game.msc.cgdl
+namespace dk.itu.game.msc.cgol
 {
     public class CardGameDLParser
     {
-        private readonly CGDLParser parser;
+        private readonly CGOLParser parser;
         private Lexer lexer;
 
-        public CardGameDLParser(LexerFactory factory, CGDLParser parser)
+        public CardGameDLParser(LexerFactory factory, CGOLParser parser)
         {
             lexer = factory.Create();
             this.parser = parser ?? throw new System.ArgumentNullException(nameof(parser));

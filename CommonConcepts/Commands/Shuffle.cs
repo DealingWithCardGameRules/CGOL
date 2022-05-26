@@ -1,7 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
+namespace dk.itu.game.msc.cgol.CommonConcepts.Commands
 {
     public class Shuffle : ICommand
     {
@@ -10,6 +11,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public Guid Instance { get; }
         public string Collection { get; }
 
+        [Concept(Description = "Shuffle the cards of a collection.")]
         public Shuffle(string collection)
         {
             Instance = Guid.NewGuid();

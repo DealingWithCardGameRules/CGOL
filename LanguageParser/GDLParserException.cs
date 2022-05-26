@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace dk.itu.game.msc.cgdl.Parser
+namespace dk.itu.game.msc.cgol.Parser
 {
     [Serializable]
     public class GDLParserException : Exception

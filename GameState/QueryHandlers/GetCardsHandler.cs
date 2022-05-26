@@ -1,15 +1,15 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts;
-using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts;
+using dk.itu.game.msc.cgol.CommonConcepts.Queries;
+using dk.itu.game.msc.cgol.Distribution;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
+namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
     public class GetCardsHandler : IQueryHandler<GetCards, IEnumerable<ICard>>
     {
         private readonly Game game;
 
-        public GetCardsHandler(Game game)
+        internal GetCardsHandler(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }

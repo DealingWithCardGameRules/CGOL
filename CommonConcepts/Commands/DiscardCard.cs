@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
+namespace dk.itu.game.msc.cgol.CommonConcepts.Commands
 {
     public class DiscardCard : ICommand
     {
@@ -12,7 +12,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public string From { get; }
         public string To { get; }
 
-        [Concept(Description = "Ask a player to discard a card from one collection into an other collection. If no player index is set, the owner of the collection will be asked.")]
+        [Concept(Description = "Ask a player to discard a card from one collection into another collection. If no player index is set, the owner of the collection will be asked.")]
 		public DiscardCard(string from, string to, int playerIndex = 0)
         {
             Instance = Guid.NewGuid();

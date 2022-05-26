@@ -1,9 +1,9 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl
+namespace dk.itu.game.msc.cgol
 {
     public class Interpreter : IInterpreter
     {

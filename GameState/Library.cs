@@ -1,11 +1,10 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts;
-using dk.itu.game.msc.cgdl.Distribution;
-using System;
+﻿using dk.itu.game.msc.cgol.CommonConcepts;
+using dk.itu.game.msc.cgol.Distribution;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.GameState
+namespace dk.itu.game.msc.cgol.GameState
 {
-    public class Library
+    internal class Library
     {
         private readonly Dictionary<string, ICardTemplate> library;
 

@@ -1,10 +1,10 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.FluxxConcepts.Commands;
-using dk.itu.game.msc.cgdl.FluxxConcepts.Events;
-using dk.itu.game.msc.cgdl.FluxxConcepts.Queries;
+﻿using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.FluxxConcepts.Commands;
+using dk.itu.game.msc.cgol.FluxxConcepts.Events;
+using dk.itu.game.msc.cgol.FluxxConcepts.Queries;
 using System;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts.Handler
+namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
     public class PlayLimitHandler : ICommandHandler<PlayLimit>
     {

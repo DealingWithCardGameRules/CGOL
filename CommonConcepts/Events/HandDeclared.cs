@@ -1,7 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
+namespace dk.itu.game.msc.cgol.CommonConcepts.Events
 {
     public class HandDeclared : IEvent
     {
@@ -10,6 +11,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
         public Guid ProcessId { get; }
         public string Name { get; }
 
+        [Concept(Description = "The hand was declared.")]
         public HandDeclared(DateTime eventTime, Guid processId, string name)
         {
             EventTime = eventTime;

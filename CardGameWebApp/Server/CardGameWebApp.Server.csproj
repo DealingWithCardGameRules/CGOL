@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CardGameDL\CardGameDL.csproj" />
+    <ProjectReference Include="..\..\CardGameDL\CardGameOL.csproj" />
     <ProjectReference Include="..\..\Representation\Representation.csproj" />
     <ProjectReference Include="..\Client\CardGameWebApp.Client.csproj" />
     <ProjectReference Include="..\Shared\CardGameWebApp.Shared.csproj" />

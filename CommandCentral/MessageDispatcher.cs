@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace dk.itu.game.msc.cgdl.Distribution
+namespace dk.itu.game.msc.cgol.Distribution
 {
     // This class is based on the Message class from https://github.com/vkhorikov/CqrsInPractice
     public sealed class MessageDispatcher : IDispatcher

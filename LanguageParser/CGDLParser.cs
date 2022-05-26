@@ -1,21 +1,21 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
-using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.Parser.Parsers;
-using dk.itu.game.msc.cgdl.Parser.Tokens;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
+using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.Parser.Parsers;
+using dk.itu.game.msc.cgol.Parser.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.Parser
+namespace dk.itu.game.msc.cgol.Parser
 {
-    public class CGDLParser
+    public class CGOLParser
     {
         private readonly IParserQueueFactory factory;
         private readonly IParser<ICommand?> conceptParser;
         private readonly IParser<IQuery<bool>?> queryParser;
         private IParserQueue queue;
 
-        public CGDLParser(IParserQueueFactory factory, IParser<ICommand?> commandParser, IParser<IQuery<bool>?> queryParser)
+        public CGOLParser(IParserQueueFactory factory, IParser<ICommand?> commandParser, IParser<IQuery<bool>?> queryParser)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
             conceptParser = commandParser ?? throw new ArgumentNullException(nameof(commandParser));

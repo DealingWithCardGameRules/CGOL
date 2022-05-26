@@ -1,6 +1,7 @@
 /*******************************************
 * General rules for Fluxx                  *
 *******************************************/
+LoadBehavior "FluxxConcepts"
 Play DrawCard "Deck"
 Play PlayCard
 Play PassTurn

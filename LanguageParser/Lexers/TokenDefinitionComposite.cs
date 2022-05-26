@@ -1,7 +1,7 @@
-﻿using dk.itu.game.msc.cgdl.Parser.Tokens;
+﻿using dk.itu.game.msc.cgol.Parser.Tokens;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.Parser.Lexers
+namespace dk.itu.game.msc.cgol.Parser.Lexers
 {
     public class TokenDefinitionComposite : ITokenDefinition
     {

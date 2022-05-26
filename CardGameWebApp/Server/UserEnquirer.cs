@@ -1,6 +1,6 @@
 ﻿using CardGameWebApp.Server.Hubs;
 using CardGameWebApp.Shared.Inquiries;
-using dk.itu.game.msc.cgdl.Representation;
+using dk.itu.game.msc.cgol.Representation;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;

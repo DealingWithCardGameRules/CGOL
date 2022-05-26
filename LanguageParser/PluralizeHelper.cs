@@ -1,6 +1,6 @@
 ﻿using Pluralize.NET;
 
-namespace dk.itu.game.msc.cgdl.Parser
+namespace dk.itu.game.msc.cgol.Parser
 {
     public static class PluralizeHelper
     {

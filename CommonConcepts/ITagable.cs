@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts
+namespace dk.itu.game.msc.cgol.CommonConcepts
 {
     public interface ITagable
     {

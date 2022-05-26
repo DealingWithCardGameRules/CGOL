@@ -1,5 +1,5 @@
-﻿using dk.itu.game.msc.cgdl.FluxxConcepts;
-using dk.itu.game.msc.cgdl.Representation;
+﻿using dk.itu.game.msc.cgol.FluxxConcepts;
+using dk.itu.game.msc.cgol.Representation;
 using System;
 using System.Collections.Generic;
 
@@ -22,7 +22,7 @@ namespace CardGameWebApp.Server
         {
             session.Create(id, userEnquirerFactory);
             var ses = session.GetSession(id);
-            ses.Service.LoadConcepts(new FluxxConceptsSetup());
+            //ses.Service.LoadConcepts(new FluxxConceptsSetup());
             ses.Interpolator.AddConcept(new LoadCardHandler(ses.Service, storage, context));
         }
 

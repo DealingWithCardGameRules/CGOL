@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
+namespace dk.itu.game.msc.cgol.CommonConcepts.Commands
 {
     public class DealCard : ICommand
     {
@@ -12,7 +12,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public int Cards { get; }
         public Guid Instance { get; }
 
-        [Concept(Description = "Deal cards from one collection to an other collection. If the to parameter is not set, the destination is set to the current players hand.")]
+        [Concept(Description = "Deal cards from one collection to another collection. If the to parameter is not set, the destination is set to the current players hand.")]
         public DealCard(string from, int cards = 1, string to = null)
         {
             Instance = Guid.NewGuid();

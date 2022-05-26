@@ -1,7 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
+namespace dk.itu.game.msc.cgol.CommonConcepts.Events
 {
     public class CardRevealed : IEvent
     {
@@ -11,6 +12,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Events
         public string Placement { get; }
         public ICard Card { get; }
 
+        [Concept(Description = "The card was revealed.")]
         public CardRevealed(DateTime eventTime, Guid processId, string placement, ICard card)
         {
             EventTime = eventTime;

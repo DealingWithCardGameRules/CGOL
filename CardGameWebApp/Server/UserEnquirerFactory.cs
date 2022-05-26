@@ -1,5 +1,5 @@
 ﻿using CardGameWebApp.Server.Hubs;
-using dk.itu.game.msc.cgdl.Representation;
+using dk.itu.game.msc.cgol.Representation;
 using Microsoft.AspNetCore.SignalR;
 
 namespace CardGameWebApp.Server

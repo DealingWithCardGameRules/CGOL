@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
+namespace dk.itu.game.msc.cgol.CommonConcepts.Commands
 {
     public class CreateCard : ICommand
     {
@@ -12,7 +12,7 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
 
         public Guid Instance { get; }
 
-        [Concept(Description = "Create a card template with an unique name. It's possible to attach effects to the template and later create an instance using the AddCard concept.")]
+        [Concept(Description = "Create a card template with a unique name. It's possible to attach effects to the template and later create an instance using the AddCard concept.")]
         public CreateCard(string uniqueCardName)
         {
             Instance = Guid.NewGuid();

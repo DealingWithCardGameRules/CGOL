@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace dk.itu.game.msc.cgdl
+namespace dk.itu.game.msc.cgol
 {
     [Serializable]
     public class DuplicateConceptException : Exception

@@ -1,15 +1,15 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Queries;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
+namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
     public class HasCardsHandler : IQueryHandler<HasCards, bool>
     {
         private readonly Game game;
         private readonly IQueryDispatcher dispatcher;
 
-        public HasCardsHandler(Game game, IQueryDispatcher dispatcher)
+        internal HasCardsHandler(Game game, IQueryDispatcher dispatcher)
         {
             this.game = game ?? throw new ArgumentNullException(nameof(game));
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));

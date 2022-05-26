@@ -1,13 +1,13 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Events;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
+using dk.itu.game.msc.cgol.Distribution;
 
-namespace dk.itu.game.msc.cgdl.GameState.EventObservers
+namespace dk.itu.game.msc.cgol.GameState.EventObservers
 {
     public class EnteredStateObserver : IEventObserver<EnteredState>
     {
         private readonly Game game;
 
-        public EnteredStateObserver(Game game)
+        internal EnteredStateObserver(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }

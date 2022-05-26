@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.GameState
+namespace dk.itu.game.msc.cgol.GameState
 {
     internal static class RandomHelper
     {

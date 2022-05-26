@@ -1,7 +1,7 @@
 using CardGameWebApp.Server.Hubs;
-using dk.itu.game.msc.cgdl;
-using dk.itu.game.msc.cgdl.CommonConcepts;
-using dk.itu.game.msc.cgdl.Representation;
+using dk.itu.game.msc.cgol;
+using dk.itu.game.msc.cgol.CommonConcepts;
+using dk.itu.game.msc.cgol.Representation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;

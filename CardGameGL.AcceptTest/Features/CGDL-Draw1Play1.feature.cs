@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace CardGameGL.AcceptTest.Features
+namespace CardGameOL.AcceptTest.Features
 {
     using TechTalk.SpecFlow;
     using System;
@@ -20,7 +20,7 @@ namespace CardGameGL.AcceptTest.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class DrawOnePlayOne_DefinedInCGDLFeature
+    public partial class DrawOnePlayOne_DefinedInCGOLFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -48,7 +48,7 @@ namespace CardGameGL.AcceptTest.Features
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Draw one, play one - defined in CGDL", "A very simple draw one play one card game\r\nwhere none of the cards has any effect" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Draw one, play one - defined in CGOL", "A very simple draw one play one card game\r\nwhere none of the cards has any effect" +
                     "! How fun!", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -64,9 +64,9 @@ namespace CardGameGL.AcceptTest.Features
         public virtual void TestInitialize()
         {
             if (((testRunner.FeatureContext != null) 
-                        && (testRunner.FeatureContext.FeatureInfo.Title != "Draw one, play one - defined in CGDL")))
+                        && (testRunner.FeatureContext.FeatureInfo.Title != "Draw one, play one - defined in CGOL")))
             {
-                global::CardGameGL.AcceptTest.Features.DrawOnePlayOne_DefinedInCGDLFeature.FeatureSetup(null);
+                global::CardGameOL.AcceptTest.Features.DrawOnePlayOne_DefinedInCGOLFeature.FeatureSetup(null);
             }
         }
         
@@ -111,7 +111,7 @@ namespace CardGameGL.AcceptTest.Features
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Draw a card")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Draw one, play one - defined in CGDL")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Draw one, play one - defined in CGOL")]
         public virtual void DrawACard()
         {
             string[] tagsOfScenario = ((string[])(null));
@@ -152,7 +152,7 @@ this.FeatureBackground();
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Play a card")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Draw one, play one - defined in CGDL")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Draw one, play one - defined in CGOL")]
         public virtual void PlayACard()
         {
             string[] tagsOfScenario = ((string[])(null));

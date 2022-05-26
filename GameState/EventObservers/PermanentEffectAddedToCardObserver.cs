@@ -1,13 +1,13 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Events;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
+using dk.itu.game.msc.cgol.Distribution;
 
-namespace dk.itu.game.msc.cgdl.GameState.EventObservers
+namespace dk.itu.game.msc.cgol.GameState.EventObservers
 {
     public class PermanentEffectAddedToCardObserver : IEventObserver<PermanentEffectAddedToCard>
     {
         private readonly Library library;
 
-        public PermanentEffectAddedToCardObserver(Library library)
+        internal PermanentEffectAddedToCardObserver(Library library)
         {
             this.library = library ?? throw new System.ArgumentNullException(nameof(library));
         }

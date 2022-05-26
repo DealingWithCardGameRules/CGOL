@@ -1,10 +1,10 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
 
-namespace dk.itu.game.msc.cgdl.CommandCentral.Test
+namespace dk.itu.game.msc.cgol.CommandCentral.Test
 {
     [TestClass]
     public class TestEventDispatcher

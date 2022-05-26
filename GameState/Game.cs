@@ -1,13 +1,13 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts;
+﻿using dk.itu.game.msc.cgol.CommonConcepts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.GameState
+namespace dk.itu.game.msc.cgol.GameState
 {
-    public class Game
+    internal class Game 
     {
-        public string? CurrentState { get; set; } = null;
+        internal string? CurrentState { get; set; } = null;
 
         private readonly Dictionary<string, ICardCollection> collections;
         private readonly Dictionary<int, IPlayer> players;
@@ -48,7 +48,7 @@ namespace dk.itu.game.msc.cgdl.GameState
         {
             return collections
                     .Where(c => c.Value.Tags.Contains("hand") && c.Value.OwnerIndex == playerIndex)
-                    .Select(c=>c.Key)
+                    .Select(c => c.Key)
                     .FirstOrDefault();
         }
 
@@ -127,7 +127,7 @@ namespace dk.itu.game.msc.cgdl.GameState
 
         internal IEnumerable<string> CollectionNames(int? owner = null, IEnumerable<string>? tags = null)
         {
-            var cols = owner.HasValue ? CollectionOf(owner.Value): collections;
+            var cols = owner.HasValue ? CollectionOf(owner.Value) : collections;
             if (tags != null)
                 cols = cols.Where(p => p.Value.Tags.Count(t => tags.Contains(t)) == tags.Count());
             return cols.Select(c => c.Key);
@@ -138,14 +138,14 @@ namespace dk.itu.game.msc.cgdl.GameState
             collections.Add(collection.Name, collection);
         }
 
-        internal int CollectionSize(string stack)
+        internal int CollectionSize(string collection)
         {
-            return collections[stack].Count();
+            return collections[collection].Count();
         }
 
-        internal ICard? GetCard(string stack)
+        internal ICard? GetCard(string collection)
         {
-            return collections[stack].GetCard();
+            return collections[collection].GetCard();
         }
 
         internal ICard? GetCard(string collection, Guid cardId)

@@ -1,13 +1,13 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Queries;
+using dk.itu.game.msc.cgol.Distribution;
 
-namespace dk.itu.game.msc.cgdl.GameState.QueryHandlers
+namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
     public class GetPlayersHandHandler : IQueryHandler<GetPlayersHand, string?>
     {
         private readonly Game game;
 
-        public GetPlayersHandHandler(Game game)
+        internal GetPlayersHandHandler(Game game)
         {
             this.game = game;
         }

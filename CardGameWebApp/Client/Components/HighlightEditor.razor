@@ -64,7 +64,7 @@
     <div class="highlight-editor">
         <textarea @ref="inputText" id="editing" class="editing @intel" wrap="off" spellcheck="false" value="@Value" @oninput="TextChanged" onscroll="sync_scroll();" @onkeydown="KeyDown" @onkeydown:preventDefault="@keyEventHandled" @onkeyup="Reset"></textarea>
         <pre id="highlighting" class="highlighting" aria-hidden="true" @onclick="Reset">
-          <code class="language-cgdl">@((MarkupString)HighlightedCGDL)</code>
+          <code class="language-cgol">@((MarkupString)HighlightedCGOL)</code>
         </pre>
     </div>
 </div>
@@ -76,7 +76,7 @@
     private ElementReference inputText { get; set; }
     private Highlighter highlighter = new Highlighter();
     private string source = string.Empty;
-    private string HighlightedCGDL;
+    private string HighlightedCGOL;
     private string intel;
     private bool keyEventHandled = false;
 
@@ -152,7 +152,7 @@
     private async Task HighlightText()
     {
         var pos = await JS.InvokeAsync<int>("getSelectedStart", inputText);
-        HighlightedCGDL = Highlight(Value, pos);
+        HighlightedCGOL = Highlight(Value, pos);
         await JS.InvokeVoidAsync("sync_scroll");
         this.StateHasChanged();
     }

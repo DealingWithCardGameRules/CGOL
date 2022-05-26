@@ -1,9 +1,9 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.GameState
+namespace dk.itu.game.msc.cgol.GameState
 {
-    public interface ICommandRepositoryQueries
+    internal interface ICommandRepositoryQueries
     {
         IEnumerable<IUserAction> GetCommands(int? playerIndex = null);
     }

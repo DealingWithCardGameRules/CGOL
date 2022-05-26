@@ -1,4 +1,4 @@
-﻿namespace dk.itu.game.msc.cgdl.CommonConcepts
+﻿namespace dk.itu.game.msc.cgol.CommonConcepts
 {
     internal class SimplePlayer : TagHandler, IPlayer
     {

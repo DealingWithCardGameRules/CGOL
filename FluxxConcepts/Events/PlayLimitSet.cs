@@ -1,7 +1,7 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts.Events
+namespace dk.itu.game.msc.cgol.FluxxConcepts.Events
 {
     public class PlayLimitSet : IEvent
     {

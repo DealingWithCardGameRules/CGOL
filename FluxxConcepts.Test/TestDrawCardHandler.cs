@@ -1,13 +1,13 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
-using dk.itu.game.msc.cgdl.CommonConcepts.Events;
-using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.FluxxConcepts.Handler;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
+using dk.itu.game.msc.cgol.CommonConcepts.Events;
+using dk.itu.game.msc.cgol.CommonConcepts.Queries;
+using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.FluxxConcepts.Handler;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
+namespace dk.itu.game.msc.cgol.FluxxConcepts.Test
 {
     [TestClass]
     public class TestDrawCardHandler
@@ -81,7 +81,7 @@ namespace dk.itu.game.msc.cgdl.FluxxConcepts.Test
             sut.Handle(command, eventDispatcherMock);
 
             // Then
-            eventDispatcherMock.Received().Dispatch(Arg.Is<CardDrawn>(result => expectedDestination == result.Distination));
+            eventDispatcherMock.Received().Dispatch(Arg.Is<CardDrawn>(result => expectedDestination == result.Destination));
         }
     }
 }

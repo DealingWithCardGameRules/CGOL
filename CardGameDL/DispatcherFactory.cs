@@ -1,9 +1,9 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.Distribution;
-using dk.itu.game.msc.cgdl.GameEvents;
+﻿using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.Distribution;
+using dk.itu.game.msc.cgol.GameEvents;
 using System;
 
-namespace dk.itu.game.msc.cgdl
+namespace dk.itu.game.msc.cgol
 {
     public class DispatcherFactory
     {

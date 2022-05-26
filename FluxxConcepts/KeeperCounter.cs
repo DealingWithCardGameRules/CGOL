@@ -1,10 +1,10 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Queries;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts
+namespace dk.itu.game.msc.cgol.FluxxConcepts
 {
     public class CardCounter
     {

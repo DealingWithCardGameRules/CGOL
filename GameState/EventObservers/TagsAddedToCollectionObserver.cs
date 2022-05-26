@@ -1,13 +1,13 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Events;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
+using dk.itu.game.msc.cgol.Distribution;
 
-namespace dk.itu.game.msc.cgdl.GameState.EventObservers
+namespace dk.itu.game.msc.cgol.GameState.EventObservers
 {
     public class TagsAddedToCollectionObserver : IEventObserver<TagsAddedToCollection>
     {
         private readonly Game game;
 
-        public TagsAddedToCollectionObserver(Game game)
+        internal TagsAddedToCollectionObserver(Game game)
         {
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }

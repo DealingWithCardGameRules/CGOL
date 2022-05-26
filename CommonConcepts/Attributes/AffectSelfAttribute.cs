@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Attributes
+namespace dk.itu.game.msc.cgol.CommonConcepts.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class AffectSelfAttribute : Attribute

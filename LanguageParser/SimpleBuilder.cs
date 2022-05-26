@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace dk.itu.game.msc.cgdl.Parser
+namespace dk.itu.game.msc.cgol.Parser
 {
     public class SimpleBuilder<T>
     {

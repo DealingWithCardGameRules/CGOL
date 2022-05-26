@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts
+namespace dk.itu.game.msc.cgol.CommonConcepts
 {
     public static class CommaSeperatedStringHelper
     {

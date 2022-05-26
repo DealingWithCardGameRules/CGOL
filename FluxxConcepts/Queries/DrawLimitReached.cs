@@ -1,6 +1,6 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 
-namespace dk.itu.game.msc.cgdl.FluxxConcepts.Queries
+namespace dk.itu.game.msc.cgol.FluxxConcepts.Queries
 {
     public class DrawLimitReached : IQuery<bool>
     {

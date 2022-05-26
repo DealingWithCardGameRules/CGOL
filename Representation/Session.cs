@@ -1,16 +1,16 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.Representation
+namespace dk.itu.game.msc.cgol.Representation
 {
     public class Session
     {
         public Guid Instance { get; }
-        public CGDLService Service { get; }
+        public CGOLService Service { get; }
         public IInterpreter Interpolator { get; }
         public PlayerRepository PlayerRepository { get; }
 
-        public Session(Guid instance, CGDLService service, IInterpreter interpolator, PlayerRepository playerRepository)
+        public Session(Guid instance, CGOLService service, IInterpreter interpolator, PlayerRepository playerRepository)
         {
             Instance = instance;
             Service = service ?? throw new ArgumentNullException(nameof(service));

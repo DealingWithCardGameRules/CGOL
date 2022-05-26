@@ -1,12 +1,12 @@
 ﻿using CardGameWebApp.Shared.DTOs;
-using dk.itu.game.msc.cgdl.Representation;
+using dk.itu.game.msc.cgol.Representation;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
-using dk.itu.game.msc.cgdl.Distribution;
+using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 
 namespace CardGameWebApp.Server.Controllers
 {

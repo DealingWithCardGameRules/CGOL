@@ -1,8 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.Parser.Tokens;
+﻿using dk.itu.game.msc.cgol.Parser.Tokens;
 using System;
 using System.Collections.Generic;
 
-namespace dk.itu.game.msc.cgdl.Parser.Parsers
+namespace dk.itu.game.msc.cgol.Parser.Parsers
 {
     internal class ParserQueue : IParserQueue
     {

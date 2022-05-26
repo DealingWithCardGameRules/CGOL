@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace CardGameGL.AcceptTest.Features
+namespace CardGameOL.AcceptTest.Features
 {
     using TechTalk.SpecFlow;
     using System;
@@ -66,7 +66,7 @@ namespace CardGameGL.AcceptTest.Features
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "Draw one, Play one game")))
             {
-                global::CardGameGL.AcceptTest.Features.DrawOnePlayOneGameFeature.FeatureSetup(null);
+                global::CardGameOL.AcceptTest.Features.DrawOnePlayOneGameFeature.FeatureSetup(null);
             }
         }
         

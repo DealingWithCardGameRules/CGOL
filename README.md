@@ -1,7 +1,7 @@
-# CardGameDescriptionLanguage
+# Card Game Operational Language (CGOL)
 
-[![.NET](https://github.com/DealingWithCardGames-ThesisGroup/CardGameDescriptionLanguage/actions/workflows/dotnet.yml/badge.svg)](https://github.com/DealingWithCardGames-ThesisGroup/CardGameDescriptionLanguage/actions/workflows/dotnet.yml)
+[![.NET](https://github.com/DealingWithCardGames-ThesisGroup/CGOL/actions/workflows/dotnet.yml/badge.svg)](https://github.com/DealingWithCardGames-ThesisGroup/CGOL/actions/workflows/dotnet.yml)
 
-Webpage: http://cgdl-thesis.programmers.dk/
+The complete source code for the Card Game Operational Language (CGOL), made as a thesis project for Msc Games at IT-University of Copenhagen.
 
-The core logic for a Card Game Description Language (CGDL), made as a thesis project for MSc Games at IT-University of Copenhagen.
+![logo](cgol.png)

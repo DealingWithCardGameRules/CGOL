@@ -4,18 +4,18 @@ using Microsoft.AspNetCore.Http.Extensions;
 using CardGameWebApp.Shared.Responses;
 using System;
 using CardGameWebApp.Shared.DTOs;
-using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
+using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using System.Collections.Generic;
-using dk.itu.game.msc.cgdl.CommonConcepts;
-using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.CommonConcepts;
+using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
 using System.Linq;
 using System.Dynamic;
 using CardGameWebApp.Server.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
-using dk.itu.game.msc.cgdl.Representation;
+using dk.itu.game.msc.cgol.Representation;
 using Microsoft.Extensions.Primitives;
-using dk.itu.game.msc.cgdl.Distribution;
+using dk.itu.game.msc.cgol.Distribution;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -47,7 +47,7 @@ namespace CardGameWebApp.Server.Controllers
             var sessionId = Guid.NewGuid();
             session.Create(sessionId, new WebContext { User = "anonymous" });
             var current = session.GetSession(sessionId);
-            current.Service.Parse(game.CGDLSource);
+            current.Service.Parse(game.CGOLSource);
             return Created(Url.Action(nameof(GetGame), "game", new { id = sessionId }, Request.Scheme), null);
         }
 
@@ -60,7 +60,7 @@ namespace CardGameWebApp.Server.Controllers
 
             try
             {
-                current.Service.Parse(game.CGDLSource);
+                current.Service.Parse(game.CGOLSource);
             }
             catch (Exception ex)
             {

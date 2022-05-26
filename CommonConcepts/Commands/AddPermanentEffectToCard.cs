@@ -1,7 +1,8 @@
-﻿using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
+namespace dk.itu.game.msc.cgol.CommonConcepts.Commands
 {
     public class AddPermanentEffectToCard : ICommand
     {
@@ -9,6 +10,8 @@ namespace dk.itu.game.msc.cgdl.CommonConcepts.Commands
         public Guid Instance { get; private set; }
         public string UniqueCardName { get; }
         public ICommand Command { get; }
+
+        [Concept(Description = "Adds a when active effect to a card. Use the when keyword together with the active trigger to utilize.")]
         public AddPermanentEffectToCard(string uniqueCardName, ICommand command)
         {
             Instance = Guid.NewGuid();

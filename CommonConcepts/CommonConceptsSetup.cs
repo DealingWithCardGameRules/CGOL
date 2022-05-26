@@ -1,13 +1,13 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Handlers;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Handlers;
+using dk.itu.game.msc.cgol.Distribution;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts
+namespace dk.itu.game.msc.cgol.CommonConcepts
 {
     public class CommonConceptsSetup : IPluginSetup
     {
         public void Setup(IPluginContext context)
         {
-            var interpolator = context.Interpolator;
+            var interpolator = context.Interpreter;
             var timeProvider = context.TimeProvider;
             var dispatcher = context.Dispatcher;
 

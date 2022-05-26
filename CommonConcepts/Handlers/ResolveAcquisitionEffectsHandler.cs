@@ -1,9 +1,9 @@
-﻿using dk.itu.game.msc.cgdl.CommonConcepts.Attributes;
-using dk.itu.game.msc.cgdl.CommonConcepts.Commands;
-using dk.itu.game.msc.cgdl.CommonConcepts.Queries;
-using dk.itu.game.msc.cgdl.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.CommonConcepts.Commands;
+using dk.itu.game.msc.cgol.CommonConcepts.Queries;
+using dk.itu.game.msc.cgol.Distribution;
 
-namespace dk.itu.game.msc.cgdl.CommonConcepts.Handlers
+namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
     public class ResolveAcquisitionEffectsHandler : ICommandHandler<ResolveAcquisitionEffects>
     {
