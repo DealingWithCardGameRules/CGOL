@@ -29,7 +29,7 @@ namespace CardGameOL.AcceptTest.Features
         
         private string[] _featureTags = ((string[])(null));
         
-#line 1 "CGDL-Draw1Play1.feature"
+#line 1 "CGOL-Draw1Play1.feature"
 #line hidden
         
         public virtual Microsoft.VisualStudio.TestTools.UnitTesting.TestContext TestContext

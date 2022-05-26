@@ -27,7 +27,6 @@ namespace dk.itu.game.msc.cgol
             services.AddSingleton<IParser<IQuery<bool>?>, ConceptParser<IQuery<bool>?>>();
             services.AddSingleton<CGOLParser>();
             services.AddSingleton<LexerFactory>();
-            services.AddSingleton<CardGameDLParser>();
             services.AddSingleton<LanguageParserSetup>();
         }
 
