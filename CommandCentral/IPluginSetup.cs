@@ -4,11 +4,4 @@
     {
         void Setup(IPluginContext context);
     }
-
-    public interface IPluginContext
-    {
-        IInterpreter Interpreter { get; }
-        ITimeProvider TimeProvider { get; }
-        IDispatcher Dispatcher { get; }
-    }
 }

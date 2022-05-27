@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace dk.itu.game.msc.cgol.Parser.Tokens
+﻿namespace dk.itu.game.msc.cgol.Parser.Tokens
 {
     public abstract class Token
     {
