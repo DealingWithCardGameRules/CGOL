@@ -1,19 +1,17 @@
-﻿using dk.itu.game.msc.cgol.Distribution;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgol.Representation
 {
-    public class SessionService : ISessionService
+    public class SessionService
     {
         private readonly SessionRepository repository;
         private readonly SessionFactory factory;
-        private readonly IPluginContext pluginContext;
 
         public SessionService(SessionRepository repository, SessionFactory factory)
         {
-            this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
-            this.factory = factory ?? throw new System.ArgumentNullException(nameof(factory));
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
         }
 
         public IEnumerable<Session> ListSessions()

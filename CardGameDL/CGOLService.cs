@@ -26,7 +26,7 @@ namespace dk.itu.game.msc.cgol
 
         public void Parse(string cgol)
         {
-            dispatcher.Dispatch(new LoadCGOL(cgol));    
+            Dispatch(new LoadCGOL(cgol));
         }
 
         public void LoadConcepts(IPluginSetup setup)
