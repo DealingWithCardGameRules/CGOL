@@ -11,7 +11,7 @@ namespace dk.itu.game.msc.cgol.Representation
             var factory = new CGOLServiceFactory();
             var service = factory.CreateBasicGame();
             var playerRepository = new PlayerRepository(id.ToString());
-            var interpolator = factory.GetInterpolator();
+            var interpolator = factory.GetInterpreter();
             var userEnquirer = userEnquirerFactory.Create(playerRepository);
 
             // Setup handlers
