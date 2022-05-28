@@ -25,7 +25,7 @@ namespace CardGameWebApp.Server.Controllers
         public IEnumerable<ConceptDTO> Index(Guid id)
         {
             var current = session.GetSession(id);
-            foreach (var type in current.Interpolator.SupportedTypes)
+            foreach (var type in current.Interpreter.SupportedTypes)
             {
                 var ctor = type.GetConstructors().FirstOrDefault();
                 yield return new ConceptDTO

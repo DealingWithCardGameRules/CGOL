@@ -27,16 +27,15 @@ namespace dk.itu.game.msc.cgol
 
         public CGOLService CreateBasicGame()
         {
-            var context = serviceProvider.GetRequiredService<IPluginContext>();
-            serviceProvider.GetRequiredService<CommonConceptsSetup>().Setup(context);
-            serviceProvider.GetRequiredService<LanguageParserSetup>().Setup(context);
-            context.Interpreter.AddConcept(new LoadBehaviorHandler(context));
-
-            new GameStateSetup().Setup(context);
-            return CreateEmpty();
+            var service = CreateEmpty();
+            service.LoadConcepts(serviceProvider.GetRequiredService<CommonConceptsSetup>());
+            service.LoadConcepts(serviceProvider.GetRequiredService<LanguageParserSetup>());
+            service.LoadConcepts(new GameStateSetup());
+            service.LoadConcepts(new CGOLSetup());
+            return service;
         }
 
-        public IInterpreter GetInterpolator()
+        public IInterpreter GetInterpreter()
         {
             return serviceProvider.GetRequiredService<IInterpreter>();
         }

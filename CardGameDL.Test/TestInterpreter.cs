@@ -5,7 +5,7 @@ using NSubstitute;
 namespace dk.itu.game.msc.cgol.Test
 {
     [TestClass]
-    public class TestInterpolator
+    public class TestInterpreter
     {
         [TestMethod]
         public void GetService_UnknownType_ThrowsUnknownConceptException()

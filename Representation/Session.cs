@@ -7,14 +7,14 @@ namespace dk.itu.game.msc.cgol.Representation
     {
         public Guid Instance { get; }
         public CGOLService Service { get; }
-        public IInterpreter Interpolator { get; }
+        public IInterpreter Interpreter { get; }
         public PlayerRepository PlayerRepository { get; }
 
-        public Session(Guid instance, CGOLService service, IInterpreter interpolator, PlayerRepository playerRepository)
+        public Session(Guid instance, CGOLService service, IInterpreter interpreter, PlayerRepository playerRepository)
         {
             Instance = instance;
             Service = service ?? throw new ArgumentNullException(nameof(service));
-            Interpolator = interpolator ?? throw new ArgumentNullException(nameof(interpolator));
+            Interpreter = interpreter ?? throw new ArgumentNullException(nameof(interpreter));
             PlayerRepository = playerRepository ?? throw new ArgumentNullException(nameof(playerRepository));
         }
     }

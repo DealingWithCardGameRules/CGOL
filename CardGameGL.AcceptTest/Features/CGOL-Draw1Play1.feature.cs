@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace CardGameOL.AcceptTest.Features
+namespace CGOL.AcceptTest.Features
 {
     using TechTalk.SpecFlow;
     using System;
@@ -29,7 +29,7 @@ namespace CardGameOL.AcceptTest.Features
         
         private string[] _featureTags = ((string[])(null));
         
-#line 1 "CGDL-Draw1Play1.feature"
+#line 1 "CGOL-Draw1Play1.feature"
 #line hidden
         
         public virtual Microsoft.VisualStudio.TestTools.UnitTesting.TestContext TestContext
@@ -66,7 +66,7 @@ namespace CardGameOL.AcceptTest.Features
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "Draw one, play one - defined in CGOL")))
             {
-                global::CardGameOL.AcceptTest.Features.DrawOnePlayOne_DefinedInCGOLFeature.FeatureSetup(null);
+                global::CGOL.AcceptTest.Features.DrawOnePlayOne_DefinedInCGOLFeature.FeatureSetup(null);
             }
         }
         

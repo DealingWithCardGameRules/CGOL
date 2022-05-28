@@ -5,7 +5,7 @@ using dk.itu.game.msc.cgol.Parser.Messages;
 
 namespace dk.itu.game.msc.cgol.Parser
 {
-    public class LanguageParserSetup
+    public class LanguageParserSetup : IPluginSetup
     {
         private readonly Lexer lexer;
         private readonly CGOLParser parser;

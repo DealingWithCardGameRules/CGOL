@@ -1,5 +1,4 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
-using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.GameEvents;
 using System;
 

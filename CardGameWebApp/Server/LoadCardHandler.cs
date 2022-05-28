@@ -1,5 +1,4 @@
-﻿using dk.itu.game.msc.cgol;
-using dk.itu.game.msc.cgol.Distribution;
+﻿using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.Parser.Messages;
 using dk.itu.game.msc.cgol.Representation.Command;
 using System;
@@ -9,15 +8,15 @@ namespace CardGameWebApp.Server
 {
     public class LoadCardHandler : ICommandHandler<LoadCard>
     {
-        private readonly CGOLService service;
+        private readonly IDispatcher dispatcher;
         private readonly StorageService storage;
         private readonly WebContext context;
 
-        public LoadCardHandler(CGOLService service, StorageService storage, WebContext context)
+        public LoadCardHandler(IDispatcher dispatcher, StorageService storage, WebContext context)
         {
-            this.service = service ?? throw new System.ArgumentNullException(nameof(service));
-            this.storage = storage ?? throw new System.ArgumentNullException(nameof(storage));
-            this.context = context ?? throw new System.ArgumentNullException(nameof(context));
+            this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
+            this.storage = storage ?? throw new ArgumentNullException(nameof(storage));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Handle(LoadCard command, IEventDispatcher eventDispatcher)
@@ -25,7 +24,7 @@ namespace CardGameWebApp.Server
             try
             {
                 var cgd = storage.GetFile($"{context.User}/{command.File}");
-                service.Dispatch(new LoadCGOL(cgd));
+                dispatcher.Dispatch(new LoadCGOL(cgd));
             }
             catch (FileNotFoundException)
             {
