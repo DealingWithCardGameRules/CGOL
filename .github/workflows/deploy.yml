@@ -40,7 +40,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ${{ secrets.ftp_host }}
-          server-dir: cgdl-thesis/
+          server-dir: public_html/
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           local-dir: ./Release/
