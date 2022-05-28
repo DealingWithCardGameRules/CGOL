@@ -5,7 +5,7 @@ namespace dk.itu.game.msc.cgol.Representation
 {
     public class SessionRepository
     {
-        Dictionary<Guid, Session> sessions;
+        private Dictionary<Guid, Session> sessions;
 
         public SessionRepository()
         {
