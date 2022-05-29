@@ -14,8 +14,8 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts
             var cardCounter = new CardCounter(context.Dispatcher);
 
             // Command handlers
-            context.Interpreter.AddConcept(new DrawCardHandler(context.TimeProvider, context.Dispatcher));
-            context.Interpreter.AddConcept(new PlayCardHandler(context.TimeProvider, context.Dispatcher));
+            context.Interpreter.AddConcept(new DrawCardHandler(context.Interpreter.GetService<ICommandHandler<DrawCard>>(), context.Dispatcher));
+            context.Interpreter.AddConcept(new PlayCardHandler(context.Interpreter.GetService<ICommandHandler<PlayCard>>(), context.Dispatcher));
             context.Interpreter.AddConcept(new DrawLimitHandler(context.TimeProvider, context.Dispatcher));
             context.Interpreter.AddConcept(new PlayLimitHandler(context.TimeProvider, context.Dispatcher));
             context.Interpreter.AddConcept(new OwnerOfWinsHandler(context.Dispatcher));
@@ -42,7 +42,7 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts
             context.Interpreter.AddConcept(new DrawLimitSetObserver(drawCounter));
             context.Interpreter.AddConcept(new PlayLimitSetObserver(playCounter));
             context.Interpreter.AddConcept(new TurnStartedObserver(context.Dispatcher, playCounter, drawCounter));
-            context.Interpreter.AddConcept(new CardResolvedObserver(playCounter, context.Dispatcher));
+            context.Interpreter.AddConcept(new CardResolvedObserver(playCounter));
         }
     }
 }

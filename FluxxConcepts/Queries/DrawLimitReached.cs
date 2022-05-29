@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgol.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Queries
 {
@@ -6,6 +7,7 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Queries
     {
         public int PlayerIndex { get; }
 
+        [Concept(Description = "Check if the current player has reached or exceeded the draw limit.")]
         public DrawLimitReached(int playerIndex)
         {
             PlayerIndex = playerIndex;

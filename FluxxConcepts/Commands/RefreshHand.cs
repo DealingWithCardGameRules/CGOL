@@ -13,7 +13,7 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Commands
         public string RewardCollection { get; }
         public string DiscardCollection { get; }
 
-        [Concept(Description = "Current player discards hand and is dealt a number of cards. The numer will be fixedReward if set, otherwise the same amount as discarded.")]
+        [Concept(Description = "Current player discards hand and is dealt a number of cards. The number will be fixedReward if set, otherwise the same amount as discarded.")]
         public RefreshHand(string rewardCollection, string discardCollection, int fixedReward = 0)
         {
             Instance = Guid.NewGuid();

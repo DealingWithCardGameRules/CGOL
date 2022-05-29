@@ -1,19 +1,15 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
-using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
-using System;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Observers
 {
     public class CardResolvedObserver : IEventObserver<CardResolved>
     {
         private readonly PlayerCounter playCounter;
-        private readonly IDispatcher dispatcher;
 
-        public CardResolvedObserver(PlayerCounter playCounter, IDispatcher dispatcher)
+        public CardResolvedObserver(PlayerCounter playCounter)
         {
             this.playCounter = playCounter ?? throw new System.ArgumentNullException(nameof(playCounter));
-            this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
         public void Invoke(CardResolved @event)

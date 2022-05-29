@@ -21,67 +21,26 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Test
             // When, Then
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                new DrawCardHandler(Substitute.For<ITimeProvider>(), dispatcher);
+                new DrawCardHandler(Substitute.For<ICommandHandler<DrawCard>>(), dispatcher);
             });
         }
 
         [TestMethod]
-        public void Handle_HasCardsReturnsTrue_DispatchesCardDrawnEvent()
+        public void Handle_DrawLimitNotReached_HandlerOfDecorateeIsCalled()
         {
             // Given
-            var dispatcher = Substitute.For<IDispatcher>();
-            var timeProvider = Substitute.For<ITimeProvider>();
-            var sut = new DrawCardHandler(timeProvider, dispatcher);
+            var dispatcherStub = Substitute.For<IDispatcher>();
+            var decorateeMock = Substitute.For<ICommandHandler<DrawCard>>();
+            var sut = new DrawCardHandler(decorateeMock, dispatcherStub);
             var command = new DrawCard(string.Empty, string.Empty);
-            var eventDispatcher = Substitute.For<IEventDispatcher>();
-
-            dispatcher.Dispatch(Arg.Any<HasCards>()).Returns(true);
-
-            // When
-            sut.Handle(command, eventDispatcher);
-
-            // Then
-            eventDispatcher.Received().Dispatch(Arg.Any<CardDrawn>());
-        }
-
-        [TestMethod]
-        public void Handle_SpecificSource_CardDrawnSourceMatches()
-        {
-            // Given
-            var dispatcherStub = Substitute.For<IDispatcher>();
-            var timeProvider = Substitute.For<ITimeProvider>();
-            var sut = new DrawCardHandler(timeProvider, dispatcherStub);
-            var expectedSource = "Deck";
-            var command = new DrawCard(expectedSource, string.Empty);
-            var eventDispatcherMock = Substitute.For<IEventDispatcher>();
 
             dispatcherStub.Dispatch(Arg.Any<HasCards>()).Returns(true);
 
             // When
-            sut.Handle(command, eventDispatcherMock);
+            sut.Handle(command, null);
 
             // Then
-            eventDispatcherMock.Received().Dispatch(Arg.Is<CardDrawn>(result => expectedSource == result.Source));
-        }
-
-        [TestMethod]
-        public void Handle_SpecificTarget_CardDrawnTargetMatches()
-        {
-            // Given
-            var dispatcherStub = Substitute.For<IDispatcher>();
-            var timeProvider = Substitute.For<ITimeProvider>();
-            var sut = new DrawCardHandler(timeProvider, dispatcherStub);
-            var expectedDestination = "Deck";
-            var command = new DrawCard(string.Empty, expectedDestination);
-            var eventDispatcherMock = Substitute.For<IEventDispatcher>();
-
-            dispatcherStub.Dispatch(Arg.Any<HasCards>()).Returns(true);
-
-            // When
-            sut.Handle(command, eventDispatcherMock);
-
-            // Then
-            eventDispatcherMock.Received().Dispatch(Arg.Is<CardDrawn>(result => expectedDestination == result.Destination));
+            decorateeMock.Received().Handle(command, null);
         }
     }
 }
