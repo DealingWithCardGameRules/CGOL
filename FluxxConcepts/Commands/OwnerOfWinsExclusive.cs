@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Commands
 
         public IEnumerable<string> Keepers { get; }
 
-        [Concept(Description = "Search all players keepers zone exclusively for the comma seperated keepers specified. If one is found, the player emidiately wins.")]
+        [Concept(Description = "Search all players keepers zone exclusively for the comma separated keepers specified. If one is found, the player immediately wins.")]
         public OwnerOfWinsExclusive(string keepers)
         {
             Instance = Guid.NewGuid();

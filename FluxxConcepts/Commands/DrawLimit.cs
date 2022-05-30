@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgol.Distribution;
+﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Commands
@@ -10,6 +11,7 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Commands
         public Guid Instance { get; }
         public int Limit { get; }
 
+        [Concept(Description = "Set the limit of cards a player can draw during their turn.")]
         public DrawLimit(int limit)
         {
             Instance = Guid.NewGuid();
