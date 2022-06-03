@@ -6,25 +6,28 @@ namespace dk.itu.game.msc.cgol
 {
     public class DispatcherFactory
     {
-        private readonly EventLoggerFactory factory;
-        private readonly IInterpreter interpolator;
+        private readonly EventLogFactory factory;
+        private readonly IInterpreter interpreter;
 
-        public DispatcherFactory(EventLoggerFactory factory, IInterpreter interpolator)
+        public DispatcherFactory(EventLogFactory factory, IInterpreter interpreter)
         {
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
-            this.interpolator = interpolator ?? throw new ArgumentNullException(nameof(interpolator));
+            this.interpreter = interpreter ?? throw new ArgumentNullException(nameof(interpreter));
         }
 
         public IDispatcher Create(string path, string fileName)
         {
-            var logWriter = factory.NewLog(path, fileName);
-            var eventDispatcher = new EventLogDecorator(new EventDispatcher(interpolator), logWriter);
-            return new MessageDispatcher(interpolator, eventDispatcher);
+            var file = factory.AbsoluteFile(path, fileName);
+            factory.ResetFile(file);
+            var logWriter = factory.CreateFileLogger(file);
+            var eventDispatcher = new EventLogDecorator(new EventDispatcher(interpreter), logWriter);
+            return new MessageDispatcher(interpreter, eventDispatcher);
         }
 
         public IDispatcher Create()
         {
-            return new MessageDispatcher(interpolator, new EventDispatcher(interpolator));
+            var eventDispatcher = new EventLogDecorator(new EventDispatcher(interpreter), factory.CreateMemoryLogger());
+            return new MessageDispatcher(interpreter, eventDispatcher);
         }
     }
 }

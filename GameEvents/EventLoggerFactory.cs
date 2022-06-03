@@ -2,30 +2,41 @@
 
 namespace dk.itu.game.msc.cgol.GameEvents
 {
-    public class EventLoggerFactory
+    public class EventLogFactory
     {
-        public IEventLogger NewLog(string path, string fileName)
+        public IEventSerializer Serializer { get; set; } = new JsonEventSerializer();
+
+        public string AbsoluteFile(string path, string file)
         {
-            var eventStore = GetEventStore(path, fileName);
-
-            if (File.Exists(eventStore))
-                File.Delete(eventStore);
-
-            return new EventLogger(eventStore);
+            return $"{Path.GetFullPath(path)}{file}";
         }
 
-        public IEventLogger ContinueLog(string path, string fileName)
+        public void CreatePath(string path)
         {
-            var eventStore = GetEventStore(path, fileName);
-            return new EventLogger(eventStore);
+            Directory.CreateDirectory(Path.GetFullPath(path));
         }
 
-        private string GetEventStore(string path, string fileName)
+        public void ResetFile(string absoluteFile)
         {
-            var eventStorePath = Path.GetFullPath(path);
-            Directory.CreateDirectory(eventStorePath);
+            if (File.Exists(absoluteFile))
+                File.Delete(absoluteFile);
+        }
 
-            return eventStorePath + fileName;
+        public IEventLogger CreateFileLogger(string absoluteFile)
+        {
+            if (!File.Exists(absoluteFile))
+                throw new FileNotFoundException($"Use the {nameof(AbsoluteFile)} method to get absolute file path and use {nameof(CreatePath)} to create dictionary.");
+            return Wrap(new FileEventLogger(absoluteFile, Serializer));
+        }
+
+        public IEventLogger CreateMemoryLogger()
+        {
+            return Wrap(new MemoryEventLogger());
+        }
+
+        private IEventLogger Wrap(IEventLogger eventLogger)
+        {
+            return new AppendOnlyDecorator(eventLogger);
         }
     }
 }

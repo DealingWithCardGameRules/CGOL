@@ -12,7 +12,7 @@ namespace dk.itu.game.msc.cgol
     {
         public static void AddCGOLBasics(this IServiceCollection services)
         {
-            services.AddSingleton<EventLoggerFactory>();
+            services.AddSingleton<EventLogFactory>();
             services.AddSingleton<DispatcherFactory>();
             services.AddSingleton<IInterpreter, Interpreter>();
             services.AddSingleton<ITimeProvider, UtcTime>();
