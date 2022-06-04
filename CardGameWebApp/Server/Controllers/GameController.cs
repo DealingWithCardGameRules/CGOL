@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using dk.itu.game.msc.cgol.Representation;
 using Microsoft.Extensions.Primitives;
 using dk.itu.game.msc.cgol.Distribution;
+using Microsoft.AspNetCore.Http;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -85,7 +86,7 @@ namespace CardGameWebApp.Server.Controllers
 
             var current = session.GetSession(id);
             var zones = current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "community" } });
-            zones = zones.Union( current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "zone" }}) );
+            zones = zones.Union(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "zone" } }));
 
             var dto = new GameStateDTO
             {

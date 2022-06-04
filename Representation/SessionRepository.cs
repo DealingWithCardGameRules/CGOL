@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgol.Representation
 
         public void AddSession(Session session)
         {
-            sessions.Add(session.Instance, session);
+            sessions[session.Instance] = session;
         }
 
         public Session? GetSession(Guid id)

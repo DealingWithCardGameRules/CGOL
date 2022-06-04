@@ -1,7 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts;
 using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.GameState;
-using dk.itu.game.msc.cgol.Handlers;
 using dk.itu.game.msc.cgol.Parser;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,19 +15,23 @@ namespace dk.itu.game.msc.cgol
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddCGOLBasics();
             serviceCollection.AddCGOLParser();
-            serviceCollection.AddCGOLService();
             serviceProvider = serviceCollection.BuildServiceProvider();
         }
 
         public CGOLService CreateEmpty()
         {
-            return serviceProvider.GetRequiredService<CGOLService>();
+            var recorder = serviceProvider.GetRequiredService<EventRecorderFactory>().Create();
+            var interpreter = serviceProvider.GetRequiredService<IInterpreter>();
+            var dispatcher = new MessageDispatcher(interpreter, recorder);
+            var timeProvider = serviceProvider.GetRequiredService<ITimeProvider>();
+            var context = new PluginContext(interpreter, timeProvider, dispatcher);
+            return new CGOLService(dispatcher, context, recorder);
         }
 
-        public CGOLService CreateBasicGame()
+        public CGOLService CreateBasic()
         {
             var service = CreateEmpty();
-            service.LoadConcepts(serviceProvider.GetRequiredService<CommonConceptsSetup>());
+            service.LoadConcepts(new CommonConceptsSetup());
             service.LoadConcepts(serviceProvider.GetRequiredService<LanguageParserSetup>());
             service.LoadConcepts(new GameStateSetup());
             service.LoadConcepts(new CGOLSetup());

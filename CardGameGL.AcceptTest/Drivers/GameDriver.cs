@@ -10,7 +10,7 @@ namespace CardGameGL.AcceptTest.Drivers
 
         public GameDriver()
         {
-            cgol = new CGOLServiceFactory().CreateBasicGame();
+            cgol = new CGOLServiceFactory().CreateBasic();
         }
 
         internal void Process(string source)

@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
 using System;
+using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgol.GameEvents
 {
@@ -12,6 +13,8 @@ namespace dk.itu.game.msc.cgol.GameEvents
         {
             this.decoratee = decoratee ?? throw new ArgumentNullException(nameof(decoratee));
         }
+
+        public IEnumerable<IEvent> EventLog => decoratee.EventLog;
 
         public void AppendLog(IEvent @event)
         {

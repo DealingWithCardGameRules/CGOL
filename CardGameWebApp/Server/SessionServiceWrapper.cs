@@ -33,5 +33,12 @@ namespace CardGameWebApp.Server
         {
             return session.ListSessions();
         }
+
+        internal void Reset(Guid id, WebContext webContext)
+        {
+            session.Reset(id, userEnquirerFactory);
+            var ses = session.GetSession(id);
+            ses.Service.LoadConcepts(new ConceptHandlerSetup(storage, webContext));
+        }
     }
 }

@@ -29,5 +29,12 @@ namespace dk.itu.game.msc.cgol.Representation
         {
             return repository.GetSession(id);
         }
+
+        public void Reset(Guid id, IUserEnquirerFactory userEnquirerFactory)
+        {
+            var oldSession = GetSession(id) ?? throw new Exception("Session not found");
+            var newSession = factory.ResetSession(oldSession, userEnquirerFactory);
+            repository.AddSession(newSession);
+        }
     }
 }

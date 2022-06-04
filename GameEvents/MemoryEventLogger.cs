@@ -12,6 +12,8 @@ namespace dk.itu.game.msc.cgol.GameEvents
             log = new List<IEvent>();
         }
 
+        public IEnumerable<IEvent> EventLog => log;
+
         public void AppendLog(IEvent @event)
         {
             log.Add(@event);
