@@ -32,7 +32,6 @@ namespace dk.itu.game.msc.cgol.Representation
         private void AddHandlers(IInterpreter interpreter, IUserEnquirer userEnquirer)
         {
             // Setup handlers
-            interpreter.AddConcept(new PickACardHandler(userEnquirer));
             interpreter.AddConcept(new PlayerAgreeHandler(userEnquirer));
 
             // Setup observers

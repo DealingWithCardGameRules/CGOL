@@ -1,1 +1,1 @@
-If (HasCards) RefreshHand "Deck" "Discard Pile"
+if (PlayerAgree 2 "Vil du vinde?") Win 2	

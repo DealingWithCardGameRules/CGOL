@@ -1,0 +1,6 @@
+CreateCard "Draw 5"
+AddCardTags "Draw 5" "rule, draw"
+Instantaneous "Draw 5" DiscardCards "Rules" "Discard Pile" "draw"
+Instantaneous "Draw 5" DrawLimit 5
+Instantaneous "Draw 5" PlaceIn "Rules"
+Permanent "Draw 5" DrawLimit 5

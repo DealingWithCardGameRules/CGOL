@@ -1,0 +1,1 @@
+If (HasCards) RefreshHand "Deck" "Discard Pile"

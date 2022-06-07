@@ -1,0 +1,19 @@
+/*******************************************
+* General rules for Fluxx                  *
+*******************************************/
+LoadBehavior "FluxxConcepts"
+Play DrawCard "Deck"
+Play PlayCard
+Play PassTurn
+
+CreateZone "Meta Rules" // First permanents to resolve
+CreateDeck "Deck"
+CreateDeck "Discard Pile"
+CreateZone "Rules"
+// Make sure the Discard Pile recycles into Deck if empty.
+SetReshuffle "Discard Pile" "Deck"
+
+LoadCard "Fluxx/FluxxDeck"
+LoadCard "Fluxx/RuleCard"
+
+Start

@@ -152,7 +152,7 @@
 			await updateCache();
 			this.StateHasChanged();
 
-			var cards = collectionCache[inquirt.Collection].CardCollection.VisibleCards;
+			var cards = inquirt.Selection;
 			await cardPrompt.Select(cards, async (card) =>
 			{
 				await hubConnection.SendAsync("CardSelected", inquirt.CorrespondenceId, card);

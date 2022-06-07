@@ -9,19 +9,25 @@ namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
     public class GetAvailableActionsForCollectionHandler : IQueryHandler<GetAvailableActionsForCollection, IEnumerable<IUserAction>>
     {
         private readonly ICommandRepositoryQueries repository;
+        private readonly IQueryDispatcher dispatcher;
 
-        internal GetAvailableActionsForCollectionHandler(ICommandRepositoryQueries repository)
+        internal GetAvailableActionsForCollectionHandler(ICommandRepositoryQueries repository, IQueryDispatcher dispatcher)
         {
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
+            this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
         public IEnumerable<IUserAction> Handle(GetAvailableActionsForCollection query)
         {
             foreach (var command in repository.GetCommands(query.PlayerIndex))
             {
-                if (command.Command.GetPlayFroms().Contains(query.Collection))
+                foreach (var col in command.Command.GetPlayFromMaybeQueries())
                 {
-                    yield return command;
+                    if (col.Value(dispatcher).Equals(query.Collection, System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        yield return command;
+                        continue;
+                    }
                 }
             }
         }

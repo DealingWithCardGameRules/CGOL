@@ -1,0 +1,13 @@
+CreateCard "War"
+AddCardTags "War" "creeper, war"
+When "War" drawn PlaceWith "creepers"
+CreateCard "Taxes"
+AddCardTags "Taxes" "creeper, taxes"
+When "Taxes" drawn PlaceWith "creepers"
+CreateCard "Death"
+AddCardTags "Death" "creeper, death"
+When "Death" drawn PlaceWith "creepers"
+CreateCard "Radioactive Potato"
+AddCardTags "Radioactive Potato" "creeper, radioactive potato"
+When "Radioactive Potato" drawn PlaceWith "creepers"
+

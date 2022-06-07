@@ -1,0 +1,6 @@
+CreateCard "No Limits"
+AddCardTags "No Limits" "rule, discard"
+Instantaneous "No Limits" DiscardCards "Rules" "Discard Pile" "keeper"
+Instantaneous "No Limits" DiscardCards "Rules" "Discard Pile" "hand"
+Instantaneous "No Limits" ResolvePermanents "Meta Rules"
+Instantaneous "No Limits" PlaceIn "Discard Pile"

@@ -4,7 +4,7 @@ using dk.itu.game.msc.cgol.Representation.Command;
 using System;
 using System.IO;
 
-namespace CardGameWebApp.Server
+namespace CardGameWebApp.Server.Handlers
 {
     public class LoadCardHandler : ICommandHandler<LoadCard>
     {

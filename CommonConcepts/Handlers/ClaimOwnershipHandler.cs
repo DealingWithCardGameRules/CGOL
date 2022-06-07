@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
+﻿using dk.itu.game.msc.cgol.Common;
+using dk.itu.game.msc.cgol.CommonConcepts.Commands;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System;

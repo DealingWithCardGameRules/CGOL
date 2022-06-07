@@ -1,0 +1,6 @@
+CreateCard "Draw 4"
+AddCardTags "Draw 4" "rule, draw"
+Instantaneous "Draw 4" DiscardCards "Rules" "Discard Pile" "draw"
+Instantaneous "Draw 4" DrawLimit 4
+Instantaneous "Draw 4" PlaceIn "Rules"
+Permanent "Draw 4" DrawLimit 4

@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgol.Distribution;
+﻿using dk.itu.game.msc.cgol.Common;
+using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Linq;
 
@@ -27,7 +28,24 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Attributes
                 Where(p => p.IsDefined(typeof(PlayCardAttribute), false)).FirstOrDefault();
 
             if (property != null)
-                property.SetValue(command, cardId);
+            {
+                if (property.PropertyType == typeof(Guid))
+                {
+                    property.SetValue(command, cardId);
+                }
+                else if (property.PropertyType == typeof(MaybeChoice<Guid>))
+                {
+                    ((MaybeChoice<Guid>)property.GetValue(command)).Choose(cardId);
+                }
+                else if (property.PropertyType == typeof(Maybe<Guid>))
+                {
+                    property.SetValue(command, new Maybe<Guid>(cardId));
+                }
+                else if (property.PropertyType == typeof(MaybeQuery<Guid>))
+                {
+                    property.SetValue(command, new MaybeQuery<Guid>(cardId));
+                }
+            }
         }
     }
 }

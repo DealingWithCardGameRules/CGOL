@@ -266,7 +266,6 @@ namespace CardGameWebApp.Server.Controllers
 
         private IEnumerable<int> GetPlayerIndexes(Session session, StringValues stringValues)
         {
-
             var clientIds = Request.Headers["clientid"].ToString().CommaSeperateTrimmed();
             foreach (var clientId in clientIds)
                 foreach (var index in session.PlayerRepository.GetIndexes(clientId))

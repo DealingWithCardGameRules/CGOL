@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+﻿using dk.itu.game.msc.cgol.Common;
+using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Commands
         }
 
         [PlayCollection] public IEnumerable<string> SourceRefs => Commands.SelectMany(c => c.GetPlayFroms());
+        [PlayCollection] public IEnumerable<MaybeQuery<string>> SourceRefsMaybeQueries => Commands.SelectMany(c => c.GetPlayFromMaybeQueries());
 
         public IEnumerable<ICommand> Commands { get; }
 
