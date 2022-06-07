@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Agents\Agents.csproj" />
     <ProjectReference Include="..\CommandCentral\Distribution.csproj" />
     <ProjectReference Include="..\FluxxConcepts\FluxxConcepts.csproj" />
     <ProjectReference Include="..\GameEvents\GameEvents.csproj" />

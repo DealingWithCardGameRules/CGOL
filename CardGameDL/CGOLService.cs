@@ -25,7 +25,7 @@ namespace dk.itu.game.msc.cgol
 
         public T Dispatch<T>(IQuery<T> query)
         {
-            return dispatcher.Dispatch<T>(query);
+            return dispatcher.Dispatch(query);
         }
 
         public void Parse(string cgol)

@@ -16,7 +16,8 @@ using System.Threading.Tasks;
 using dk.itu.game.msc.cgol.Representation;
 using Microsoft.Extensions.Primitives;
 using dk.itu.game.msc.cgol.Distribution;
-using Microsoft.AspNetCore.Http;
+using Agents;
+using dk.itu.game.msc.cgol;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -103,6 +104,7 @@ namespace CardGameWebApp.Server.Controllers
             };
             response.Links.Add("actions", Url.Action(nameof(GetActions), "game", new { id }, Request.Scheme));
             response.Links.Add("hub", $"{Request.Scheme}://{Request.Host}/gamehub");
+            response.Links.Add("random-action", Url.Action(nameof(PerformRandomAction), "game", new { id }, Request.Scheme));
 
             return response;
         }
@@ -214,6 +216,16 @@ namespace CardGameWebApp.Server.Controllers
             dto.Parameters = parameters;
             var output = new ActionResponse(dto, Request.GetEncodedUrl());
             return output;
+        }
+
+        [HttpPost("{id:Guid}/actions/random")]
+        public async Task<ActionResult> PerformRandomAction(Guid id)
+        {
+            var current = session.GetSession(id);
+            var agent = new AIAgentFactory().CreateRandom();
+            current.Service.Dispatch( agent.Choose(current.Service.SessionEvents.ToArray()) );
+            await gameHub.Clients.Group(id.ToString()).SendAsync("NewState");
+            return Ok();
         }
 
         [HttpPost("{id:Guid}/actions/{instance:Guid}")]

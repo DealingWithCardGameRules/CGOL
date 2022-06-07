@@ -50,6 +50,11 @@ namespace dk.itu.game.msc.cgol.Common
             return chooser(GetOptions(dispatcher));
         }
 
+        public IEnumerable<ValueType> Choices(IQueryDispatcher dispatcher)
+        {
+            return GetOptions(dispatcher);
+        }
+
         public void ClearChoice()
         {
             choices = new ValueType[0];
