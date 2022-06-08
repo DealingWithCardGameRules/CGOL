@@ -3,7 +3,7 @@ using dk.itu.game.msc.cgol.GameEvents;
 
 namespace dk.itu.game.msc.cgol
 {
-    internal class EventRecorderFactory
+    public class EventRecorderFactory
     {
         private readonly EventLogFactory factory;
         private readonly IInterpreter interpreter;

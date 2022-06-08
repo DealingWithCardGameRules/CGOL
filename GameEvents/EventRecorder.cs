@@ -12,8 +12,8 @@ namespace dk.itu.game.msc.cgol.GameEvents
 
         public EventRecorder(IEventDispatcher eventDispatcher, IEventLogger eventLogger)
         {
-            var dispatcher = eventDispatcher ?? throw new System.ArgumentNullException(nameof(eventDispatcher));
-            this.eventLogger = eventLogger ?? throw new System.ArgumentNullException(nameof(eventLogger));
+            var dispatcher = eventDispatcher ?? throw new ArgumentNullException(nameof(eventDispatcher));
+            this.eventLogger = eventLogger ?? throw new ArgumentNullException(nameof(eventLogger));
             this.eventDispatcher = new EventLogDecorator(dispatcher, this.eventLogger);
         }
 
