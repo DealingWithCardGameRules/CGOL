@@ -21,7 +21,7 @@ namespace dk.itu.game.msc.cgol
         {
             var recorder = serviceProvider.GetRequiredService<EventRecorderFactory>().Create();
             var interpreter = serviceProvider.GetRequiredService<IInterpreter>();
-            var dispatcher = new MessageDispatcher(interpreter, recorder);
+            var dispatcher = new MessageDispatcher(interpreter, new DummyEventDisPatcher());
             var timeProvider = serviceProvider.GetRequiredService<ITimeProvider>();
             var context = new PluginContext(interpreter, timeProvider, dispatcher);
             new CommonConceptsSetup().Setup(context);
@@ -29,5 +29,12 @@ namespace dk.itu.game.msc.cgol
             return new RandomAgent(recorder, dispatcher);
         }
 
+        class DummyEventDisPatcher : IEventDispatcher
+        {
+            public void Dispatch(IEvent @event)
+            {
+                
+            }
+        }
     }
 }

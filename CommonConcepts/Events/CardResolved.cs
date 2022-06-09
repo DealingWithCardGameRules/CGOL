@@ -20,5 +20,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             ProcessId = processId;
             Card = card;
         }
+
+        public override string ToString()
+        {
+            return $"The card \"{Card.Template}\" was resolved.";
+        }
     }
 }

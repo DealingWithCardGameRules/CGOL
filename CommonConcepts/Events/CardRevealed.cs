@@ -20,5 +20,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             Placement = placement;
             Card = card;
         }
+
+        public override string ToString()
+        {
+            return $"The card \"{Card.Template}\" was revealed from \"{Placement}\".";
+        }
     }
 }

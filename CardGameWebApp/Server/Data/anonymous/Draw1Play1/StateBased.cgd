@@ -1,5 +1,4 @@
 SetPlayers 2
-DrawLimit 1
 CreateDeck "deck"
 CreateDeck "discard pile"
 CreateHand "player"

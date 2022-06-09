@@ -20,5 +20,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             Card = card;
             Destination = destination;
         }
+
+        public override string ToString()
+        {
+            return $"The card \"{Card.Template}\" was added to \"{Destination}\"";
+        }
     }
 }

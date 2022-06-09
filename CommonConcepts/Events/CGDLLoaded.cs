@@ -22,5 +22,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             ProcessId = processId;
             Commands = commands.ToArray();
         }
+
+        public override string ToString()
+        {
+            return $"{Commands.Length} commands loaded.";
+        }
     }
 }

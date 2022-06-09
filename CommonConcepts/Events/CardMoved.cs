@@ -22,5 +22,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             Destination = destinationId;
             CardId = cardId;
         }
+
+        public override string ToString()
+        {
+            return $"Card was moved from \"{Source}\" to \"{Destination}\" with the id {CardId}";
+        }
     }
 }

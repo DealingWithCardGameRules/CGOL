@@ -24,5 +24,9 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             Template = template;
             Tags = tags.ToArray();
         }
+        public override string ToString()
+        {
+            return $"Tags \"{Tags.WriteOut()}\" added to card \"{Template}\".";
+        }
     }
 }

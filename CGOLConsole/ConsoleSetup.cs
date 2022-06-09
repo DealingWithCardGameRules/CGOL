@@ -8,6 +8,7 @@ namespace CGOLConsole
         public void Setup(IPluginContext context)
         {
             context.Interpreter.AddConcept(new LoadCardHandler(context.Dispatcher));
+            context.Interpreter.AddConcept(new PickACardHandler());
         }
     }
 }

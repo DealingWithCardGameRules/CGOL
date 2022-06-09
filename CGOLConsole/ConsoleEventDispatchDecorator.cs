@@ -15,7 +15,7 @@ namespace CGOLConsole
 
         public void Dispatch(IEvent @event)
         {
-            consoleWriter.Write($"[Event]: {@event.GetType().Name}", @event);
+            consoleWriter.Write(@event);
             dispatcher.Dispatch(@event);
         }
     }

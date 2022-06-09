@@ -21,5 +21,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             ProcessId = processId;
             PlayerIndex = playerIndex;
         }
+
+        public override string ToString()
+        {
+            return $"Player {PlayerIndex??0} won!";
+        }
     }
 }

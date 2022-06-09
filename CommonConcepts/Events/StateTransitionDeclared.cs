@@ -20,5 +20,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             ProcessId = processId;
             State = state;
         }
+
+        public override string ToString()
+        {
+            return $"State \"{State}\" is ending.";
+        }
     }
 }

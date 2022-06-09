@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgol
         {
             services.AddSingleton<EventLogFactory>();
             services.AddSingleton<EventRecorderFactory>();
-            services.AddSingleton<IInterpreter, Interpreter>();
+            services.AddSingleton<IInterpreter>(new Interpreter());
             services.AddSingleton<ITimeProvider, UtcTime>();
         }
 

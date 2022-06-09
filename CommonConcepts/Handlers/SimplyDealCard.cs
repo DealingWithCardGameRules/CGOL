@@ -36,7 +36,7 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 
                     dispatcher.Dispatch(new ShuffleInto(from, command.Source));
 
-                    if (dispatcher.Dispatch(new HasCards(command.Source)))
+                    if (!dispatcher.Dispatch(new HasCards(command.Source)))
                     {
                         eventDispatcher.Dispatch(new CollectionBust(timeProvider.Now, command.ProcessId, command.Source));
                         throw new Exception($"No cards in collection {command.Source}");

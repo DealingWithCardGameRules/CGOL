@@ -21,5 +21,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             ProcessId = processId;
             Collection = collection;
         }
+
+        public override string ToString()
+        {
+            return $"No more cards in \"{Collection}\".";
+        }
     }
 }

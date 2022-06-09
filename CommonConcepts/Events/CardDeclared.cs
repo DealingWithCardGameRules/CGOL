@@ -13,7 +13,6 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
         public Guid ProcessId { get; }
         public string Template { get; }
         public ICardTemplate Card { get; }
-        public string Name { get; }
 
         [Concept(Description = "A card was declared.")]
         public CardDeclared(DateTime eventTime, Guid processId, string template, ICardTemplate card)
@@ -22,6 +21,11 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             ProcessId = processId;
             Template = template;
             Card = card;
+        }
+
+        public override string ToString()
+        {
+            return $"The card \"{Template}\" was declared";
         }
     }
 }
