@@ -67,4 +67,33 @@ namespace dk.itu.game.msc.cgol.Common
             return new ValueType[0];
         }
     }
+
+    public static class MaybeChoiceHelper
+    {
+        public static IEnumerable<MaybeChoice<T>> GetChoices<T>(this ICommand command)
+        {
+            foreach (var property in command.GetType().GetProperties())
+            {
+                if (typeof(MaybeChoice<T>).IsAssignableFrom(property.PropertyType))
+                {
+                    yield return (MaybeChoice<T>)property.GetValue(command);
+                }
+                else if (property.PropertyType is ICommand)
+                {
+                    foreach (var item in ((ICommand)property.GetValue(command)).GetChoices<T>())
+                    {
+                        yield return item;
+                    }
+                }
+                else if (typeof(IEnumerable<ICommand>).IsAssignableFrom(property.PropertyType))
+                {
+                    foreach (ICommand item in (IEnumerable<ICommand>)property.GetValue(command))
+                    {
+                        foreach(var choice in item.GetChoices<T>())
+                            yield return choice;
+                    }
+                }
+            }
+        }
+    }
 }

@@ -28,19 +28,17 @@ namespace Agents
             if (actions == null || !actions.Any())
                 throw new Exception("No actions available!");
 
-            return Expand(actions).Random();
+            return Expand(actions.Select(a=>a.Command)).Random();
         }
 
-        public IEnumerable<ICommand> Expand(IEnumerable<IUserAction> cmds) 
+        public IEnumerable<ICommand> Expand(IEnumerable<ICommand> cmds) 
         {
-            foreach (var cmd in cmds.Select(a => a.Command))
+            foreach (var cmd in cmds.Select(a => a))
             {
                 if (cmd is PlayCard play)
                 {
                     foreach (var choice in play.Card.Choices(dispatcher))
-                    {
                         yield return new PlayCard(play.Source.Value(dispatcher), play.Destination, choice);
-                    }
                 }
                 else
                 {
