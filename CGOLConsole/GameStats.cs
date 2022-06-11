@@ -35,7 +35,7 @@ namespace CGOLConsole
                 decks = collections.Count(),
                 cards = collections.Sum(c => dispatcher.Dispatch(new CardCount(c))),
                 actions = actions.Count(),
-                options = actions.Sum(a => a.GetChoices<string>().Sum(c => c.Choices(dispatcher).Count()))
+                options = actions.Sum(a => a.GetChoices<Guid>().Sum(c => c.Choices(dispatcher).Count()))
             });
         }
     }

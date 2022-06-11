@@ -66,11 +66,11 @@ namespace CGOLConsole
                 Console.WriteLine("Quick stats!");
                 Console.WriteLine("------------------------------------------------");
                 Console.WriteLine($"Winning player: {stats.playerWon}");
-                Console.WriteLine($"Average player: {stats.AvgPlayer}");
-                Console.WriteLine($"Average cards: {stats.AvgCards}");
-                Console.WriteLine($"Average decks: {stats.AvgDecks}");
-                Console.WriteLine($"Average actions: {stats.AvgActions}");
-                Console.WriteLine($"Average options: {stats.AvgOptions}");
+                Console.WriteLine($"Average player: {stats.AvgPlayer:F}");
+                Console.WriteLine($"Average cards: {stats.AvgCards:F}");
+                Console.WriteLine($"Average decks: {stats.AvgDecks:F}");
+                Console.WriteLine($"Average actions: {stats.AvgActions:F}");
+                Console.WriteLine($"Average options: {stats.AvgOptions:F}");
 
             }
         }
