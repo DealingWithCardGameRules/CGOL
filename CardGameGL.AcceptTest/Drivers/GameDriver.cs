@@ -1,4 +1,5 @@
 ﻿using dk.itu.game.msc.cgol;
+using dk.itu.game.msc.cgol.Common;
 using dk.itu.game.msc.cgol.CommonConcepts.Commands;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 
@@ -10,7 +11,7 @@ namespace CardGameGL.AcceptTest.Drivers
 
         public GameDriver()
         {
-            cgol = new CGOLServiceFactory().CreateBasicGame();
+            cgol = new CGOLServiceFactory().CreateBasic();
         }
 
         internal void Process(string source)
@@ -36,8 +37,8 @@ namespace CardGameGL.AcceptTest.Drivers
         {
             var commands = cgol.Dispatch(new GetAvailableActions());
             var playCommand = (PlayCard)commands.First(c => c.Command is PlayCard).Command;
-            var card = cgol.Dispatch(new GetTopCard(playCommand.Source)) ?? throw new Exception($"No cards in {playCommand.Source}");
-            playCommand.Card = card.Instance;
+            var card = cgol.Dispatch(new GetTopCard(playCommand.Source.Value(null))) ?? throw new Exception($"No cards in {playCommand.Source}");
+            playCommand.Card = new MaybeChoice<Guid>(card.Instance);
             cgol.Dispatch(playCommand);
         }
 

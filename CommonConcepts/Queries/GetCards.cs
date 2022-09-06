@@ -1,4 +1,5 @@
-﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
+﻿using dk.itu.game.msc.cgol.Common;
+using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
 using dk.itu.game.msc.cgol.Distribution;
 using System.Collections.Generic;
 
@@ -15,6 +16,5 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Queries
             Collection = collection ?? throw new System.ArgumentNullException(nameof(collection));
             Tags = tags;
         }
-
     }
 }

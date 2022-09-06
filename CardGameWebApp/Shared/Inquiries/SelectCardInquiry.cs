@@ -1,19 +1,19 @@
-﻿using System;
+﻿using CardGameWebApp.Shared.DTOs;
+using System;
+using System.Collections.Generic;
 
 namespace CardGameWebApp.Shared.Inquiries
 {
     public class SelectCardInquiry
     {
         public Guid CorrespondenceId { get; }
-        public string Collection { get; }
-        public string[]? RequiredTags { get; }
+        public IEnumerable<CardRefDTO> Selection { get; }
         public bool Required { get; }
 
-        public SelectCardInquiry(Guid correspondenceId, string collection, string[]? requiredTags = null, bool required = true)
+        public SelectCardInquiry(Guid correspondenceId, IEnumerable<CardRefDTO> selection, bool required = true)
         {
             CorrespondenceId = correspondenceId;
-            Collection = collection;
-            RequiredTags = requiredTags;
+            Selection = selection;
             Required = required;
         }
     }

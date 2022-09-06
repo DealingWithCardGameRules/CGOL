@@ -1,23 +1,24 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Queries
 {
     public class PickACard : IQuery<Guid?>
     {
         public string Collection { get; }
+        public ICard[] Selection { get; }
         public int Player { get; }
-        public string[]? RequiredTags { get; }
         public bool Required { get; }
         public int TimeoutLimitSeconds { get; set; } = 300; // Five minutes
 
-        [Concept(Description = "Try to get a given player  to pick a card from a specific collection. The selection can be limited to certain tags.")]
-        public PickACard(string collection, int player, string[]? requiredTags = null, bool required = true)
+        [Concept(Description = "Try to get a given player to pick one in a selection of cards.")]
+        public PickACard(IEnumerable<ICard> selection, int player, bool required = true)
         {
-            Collection = collection;
+            Selection = selection.ToArray();
             Player = player;
-            RequiredTags = requiredTags;
             Required = required;
         }
     }

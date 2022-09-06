@@ -20,5 +20,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             ProcessId = processId;
             PlayerIndex = playerIndex;
         }
+
+        public override string ToString()
+        {
+            return $"Current player is now player {PlayerIndex}";
+        }
     }
 }

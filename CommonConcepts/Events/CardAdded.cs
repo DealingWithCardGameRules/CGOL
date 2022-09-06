@@ -9,18 +9,21 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
         public int Version => 1;
         public DateTime EventTime { get; }
         public Guid ProcessId { get; }
-        public DateTime EventTime1 { get; }
-        public Guid ProcessId1 { get; }
         public ICard Card { get; }
         public string Destination { get; }
 
         [Concept(Description = "Card was added to a collection")]
         public CardAdded(DateTime eventTime, Guid processId, ICard card, string destination)
         {
-            EventTime1 = eventTime;
-            ProcessId1 = processId;
+            EventTime = eventTime;
+            ProcessId = processId;
             Card = card;
             Destination = destination;
+        }
+
+        public override string ToString()
+        {
+            return $"The card \"{Card.Template}\" was added to \"{Destination}\"";
         }
     }
 }

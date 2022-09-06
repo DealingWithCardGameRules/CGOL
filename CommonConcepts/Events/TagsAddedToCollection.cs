@@ -24,5 +24,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             Collection = collection ?? throw new ArgumentNullException(nameof(collection));
             Tags = tags.ToArray();
         }
+
+        public override string ToString()
+        {
+            return $"Tags \"{Tags.WriteOut()}\" added to collection \"{Collection}\".";
+        }
     }
 }

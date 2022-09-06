@@ -1,0 +1,23 @@
+SetPlayers 1
+DrawLimit 1
+CreateDeck "deck"
+CreateDeck "discard pile"
+CreateHand "player" 1
+
+CreateCard "Draw 1 Play 1 Rules"
+Permanent "Draw 1 Play 1 Rules" If (InState "Draw") Play "Draw":
+	DrawCard "deck"
+	ChangeState "Play"
+Permanent "Draw 1 Play 1 Rules" If (InState "Play") Play "Play":
+	PlayCard
+	ChangeState "Draw"
+CreateZone "One Player Rules"
+AddCard "Draw 1 Play 1 Rules" "One Player Rules"
+
+CreateCard "pass"
+Instantaneous "pass" PlaceIn "discard pile"
+AddCard "pass" "deck"
+AddCard "pass" "deck"
+AddCard "pass" "deck"
+AddCard "pass" "deck"
+ChangeState "Draw"

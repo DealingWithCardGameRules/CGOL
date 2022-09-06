@@ -22,5 +22,11 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             Zone = zone;
             OwnerIndex = ownerIndex;
         }
+
+        public override string ToString()
+        {
+            var owner = OwnerIndex != null ? $"Owned by player {OwnerIndex}" : "";
+            return $"Card zone \"{Zone}\" declared. {owner}";
+        }
     }
 }

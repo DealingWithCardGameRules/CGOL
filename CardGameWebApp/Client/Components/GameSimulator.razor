@@ -21,6 +21,7 @@
 				<button type="button" class="btn @(players[i] ? "btn-primary" : "btn-outline-primary")" @onclick="@(() => TogglePlayer(playerIndex))" autocomplete="off">Player @(playerIndex)</button>
 			}
 			</div>
+			<button type="button" class="btn btn-primary" @onclick="@(() => PlayRandomly())"><i class="fa-solid fa-robot"></i></button>
 		}
 
 		@if (GlobalActions != null)
@@ -152,7 +153,7 @@
 			await updateCache();
 			this.StateHasChanged();
 
-			var cards = collectionCache[inquirt.Collection].CardCollection.VisibleCards;
+			var cards = inquirt.Selection;
 			await cardPrompt.Select(cards, async (card) =>
 			{
 				await hubConnection.SendAsync("CardSelected", inquirt.CorrespondenceId, card);
@@ -191,7 +192,7 @@
 		{
 			players.Add(false);
 		}
-		
+
 
 		hands = game.Game.Hands;
 		decks = game.Game.Decks;
@@ -204,6 +205,11 @@
 	{
 		await hubConnection.SendAsync("leave", game.SessionId);
 		await hubConnection.StopAsync();
+	}
+
+	private async Task PlayRandomly() 
+	{
+		await Http.PostAsync(game.Links["random-action"], null);
 	}
 
 	private void TogglePlayer(int index)

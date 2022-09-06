@@ -18,5 +18,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             ProcessId = processId;
             Name = name;
         }
+
+        public override string ToString()
+        {
+            return $"The hand \"{Name}\" was declared.";
+        }
     }
 }

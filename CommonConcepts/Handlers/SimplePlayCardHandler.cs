@@ -4,6 +4,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
+using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -20,18 +21,12 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 
         public void Handle(PlayCard command, IEventDispatcher eventDispatcher)
         {
-            var source = command.Source ?? CurrentPlayersHand();
+            var source = command.Source.Value(dispatcher);
             if (source == null)
                 throw new ArgumentNullException($"No destination found, please specify one by filling out the \"from\" parameter or make sure the current player has a hand.");
 
-            var selectedCard = command.Card ?? SelectCard(source);
-            if (selectedCard == null)
-                throw new Exception("No card selected!");
-
-            var card = dispatcher.Dispatch(new GetCard(source, selectedCard.Value));
-
-            if (card == null)
-                throw new Exception($"Card not found: {command.Card}");
+            Guid selectedCard = command.Card.ValueOrChoice((guids) => SelectCard(ToCards(source, guids)), dispatcher);
+            var card = dispatcher.Dispatch(new GetCard(source, selectedCard)) ?? throw new Exception($"Card not found: {command.Card}");
 
             var revealEvent = new CardRevealed(timeProvider.Now, command.ProcessId, source, card);
             eventDispatcher.Dispatch(revealEvent);
@@ -53,24 +48,27 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
                 var moveEvent = new CardMoved(timeProvider.Now, command.ProcessId, source, command.Destination, card.Instance);
                 eventDispatcher.Dispatch(moveEvent);
             }
+            
+            command.Card.ClearChoice();
         }
 
-        private Guid? SelectCard(string collection)
+        private Guid SelectCard(IEnumerable<ICard> cards)
         {
             var player = dispatcher.Dispatch(new CurrentPlayer());
             if (player == null)
-                throw new ArgumentException("No card select and no player to ask.");
+                throw new ArgumentException("No card selected and no player to ask.");
 
-            return dispatcher.Dispatch(new PickACard(collection, player.Index, required: false));
+            return dispatcher.Dispatch(new PickACard(cards, player.Index, required: false)) ?? throw new Exception("No card selected!");
         }
 
-        private string? CurrentPlayersHand()
+        private IEnumerable<ICard> ToCards(string source, IEnumerable<Guid> guids)
         {
-            var player = dispatcher.Dispatch(new CurrentPlayer());
-            if (player == null)
-                throw new ArgumentException("No source specified, please fill out the the \"source\" parameter or specify players with individual hands");
-
-            return dispatcher.Dispatch(new GetPlayersHand(player.Index));
+            foreach (var guid in guids)
+            {
+                var card = dispatcher.Dispatch(new GetCard(source, guid));
+                if (card != null)
+                    yield return card;
+            }
         }
     }
 }

@@ -2,30 +2,17 @@
 
 namespace dk.itu.game.msc.cgol.GameEvents
 {
-    public class EventLoggerFactory
+    public class EventLogFactory
     {
-        public IEventLogger NewLog(string path, string fileName)
+
+        public IEventLogger CreateMemoryLogger()
         {
-            var eventStore = GetEventStore(path, fileName);
-
-            if (File.Exists(eventStore))
-                File.Delete(eventStore);
-
-            return new EventLogger(eventStore);
+            return Wrap(new MemoryEventLogger());
         }
 
-        public IEventLogger ContinueLog(string path, string fileName)
+        private IEventLogger Wrap(IEventLogger eventLogger)
         {
-            var eventStore = GetEventStore(path, fileName);
-            return new EventLogger(eventStore);
-        }
-
-        private string GetEventStore(string path, string fileName)
-        {
-            var eventStorePath = Path.GetFullPath(path);
-            Directory.CreateDirectory(eventStorePath);
-
-            return eventStorePath + fileName;
+            return new AppendOnlyDecorator(eventLogger);
         }
     }
 }

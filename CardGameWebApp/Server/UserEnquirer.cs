@@ -39,20 +39,25 @@ namespace CardGameWebApp.Server
 
         public Guid? SelectCard(int playerIndex, string collection, string[] requiredTags, bool required)
         {
-            var clientId = playerRepository.GetPlayer(playerIndex);
-            if (clientId == null)
-                return null;
-
-            Guid? returnValue = null;
-            Task.Run(() =>
-            {
-                Guid corId = Guid.NewGuid();
-                responseOperator.Expect<Guid?>(corId, (card) => returnValue = card);
-                gameHub.Clients.Client(clientId).SendAsync("SelectCard", new SelectCardInquiry(corId, collection, requiredTags, required));
-                while (returnValue == null);
-            }).Wait();
-            return returnValue;
+            throw new NotImplementedException();
         }
+
+        //public Guid? SelectCard(int playerIndex, string collection, string[] requiredTags, bool required)
+        //{
+        //    var clientId = playerRepository.GetPlayer(playerIndex);
+        //    if (clientId == null)
+        //        return null;
+
+        //    Guid? returnValue = null;
+        //    Task.Run(() =>
+        //    {
+        //        Guid corId = Guid.NewGuid();
+        //        responseOperator.Expect<Guid?>(corId, (card) => returnValue = card);
+        //        gameHub.Clients.Client(clientId).SendAsync("SelectCard", new SelectCardInquiry(corId, collection, requiredTags, required));
+        //        while (returnValue == null);
+        //    }).Wait();
+        //    return returnValue;
+        //}
 
         public void SendConclusion(string message)
         {

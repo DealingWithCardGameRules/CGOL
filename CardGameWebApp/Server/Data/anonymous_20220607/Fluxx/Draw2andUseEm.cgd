@@ -1,0 +1,8 @@
+CreateCard "Draw 2 and Use 'em"
+AddCardTags "Draw 2 and Use 'em" "draw, play"
+Instantaneous "Draw 2 and Use 'em" CreateHand "tempHand"
+Instantaneous "Draw 2 and Use 'em" DealCard "Deck" 2 "tempHand"
+Instantaneous "Draw 2 and Use 'em" PlayCard "tempHand"
+Instantaneous "Draw 2 and Use 'em" PlayCard "tempHand"
+Instantaneous "Draw 2 and Use 'em" RemoveCollection "tempHand"
+Instantaneous "Draw 2 and Use 'em" PlaceIn "Discard Pile"

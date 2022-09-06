@@ -18,5 +18,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             EventTime = eventTime;
             ProcessId = processId;
         }
+
+        public override string ToString()
+        {
+            return "Turn started";
+        }
     }
 }

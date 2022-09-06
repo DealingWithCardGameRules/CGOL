@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
         public DiscardCardsHandler(ITimeProvider timeProvider, IDispatcher dispatcher)
         {
             this.timeProvider = timeProvider ?? throw new ArgumentNullException(nameof(timeProvider));
-            this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
+            this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
         public void Handle(DiscardCards command, IEventDispatcher eventDispatcher)

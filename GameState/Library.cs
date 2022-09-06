@@ -15,7 +15,7 @@ namespace dk.itu.game.msc.cgol.GameState
 
         public void AddCardTemplate(string template, ICardTemplate card)
         {
-            library.Add(template, card);
+            library.Add(template, new SimpleTemplate(template)); // Instance problems
         }
 
         public void AddInstantaneous(string template, ICommand command)

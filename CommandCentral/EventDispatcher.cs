@@ -15,7 +15,7 @@ namespace dk.itu.game.msc.cgol.Distribution
         {
             if (!interpreter.Supports(@event))
             {
-                Console.WriteLine($"Warning event ignored! No observers for event {@event.GetType().Name}.");
+                //Console.WriteLine($"Warning event ignored! No observers for event {@event.GetType().Name}.");
                 return;
             }
 

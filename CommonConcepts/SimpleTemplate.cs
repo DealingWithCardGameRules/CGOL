@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts
 {
-    internal class SimpleTemplate : TagHandler, ICardTemplate
+    public class SimpleTemplate : TagHandler, ICardTemplate
     {
         private List<ICommand> instantaneous = new List<ICommand>();
         private List<ICommand> permanent = new List<ICommand>();

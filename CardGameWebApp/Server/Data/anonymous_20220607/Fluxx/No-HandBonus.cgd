@@ -1,0 +1,4 @@
+CreateCard "No-Hand Bonus"
+AddCardTags "No-Hand Bonus" "rule, drawSpecial"
+Instantaneous "No-Hand Bonus" PlaceIn "Rules"
+Permanent "No-Hand Bonus" If (HasNoCards) DealCard "Deck" 2

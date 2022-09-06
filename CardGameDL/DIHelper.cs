@@ -12,11 +12,10 @@ namespace dk.itu.game.msc.cgol
     {
         public static void AddCGOLBasics(this IServiceCollection services)
         {
-            services.AddSingleton<EventLoggerFactory>();
-            services.AddSingleton<DispatcherFactory>();
-            services.AddSingleton<IInterpreter, Interpreter>();
+            services.AddSingleton<EventLogFactory>();
+            services.AddSingleton<EventRecorderFactory>();
+            services.AddSingleton<IInterpreter>(new Interpreter());
             services.AddSingleton<ITimeProvider, UtcTime>();
-            services.AddSingleton<IPluginContext, PluginContext>();
         }
 
         public static void AddCGOLParser(this IServiceCollection services)
@@ -28,13 +27,6 @@ namespace dk.itu.game.msc.cgol
             services.AddSingleton<CGOLParser>();
             services.AddSingleton<LexerFactory>();
             services.AddSingleton<LanguageParserSetup>();
-        }
-
-        public static void AddCGOLService(this IServiceCollection services)
-        {
-            services.AddSingleton(p => p.GetRequiredService<DispatcherFactory>().Create());
-            services.AddSingleton<CommonConceptsSetup>();
-            services.AddSingleton<CGOLService>();
         }
     }
 }

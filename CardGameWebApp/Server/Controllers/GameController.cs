@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using dk.itu.game.msc.cgol.Representation;
 using Microsoft.Extensions.Primitives;
 using dk.itu.game.msc.cgol.Distribution;
+using Agents;
+using dk.itu.game.msc.cgol;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -85,7 +87,7 @@ namespace CardGameWebApp.Server.Controllers
 
             var current = session.GetSession(id);
             var zones = current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "community" } });
-            zones = zones.Union( current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "zone" }}) );
+            zones = zones.Union(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "zone" } }));
 
             var dto = new GameStateDTO
             {
@@ -102,6 +104,7 @@ namespace CardGameWebApp.Server.Controllers
             };
             response.Links.Add("actions", Url.Action(nameof(GetActions), "game", new { id }, Request.Scheme));
             response.Links.Add("hub", $"{Request.Scheme}://{Request.Host}/gamehub");
+            response.Links.Add("random-action", Url.Action(nameof(PerformRandomAction), "game", new { id }, Request.Scheme));
 
             return response;
         }
@@ -215,6 +218,16 @@ namespace CardGameWebApp.Server.Controllers
             return output;
         }
 
+        [HttpPost("{id:Guid}/actions/random")]
+        public async Task<ActionResult> PerformRandomAction(Guid id)
+        {
+            var current = session.GetSession(id);
+            var agent = new AIAgentFactory().CreateRandom();
+            current.Service.Dispatch( agent.Choose(current.Service.SessionEvents.ToArray()) );
+            await gameHub.Clients.Group(id.ToString()).SendAsync("NewState");
+            return Ok();
+        }
+
         [HttpPost("{id:Guid}/actions/{instance:Guid}")]
         public async Task<ActionResult> PerformAction(Guid id, Guid instance, [FromBody]ActionDTO action)
         {
@@ -265,7 +278,6 @@ namespace CardGameWebApp.Server.Controllers
 
         private IEnumerable<int> GetPlayerIndexes(Session session, StringValues stringValues)
         {
-
             var clientIds = Request.Headers["clientid"].ToString().CommaSeperateTrimmed();
             foreach (var clientId in clientIds)
                 foreach (var index in session.PlayerRepository.GetIndexes(clientId))

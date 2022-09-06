@@ -22,5 +22,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             Collection = collection;
             Seed = seed;
         }
+
+        public override string ToString()
+        {
+            return $"The collection \"{Collection}\" was shuffled ({Seed}).";
+        }
     }
 }

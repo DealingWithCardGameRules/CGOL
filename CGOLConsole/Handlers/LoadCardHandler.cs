@@ -1,30 +1,26 @@
-﻿using dk.itu.game.msc.cgol.Distribution;
+﻿using CGOLConsole.Commands;
+using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.Parser.Messages;
-using dk.itu.game.msc.cgol.Representation.Command;
-using System;
-using System.IO;
 
-namespace CardGameWebApp.Server
+namespace CGOLConsole.Handlers
 {
     public class LoadCardHandler : ICommandHandler<LoadCard>
     {
+        private const string dataFileExtension = ".cgd";
         private readonly IDispatcher dispatcher;
-        private readonly StorageService storage;
-        private readonly WebContext context;
 
-        public LoadCardHandler(IDispatcher dispatcher, StorageService storage, WebContext context)
+        public LoadCardHandler(IDispatcher dispatcher)
         {
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
-            this.storage = storage ?? throw new ArgumentNullException(nameof(storage));
-            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Handle(LoadCard command, IEventDispatcher eventDispatcher)
         {
             try
             {
-                var cgd = storage.GetFile($"{context.User}/{command.File}");
-                dispatcher.Dispatch(new LoadCGOL(cgd));
+                using var stream = File.OpenRead($"{command.File}{dataFileExtension}");
+                var data = new StreamReader(stream).ReadToEnd();
+                dispatcher.Dispatch(new LoadCGOL(data));
             }
             catch (FileNotFoundException)
             {

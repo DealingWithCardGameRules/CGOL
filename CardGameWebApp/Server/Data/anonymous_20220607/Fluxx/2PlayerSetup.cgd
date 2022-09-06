@@ -1,0 +1,12 @@
+/*******************************************
+* Load this file for a 2 player Fluxx game *
+*******************************************/
+SetPlayers 2
+
+// Player hands
+
+CreateHand "Player1" 1
+CreateHand "Player2" 2
+
+// Load general rules
+LoadCard "Fluxx/FluxxSetup"

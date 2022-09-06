@@ -1,0 +1,9 @@
+SetPlayers 1
+CreateDeck "deck"
+CreateDeck "discard pile"
+CreateHand "player"
+CreateCard "pass"
+Instantaneous "pass" PlaceIn "discard pile"
+AddCard "pass" "deck"
+Play DrawCard "deck" "player"
+Play PlayCard "player"

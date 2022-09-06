@@ -5,7 +5,6 @@ namespace dk.itu.game.msc.cgol.GameEvents
 {
     public class EventLogDecorator : IEventDispatcher
     {
-        public bool EnableLogging { get; set; }
         private readonly IEventDispatcher decoratee;
         private readonly IEventLogger logger;
 
@@ -13,14 +12,11 @@ namespace dk.itu.game.msc.cgol.GameEvents
         {
             this.decoratee = decoratee ?? throw new ArgumentNullException(nameof(decoratee));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            EnableLogging = true;
         }
 
         public void Dispatch(IEvent @event)
         {
-            if (EnableLogging)
-                logger.AppendLog(@event);
-
+            logger.AppendLog(@event);
             decoratee.Dispatch(@event);
         }
     }

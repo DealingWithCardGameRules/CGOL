@@ -20,5 +20,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             ProcessId = processId;
             Player = player;
         }
+
+        public override string ToString()
+        {
+            return $"Player {Player.Name} entered the game.";
+        }
     }
 }

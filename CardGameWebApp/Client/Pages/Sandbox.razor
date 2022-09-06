@@ -30,9 +30,20 @@
 				</div>
 			</div>
 
-			<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" @onclick="() => Reset()">
+			<button type="button" class="btn btn-primary me-2" data-bs-toggle="offcanvas" data-bs-target="#playArea" @onclick="() => Reset()">
 				<i class="fa-solid fa-rotate-right"></i> Reset
 			</button>
+			
+			<div class="btn-group" role="group" aria-label="Preloads">
+
+				<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" @onclick="() => Save()">
+					<i class="fa-solid fa-cloud-arrow-down"></i> Save
+				</button>
+				<button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#playArea" @onclick="() => Restore()">
+					<i class="fa-solid fa-cloud-arrow-up"></i> Restore
+				</button>
+
+			</div>
 		</div>
 
 		<HighlightEditor @ref=highlighter></HighlightEditor>
@@ -68,15 +79,15 @@
 	private bool playing = false;
 	private GameSimulator gameSim;
 	private string playUrl = string.Empty;
-	private GameIndexResponse game;
+	private GameIndexResponse index;
 	private HighlightEditor highlighter;
 	private SelectCardPrompt test;
 	private SessionResponse session;
 
 	private async void PlayGame()
 	{
-		game.Game.CGOLSource = highlighter.Value;
-		var response = await Http.PostAsync(session.Links["game"], JsonContent.Create(game.Game));
+		index.Game.CGOLSource = highlighter.Value;
+		var response = await Http.PostAsync(session.Links["game"], JsonContent.Create(index.Game));
 		if (response.StatusCode == HttpStatusCode.OK)
 		{
 			session = await Http.GetFromJsonAsync<SessionResponse>(session.Links["self"]);
@@ -89,7 +100,7 @@
 
 	private async Task Reset()
 	{
-		game = await Http.GetFromJsonAsync<GameIndexResponse>("game");
+		index = await Http.GetFromJsonAsync<GameIndexResponse>("game");
 		var response = await Http.PostAsync("sessions", JsonContent.Create(string.Empty));
 		if (response.StatusCode == HttpStatusCode.Created)
 		{
@@ -101,6 +112,17 @@
 			await gameSim.Start(session.Links["game"]);
 		}
 		this.StateHasChanged();
+	}
+
+	private async Task Save() 
+	{
+		await Http.PostAsync(session.Links["savegame"], null);
+		this.StateHasChanged();
+	}
+
+	private async Task Restore()
+	{
+		await Http.PutAsync(session.Links["savegame"], null);
 	}
 
 	protected override async Task OnInitializedAsync()

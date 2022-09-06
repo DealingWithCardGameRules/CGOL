@@ -15,5 +15,9 @@ namespace dk.itu.game.msc.cgol.CommonConcepts
             return input.Split(',');
         }
 
+        public static string WriteOut(this IEnumerable<string> strings)
+        {
+            return string.Join(',', strings);
+        }
     }
 }

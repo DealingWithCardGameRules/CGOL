@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.GameState.EventObservers;
 using dk.itu.game.msc.cgol.GameState.QueryHandlers;
+using dk.itu.game.msc.cgol.State.QueryHandlers;
 
 namespace dk.itu.game.msc.cgol.GameState
 {
@@ -35,7 +36,7 @@ namespace dk.itu.game.msc.cgol.GameState
             context.Interpreter.AddConcept(new GetCollectionNamesHandler(game));
             context.Interpreter.AddConcept(new GetVisibleCardsHandler(game));
             context.Interpreter.AddConcept(new GetCollectionTagsHandler(game));
-            context.Interpreter.AddConcept(new GetAvailableActionsForCollectionHandler(turnBasedRepository));
+            context.Interpreter.AddConcept(new GetAvailableActionsForCollectionHandler(turnBasedRepository, context.Dispatcher));
             context.Interpreter.AddConcept(new GetAvailableActionHandler(turnBasedRepository));
             context.Interpreter.AddConcept(new HasCardsHandler(game, context.Dispatcher));
             context.Interpreter.AddConcept(new GetCollectionContainingCardHandler(game));
@@ -47,6 +48,7 @@ namespace dk.itu.game.msc.cgol.GameState
             context.Interpreter.AddConcept(new InStateHandler(game));
             context.Interpreter.AddConcept(new GetPlayersHandHandler(game));
             context.Interpreter.AddConcept(new GetCardsHandler(game));
+            context.Interpreter.AddConcept(new GetCardSelectionHandler(game, context.Dispatcher));
             context.Interpreter.AddConcept(new GetReshuffleFromForHandler(recycleRules));
             context.Interpreter.AddConcept(new GetRandomCardHandler(game));
 
@@ -76,6 +78,7 @@ namespace dk.itu.game.msc.cgol.GameState
             context.Interpreter.AddConcept(new CollectionRemovedObserver(game));
             context.Interpreter.AddConcept(new TagsAddedToCollectionObserver(game));
             context.Interpreter.AddConcept(new AcquisitionEffectAddedToCardObserver(library));
+            context.Interpreter.AddConcept(new CurrentPlayersHandHandler(context.Dispatcher));
         }
     }
 }

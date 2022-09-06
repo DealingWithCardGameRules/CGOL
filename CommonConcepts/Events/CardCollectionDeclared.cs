@@ -17,5 +17,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Events
             ProcessId = processId;
             Deck = deck;
         }
+
+        public override string ToString()
+        {
+            return $"The deck \"{Deck}\" was declared.";
+        }
     }
 }
