@@ -4,6 +4,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -18,12 +19,12 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(PlaceWith command, IEventDispatcher eventDispatcher)
+        public async Task Handle(PlaceWith command, IEventDispatcher eventDispatcher)
         {
             if (command.CardId == null)
                 throw new Exception("No card specified. Make sure the effect is place as permanent or instantanious.");
 
-            var player = dispatcher.Dispatch(new CurrentPlayer());
+            var player = await dispatcher.Dispatch(new CurrentPlayer());
             if (player == null)
                 throw new Exception("No current player found. Please set players.");
 
@@ -32,17 +33,17 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
                 WithTags = command.Tags,
                 OwnedBy = player.Index
             };
-            var collection = dispatcher.Dispatch(getCollectionName).SingleOrDefault();
+            var collection = await (await dispatcher.Dispatch(getCollectionName))().SingleOrDefaultAsync();
             if (collection == null)
                 throw new Exception("No collection found. Remember to add tags to collection and assign ownership to players.");
 
-            var source = dispatcher.Dispatch(new GetCollectionContainingCard(command.CardId.Value));
+            var source = await dispatcher.Dispatch(new GetCollectionContainingCard(command.CardId.Value));
 
             if (source == null)
                 throw new Exception("Unable to locate card in any collection.");
 
             var @event = new CardMoved(timeProvider.Now, command.Instance, source, collection, command.CardId.Value);
-            eventDispatcher.Dispatch(@event);
+            await eventDispatcher.Dispatch(@event);
         }
     }
 }

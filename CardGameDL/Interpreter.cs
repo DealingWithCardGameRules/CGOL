@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol
 {
@@ -128,7 +129,7 @@ namespace dk.itu.game.msc.cgol
             EventObservers = new List<IEventObserver<T>>();
         }
 
-        public void Invoke(T @event)
+        public async Task Invoke(T @event)
         {
             foreach (var observer in EventObservers)
                 observer.Invoke(@event);

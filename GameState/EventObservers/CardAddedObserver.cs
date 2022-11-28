@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.EventObservers
 {
@@ -12,7 +13,7 @@ namespace dk.itu.game.msc.cgol.GameState.EventObservers
             this.game = game;
         }
 
-        public void Invoke(CardAdded @event)
+        public async Task Invoke(CardAdded @event)
         {
             game.AddCard(@event.Destination, @event.Card);
         }

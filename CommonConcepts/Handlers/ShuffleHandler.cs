@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -17,14 +18,14 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(Shuffle command, IEventDispatcher eventDispatcher)
+        public async Task Handle(Shuffle command, IEventDispatcher eventDispatcher)
         {
-            if (!dispatcher.Dispatch(new HasCollection(command.Collection)))
+            if (!await dispatcher.Dispatch(new HasCollection(command.Collection)))
                 throw new Exception($"The collection \"{command.Collection}\" was not found. Remember to declare the collection using {nameof(CreateDeck)}, {nameof(CreateZone)} or {nameof(CreateHand)}");
 
             var random = new Random();
             var @event = new CollectionShuffled(timeProvider.Now, command.ProcessId, command.Collection, random.Next());
-            eventDispatcher.Dispatch(@event);
+            await eventDispatcher.Dispatch(@event);
         }
     }
 }

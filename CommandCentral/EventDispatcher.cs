@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.Distribution
 {
@@ -11,7 +12,7 @@ namespace dk.itu.game.msc.cgol.Distribution
             this.interpreter = interpreter ?? throw new ArgumentNullException(nameof(interpreter));
         }
 
-        public void Dispatch(IEvent @event)
+        public async Task Dispatch(IEvent @event)
         {
             if (!interpreter.Supports(@event))
             {
@@ -26,7 +27,7 @@ namespace dk.itu.game.msc.cgol.Distribution
 
             // Invoke event observer
             dynamic observer = interpreter.GetService(genericObserverType);
-            observer.Invoke((dynamic)@event);
+            await observer.Invoke((dynamic)@event);
         }
     }
 }

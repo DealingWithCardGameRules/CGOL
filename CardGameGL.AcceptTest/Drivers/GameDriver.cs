@@ -19,75 +19,75 @@ namespace CardGameGL.AcceptTest.Drivers
             cgol.Parse(source);
         }
 
-        internal void CreateLibrary()
+        internal async Task CreateLibrary()
         {
             var card = new CreateCard("Pass");
-            cgol.Dispatch(card);
+            await cgol.Dispatch(card);
         }
 
-        internal void ChooseDrawCard()
+        internal async Task ChooseDrawCard()
         {
-            var commands = cgol.Dispatch(new GetAvailableActions());
-            var drawCommand = commands.First(c => c.Command is DrawCard);
+            var commands = (await cgol.Dispatch(new GetAvailableActions()))();
+            var drawCommand = await commands.FirstAsync(c => c.Command is DrawCard);
             if (drawCommand != null)
-                cgol.Dispatch(drawCommand.Command);
+                await cgol.Dispatch(drawCommand.Command);
         }
 
-        internal void ChoosePLayCard()
+        internal async Task ChoosePLayCard()
         {
-            var commands = cgol.Dispatch(new GetAvailableActions());
-            var playCommand = (PlayCard)commands.First(c => c.Command is PlayCard).Command;
-            var card = cgol.Dispatch(new GetTopCard(playCommand.Source.Value(null))) ?? throw new Exception($"No cards in {playCommand.Source}");
+            var commands = (await cgol.Dispatch(new GetAvailableActions()))();
+            var playCommand = (PlayCard)(await commands.FirstAsync(c => c.Command is PlayCard)).Command;
+            var card = await cgol.Dispatch(new GetTopCard(await playCommand.Source.Value(null))) ?? throw new Exception($"No cards in {playCommand.Source}");
             playCommand.Card = new MaybeChoice<Guid>(card.Instance);
-            cgol.Dispatch(playCommand);
+            await cgol.Dispatch(playCommand);
         }
 
-        internal void CreateDiscardPile(string name)
+        internal async Task CreateDiscardPile(string name)
         {
-            cgol.Dispatch(new CreateDeck(name));
+            await cgol.Dispatch(new CreateDeck(name));
         }
 
-        internal void DrawCards(string deck, string hand, int cards)
+        internal async Task DrawCards(string deck, string hand, int cards)
         {
             for (int i = 0; i < cards; i++)
-                DrawCard(deck, hand);
+                await DrawCard(deck, hand);
         }
 
-        internal void PlayCard(string hand, string discardPile)
+        internal async Task PlayCard(string hand, string discardPile)
         {
-            var card = cgol.Dispatch(new GetTopCard(hand));
+            var card = await cgol.Dispatch(new GetTopCard(hand));
             if (card != null)
-                cgol.Dispatch(new PlayCard(hand, discardPile, card.Instance));
+                await cgol.Dispatch(new PlayCard(hand, discardPile, card.Instance));
         }
 
-        internal void CheckSize(string collection, int expectedSize)
+        internal async Task CheckSize(string collection, int expectedSize)
         {
-            var count = cgol.Dispatch(new CardCount(collection));
+            var count = await cgol.Dispatch(new CardCount(collection));
             Assert.AreEqual(expectedSize, count);
         }
 
-        internal void DrawCard(string deck, string hand)
+        internal async Task DrawCard(string deck, string hand)
         {
-            cgol.Dispatch(new DrawCard(deck, hand));
+            await cgol.Dispatch(new DrawCard(deck, hand));
         }
 
-        internal void AddHand(string hand, int cards)
+        internal async Task AddHand(string hand, int cards)
         {
-            cgol.Dispatch(new CreateHand(hand));
-            AddCards(hand, cards);
+            await cgol.Dispatch(new CreateHand(hand));
+            await AddCards(hand, cards);
         }
 
-        internal void AddDeck(string deck, int cards = 0)
+        internal async Task AddDeck(string deck, int cards = 0)
         {
-            cgol.Dispatch(new CreateDeck(deck));
-            AddCards(deck, cards);
+            await cgol.Dispatch(new CreateDeck(deck));
+            await AddCards(deck, cards);
         }
 
-        private void AddCards(string deck, int cards)
+        private async Task AddCards(string deck, int cards)
         {
             for (int i = 0; i < cards; i++)
             {
-                cgol.Dispatch(new AddCard("Pass", deck));
+                await cgol.Dispatch(new AddCard("Pass", deck));
             }
         }
     }

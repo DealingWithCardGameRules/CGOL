@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 
 namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
-    public class GetAvailableActionsHandler : IQueryHandler<GetAvailableActions, IEnumerable<IUserAction>>
+    public class GetAvailableActionsHandler : IQueryHandler<GetAvailableActions, Func<IAsyncEnumerable<IUserAction>>>
     {
         private readonly ICommandRepositoryQueries repository;
 
@@ -13,9 +16,14 @@ namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
         }
 
-        public IEnumerable<IUserAction> Handle(GetAvailableActions query)
+        public async Task<Func<IAsyncEnumerable<IUserAction>>> Handle(GetAvailableActions query)
         {
-            return repository.GetCommands(query.PlayerIndex);
+            async IAsyncEnumerable<IUserAction> Handle()
+            {
+                await foreach (var action in (await repository.GetCommands(query.PlayerIndex))())
+                    yield return action;
+            }
+            return () => Handle();
         }
     }
 }

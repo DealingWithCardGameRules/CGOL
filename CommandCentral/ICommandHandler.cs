@@ -1,7 +1,9 @@
-﻿namespace dk.itu.game.msc.cgol.Distribution
+﻿using System.Threading.Tasks;
+
+namespace dk.itu.game.msc.cgol.Distribution
 {
     public interface ICommandHandler<TCommand> where TCommand : ICommand
     {
-        void Handle(TCommand command, IEventDispatcher eventDispatcher);
+        Task Handle(TCommand command, IEventDispatcher eventDispatcher);
     }
 }

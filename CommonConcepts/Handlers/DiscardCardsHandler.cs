@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -17,18 +18,18 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(DiscardCards command, IEventDispatcher eventDispatcher)
+        public async Task Handle(DiscardCards command, IEventDispatcher eventDispatcher)
         {
-            if (!dispatcher.Dispatch(new HasCollection(command.Source)))
+            if (!await dispatcher.Dispatch(new HasCollection(command.Source)))
                 throw new Exception($"The source collection \"{command.Source}\" was not found. Remember to declare the collection using {nameof(CreateDeck)}, {nameof(CreateZone)} or {nameof(CreateHand)}");
 
-            if (!dispatcher.Dispatch(new HasCollection(command.Destination)))
+            if (!await dispatcher.Dispatch(new HasCollection(command.Destination)))
                 throw new Exception($"The destination collection \"{command.Destination}\" was not found. Remember to declare the collection using {nameof(CreateDeck)}, {nameof(CreateZone)} or {nameof(CreateHand)}");
 
-            var cards = dispatcher.Dispatch(new GetCards(command.Source, command.Tags));
+            var cards = await dispatcher.Dispatch(new GetCards(command.Source, command.Tags));
             
-            foreach (var card in cards)
-                eventDispatcher.Dispatch(new CardMoved(timeProvider.Now, command.ProcessId, command.Source, command.Destination, card.Instance));
+            await foreach (var card in cards())
+                await eventDispatcher.Dispatch(new CardMoved(timeProvider.Now, command.ProcessId, command.Source, command.Destination, card.Instance));
         }
     }
 }

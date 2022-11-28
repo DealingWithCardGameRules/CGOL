@@ -2,6 +2,7 @@
 using dk.itu.game.msc.cgol.FluxxConcepts.Queries;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
@@ -14,10 +15,10 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
             this.cardCounter = cardCounter ?? throw new ArgumentNullException(nameof(cardCounter));
         }
 
-        public bool Handle(FewestKeepers query)
+        public async Task<bool> Handle(FewestKeepers query)
         {
-            var counts = cardCounter.Count("zone", "keepers");
-            var playersKeeperZone = cardCounter.PlayersCollection("zone", "keepers");
+            var counts = await cardCounter.Count("zone", "keepers");
+            var playersKeeperZone = await cardCounter.PlayersCollection("zone", "keepers");
             return counts.Where(x => x.Value == counts.Values.Min()).Any(c => c.Key.Equals(playersKeeperZone));
         }
     }

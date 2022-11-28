@@ -5,6 +5,7 @@ using dk.itu.game.msc.cgol.GameEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Agents
 {
@@ -19,26 +20,26 @@ namespace Agents
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public ICommand Choose(IEvent[] state)
+        public async Task<ICommand> Choose(IEvent[] state)
         {
-            recorder.Replay(state);
-            var player = dispatcher.Dispatch(new CurrentPlayer());
-            var actions = dispatcher.Dispatch(new GetAvailableActions(player?.Index));
+            await recorder.Replay(state);
+            var player = await dispatcher.Dispatch(new CurrentPlayer());
+            var actions = (await dispatcher.Dispatch(new GetAvailableActions(player?.Index)))();
             
-            if (actions == null || !actions.Any())
+            if (actions == null || !await actions.AnyAsync())
                 throw new Exception("No actions available!");
 
-            return Expand(actions.Select(a=>a.Command)).Random();
+            return await Expand(actions.Select(a=>a.Command)).Random();
         }
 
-        public IEnumerable<ICommand> Expand(IEnumerable<ICommand> cmds) 
+        public async IAsyncEnumerable<ICommand> Expand(IAsyncEnumerable<ICommand> cmds) 
         {
-            foreach (var cmd in cmds.Select(a => a))
+            await foreach (var cmd in cmds.Select(a => a))
             {
                 if (cmd is PlayCard play)
                 {
-                    foreach (var choice in play.Card.Choices(dispatcher))
-                        yield return new PlayCard(play.Source.Value(dispatcher), play.Destination, choice);
+                    await foreach (var choice in play.Card.Choices(dispatcher))
+                        yield return new PlayCard(await play.Source.Value(dispatcher), play.Destination, choice);
                 }
                 else
                 {

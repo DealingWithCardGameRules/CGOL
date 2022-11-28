@@ -4,6 +4,7 @@ using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.GameState;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol
 {
@@ -31,7 +32,7 @@ namespace dk.itu.game.msc.cgol
 
         class DummyEventDisPatcher : IEventDispatcher
         {
-            public void Dispatch(IEvent @event)
+            public async Task Dispatch(IEvent @event)
             {
                 
             }

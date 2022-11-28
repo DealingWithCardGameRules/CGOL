@@ -1,7 +1,9 @@
-﻿namespace dk.itu.game.msc.cgol.Distribution
+﻿using System.Threading.Tasks;
+
+namespace dk.itu.game.msc.cgol.Distribution
 {
     public interface IEventDispatcher
     {
-        void Dispatch(IEvent @event);
+        Task Dispatch(IEvent @event);
     }
 }

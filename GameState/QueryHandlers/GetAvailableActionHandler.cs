@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
@@ -13,10 +14,10 @@ namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
         }
 
-        public ICommand? Handle(GetAvailableAction query)
+        public async Task<ICommand?> Handle(GetAvailableAction query)
         {
-            var commands = repository.GetCommands(query.PlayerIndex);
-            return commands.FirstOrDefault(c => c.Command.Instance == query.Instance)?.Command;
+            var commands = (await repository.GetCommands(query.PlayerIndex))();
+            return (await commands.FirstOrDefaultAsync(c => c.Command.Instance == query.Instance))?.Command;
         }
     }
 }

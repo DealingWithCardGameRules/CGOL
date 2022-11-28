@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
@@ -12,7 +13,7 @@ namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
             this.game = game;
         }
 
-        public string? Handle(GetPlayersHand query)
+        public async Task<string?> Handle(GetPlayersHand query)
         {
             var player = query.PlayerIndex ?? game.GetCurrentPlayer()?.Index;
             if (!player.HasValue)

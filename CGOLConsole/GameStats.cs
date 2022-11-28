@@ -23,20 +23,20 @@ namespace CGOLConsole
             this.dispatcher = dispatcher;
         }
 
-        public void AddStats()
+        public async Task AddStats()
         {
-            var collections = dispatcher.Dispatch(new GetCollectionNames());
-            var player = dispatcher.Dispatch(new CurrentPlayer());
-            var actions = dispatcher.Dispatch(new GetAvailableActions(player.Index)).Select(a => a.Command);
+            var collections = (await dispatcher.Dispatch(new GetCollectionNames()))();
+            var player = await dispatcher.Dispatch(new CurrentPlayer());
+            var actions = (await dispatcher.Dispatch(new GetAvailableActions(player.Index)))().Select(a => a.Command);
             stats.Add(new StatEntity
             {
                 currentPlayer = player.Index,
-                players = dispatcher.Dispatch(new GetNumberOfPlayers()),
-                decks = collections.Count(),
-                cards = collections.Sum(c => dispatcher.Dispatch(new CardCount(c))),
-                actions = actions.Count(),
-                options = actions.Sum(a => a.GetChoices<Guid>().Sum(c => c.Choices(dispatcher).Count()))
-            });
+                players = await dispatcher.Dispatch(new GetNumberOfPlayers()),
+                decks = await collections.CountAsync(),
+                cards = await collections.SumAwaitAsync(async c => await dispatcher.Dispatch(new CardCount(c))),
+                actions = await actions.CountAsync(),
+                options = 0//await actions.CountAwaitAsync(async a => await a.GetChoices<Guid>().CountAsync())
+            });;
         }
     }
 

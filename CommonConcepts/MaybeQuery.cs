@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.Common
 {
@@ -19,10 +20,10 @@ namespace dk.itu.game.msc.cgol.Common
 
         public bool HasValue => values.Any();
 
-        public ValueType Value(IQueryDispatcher dispatcher)
+        public async Task<ValueType> Value(IQueryDispatcher dispatcher)
         {
             if (!HasValue)
-                return dispatcher.Dispatch(query);
+                return await dispatcher.Dispatch(query);
             return values.Single();
         }
     }

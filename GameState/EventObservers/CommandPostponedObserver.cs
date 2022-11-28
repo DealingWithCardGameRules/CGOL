@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.EventObservers
 {
@@ -12,7 +13,7 @@ namespace dk.itu.game.msc.cgol.GameState.EventObservers
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
         }
 
-        public void Invoke(CommandPostponed @event)
+        public async Task Invoke(CommandPostponed @event)
         {
             var label = @event.Label ?? @event.Command.GetType().Name;
             repository.AddCommand(label, @event.Command);

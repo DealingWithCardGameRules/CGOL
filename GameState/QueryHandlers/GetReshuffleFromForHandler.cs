@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
@@ -12,7 +13,7 @@ namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
             this.reshuffleRules = reshuffleRules ?? throw new System.ArgumentNullException(nameof(reshuffleRules));
         }
 
-        public string? Handle(GetReshuffleFromFor query)
+        public async Task<string?> Handle(GetReshuffleFromFor query)
         {
             return reshuffleRules.GetRule(query.Destination);
         }

@@ -1,7 +1,9 @@
-﻿namespace dk.itu.game.msc.cgol.Distribution
+﻿using System.Threading.Tasks;
+
+namespace dk.itu.game.msc.cgol.Distribution
 {
     public interface IEventObserver<TEvent> where TEvent : IEvent
     {
-        void Invoke(TEvent @event);
+        Task Invoke(TEvent @event);
     }
 }

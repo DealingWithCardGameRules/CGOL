@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
 using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -13,9 +14,9 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.timeProvider = timeProvider ?? throw new System.ArgumentNullException(nameof(timeProvider));
         }
 
-        public void Handle(AddAcquisitionEffectToCard command, IEventDispatcher eventDispatcher)
+        public async Task Handle(AddAcquisitionEffectToCard command, IEventDispatcher eventDispatcher)
         {
-            eventDispatcher.Dispatch(
+            await eventDispatcher.Dispatch(
                 new AcquisitionEffectAddedToCard(timeProvider.Now, command.ProcessId, command.UniqueCardName, command.Command));
         }
     }

@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.FluxxConcepts.Queries;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
@@ -12,7 +13,7 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
             this.drawLimit = drawLimit ?? throw new System.ArgumentNullException(nameof(drawLimit));
         }
 
-        public bool Handle(DrawLimitReached query)
+        public async Task<bool> Handle(DrawLimitReached query)
         {
             return drawLimit.ReachedFor(query.PlayerIndex);
         }

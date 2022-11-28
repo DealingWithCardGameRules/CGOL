@@ -14,7 +14,7 @@ namespace dk.itu.game.msc.cgol.Representation.Handlers
             this.enquirer = enquirer ?? throw new System.ArgumentNullException(nameof(enquirer));
         }
 
-        public bool Handle(PlayerAgree query)
+        public async Task<bool> Handle(PlayerAgree query)
         {
             bool result = false;
             Task.Run(() => result = enquirer.AskPlayer(query.PlayerIndex, query.Message))

@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Observers
 {
@@ -17,9 +18,9 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Observers
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Invoke(TurnStarted @event)
+        public async Task Invoke(TurnStarted @event)
         {
-            var player = dispatcher.Dispatch(new CurrentPlayer());
+            var player = await dispatcher.Dispatch(new CurrentPlayer());
             if (player == null)
                 throw new Exception($"No current player. Remember to set players using {nameof(SetPlayers)}");
             foreach (var counter in counters)

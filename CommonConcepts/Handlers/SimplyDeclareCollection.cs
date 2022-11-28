@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
 using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -13,10 +14,10 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.timeProvider = timeProvider;
         }
 
-        public void Handle(CreateDeck command, IEventDispatcher eventDispatcher)
+        public async Task Handle(CreateDeck command, IEventDispatcher eventDispatcher)
         {
             var @event = new CardCollectionDeclared(timeProvider.Now, command.ProcessId, command.Name);
-            eventDispatcher.Dispatch(@event);
+            await eventDispatcher.Dispatch(@event);
         }
     }
 }

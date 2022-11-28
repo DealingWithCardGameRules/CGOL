@@ -1,22 +1,32 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
-    public class GetCardsHandler : IQueryHandler<GetCards, IEnumerable<ICard>>
+    public class GetCardsHandler : IQueryHandler<GetCards, Func<IAsyncEnumerable<ICard>>>
     {
         private readonly Game game;
 
         internal GetCardsHandler(Game game)
         {
-            this.game = game ?? throw new System.ArgumentNullException(nameof(game));
+            this.game = game ?? throw new ArgumentNullException(nameof(game));
         }
 
-        public IEnumerable<ICard> Handle(GetCards query)
+        public async Task<Func<IAsyncEnumerable<ICard>>> Handle(GetCards query)
         {
-            return game.GetCards(query.Collection, query.Tags);
+            async IAsyncEnumerable<ICard> Handler()
+            {
+                foreach (var card in game.GetCards(query.Collection, query.Tags))
+                {
+                    yield return card;
+                }
+            }
+                
+            return () => Handler();
         }
     }
 }

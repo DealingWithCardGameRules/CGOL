@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
 using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -15,11 +16,11 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(Start command, IEventDispatcher eventDispatcher)
+        public async Task Handle(Start command, IEventDispatcher eventDispatcher)
         {
-            dispatcher.Dispatch(new ClearTemporaryActions());
-            eventDispatcher.Dispatch(new TurnStarted(timeProvider.Now, command.ProcessId));
-            dispatcher.Dispatch(new ResolvePermanents());
+            await dispatcher.Dispatch(new ClearTemporaryActions());
+            await eventDispatcher.Dispatch(new TurnStarted(timeProvider.Now, command.ProcessId));
+            await dispatcher.Dispatch(new ResolvePermanents());
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.FluxxConcepts.Events;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Observers
 {
@@ -12,7 +13,7 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Observers
             this.drawCounter = playCounter ?? throw new System.ArgumentNullException(nameof(playCounter));
         }
 
-        public void Invoke(PlayLimitSet @event)
+        public async Task Invoke(PlayLimitSet @event)
         {
             drawCounter.SetLimit(@event.Limit);
         }

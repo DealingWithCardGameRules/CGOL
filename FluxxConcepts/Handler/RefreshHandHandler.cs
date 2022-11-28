@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.FluxxConcepts.Commands;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
@@ -15,15 +16,15 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(RefreshHand command, IEventDispatcher eventDispatcher)
+        public async Task Handle(RefreshHand command, IEventDispatcher eventDispatcher)
         {
-            var hand = dispatcher.Dispatch(new GetPlayersHand());
+            var hand = await dispatcher.Dispatch(new GetPlayersHand());
             if (hand == null)
                 throw new Exception("No current player hand found.");
 
-            var reward = command.FixedReward ?? dispatcher.Dispatch(new CardCount(hand));
-            dispatcher.Dispatch(new DiscardCards(hand, command.DiscardCollection));
-            dispatcher.Dispatch(new DealCard(command.RewardCollection, reward));
+            var reward = command.FixedReward ?? await dispatcher.Dispatch(new CardCount(hand));
+            await dispatcher.Dispatch(new DiscardCards(hand, command.DiscardCollection));
+            await dispatcher.Dispatch(new DealCard(command.RewardCollection, reward));
         }
     }
 }

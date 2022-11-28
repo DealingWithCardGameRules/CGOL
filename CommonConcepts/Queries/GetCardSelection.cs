@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgol.Common.Queries
 {
-    public class GetCardSelection : IQuery<IEnumerable<Guid>>
+    public class GetCardSelection : IQuery<Func<IAsyncEnumerable<Guid>>>
     {
         public MaybeQuery<string> Collection { get; }
         public IEnumerable<string>? Tags { get; }

@@ -4,6 +4,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -16,38 +17,38 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(ResolvePermanents command, IEventDispatcher eventDispatcher)
+        public async Task Handle(ResolvePermanents command, IEventDispatcher eventDispatcher)
         {
-            IEnumerable<string> collections;
-            var playerIndex = dispatcher.Dispatch(new CurrentPlayer())?.Index ?? 0;
+            IAsyncEnumerable<string> collections;
+            var playerIndex = (await dispatcher.Dispatch(new CurrentPlayer()))?.Index ?? 0;
             if (string.IsNullOrEmpty(command.Zone))
             {
-                collections = dispatcher.Dispatch(new GetCollectionNames
+                collections = (await dispatcher.Dispatch(new GetCollectionNames
                 {
                     WithTags = new string[] { "zone" },
                     OwnedBy = playerIndex
-                });
+                }))();
             }
             else
-                collections = new string[] { command.Zone };
+                collections = new string[] { command.Zone }.ToAsyncEnumerable();
 
-            collections = collections.Union(dispatcher.Dispatch(new GetCollectionNames
+            collections = collections.Union((await dispatcher.Dispatch(new GetCollectionNames
             {
                 WithTags = new string[] { "community" }
-            }));
+            }))());
 
-            foreach (var effect in GetCommands(collections, playerIndex))
-                dispatcher.Dispatch(effect);
+            await foreach (var effect in GetCommands(collections.ToEnumerable(), playerIndex))
+                await dispatcher.Dispatch(effect);
         }
 
-        public IEnumerable<ICommand> GetCommands(IEnumerable<string> names, int playerIndex)
+        public async IAsyncEnumerable<ICommand> GetCommands(IEnumerable<string> names, int playerIndex)
         {
             foreach (var name in names)
             {
-                var cards = dispatcher.Dispatch(new GetVisibleCards(name, new int[] { playerIndex }));
-                foreach (var card in cards)
+                var cards = await dispatcher.Dispatch(new GetVisibleCards(name, new int[] { playerIndex }));
+                await foreach (var card in cards())
                 {
-                    var template = dispatcher.Dispatch(new GetTemplate(card.Template));
+                    var template = await dispatcher.Dispatch(new GetTemplate(card.Template));
                     if (template == null)
                         yield break;
 

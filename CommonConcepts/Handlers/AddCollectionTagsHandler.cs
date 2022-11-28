@@ -5,6 +5,7 @@ using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -19,12 +20,12 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(AddCollectionTags command, IEventDispatcher eventDispatcher)
+        public async Task Handle(AddCollectionTags command, IEventDispatcher eventDispatcher)
         {
-            if (!dispatcher.Dispatch(new HasCollection(command.Collection)))
+            if (!await dispatcher.Dispatch(new HasCollection(command.Collection)))
                 throw new Exception($"Collection does not exist, remember to create collection using {nameof(CreateDeck)}, {nameof(CreateHand)} or {nameof(CreateZone)}");
 
-            eventDispatcher.Dispatch(new TagsAddedToCollection(timeProvider.Now, command.ProcessId, command.Collection, command.Tags));
+            await eventDispatcher.Dispatch(new TagsAddedToCollection(timeProvider.Now, command.ProcessId, command.Collection, command.Tags));
         }
     }
 }

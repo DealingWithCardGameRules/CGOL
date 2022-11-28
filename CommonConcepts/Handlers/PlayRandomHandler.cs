@@ -2,6 +2,7 @@
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -14,21 +15,21 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(PlayRandom command, IEventDispatcher eventDispatcher)
+        public async Task Handle(PlayRandom command, IEventDispatcher eventDispatcher)
         {
-            var collection = command.Collection ?? GetPlayersHand();
-            var card = dispatcher.Dispatch(new GetRandomCard(collection));
+            var collection = command.Collection ?? await GetPlayersHand();
+            var card = await dispatcher.Dispatch(new GetRandomCard(collection));
             if (card == null)
                 throw new Exception("No cards in collection.");
-            dispatcher.Dispatch(new PlayCard(command.Collection, card: card.Instance));
+            await dispatcher.Dispatch(new PlayCard(command.Collection, card: card.Instance));
         }
 
-        private string GetPlayersHand()
+        private async Task<string> GetPlayersHand()
         {
-            var player = dispatcher.Dispatch(new CurrentPlayer());
+            var player = await dispatcher.Dispatch(new CurrentPlayer());
             if (player == null)
                 throw new Exception("No collection specified and no players setup. Remember to set up players.");
-            var hand = dispatcher.Dispatch(new GetPlayersHand(player.Index));
+            var hand = await dispatcher.Dispatch(new GetPlayersHand(player.Index));
             if (hand == null)
                 throw new Exception("No collection specified and no hand found for current player. Remember to assign hands to playeres.");
             return hand;

@@ -25,7 +25,7 @@ namespace CardGameWebApp.Server.Handlers
             this.responseOperator = responseOperator ?? throw new ArgumentNullException(nameof(responseOperator));
         }
 
-        public Guid? Handle(PickACard query)
+        public async Task<Guid?> Handle(PickACard query)
         {
             var clientId = playerRepository.GetPlayer(query.Player);
             if (clientId == null)

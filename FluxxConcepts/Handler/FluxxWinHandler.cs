@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
@@ -17,15 +18,15 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(Win command, IEventDispatcher eventDispatcher)
+        public async Task Handle(Win command, IEventDispatcher eventDispatcher)
         {
-            var playerIndex = command.PlayerIndex ?? dispatcher.Dispatch(new CurrentPlayer())?.Index;
+            var playerIndex = command.PlayerIndex ?? (await dispatcher.Dispatch(new CurrentPlayer()))?.Index;
             if (playerIndex == null)
                 throw new Exception("No winner specified and no current player.");
-            var creeperZone = dispatcher.Dispatch(new GetCollectionNames { OwnedBy = playerIndex, WithTags = new[] { "zone", "creepers" } }).FirstOrDefault();
+            var creeperZone = await (await dispatcher.Dispatch(new GetCollectionNames { OwnedBy = playerIndex, WithTags = new[] { "zone", "creepers" } }))().FirstOrDefaultAsync();
 
-            if (creeperZone == null || dispatcher.Dispatch(new CardCount(creeperZone)) == 0)
-                decoratee.Handle(command, eventDispatcher);
+            if (creeperZone == null || await dispatcher.Dispatch(new CardCount(creeperZone)) == 0)
+                await decoratee.Handle(command, eventDispatcher);
         }
     }
 }

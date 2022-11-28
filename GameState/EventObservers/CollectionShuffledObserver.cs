@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.EventObservers
 {
@@ -12,7 +13,7 @@ namespace dk.itu.game.msc.cgol.GameState.EventObservers
             this.game = game;
         }
 
-        public void Invoke(CollectionShuffled @event)
+        public async Task Invoke(CollectionShuffled @event)
         {
             game.ShuffleCollection(@event.Collection, @event.Seed);
         }

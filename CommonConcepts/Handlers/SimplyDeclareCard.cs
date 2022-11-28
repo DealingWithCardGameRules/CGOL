@@ -2,6 +2,7 @@
 using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -16,14 +17,14 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(CreateCard command, IEventDispatcher eventDispatcher)
+        public async Task Handle(CreateCard command, IEventDispatcher eventDispatcher)
         {
-            if (dispatcher.Dispatch(new GetTemplate(command.Template)) != null)
+            if (await dispatcher.Dispatch(new GetTemplate(command.Template)) != null)
                 return;
             
             var template = new SimpleTemplate(command.Template);
             var @event = new CardDeclared(timeProvider.Now, command.ProcessId, command.Template, template);
-            eventDispatcher.Dispatch(@event);            
+            await eventDispatcher.Dispatch(@event);            
         }
     }
 }

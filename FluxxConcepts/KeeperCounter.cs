@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts
 {
@@ -15,26 +16,26 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts
             this.dispatcher = dispatcher;
         }
 
-        public string PlayersCollection(params string[] tags)
+        public async Task<string> PlayersCollection(params string[] tags)
         {
-            var player = dispatcher.Dispatch(new CurrentPlayer());
+            var player = await dispatcher.Dispatch(new CurrentPlayer());
             if (player == null)
                 throw new Exception("No current player. Remember to set up players");
 
-            var playerCollection = dispatcher.Dispatch(new GetCollectionNames { WithTags = tags, OwnedBy = player.Index });
+            var playerCollection = await dispatcher.Dispatch(new GetCollectionNames { WithTags = tags, OwnedBy = player.Index });
             if (playerCollection == null)
                 throw new Exception("Current player has no keeper zone. Remember to create keepers zones, assign them to players and tag them with keepers.");
 
-            return playerCollection.First();
+            return await playerCollection().FirstAsync();
         }
 
-        public Dictionary<string, int> Count(params string[] tags)
+        public async Task<Dictionary<string, int>> Count(params string[] tags)
         {
-            var collections = dispatcher.Dispatch(new GetCollectionNames { WithTags = tags });
+            var collections = await dispatcher.Dispatch(new GetCollectionNames { WithTags = tags });
 
             Dictionary<string, int> counts = new Dictionary<string, int>();
-            foreach (var collection in collections)
-                counts[collection] = dispatcher.Dispatch(new CardCount(collection));
+            await foreach (var collection in collections())
+                counts[collection] = await dispatcher.Dispatch(new CardCount(collection));
             return counts;
         }
     }

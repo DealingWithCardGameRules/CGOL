@@ -1,5 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState
 {
@@ -7,11 +9,15 @@ namespace dk.itu.game.msc.cgol.GameState
     {
         private readonly ICommandRepositoryQueries[] repositories;
 
-        public IEnumerable<IUserAction> GetCommands(int? playerIndex = null)
+        public async Task<Func<IAsyncEnumerable<IUserAction>>> GetCommands(int? playerIndex = null)
         {
-            foreach (var repository in repositories)
-                foreach (var command in repository.GetCommands(playerIndex))
-                    yield return command;
+            async IAsyncEnumerable<IUserAction> Handler() 
+            {
+                foreach (var repository in repositories)
+                    await foreach (var command in (await repository.GetCommands(playerIndex))())
+                        yield return command;
+            }
+            return () => Handler();
         }
 
         public CommandComposite(params ICommandRepositoryQueries[] repositories)

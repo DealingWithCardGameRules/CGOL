@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.Parser.Messages;
 using dk.itu.game.msc.cgol.Representation.Command;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace CardGameWebApp.Server.Handlers
 {
@@ -19,7 +20,7 @@ namespace CardGameWebApp.Server.Handlers
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public void Handle(LoadCard command, IEventDispatcher eventDispatcher)
+        public async Task Handle(LoadCard command, IEventDispatcher eventDispatcher)
         {
             try
             {

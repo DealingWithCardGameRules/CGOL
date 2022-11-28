@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.Handlers
 {
@@ -15,7 +16,7 @@ namespace dk.itu.game.msc.cgol.Handlers
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public void Handle(LoadBehavior command, IEventDispatcher eventDispatcher)
+        public async Task Handle(LoadBehavior command, IEventDispatcher eventDispatcher)
         {
             var assembly = Assembly.Load(command.AssemblyName);
             Type type;

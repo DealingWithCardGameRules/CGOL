@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
@@ -13,7 +14,7 @@ namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
             this.library = library ?? throw new System.ArgumentNullException(nameof(library));
         }
 
-        public ICardTemplate? Handle(GetTemplate query)
+        public async Task<ICardTemplate?> Handle(GetTemplate query)
         {
             return library.GetCardTemplate(query.Template);
         }

@@ -11,7 +11,7 @@ namespace CGOLConsole.Handlers
             random = new Random();
         }
 
-        public Guid? Handle(PickACard query)
+        public async Task<Guid?> Handle(PickACard query)
         {
             var index = random.Next(0, query.Selection.Length);
             return query.Selection[index].Instance;

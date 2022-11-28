@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.Test
 {
@@ -365,7 +366,7 @@ namespace dk.itu.game.msc.cgol.Test
 
         class CommandHandlerStub : ICommandHandler<CommandStub>
         {
-            public void Handle(CommandStub command, IEventDispatcher eventDispatcher)
+            public async Task Handle(CommandStub command, IEventDispatcher eventDispatcher)
             {
                 throw new System.NotImplementedException();
             }
@@ -375,7 +376,7 @@ namespace dk.itu.game.msc.cgol.Test
 
         class QueryHandlerStub : IQueryHandler<QueryStub, bool>
         {
-            public bool Handle(QueryStub query)
+            public async Task<bool> Handle(QueryStub query)
             {
                 throw new System.NotImplementedException();
             }
@@ -390,7 +391,7 @@ namespace dk.itu.game.msc.cgol.Test
 
         class EventObserverStub : IEventObserver<EventStub>
         {
-            public void Invoke(EventStub @event)
+            public async Task Invoke(EventStub @event)
             {
                 throw new System.NotImplementedException();
             }

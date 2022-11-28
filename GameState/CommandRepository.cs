@@ -1,5 +1,8 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState
 {
@@ -22,9 +25,9 @@ namespace dk.itu.game.msc.cgol.GameState
             repository.Add(new UserCommand(label, command));
         }
 
-        public IEnumerable<IUserAction> GetCommands(int? _)
+        public async Task<Func<IAsyncEnumerable<IUserAction>>> GetCommands(int? _)
         {
-            return repository;
+            return () => repository.ToAsyncEnumerable();
         }
 
         class UserCommand : IUserAction

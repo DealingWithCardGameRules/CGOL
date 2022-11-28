@@ -12,7 +12,7 @@ namespace CGOLConsole.Handlers
             this.stats = stats ?? throw new ArgumentNullException(nameof(stats));
         }
 
-        public void Invoke(PlayerWon @event)
+        public async Task Invoke(PlayerWon @event)
         {
             stats.playerWon = @event.PlayerIndex;
             stats.gameOver = true;

@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.FluxxConcepts.Queries;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
@@ -17,16 +18,16 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(DrawCard command, IEventDispatcher eventDispatcher)
+        public async Task Handle(DrawCard command, IEventDispatcher eventDispatcher)
         {
-            var player = dispatcher.Dispatch(new CurrentPlayer());
+            var player = await dispatcher.Dispatch(new CurrentPlayer());
             if (player == null)
                 throw new Exception("No current player. Remember to setup players.");
             
-            if (!dispatcher.Dispatch(new DrawLimitReached(player.Index)))
+            if (!await dispatcher.Dispatch(new DrawLimitReached(player.Index)))
             {
-                decoratee.Handle(command, eventDispatcher);
-                dispatcher.Dispatch(new ClaimOwnership());
+                await decoratee.Handle(command, eventDispatcher);
+                await dispatcher.Dispatch(new ClaimOwnership());
             }
         }
     }

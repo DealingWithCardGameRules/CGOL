@@ -38,7 +38,7 @@ namespace CGOLConsole
             return Task.CompletedTask;
         }
 
-        static void Parse(string input)
+        static async Task Parse(string input)
         {
             if (input.StartsWith("rand", StringComparison.OrdinalIgnoreCase))
             {
@@ -48,12 +48,12 @@ namespace CGOLConsole
                 {
                     while (!stats.gameOver)
                     {
-                        stats.AddStats();
+                        await stats.AddStats();
                         Console.Write("Random agent is choosing action... ");
                         var ai = new AIAgentFactory().CreateRandom();
-                        var action = ai.Choose(service.SessionEvents.ToArray());
+                        var action = await ai.Choose(service.SessionEvents.ToArray());
                         Console.WriteLine($"[{action.GetType().Name}]");
-                        service.Dispatch(action);
+                        await service.Dispatch(action);
                     }
                 }
                 catch (Exception ex)

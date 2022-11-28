@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameEvents
 {
@@ -14,10 +15,10 @@ namespace dk.itu.game.msc.cgol.GameEvents
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public void Dispatch(IEvent @event)
+        public async Task Dispatch(IEvent @event)
         {
             logger.AppendLog(@event);
-            decoratee.Dispatch(@event);
+            await decoratee.Dispatch(@event);
         }
     }
 }

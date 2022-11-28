@@ -3,6 +3,7 @@ using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommandCentral.Test
 {
@@ -35,7 +36,7 @@ namespace dk.itu.game.msc.cgol.CommandCentral.Test
         }
 
         [TestMethod]
-        public void Dispatch_NoCommandHandler_ThrowsRuntimeBinderException()
+        public async Task Dispatch_NoCommandHandler_ThrowsHandlerMissingException()
         {
             // Given
             var providerStub = Substitute.For<IServiceProvider>();
@@ -43,14 +44,14 @@ namespace dk.itu.game.msc.cgol.CommandCentral.Test
             var someCommandStub = Substitute.For<ICommand>();
 
             // When
-            Assert.ThrowsException<RuntimeBinderException>(() =>
+            await Assert.ThrowsExceptionAsync<HandlerMissingException>(async () =>
             {
-                sut.Dispatch(someCommandStub);
+                await sut.Dispatch(someCommandStub);
             });
         }
 
         [TestMethod]
-        public void Dispatch_AnyCommand_CallsGetService()
+        public async Task Dispatch_AnyCommand_CallsGetService()
         {
             // Given
             var providerMock = Substitute.For<IServiceProvider>();
@@ -59,14 +60,14 @@ namespace dk.itu.game.msc.cgol.CommandCentral.Test
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<ICommandHandler<ICommand>>());
 
             // When
-            sut.Dispatch(Substitute.For<ICommand>());
+            await sut.Dispatch(Substitute.For<ICommand>());
 
             // Then
             providerMock.Received().GetService(Arg.Any<Type>());
         }
 
         [TestMethod]
-        public void Dispatch_SpecificCommand_CallsGetServiceWithSpecificHandler()
+        public async Task Dispatch_SpecificCommand_CallsGetServiceWithSpecificHandler()
         {
             // Given
             var commandStub = new CommandStub();
@@ -76,14 +77,14 @@ namespace dk.itu.game.msc.cgol.CommandCentral.Test
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<ICommandHandler<ICommand>>());
 
             // When
-            sut.Dispatch(commandStub);
+            await sut.Dispatch(commandStub);
 
             // Then
             providerMock.Received().GetService(typeof(ICommandHandler<CommandStub>));
         }
 
         [TestMethod]
-        public void Dispatch_KnownCommand_CallsHandleOnCommandHandlerWithCommand()
+        public async Task Dispatch_KnownCommand_CallsHandleOnCommandHandlerWithCommand()
         {
             // Given
             var commandStub = new CommandStub();
@@ -94,28 +95,28 @@ namespace dk.itu.game.msc.cgol.CommandCentral.Test
             providerMock.GetService(Arg.Any<Type>()).Returns(commandHandlerMock);
 
             // When
-            sut.Dispatch(commandStub);
+            await sut.Dispatch(commandStub);
 
             // Then
-            commandHandlerMock.Received().Handle(commandStub, Arg.Any<IEventDispatcher>());
+            await commandHandlerMock.Received().Handle(commandStub, Arg.Any<IEventDispatcher>());
         }
 
         [TestMethod]
-        public void Dispatch_NoQueryHandler_ThrowsRuntimeBinderException()
+        public async Task Dispatch_NoQueryHandler_ThrowsRuntimeBinderException()
         {
             // Given
             var queryStub = Substitute.For<IQuery<int>>();
             var sut = new MessageDispatcher(Substitute.For<IServiceProvider>(), Substitute.For<IEventDispatcher>());
 
             // When
-            Assert.ThrowsException<RuntimeBinderException>(() =>
+            await Assert.ThrowsExceptionAsync<RuntimeBinderException>(async () =>
             {
-                sut.Dispatch(queryStub);
+                await sut.Dispatch(queryStub);
             });
         }
 
         [TestMethod]
-        public void Dispatch_AnyQuery_CallsGetService()
+        public async Task Dispatch_AnyQuery_CallsGetService()
         {
             // Given
             var providerMock = Substitute.For<IServiceProvider>();
@@ -124,14 +125,14 @@ namespace dk.itu.game.msc.cgol.CommandCentral.Test
             providerMock.GetService(Arg.Any<Type>()).Returns(Substitute.For<IQueryHandler<IQuery<int>, int>>());
 
             // When
-            sut.Dispatch(Substitute.For<IQuery<int>>());
+            await sut.Dispatch(Substitute.For<IQuery<int>>());
 
             // Then
             providerMock.Received().GetService(Arg.Any<Type>());
         }
 
         [TestMethod]
-        public void Dispatch_SpecificQuery_CallsGetServiceWithSpecificHandler()
+        public async Task Dispatch_SpecificQuery_CallsGetServiceWithSpecificHandler()
         {
             // Given
             var queryStub = new QueryStub();
@@ -141,14 +142,14 @@ namespace dk.itu.game.msc.cgol.CommandCentral.Test
             providerMock.GetService(typeof(IQueryHandler<QueryStub, int>)).Returns(Substitute.For< IQueryHandler<IQuery<int>, int> >());
 
             // When
-            sut.Dispatch(queryStub);
+            await sut.Dispatch(queryStub);
 
             // Then
             providerMock.Received().GetService(typeof(IQueryHandler<QueryStub, int>));
         }
 
         [TestMethod]
-        public void Dispatch_KnownQuery_CallsHandleOnQueryHandlerWithQuery()
+        public async Task Dispatch_KnownQuery_CallsHandleOnQueryHandlerWithQuery()
         {
             // Given
             var queryStub = new QueryStub();
@@ -159,14 +160,14 @@ namespace dk.itu.game.msc.cgol.CommandCentral.Test
             providerMock.GetService(typeof(IQueryHandler<QueryStub, int>)).Returns(queryHandler);
 
             // When
-            sut.Dispatch(queryStub);
+            await sut.Dispatch(queryStub);
 
             // Then
-            queryHandler.Received().Handle(queryStub);
+            await queryHandler.Received().Handle(queryStub);
         }
 
         [TestMethod]
-        public void Dispatch_KnownQuery_ReturnsValueFromQueryHandler()
+        public async Task Dispatch_KnownQuery_ReturnsValueFromQueryHandler()
         {
             // Given
             var expected = 42;
@@ -179,7 +180,7 @@ namespace dk.itu.game.msc.cgol.CommandCentral.Test
             queryHandler.Handle(queryStub).Returns(expected);
 
             // When
-            var result = sut.Dispatch(queryStub);
+            var result = await sut.Dispatch(queryStub);
 
             // Then
             Assert.AreEqual(expected, result);

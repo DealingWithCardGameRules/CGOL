@@ -2,6 +2,7 @@
 using dk.itu.game.msc.cgol.CommonConcepts.Commands;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -14,16 +15,16 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(ResolveAcquisitionEffects command, IEventDispatcher eventDispatcher)
+        public async Task Handle(ResolveAcquisitionEffects command, IEventDispatcher eventDispatcher)
         {
-            var template = dispatcher.Dispatch(new GetTemplate(command.Card.Template));
+            var template = await dispatcher.Dispatch(new GetTemplate(command.Card.Template));
             if (template == null)
                 return; // No acquisition effects to resolve
 
             foreach (ICommand effect in template.Acquisition)
             {
                 effect.SetAffactSelfRef(command.Card.Instance);
-                dispatcher.Dispatch(effect);
+                await dispatcher.Dispatch(effect);
             }
         }
     }

@@ -8,27 +8,27 @@ namespace CardGameGL.AcceptTest.StepDefinitions
         GameDriver gameDriver = new GameDriver();
 
         [Then(@"the ""([^""]*)"" should have (.*) cards?")]
-        public void ThenTheShouldHaveCard(string collection, int cards)
+        public async Task ThenTheShouldHaveCard(string collection, int cards)
         {
-            gameDriver.CheckSize(collection, cards);
+            await gameDriver.CheckSize(collection, cards);
         }
 
         [When(@"the player choses DrawCard")]
-        public void WhenThePlayerChosesDrawCard()
+        public async Task WhenThePlayerChosesDrawCard()
         {
-            gameDriver.ChooseDrawCard();
+            await gameDriver.ChooseDrawCard();
         }
 
         [Given(@"the player has chosen DrawCard")]
-        public void GivenThePlayerHasChosenDrawCard()
+        public async Task GivenThePlayerHasChosenDrawCard()
         {
-            gameDriver.ChooseDrawCard();
+            await gameDriver.ChooseDrawCard();
         }
 
         [When(@"the player choses PlayCard")]
-        public void WhenThePlayerChosesPlayCard()
+        public async Task WhenThePlayerChosesPlayCard()
         {
-            gameDriver.ChoosePLayCard();
+            await gameDriver.ChoosePLayCard();
         }
 
         [Given(@"the following:")]

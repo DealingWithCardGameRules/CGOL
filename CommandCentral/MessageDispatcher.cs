@@ -15,7 +15,7 @@ namespace dk.itu.game.msc.cgol.Distribution
             dispatcher = eventDispatcher ?? throw new ArgumentNullException(nameof(eventDispatcher));
         }
 
-        public void Dispatch(ICommand command)
+        public async Task Dispatch(ICommand command)
         {
             // Identify command handler
             Type commandHandlerType = typeof(ICommandHandler<>);
@@ -24,10 +24,14 @@ namespace dk.itu.game.msc.cgol.Distribution
 
             // Engage command handler
             dynamic handler = provider.GetService(genericHandlerType);
-            handler.Handle((dynamic)command, dispatcher);
+
+            if (handler == null)
+                throw new HandlerMissingException(genericHandlerType, command.GetType());
+
+            await handler.Handle((dynamic)command, dispatcher);
         }
 
-        public T Dispatch<T>(IQuery<T> query)
+        public async Task<T> Dispatch<T>(IQuery<T> query)
         {
             // Identify query handler
             Type queryHandlerType = typeof(IQueryHandler<,>);
@@ -36,13 +40,8 @@ namespace dk.itu.game.msc.cgol.Distribution
 
             // Engage query handler
             dynamic handler = provider.GetService(genericHandlerType);
-            T result = handler.Handle((dynamic)query);
+            T result = await handler.Handle((dynamic)query);
             return result;
-        }
-
-        public async Task<T> DispatchAsync<T>(IQuery<T> query)
-        {
-            return await Task.Run(() => Dispatch(query));
         }
     }
 }

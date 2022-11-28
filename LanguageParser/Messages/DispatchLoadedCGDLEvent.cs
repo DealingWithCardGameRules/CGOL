@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.Parser.Messages
 {
@@ -12,11 +13,11 @@ namespace dk.itu.game.msc.cgol.Parser.Messages
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Invoke(CGOLLoaded @event)
+        public async Task Invoke(CGOLLoaded @event)
         {
             foreach (var command in @event.Commands)
             {
-                dispatcher.Dispatch(command);
+                await dispatcher.Dispatch(command);
             }
         }
     }

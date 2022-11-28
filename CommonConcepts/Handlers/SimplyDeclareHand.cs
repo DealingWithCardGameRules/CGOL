@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
 using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -15,11 +16,11 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(CreateHand command, IEventDispatcher eventDispatcher)
+        public async Task Handle(CreateHand command, IEventDispatcher eventDispatcher)
         {
-            eventDispatcher.Dispatch(new HandDeclared(timeProvider.Now, command.ProcessId, command.Hand));
+            await eventDispatcher.Dispatch(new HandDeclared(timeProvider.Now, command.ProcessId, command.Hand));
             if (command.PlayerIndex.HasValue)
-                dispatcher.Dispatch(new CollectionOwner(command.Hand, command.PlayerIndex.Value));
+                await dispatcher.Dispatch(new CollectionOwner(command.Hand, command.PlayerIndex.Value));
         }
     }
 }

@@ -4,6 +4,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.EventObservers
 {
@@ -18,17 +19,17 @@ namespace dk.itu.game.msc.cgol.GameState.EventObservers
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Invoke(CardDrawn @event)
+        public async Task Invoke(CardDrawn @event)
         {
             var card = game.GetCard(@event.Source) ?? throw new NullReferenceException($"Fatal event exception, no cards in source: {@event.Source}");
             game.AddCard(@event.Destination, card);
             game.RemoveCard(@event.Source, card.Instance);
 
-            var template = dispatcher.Dispatch(new GetTemplate(card.Template));
+            var template = await dispatcher.Dispatch(new GetTemplate(card.Template));
             if (template == null || !template.Acquisition.Any())
                 return; // No instantanious effects to resolve
 
-            dispatcher.Dispatch(new ResolveAcquisitionEffects(card));
+            await dispatcher.Dispatch(new ResolveAcquisitionEffects(card));
         }
     }
 }

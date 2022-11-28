@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -13,15 +14,15 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(DiscardDownTo command, IEventDispatcher eventDispatcher)
+        public async Task Handle(DiscardDownTo command, IEventDispatcher eventDispatcher)
         {
-            var size = dispatcher.Dispatch(new CardCount(command.From));
+            var size = await dispatcher.Dispatch(new CardCount(command.From));
             var toDiscard = size - command.Size;
             if (toDiscard < 1)
                 return;
 
             for(int i = 0; i < toDiscard; i++)
-                dispatcher.Dispatch(new DiscardCard(command.From, command.To));
+                await dispatcher.Dispatch(new DiscardCard(command.From, command.To));
         }
     }
 }

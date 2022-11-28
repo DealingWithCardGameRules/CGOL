@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.Parser;
 using dk.itu.game.msc.cgol.Parser.Lexers;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.Parser.Messages
 {
@@ -19,14 +20,14 @@ namespace dk.itu.game.msc.cgol.Parser.Messages
             this.parser = parser ?? throw new System.ArgumentNullException(nameof(parser));
         }
 
-        public void Handle(LoadCGOL command, IEventDispatcher eventDispatcher)
+        public async Task Handle(LoadCGOL command, IEventDispatcher eventDispatcher)
         {
             var tokens = lexer.Tokenize(command.CGOL);
             var commands = parser.Parse(tokens);
             if (commands.Any())
             {
                 var @event = new CGOLLoaded(timeProvider.Now, command.ProcessId, commands);
-                eventDispatcher.Dispatch(@event);
+                await eventDispatcher.Dispatch(@event);
             }
         }
     }

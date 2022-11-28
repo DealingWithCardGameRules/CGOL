@@ -2,6 +2,7 @@
 using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -16,21 +17,21 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(ChangeState command, IEventDispatcher eventDispatcher)
+        public async Task Handle(ChangeState command, IEventDispatcher eventDispatcher)
         {
-            if (dispatcher.Dispatch(new InState(command.NewState)))
+            if (await dispatcher.Dispatch(new InState(command.NewState)))
                 return; // We're allready in the destinated state.
 
-            var state = dispatcher.Dispatch(new CurrentState());
+            var state = await dispatcher.Dispatch(new CurrentState());
             if (!string.IsNullOrEmpty(state))
             {
                 // Event to trigger end of state events
-                eventDispatcher.Dispatch(new StateTransitionDeclared(timeProvider.Now, command.ProcessId, state));
+                await eventDispatcher.Dispatch(new StateTransitionDeclared(timeProvider.Now, command.ProcessId, state));
             }
-            
-            dispatcher.Dispatch(new ClearTemporaryActions());
-            eventDispatcher.Dispatch(new EnteredState(timeProvider.Now, command.ProcessId, command.NewState));
-            dispatcher.Dispatch(new ResolvePermanents());
+
+            await dispatcher.Dispatch(new ClearTemporaryActions());
+            await eventDispatcher.Dispatch(new EnteredState(timeProvider.Now, command.ProcessId, command.NewState));
+            await dispatcher.Dispatch(new ResolvePermanents());
         }
     }
 }

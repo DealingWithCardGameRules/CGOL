@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.EventObservers
 {
@@ -13,7 +14,7 @@ namespace dk.itu.game.msc.cgol.GameState.EventObservers
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }
 
-        public void Invoke(CardsTransferred @event)
+        public async Task Invoke(CardsTransferred @event)
         {
             var cards = game.GetCards(@event.Source).ToArray();
             for(int i = 0; i < cards.Length; i++)

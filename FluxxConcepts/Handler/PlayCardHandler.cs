@@ -3,6 +3,7 @@ using System;
 using dk.itu.game.msc.cgol.FluxxConcepts.Queries;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
@@ -17,14 +18,14 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
                 }
 
-        public void Handle(PlayCard command, IEventDispatcher eventDispatcher)
+        public async Task Handle(PlayCard command, IEventDispatcher eventDispatcher)
         {
-            var player = dispatcher.Dispatch(new CurrentPlayer());
+            var player = await dispatcher.Dispatch(new CurrentPlayer());
             if (player == null)
                 throw new Exception("No current player. In Fluxx players are required to keep track of play limit.");
 
-            if (!dispatcher.Dispatch(new PlayLimitReached(player.Index)))
-                decoratee.Handle(command, eventDispatcher);
+            if (!await dispatcher.Dispatch(new PlayLimitReached(player.Index)))
+                await decoratee.Handle(command, eventDispatcher);
         }
     }
 }

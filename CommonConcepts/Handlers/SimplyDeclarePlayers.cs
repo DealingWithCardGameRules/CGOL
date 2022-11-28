@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
 using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -13,7 +14,7 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.timeProvider = timeProvider ?? throw new System.ArgumentNullException(nameof(timeProvider));
         }
 
-        public void Handle(SetPlayers command, IEventDispatcher eventDispatcher)
+        public async Task Handle(SetPlayers command, IEventDispatcher eventDispatcher)
         {
             for(int i = 0; i < command.Amount; i++)
             {
@@ -23,9 +24,9 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
                     Name = $"player_{i + 1}",
                     Identity = $"player_{i + 1}"
                 };
-                eventDispatcher.Dispatch(new PlayerDeclared(timeProvider.Now, command.ProcessId, player));
+                await eventDispatcher.Dispatch(new PlayerDeclared(timeProvider.Now, command.ProcessId, player));
             }
-            eventDispatcher.Dispatch(new CurrentPlayerSelected(timeProvider.Now, command.ProcessId, 1));
+            await eventDispatcher.Dispatch(new CurrentPlayerSelected(timeProvider.Now, command.ProcessId, 1));
         }
     }
 }

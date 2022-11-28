@@ -1,6 +1,9 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState
 {
@@ -11,19 +14,24 @@ namespace dk.itu.game.msc.cgol.GameState
 
         public PlayerSpecificCommandRepository(IDispatcher dispatcher, ICommandRepositoryQueries repository)
         {
-            this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
-            this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
+            this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public IEnumerable<IUserAction> GetCommands(int? playerIndex = null)
+        public async Task<Func<IAsyncEnumerable<IUserAction>>> GetCommands(int? playerIndex = null)
         {
-            var player = dispatcher.Dispatch(new CurrentPlayer());
-            if (player == null)
-                return repository.GetCommands();
+            async IAsyncEnumerable<IUserAction> Handler()
+            {
+                var player = await dispatcher.Dispatch(new CurrentPlayer());
+                if (player == null)
+                    await foreach (var command in (await repository.GetCommands())())
+                        yield return command;
 
-            if (playerIndex == player.Index)
-                return repository.GetCommands(playerIndex);
-            return new List<IUserAction>();
+                if (playerIndex == player.Index)
+                    await foreach (var command in (await repository.GetCommands(playerIndex))())
+                        yield return command;
+            }
+            return () => Handler();
         }
     }
 }

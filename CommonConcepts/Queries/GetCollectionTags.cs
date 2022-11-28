@@ -1,10 +1,11 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
 using dk.itu.game.msc.cgol.Distribution;
+using System;
 using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Queries
 {
-    public class GetCollectionTags : IQuery<IEnumerable<string>>
+    public class GetCollectionTags : IQuery<Func<IAsyncEnumerable<string>>>
     {
         public string Collection { get; set; }
 

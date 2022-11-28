@@ -11,24 +11,16 @@ namespace CardGameGL.AcceptTest.Support
             this.decoratee = decoratee ?? throw new ArgumentNullException(nameof(decoratee));
         }
 
-        public void Dispatch(ICommand command)
+        public async Task Dispatch(ICommand command)
         {
             Console.WriteLine($"Dispatching command: {command.GetType().Name}");
-            decoratee.Dispatch(command);
+            await decoratee.Dispatch(command);
         }
 
-        public T Dispatch<T>(IQuery<T> query)
+        public async Task<T> Dispatch<T>(IQuery<T> query)
         {
             Console.WriteLine($"Dispatching query: {query.GetType().Name}");
-            var result = decoratee.Dispatch<T>(query);
-            Console.WriteLine($"Result for {query.GetType().Name}: {result}");
-            return result;
-        }
-
-        public async Task<T> DispatchAsync<T>(IQuery<T> query)
-        {
-            Console.WriteLine($"Dispatching query: {query.GetType().Name}");
-            var result = await decoratee.DispatchAsync<T>(query);
+            var result = await decoratee.Dispatch<T>(query);
             Console.WriteLine($"Result for {query.GetType().Name}: {result}");
             return result;
         }

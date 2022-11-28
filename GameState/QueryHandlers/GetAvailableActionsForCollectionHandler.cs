@@ -1,35 +1,40 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
-    public class GetAvailableActionsForCollectionHandler : IQueryHandler<GetAvailableActionsForCollection, IEnumerable<IUserAction>>
+    public class GetAvailableActionsForCollectionHandler : IQueryHandler<GetAvailableActionsForCollection, Func<IAsyncEnumerable<IUserAction>>>
     {
         private readonly ICommandRepositoryQueries repository;
         private readonly IQueryDispatcher dispatcher;
 
         internal GetAvailableActionsForCollectionHandler(ICommandRepositoryQueries repository, IQueryDispatcher dispatcher)
         {
-            this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
-            this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public IEnumerable<IUserAction> Handle(GetAvailableActionsForCollection query)
+        public async Task<Func<IAsyncEnumerable<IUserAction>>> Handle(GetAvailableActionsForCollection query)
         {
-            foreach (var command in repository.GetCommands(query.PlayerIndex))
+            async IAsyncEnumerable<IUserAction> Handle()
             {
-                foreach (var col in command.Command.GetPlayFromMaybeQueries())
+                await foreach (var command in (await repository.GetCommands(query.PlayerIndex))())
                 {
-                    if (col.Value(dispatcher).Equals(query.Collection, System.StringComparison.OrdinalIgnoreCase))
+                    foreach (var col in command.Command.GetPlayFromMaybeQueries())
                     {
-                        yield return command;
-                        continue;
+                        if ((await col.Value(dispatcher)).Equals(query.Collection, System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            yield return command;
+                        }
                     }
                 }
             }
+            return () => Handle();
         }
     }
 }

@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.Common
 {
     public class MaybeChoice <ValueType>
     {
         private readonly IEnumerable<ValueType> values;
-        private readonly IQuery<IEnumerable<ValueType>>? optionsQuery;
+        private readonly IQuery<Func<IAsyncEnumerable<ValueType>>>? optionsQuery;
         private IEnumerable<ValueType> choices;
 
         public MaybeChoice(ValueType value)
@@ -17,7 +18,7 @@ namespace dk.itu.game.msc.cgol.Common
             choices = new ValueType[0];
         }
 
-        public MaybeChoice(IQuery<IEnumerable<ValueType>> query)
+        public MaybeChoice(IQuery<Func<IAsyncEnumerable<ValueType>>> query)
         {
             optionsQuery = query ?? throw new ArgumentNullException(nameof(query));
             values = new ValueType[0];
@@ -27,9 +28,9 @@ namespace dk.itu.game.msc.cgol.Common
         public bool HasValue => values.Any();
         public bool HasChosen => choices.Any();
 
-        public void Choose(Func<IEnumerable<ValueType>, ValueType> chooser, IQueryDispatcher dispatcher)
+        public async Task Choose(Func<IEnumerable<ValueType>, Task<ValueType>> chooser, IQueryDispatcher dispatcher)
         {
-            choices = new[] { chooser(GetOptions(dispatcher)) };
+            choices = new[] { await chooser(await GetOptions(dispatcher)) };
         }
 
         public void Choose(ValueType value)
@@ -37,22 +38,23 @@ namespace dk.itu.game.msc.cgol.Common
             choices = new[] { value };
         }
 
-        public ValueType ValueOrChoice(Func<IEnumerable<ValueType>, ValueType> chooser, IQueryDispatcher dispatcher)
+        public async Task<ValueType> ValueOrChoice(Func<IEnumerable<ValueType>, Task<ValueType>> chooser, IQueryDispatcher dispatcher)
         {
             if (HasValue)
                 return values.Single();
             else if (HasChosen)
             {
-                if (GetOptions(dispatcher).Contains(choices.Single()))
+                if ((await GetOptions(dispatcher)).Contains(choices.Single()))
                     return choices.Single();
             }
 
-            return chooser(GetOptions(dispatcher));
+            return await chooser(await GetOptions(dispatcher));
         }
 
-        public IEnumerable<ValueType> Choices(IQueryDispatcher dispatcher)
+        public async IAsyncEnumerable<ValueType> Choices(IQueryDispatcher dispatcher)
         {
-            return GetOptions(dispatcher);
+            foreach (var choises in await GetOptions(dispatcher))
+                yield return choises;
         }
 
         public void ClearChoice()
@@ -60,17 +62,17 @@ namespace dk.itu.game.msc.cgol.Common
             choices = new ValueType[0];
         }
 
-        private IEnumerable<ValueType> GetOptions(IQueryDispatcher dispatcher)
+        private async Task<IEnumerable<ValueType>> GetOptions(IQueryDispatcher dispatcher)
         {
             if (optionsQuery != null)
-                return dispatcher.Dispatch(optionsQuery);
+                return (await dispatcher.Dispatch(optionsQuery))().ToEnumerable();
             return new ValueType[0];
         }
     }
 
     public static class MaybeChoiceHelper
     {
-        public static IEnumerable<MaybeChoice<T>> GetChoices<T>(this ICommand command)
+        public static async IAsyncEnumerable<MaybeChoice<T>> GetChoices<T>(this ICommand command)
         {
             foreach (var property in command.GetType().GetProperties())
             {
@@ -80,7 +82,7 @@ namespace dk.itu.game.msc.cgol.Common
                 }
                 else if (property.PropertyType is ICommand)
                 {
-                    foreach (var item in ((ICommand)property.GetValue(command)).GetChoices<T>())
+                    await foreach (var item in ((ICommand)property.GetValue(command)).GetChoices<T>())
                     {
                         yield return item;
                     }
@@ -89,7 +91,7 @@ namespace dk.itu.game.msc.cgol.Common
                 {
                     foreach (ICommand item in (IEnumerable<ICommand>)property.GetValue(command))
                     {
-                        foreach(var choice in item.GetChoices<T>())
+                        await foreach(var choice in item.GetChoices<T>())
                             yield return choice;
                     }
                 }

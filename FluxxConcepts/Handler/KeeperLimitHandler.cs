@@ -4,6 +4,7 @@ using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.FluxxConcepts.Commands;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
@@ -18,25 +19,25 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(KeeperLimit command, IEventDispatcher eventDispatcher)
+        public async Task Handle(KeeperLimit command, IEventDispatcher eventDispatcher)
         {
             // All inactive players discard
-            var players = dispatcher.Dispatch(new GetNumberOfPlayers());
+            var players = await dispatcher.Dispatch(new GetNumberOfPlayers());
             if (players == 0)
                 return; // No players to discard from
 
-            var currentPlayer = dispatcher.Dispatch(new CurrentPlayer())?.Index ?? -1;
+            var currentPlayer = (await dispatcher.Dispatch(new CurrentPlayer()))?.Index ?? -1;
             var tags = new[] { "zone", "keepers" };
 
             for (int i = 0; i < players; i++)
             {
                 if ((i + 1) != currentPlayer)
                 {
-                    var hand = dispatcher.Dispatch(new GetCollectionNames { WithTags = tags, OwnedBy = i + 1 })?.FirstOrDefault();
+                    var hand = await (await dispatcher.Dispatch(new GetCollectionNames { WithTags = tags, OwnedBy = i + 1 }))().FirstOrDefaultAsync();
                     if (hand == null)
                         throw new Exception($"Player {i + 1} has no keeper zone. Remember to assign ownership for keeper zones.");
 
-                    dispatcher.Dispatch(new DiscardDownTo(hand, command.Limit, command.DiscardPile));
+                    await dispatcher.Dispatch(new DiscardDownTo(hand, command.Limit, command.DiscardPile));
                 }
             }
         }

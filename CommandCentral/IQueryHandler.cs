@@ -1,7 +1,9 @@
-﻿namespace dk.itu.game.msc.cgol.Distribution
+﻿using System.Threading.Tasks;
+
+namespace dk.itu.game.msc.cgol.Distribution
 {
     public interface IQueryHandler<TQuery, TResult> where TQuery : IQuery<TResult>
     {
-        TResult Handle(TQuery query);
+        Task<TResult> Handle(TQuery query);
     }
 }

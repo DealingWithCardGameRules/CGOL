@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameEvents
 {
@@ -7,6 +8,6 @@ namespace dk.itu.game.msc.cgol.GameEvents
     {
         IEnumerable<IEvent> RecordedEvents { get; }
 
-        void Replay(IEnumerable<IEvent> events);
+        Task Replay(IEnumerable<IEvent> events);
     }
 }

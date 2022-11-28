@@ -1,11 +1,12 @@
 ﻿using dk.itu.game.msc.cgol.Common;
 using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
 using dk.itu.game.msc.cgol.Distribution;
+using System;
 using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Queries
 {
-    public class GetCards : IQuery<IEnumerable<ICard>>
+    public class GetCards : IQuery<Func<IAsyncEnumerable<ICard>>>
     {
         public string Collection { get; }
         public IEnumerable<string>? Tags { get; }

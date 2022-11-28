@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.EventObservers
 {
@@ -13,7 +14,7 @@ namespace dk.itu.game.msc.cgol.GameState.EventObservers
             this.library = library ?? throw new ArgumentNullException(nameof(library));
         }
 
-        public void Invoke(AcquisitionEffectAddedToCard @event)
+        public async Task Invoke(AcquisitionEffectAddedToCard @event)
         {
             library.AddAcquisition(@event.UniqueCardName, @event.Command);
         }

@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.FluxxConcepts.Commands;
 using dk.itu.game.msc.cgol.FluxxConcepts.Queries;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
@@ -15,18 +16,18 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(OwnerOfWinsExclusive command, IEventDispatcher eventDispatcher)
+        public async Task Handle(OwnerOfWinsExclusive command, IEventDispatcher eventDispatcher)
         {
-            var zones = dispatcher.Dispatch(new GetCollectionNames { WithTags = new[] { "zone", "keepers" } });
+            var zones = (await dispatcher.Dispatch(new GetCollectionNames { WithTags = new[] { "zone", "keepers" } }))();
             var keepers = string.Join(",", command.Keepers);
 
-            foreach (var zone in zones)
+            await foreach (var zone in zones)
             {
-                if (dispatcher.Dispatch(new OnlyHasKeepers(keepers, zone)))
+                if (await dispatcher.Dispatch(new OnlyHasKeepers(keepers, zone)))
                 {
-                    var owner = dispatcher.Dispatch(new GetCollectionOwnerIndex(zone));
+                    var owner = await dispatcher.Dispatch(new GetCollectionOwnerIndex(zone));
                     if (owner.HasValue)
-                        dispatcher.Dispatch(new Win(owner.Value));
+                        await dispatcher.Dispatch(new Win(owner.Value));
                 }
             }
         }

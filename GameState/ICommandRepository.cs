@@ -1,10 +1,12 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState
 {
     internal interface ICommandRepositoryQueries
     {
-        IEnumerable<IUserAction> GetCommands(int? playerIndex = null);
+        Task<Func<IAsyncEnumerable<IUserAction>>> GetCommands(int? playerIndex = null);
     }
 }

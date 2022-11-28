@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Observers
 {
@@ -12,7 +13,7 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Observers
             this.playCounter = playCounter ?? throw new System.ArgumentNullException(nameof(playCounter));
         }
 
-        public void Invoke(CardResolved @event)
+        public async Task Invoke(CardResolved @event)
         {
             if (@event.Card.OwnerIndex.HasValue && @event.Card.OwnerIndex > 0)
                 playCounter.Aggregate(@event.Card.OwnerIndex.Value);

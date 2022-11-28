@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using dk.itu.game.msc.cgol.FluxxConcepts.Commands;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
 {
@@ -17,9 +18,9 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(MostCardsWins command, IEventDispatcher eventDispatcher)
+        public async Task Handle(MostCardsWins command, IEventDispatcher eventDispatcher)
         {
-            var counts = cardCounter.Count(command.Tags.ToArray());
+            var counts = await cardCounter.Count(command.Tags.ToArray());
             var maxCount = counts.Values.Max();
             if (maxCount < command.MinCount)
                 return;
@@ -27,9 +28,9 @@ namespace dk.itu.game.msc.cgol.FluxxConcepts.Handler
             if (counts.Values.Count(v => v == maxCount) == 1)
             {
                 var collection = counts.Single(c => c.Value == maxCount).Key;
-                var owner = dispatcher.Dispatch(new GetCollectionOwnerIndex(collection));
+                var owner = await dispatcher.Dispatch(new GetCollectionOwnerIndex(collection));
                 if (owner.HasValue)
-                    dispatcher.Dispatch(new Win(owner.Value));
+                    await dispatcher.Dispatch(new Win(owner.Value));
             }
         }
     }

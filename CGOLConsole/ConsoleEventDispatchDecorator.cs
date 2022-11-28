@@ -13,10 +13,10 @@ namespace CGOLConsole
             this.consoleWriter = consoleWriter ?? throw new ArgumentNullException(nameof(consoleWriter));
         }
 
-        public void Dispatch(IEvent @event)
+        public async Task Dispatch(IEvent @event)
         {
             consoleWriter.Write(@event);
-            dispatcher.Dispatch(@event);
+            await dispatcher.Dispatch(@event);
         }
     }
 }

@@ -75,26 +75,26 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpGet("{id:Guid}")]
-        public GameOverviewResponse GetGame(Guid id)
+        public async Task<GameOverviewResponse> GetGame(Guid id)
         {
-            IDictionary<string, string> colLink(IEnumerable<string> names)
+            async Task<IDictionary<string, string>> colLink(IAsyncEnumerable<string> names)
             {
                 Dictionary<string, string> output = new();
-                foreach (var name in names)
+                await foreach (var name in names)
                     output[name] = Url.Action(nameof(GetCollection), "game", new { id, name }, Request.Scheme);
                 return output;
             }
 
             var current = session.GetSession(id);
-            var zones = current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "community" } });
-            zones = zones.Union(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "zone" } }));
+            var zones = (await current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "community" } }))();
+            zones = zones.Union((await current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "zone" } }))());
 
             var dto = new GameStateDTO
             {
-                NumberOfPlayers = current.Service.Dispatch(new GetNumberOfPlayers()),
-                Decks = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "deck" } })),
-                Hands = colLink(current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "hand" } })),
-                Zones = colLink(zones)
+                NumberOfPlayers = await current.Service.Dispatch(new GetNumberOfPlayers()),
+                Decks = await colLink((await current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "deck" } }))()),
+                Hands = await colLink((await current.Service.Dispatch(new GetCollectionNames { WithTags = new[] { "hand" } }))()),
+                Zones = await colLink(zones)
             };
 
             var response = new GameOverviewResponse(Request.GetEncodedUrl())
@@ -110,7 +110,7 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpGet("{id:Guid}/collections/{name}")]
-        public CardCollectionResponse GetCollection(Guid id, string name)
+        public async Task<CardCollectionResponse> GetCollection(Guid id, string name)
         {
             var current = session.GetSession(id);
             List<IUserAction> colActions = new();
@@ -120,7 +120,7 @@ namespace CardGameWebApp.Server.Controllers
 
             foreach (var playerIndex in playerIndexes)
             {
-                foreach (var action in current.Service.Dispatch(new GetAvailableActionsForCollection(name, playerIndex)))
+                await foreach (var action in (await current.Service.Dispatch(new GetAvailableActionsForCollection(name, playerIndex)))())
                 {
                     if (action.Command.GetPlayCard() != null)
                         cardActions.Add(action);
@@ -128,7 +128,7 @@ namespace CardGameWebApp.Server.Controllers
                 }
             }
 
-            IEnumerable<CardRefDTO> cardLink(IEnumerable<ICard> cards)
+            async IAsyncEnumerable<CardRefDTO> cardLink(IEnumerable<ICard> cards)
             {
                 foreach (var card in cards)
                 {
@@ -137,7 +137,7 @@ namespace CardGameWebApp.Server.Controllers
                         Name = card.Template,
                         Instance = card.Instance,
                         //Link = Url.Action(nameof(GetCard), "game", new { id, card = card.Instance }, Request.Scheme),
-                        Actions = ActionLink(cardActions, id, card.Instance)
+                        Actions = await ActionLink(cardActions.ToAsyncEnumerable(), id, card.Instance)
                     };
                 }
             }
@@ -145,10 +145,10 @@ namespace CardGameWebApp.Server.Controllers
             var dto = new CardCollectionDTO
             {
                 Name = name,
-                VisibleCards = cardLink(current.Service.Dispatch(new GetVisibleCards(name, playerIndexes))),
-                CardCount = current.Service.Dispatch(new CardCount(name)),
-                Tags = current.Service.Dispatch(new GetCollectionTags(name)),
-                Actions = ActionLink(colActions, id)
+                VisibleCards = cardLink((await current.Service.Dispatch(new GetVisibleCards(name, playerIndexes)))().ToEnumerable()).ToEnumerable(),
+                CardCount = await current.Service.Dispatch(new CardCount(name)),
+                Tags = (await current.Service.Dispatch(new GetCollectionTags(name)))().ToEnumerable(),
+                Actions = await ActionLink(colActions.ToAsyncEnumerable(), id)
             };
             
             return new CardCollectionResponse(Request.GetEncodedUrl())
@@ -157,10 +157,10 @@ namespace CardGameWebApp.Server.Controllers
             };
         }
 
-        private IDictionary<string, string> ActionLink(IEnumerable<IUserAction> commands, Guid id, Guid? card = null)
+        private async Task<IDictionary<string, string>> ActionLink(IAsyncEnumerable<IUserAction> commands, Guid id, Guid? card = null)
         {
             Dictionary<string, string> output = new Dictionary<string, string>();
-            foreach (var command in commands)
+            await foreach (var command in commands)
             {
                 dynamic obj = new ExpandoObject();
                 obj.id = id;
@@ -180,7 +180,7 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpGet("{id:Guid}/actions/{instance:Guid}")]
-        public ActionResult<ActionResponse> GetAction(Guid id, Guid instance)
+        public async Task<ActionResult<ActionResponse>> GetAction(Guid id, Guid instance)
         {
             var current = session.GetSession(id);
             
@@ -188,7 +188,7 @@ namespace CardGameWebApp.Server.Controllers
             var playerIndexes = GetPlayerIndexes(current, Request.Headers["clientid"]);
             foreach (var playerIndex in playerIndexes)
             {
-                var cmd = current.Service.Dispatch(new GetAvailableAction(instance, playerIndex));
+                var cmd = await current.Service.Dispatch(new GetAvailableAction(instance, playerIndex));
                 if (cmd != null)
                 {
                     command = cmd;
@@ -223,7 +223,7 @@ namespace CardGameWebApp.Server.Controllers
         {
             var current = session.GetSession(id);
             var agent = new AIAgentFactory().CreateRandom();
-            current.Service.Dispatch( agent.Choose(current.Service.SessionEvents.ToArray()) );
+            current.Service.Dispatch(await agent.Choose(current.Service.SessionEvents.ToArray()) );
             await gameHub.Clients.Group(id.ToString()).SendAsync("NewState");
             return Ok();
         }
@@ -236,7 +236,7 @@ namespace CardGameWebApp.Server.Controllers
             var playerIndexes = GetPlayerIndexes(current, Request.Headers["clientid"]);
             foreach (var playerIndex in playerIndexes)
             {
-                var cmd = current.Service.Dispatch(new GetAvailableAction(instance, playerIndex));
+                var cmd = await current.Service.Dispatch(new GetAvailableAction(instance, playerIndex));
                 if (cmd != null)
                 {
                     command = cmd;
@@ -264,15 +264,15 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpGet("{id:Guid}/actions")]
-        public ActionListResponse GetActions(Guid id)
+        public async Task<ActionListResponse> GetActions(Guid id)
         {
             var current = session.GetSession(id);
             var playerIndexes = GetPlayerIndexes(current, Request.Headers["clientid"]);
-            IEnumerable<IUserAction> actions = GetActions(current, playerIndexes);
+            var actions = GetActions(current, playerIndexes);
 
             return new ActionListResponse(Request.GetEncodedUrl())
             {
-                Actions = ActionLink(actions, id)
+                Actions = await ActionLink(actions, id)
             };
         }
 
@@ -284,12 +284,12 @@ namespace CardGameWebApp.Server.Controllers
                     yield return index;
         }
 
-        private IEnumerable<IUserAction> GetActions(Session session, IEnumerable<int> playerIndexes)
+        private async IAsyncEnumerable<IUserAction> GetActions(Session session, IEnumerable<int> playerIndexes)
         {
             foreach (var playerIndex in playerIndexes)
             {
-                var actions = session.Service.Dispatch(new GetAvailableActions(playerIndex));
-                foreach (var action in actions)
+                var actions = (await session.Service.Dispatch(new GetAvailableActions(playerIndex)))();
+                await foreach (var action in actions)
                 {
                     yield return action;
                 }

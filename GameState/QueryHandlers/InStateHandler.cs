@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
 {
@@ -12,7 +13,7 @@ namespace dk.itu.game.msc.cgol.GameState.QueryHandlers
             this.game = game ?? throw new System.ArgumentNullException(nameof(game));
         }
 
-        public bool Handle(InState query)
+        public async Task<bool> Handle(InState query)
         {
             return query.State.Equals(game.CurrentState, System.StringComparison.OrdinalIgnoreCase);
         }

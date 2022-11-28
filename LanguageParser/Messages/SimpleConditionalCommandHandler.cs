@@ -1,5 +1,6 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Commands;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.Parser.Messages
 {
@@ -12,10 +13,10 @@ namespace dk.itu.game.msc.cgol.Parser.Messages
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(ConditionalCommand command, IEventDispatcher eventDispatcher)
+        public async Task Handle(ConditionalCommand command, IEventDispatcher eventDispatcher)
         {
-            if (dispatcher.Dispatch(command.Query))
-                dispatcher.Dispatch(command.Command);
+            if (await dispatcher.Dispatch(command.Query))
+                await dispatcher.Dispatch(command.Command);
         }
     }
 }

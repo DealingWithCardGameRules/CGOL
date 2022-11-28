@@ -14,13 +14,13 @@ namespace CGOLConsole.Handlers
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(LoadCard command, IEventDispatcher eventDispatcher)
+        public async Task Handle(LoadCard command, IEventDispatcher eventDispatcher)
         {
             try
             {
                 using var stream = File.OpenRead($"{command.File}{dataFileExtension}");
                 var data = new StreamReader(stream).ReadToEnd();
-                dispatcher.Dispatch(new LoadCGOL(data));
+                await dispatcher.Dispatch(new LoadCGOL(data));
             }
             catch (FileNotFoundException)
             {

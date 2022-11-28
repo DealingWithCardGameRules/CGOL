@@ -2,6 +2,7 @@
 using dk.itu.game.msc.cgol.GameEvents;
 using dk.itu.game.msc.cgol.Parser.Messages;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol
 {
@@ -18,14 +19,14 @@ namespace dk.itu.game.msc.cgol
             this.eventRecorder = eventRecorder ?? throw new System.ArgumentNullException(nameof(eventRecorder));
         }
 
-        public void Dispatch(ICommand command)
+        public async Task Dispatch(ICommand command)
         {
             dispatcher.Dispatch(command);
         }
 
-        public T Dispatch<T>(IQuery<T> query)
+        public async Task<T> Dispatch<T>(IQuery<T> query)
         {
-            return dispatcher.Dispatch(query);
+            return await dispatcher.Dispatch(query);
         }
 
         public void Parse(string cgol)

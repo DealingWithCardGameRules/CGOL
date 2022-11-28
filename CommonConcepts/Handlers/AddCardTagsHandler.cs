@@ -3,6 +3,7 @@ using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
 using System;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -17,12 +18,12 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(AddCardTags command, IEventDispatcher eventDispatcher)
+        public async Task Handle(AddCardTags command, IEventDispatcher eventDispatcher)
         {
-            if (dispatcher.Dispatch(new GetTemplate(command.Card)) == null)
+            if (await dispatcher.Dispatch(new GetTemplate(command.Card)) == null)
                 throw new Exception($"Card template name does not exist, remember to create card using {nameof(CreateCard)}");
 
-            eventDispatcher.Dispatch(new TagsAddedToTemplate(timeProvider.Now, command.ProcessId, command.Card, command.Tags));
+            await eventDispatcher.Dispatch(new TagsAddedToTemplate(timeProvider.Now, command.ProcessId, command.Card, command.Tags));
         }
     }
 }

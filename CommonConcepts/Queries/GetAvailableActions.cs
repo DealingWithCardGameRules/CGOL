@@ -1,10 +1,11 @@
 ﻿using dk.itu.game.msc.cgol.CommonConcepts.Attributes;
 using dk.itu.game.msc.cgol.Distribution;
+using System;
 using System.Collections.Generic;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Queries
 {
-    public class GetAvailableActions : IQuery<IEnumerable<IUserAction>>
+    public class GetAvailableActions : IQuery<Func<IAsyncEnumerable<IUserAction>>>
     {
         public int? PlayerIndex { get; }
 

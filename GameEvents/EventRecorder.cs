@@ -1,6 +1,7 @@
 ﻿using dk.itu.game.msc.cgol.Distribution;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.GameEvents
 {
@@ -19,14 +20,14 @@ namespace dk.itu.game.msc.cgol.GameEvents
 
         public IEnumerable<IEvent> RecordedEvents => eventLogger.EventLog;
 
-        public void Replay(IEnumerable<IEvent> events)
+        public async Task Replay(IEnumerable<IEvent> events)
         {
             recording = false;
             foreach (var @event in events)
             {
                 try
                 {
-                    eventDispatcher.Dispatch(@event);
+                    await eventDispatcher.Dispatch(@event);
                 }
                 catch (Exception ex)
                 {
@@ -37,10 +38,10 @@ namespace dk.itu.game.msc.cgol.GameEvents
             recording = true;
         }
 
-        public void Dispatch(IEvent @event)
+        public async Task Dispatch(IEvent @event)
         {
             if (recording)
-                eventDispatcher.Dispatch(@event);
+                await eventDispatcher.Dispatch(@event);
         }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CardGameWebApp.Server.Controllers
 {
@@ -73,36 +74,36 @@ namespace CardGameWebApp.Server.Controllers
         }
 
         [HttpGet("{id:Guid}/{collection}/count")]
-        public int Count(Guid id, string collection)
+        public async Task<int> Count(Guid id, string collection)
 		{
             var service = GetService(id);
-            return service.Dispatch(new CardCount(collection));
+            return await service.Dispatch(new CardCount(collection));
         }
 
         [HttpGet("{id:Guid}/draw")]
-        public IActionResult DrawCard(Guid id)
+        public async Task<IActionResult> DrawCard(Guid id)
 		{
             var service = GetService(id);
-            service.Dispatch(new DrawCard(deck, hand));
+            await service.Dispatch(new DrawCard(deck, hand));
 
             return Ok();
 		}
 
         [HttpGet("{id:Guid}/play")]
-        public IActionResult PlayCard(Guid id, [FromQuery] Guid card)
+        public async Task<IActionResult> PlayCard(Guid id, [FromQuery] Guid card)
         {
             var service = GetService(id);
-            service.Dispatch(new PlayCard(hand, discardPile, card));
+            await service.Dispatch(new PlayCard(hand, discardPile, card));
 
             return Ok();
         }
 
         [HttpGet("{id:Guid}/{collection}")]
-        public IEnumerable<CardDescriptionDTO> GetCardsIn(Guid id, string collection, int top = 0)
+        public async IAsyncEnumerable<CardDescriptionDTO> GetCardsIn(Guid id, string collection, int top = 0)
 		{
             var service = GetService(id);
 
-            var card = service.Dispatch(new GetTopCard(collection));
+            var card = await service.Dispatch(new GetTopCard(collection));
             var dto = new CardDescriptionDTO
             {
                 Template = card.Template

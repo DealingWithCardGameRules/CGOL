@@ -2,6 +2,7 @@
 using dk.itu.game.msc.cgol.CommonConcepts.Events;
 using dk.itu.game.msc.cgol.CommonConcepts.Queries;
 using dk.itu.game.msc.cgol.Distribution;
+using System.Threading.Tasks;
 
 namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
 {
@@ -16,18 +17,18 @@ namespace dk.itu.game.msc.cgol.CommonConcepts.Handlers
             this.dispatcher = dispatcher ?? throw new System.ArgumentNullException(nameof(dispatcher));
         }
 
-        public void Handle(PassTurn command, IEventDispatcher eventDispatcher)
+        public async Task Handle(PassTurn command, IEventDispatcher eventDispatcher)
         {
-            var player = dispatcher.Dispatch(new CurrentPlayer());
-            eventDispatcher.Dispatch(new TurnEnded(timeProvider.Now, command.ProcessId));
-            var maxPlayers = dispatcher.Dispatch(new GetNumberOfPlayers());
+            var player = await dispatcher.Dispatch(new CurrentPlayer());
+            await eventDispatcher.Dispatch(new TurnEnded(timeProvider.Now, command.ProcessId));
+            var maxPlayers = await dispatcher.Dispatch(new GetNumberOfPlayers());
             if (player != null)
             {
                 var newPlayer = (player.Index % maxPlayers) + 1;
                 if (newPlayer != player.Index)
-                    eventDispatcher.Dispatch(new CurrentPlayerSelected(timeProvider.Now, command.ProcessId, newPlayer));
+                    await eventDispatcher.Dispatch(new CurrentPlayerSelected(timeProvider.Now, command.ProcessId, newPlayer));
             }
-            dispatcher.Dispatch(new Start());
+            await dispatcher.Dispatch(new Start());
         }
     }
 }
