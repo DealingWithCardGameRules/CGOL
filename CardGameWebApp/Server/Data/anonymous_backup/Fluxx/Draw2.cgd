@@ -1,6 +1,0 @@
-CreateCard "Draw 2"
-AddCardTags "Draw 2" "draw"
-Instantaneous "Draw 2" DiscardCards "Rules" "draw" "Discard Pile"
-Instantaneous "Draw 2" DrawLimit 2
-Instantaneous "Draw 2" PlaceIn "Rules"
-Permanent "Draw 2" DrawLimit 2

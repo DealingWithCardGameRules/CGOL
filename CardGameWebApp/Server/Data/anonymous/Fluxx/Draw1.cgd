@@ -1,3 +1,0 @@
-CreateCard "Draw 1"
-When "Draw 1" played PlaceIn "Meta rules"
-When "Draw 1" active DrawLimit 1

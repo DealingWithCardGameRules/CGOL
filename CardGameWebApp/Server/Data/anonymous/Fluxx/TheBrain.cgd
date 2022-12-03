@@ -1,3 +1,0 @@
-CreateCard "The Brain"
-AddCardTags "The Brain" "the brain, keeper"
-Instantaneous "The Brain" PlaceWith "keepers"

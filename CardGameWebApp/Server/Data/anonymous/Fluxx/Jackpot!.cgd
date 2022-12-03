@@ -1,4 +1,0 @@
-CreateCard "Jackpot!"
-AddCardTags "Jackpot!" "action"
-Instantaneous "Jackpot!" DealCard "Deck" 3
-Instantaneous "Jackpot!" PlaceIn "Discard Pile"

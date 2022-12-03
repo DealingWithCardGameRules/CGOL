@@ -1,3 +1,0 @@
-CreateCard "Play 1"
-Instantaneous "Play 1" PlaceIn "Meta rules"
-Permanent "Play 1" PlayLimit 1
