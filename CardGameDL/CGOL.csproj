@@ -7,8 +7,28 @@
 	<RootNamespace>dk.itu.game.msc.cgol</RootNamespace>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Title>Card Game Operational Language</Title>
-	<Company>DealingWithCardGameRules Group</Company>
+	<Company></Company>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageIcon>cgol-icon.png</PackageIcon>
+	<PackageProjectUrl>https://github.com/DealingWithCardGameRules/CGOL</PackageProjectUrl>
+	<Description>An adaptable operational language designed for complex card games. The system is based on code patterns such as CSRS and Event sourcing and the system is build around a service locator.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\cgol-icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />

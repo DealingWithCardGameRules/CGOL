@@ -5,13 +5,19 @@
     <Nullable>enable</Nullable>
 	<PackageId>CGOL.$(AssemblyName)</PackageId>
 	<RootNamespace>dk.itu.game.msc.cgol.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<Title>CGOL basic state representation</Title>
 	<PackageIcon>cgol-icon.png</PackageIcon>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<RepositoryUrl>https://github.com/DealingWithCardGameRules/CGOL</RepositoryUrl>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Title>CGOL Language parser</Title>
+	<Author>DealingWithCardGameRules Group</Author>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Parsers\CommandConceptParser.cs" />
+    <Compile Remove="Parsers\QueryConceptParser.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\cgol-icon.png">
@@ -26,6 +32,10 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Pluralize.NET" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
