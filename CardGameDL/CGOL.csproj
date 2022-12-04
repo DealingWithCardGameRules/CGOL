@@ -13,6 +13,9 @@
 	<PackageIcon>cgol-icon.png</PackageIcon>
 	<PackageProjectUrl>https://github.com/DealingWithCardGameRules/CGOL</PackageProjectUrl>
 	<Description>An adaptable operational language designed for complex card games. The system is based on code patterns such as CSRS and Event sourcing and the system is build around a service locator.</Description>
+	<Authors>DealingWithCardGameRules Group</Authors>
+	<AssemblyVersion></AssemblyVersion>
+	<Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,8 +41,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Agents\Agents.csproj" />
     <ProjectReference Include="..\CommandCentral\Distribution.csproj" />
-    <ProjectReference Include="..\FluxxConcepts\FluxxConcepts.csproj" />
-    <ProjectReference Include="..\GameEvents\GameEvents.csproj" />
     <ProjectReference Include="..\GameState\State.csproj" />
     <ProjectReference Include="..\LanguageParser\Parser.csproj" />
   </ItemGroup>
