@@ -3,8 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-	<PackageId>dk.itu.game.msc.cgol</PackageId>
+	<PackageId>CGOL</PackageId>
 	<RootNamespace>dk.itu.game.msc.cgol</RootNamespace>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Title>Card Game Operational Language</Title>
+	<Company>DealingWithCardGameRules Group</Company>
   </PropertyGroup>
 
   <ItemGroup>
