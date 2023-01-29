@@ -12,6 +12,7 @@
 	<Title>CGOL Language parser</Title>
 	<Authors>DealingWithCardGameRules Group</Authors>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

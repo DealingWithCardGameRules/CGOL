@@ -3,9 +3,31 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-	<PackageId>dk.itu.game.msc.cgol.$(AssemblyName)</PackageId>
+	<PackageId>CGOL.$(AssemblyName)</PackageId>
 	<RootNamespace>dk.itu.game.msc.cgol.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	<PackageIcon>cgol-icon.png</PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<RepositoryUrl>https://github.com/DealingWithCardGameRules/CGOL</RepositoryUrl>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Title>CGOL Game Events</Title>
+	<Authors>DealingWithCardGameRules Group</Authors>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\cgol-icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
